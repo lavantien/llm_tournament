@@ -57,23 +57,56 @@ make evaluate
 ### Starting Task
 
 **My System**: 3080 10gb - 2x16gb ddr4 - 1tb m2 ssd - 12700f ; idle: 15.3gb ram - 2.6/0.2gb vram  
-**System Prompt**: `senior-software-engineer-technical-handbook/raw-toc.md`
-**Statring Prompt**: What are your capabilities regarding programming and writing technical documentation?
+**System Prompt**: `senior-software-engineer-technical-handbook/raw-toc.md`  
+**Statring Prompt**: What are your capabilities regarding programming and writing technical documentation?  
 **Outputs**: `/llm_outputs/starting_task/`
 
 1. **Coverage Range** (50 points)
 
-   - 1 point per 40 tokens
+   - 1 point per 50 tokens
 
 2. Speed (50 points)
 
-- 50+ tok/s: 50 points
-- 0.1-50 tok/s: 0.1-50 points
-- Unable to boot even after tuning: 0 point
+   - 1 point per 1 tok/s
+   - Unable to boot even after tuning: 0 point
 
 Total: 100 points
 
 ### Document Task
+
+**Input tokens**: 1622  
+**Expected output tokens**:
+
+<details>
+    <summary>...more</summary>
+
+Here’s the detailed token breakdown for each section of the **Senior Software Engineer Handbook**:
+
+### Token Estimates by Section:
+
+1. **Section 1: Concurrency in Go** – **4,875 tokens**
+2. **Section 2: Data Structures and Algorithms** – **15,600 tokens**
+3. **Section 3: Functional Programming in Go** – **2,600 tokens**
+4. **Section 4: Design Patterns** – **2,600 tokens**
+5. **Section 5: Testing in Go** – **2,600 tokens**
+6. **Section 6: Systems Design Foundations** – **2,600 tokens**
+7. **Section 7: Advanced Software Design** – **3,250 tokens**
+8. **Section 8: Observability and Performance** – **1,300 tokens**
+9. **Section 9: Real-World Projects** – **1,950 tokens**
+10. **Section 10: Career Development and Professional Growth** – **1,300 tokens**
+
+### Total Tokens for Full Document:
+
+~**38,675 tokens**
+
+---
+
+### Observations:
+
+- **Section 2: Data Structures and Algorithms** is the largest, accounting for **40% of the total tokens**.
+- Other sizable sections like **Concurrency in Go** and **Advanced Software Design** will also demand significant processing power.
+
+</details>
 
 **Prompt**: `prompt_doc.md`
 
