@@ -16,6 +16,7 @@ MODELS := \
 	"qwen2.5-coder-14b-instruct-q5km" \
 	"Qwen2.5-Coder-7B-Instruct-q80" \
 	"Mistral-Nemo-Instruct-2407-q4km" \
+	"Qwen2.5-Coder-7B-Instruct-q6k" \
 	"gemma-2-9b-it-q4km" \
 	"llava-v1.5-7b-q5km" \
 	"Yi-Coder-9B-Chat-q4km" \
