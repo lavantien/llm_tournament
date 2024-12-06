@@ -1,140 +1,129 @@
-# Advanced Go Programming Challenge: Distributed Task Processing System Evaluation
+# Concurrent Prime Number Generator and Analyzer
 
-## Objective
+## Task Overview
 
-Design a production-ready, distributed task processing system that demonstrates:
+Develop a concurrent system for generating, analyzing, and processing prime numbers that demonstrates advanced Go programming skills, focusing on efficient concurrency patterns, error handling, and clean code design.
 
-- Advanced Go concurrency patterns
-- Robust system design
-- Performance optimization
-- Comprehensive testing and observability
+## Requirements
+
+### Core Functionality
+
+- Create a package `primeanalyzer` with two main components:
+  1. A concurrent prime number generator
+  2. A prime number processor with advanced analysis capabilities
+
+### Prime Number Generator (`generator.go`)
+
+- Implement an efficient concurrent prime number generation algorithm
+- Support configurable range and concurrency levels
+- Generate primes using an optimized sieve method
+- Provide channels for prime distribution
+
+### Prime Number Processor (`processor.go`)
+
+- Analyze generated prime numbers
+- Perform complex mathematical operations
+- Aggregate and categorize prime number characteristics
+- Handle potential computational errors
+
+## Detailed Specifications
+
+### Generator Interface
+
+```go
+type PrimeGenerator interface {
+    Generate(ctx context.Context, start, end int, concurrencyLevel int) <-chan PrimeResult
+}
+
+type PrimeResult struct {
+    Number     int
+    IsPrime    bool
+    FindTime   time.Duration
+    WorkerID   int
+    Error      error
+}
+```
+
+### Processor Interface
+
+```go
+type PrimeProcessor interface {
+    Process(results <-chan PrimeResult) ProcessorResult
+}
+
+type ProcessorResult struct {
+    TotalNumbersProcessed int
+    PrimesFound           int
+    LargestPrime          int
+    SmallestPrime         int
+    PrimeDistribution     map[int]int  // Primes grouped by digit count
+    PrimePatterns         []PrimePattern
+    ComputationTime       time.Duration
+}
+
+type PrimePattern struct {
+    Type        string  // e.g., "Twin", "Sexy", "Circular"
+    PrimeGroup  []int
+}
+```
+
+## Computational Challenges
+
+- Implement an efficient prime generation algorithm
+- Use goroutines to parallelize prime finding
+- Detect special prime number patterns
+- Minimize computational overhead
+- Handle large number ranges efficiently
 
 ## Evaluation Criteria
 
-The generated solution will be assessed across multiple dimensions:
-
-1. **Code Quality** (40 points)
-
-   - Idiomatic Go code
-   - Clean, readable design
-   - Proper error handling
-   - Adherence to Go best practices
-
-2. **Concurrency & Performance** (30 points)
+1. Concurrent Implementation (25 points)
 
    - Efficient use of goroutines
-   - Minimal resource contention
-   - Low-overhead synchronization
-   - Benchmarkable performance characteristics
+   - Optimal channel management
+   - Prevention of goroutine leaks
 
-3. **System Robustness** (20 points)
+2. Algorithm Efficiency (20 points)
 
-   - Handling of edge cases
-   - Graceful error and failure management
-   - Configurable and flexible design
+   - Prime generation speed
+   - Memory efficiency
+   - Algorithmic complexity
 
-4. **Testing & Observability** (10 points)
-   - Comprehensive unit and integration tests
-   - Meaningful logging and tracing
-   - Performance profiling readiness
+3. Code Quality (25 points)
 
-## Detailed Requirements
+   - Clean, idiomatic Go code
+   - Clear function and variable names
+   - Comprehensive documentation
+   - Adherence to Go best practices
 
-### System Architecture
+4. Advanced Features (15 points)
 
-Implement a distributed task processing system with the following core components:
+   - Prime pattern detection
+   - Sophisticated analysis capabilities
+   - Flexible configuration
 
-#### 1. Work Queue Management
+5. Error Handling (15 points)
+   - Robust error management
+   - Graceful degradation
+   - Comprehensive error logging
 
-- Dynamically scalable worker pool
-- Priority-based task queuing
-- Configurable concurrency limits
-- Support for task cancellation and timeouts
+## Computational Constraints
 
-#### 2. Task Execution Framework
+- Range: 2 to 1,000,000
+- Concurrency Levels: 1 to 16 workers
+- Memory Usage: < 500MB
+- Computation Time: < 5 seconds
 
-- Rate limiting mechanism
-- Circuit breaker pattern implementation
-- Centralized error handling
-- Distributed tracing support
+## Bonus Challenges
 
-#### 3. Advanced Concurrency Patterns
+- Implement advanced prime pattern detection
+- Create memory-efficient prime generation
+- Develop sophisticated statistical analysis
+- Optimize for both small and large number ranges
 
-- Use `sync.Once` for singleton initialization
-- Semaphore-like worker pool control
-- Channel-based communication and synchronization
-- Context-driven cancellation
+## Submission Requirements
 
-### Constraints & Guidelines
-
-- **Language**: Pure Go (1.21+)
-- **External Dependencies**: Limited to:
-  - `prometheus/client_golang` for metrics
-  - `opentelemetry` for distributed tracing
-  - `testify` for testing
-- **Code Structure**:
-  - Single package with clear separation of concerns
-  - Comprehensive godoc comments
-  - No external library usage beyond specified
-  - Production-ready, zero-allocation critical paths
-
-### Deliverables
-
-1. Complete Go package with:
-   - Implementation files
-   - Comprehensive tests
-   - Performance benchmarks
-2. Detailed `README.md` with:
-   - System architecture overview
-   - Usage examples
-   - Performance considerations
-   - Profiling recommendations
-
-### Bonus Challenges
-
-- Implement lock-free algorithms
-- Minimize memory allocations in critical paths
-- Add advanced rate limiting with adaptive strategies
-- Demonstrate zero-downtime worker scaling
-
-## Evaluation Methodology
-
-Submissions will be rigorously tested via:
-
-- `go vet` for code quality
-- `go test -race` for concurrency safety
-- `go test -bench=.` for performance benchmarks
-- Manual code review against evaluation criteria
-
-## Sample Validation Process
-
-Evaluators will run the following commands to validate the implementation:
-
-```bash
-# Initial setup
-go mod init taskprocessor
-go mod tidy
-
-# Run tests with race detector
-go test -v -race ./...
-
-# Run benchmarks
-go test -bench=. -benchmem
-
-# Generate coverage report
-go test -coverprofile=coverage.out
-go tool cover -html=coverage.out
-```
-
-## Scoring Notes
-
-- Partial credit for incomplete but well-structured solutions
-- Emphasis on clean, maintainable, and performant code
-- Creative solutions that demonstrate deep understanding of Go's concurrency model
-
-### Final Output Expectations
-
-- Fully runnable package
-- Passing all tests
-- Comprehensive documentation
-- Clear, idiomatic Go implementation
+- Implement `generator.go` and `processor.go`
+- Include comprehensive unit tests
+- Provide detailed comments explaining algorithmic choices
+- Include performance optimization rationale
