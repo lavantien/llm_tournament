@@ -26,30 +26,19 @@
 
 - Go 1.21+
 - golangci-lint
-- Make (optional but recommended)
-- LM Studio or Ollama or equivalent
+- Ollama with a frontend like Open Web UI or LM Studio with GGUF
 - Local LLMs that runnable on your machine
-
-## Setup
-
-1. Install dependencies:
-
-```bash
-make setup
-```
+- Python via pyenv for quick calc
 
 ## Usage
 
-- Place generated solution in current directory
+- Place generated solution in `llm_outputs/programming_task/` directory
 - Name files `<model-name>.go` and `model-name_test.go`
-- Run evaluation:
+- Run evaluation, and the result should be in `score-code.json`:
 
 ```bash
-# Evaluate a specific model
-go run evaluation.go "Model Name"
-
-# Or use make to evaluate all models
-make evaluate
+# Evaluate a all outputed models
+go run evaluate.go
 ```
 
 ## Evaluation Criteria
@@ -70,7 +59,7 @@ make evaluate
    - 1 point per 1 tok/s
    - Unable to boot even after tuning: 0 point
 
-**Final Starting Score (FSS)** = (TPS + tokens/50) _ (1.07^B); example: `qwen2.5-coder-32b` has FSS = 24.71 _ (1.07^32) = 215.35
+**Final Starting Score (FSS)** = (TPS + tokens/50) \* (1.07^B); example: `qwen2.5-coder-32b` has FSS = 24.71 \* (1.07^32) = 215.35
 
 ### Task 1: Documentation
 
@@ -107,7 +96,7 @@ Here’s the detailed token breakdown for each section of the **Senior Software 
 
 </details>
 
-**Prompt**: `prompt_doc.md`
+**Prompt**: `prompt-doc.md`
 
 1. **Instruction Following** (125 points)
 
@@ -128,11 +117,11 @@ Total: 3x125 + 150 = 525 points
 
 ### Task 2: Programming
 
-**Prompt**: `prompt_code.md`
+**Prompt**: `prompt-code.md`
 
 1. **Instruction Following** (70 points)
 
-   - Runnable on first try: 15 points
+   - Runnable on first try: 20 points
    - Runnable after minor adjustment: 5 points
    - Correct Code: 50 points
 
@@ -147,6 +136,53 @@ Total: 3x125 + 150 = 525 points
    - 1 point per 1 tok/s
 
 Total: 250 points
+
+**Debug Prompt**:
+
+<details>
+    <summary>...more</summary>
+
+**Generate Prompt**: upload `readme.md`.
+
+I'm doing a Local LLM Tournament to determine which AIs will be the best suite for my machine and my use case (fully generate a technical handbook).
+Currently I need a prompt for "Task 2: Programming" which will be evaluated based on the provided criteria (should be in Golang, the AIs should also generate unit tests along side with the code, a comprehensive explanation of how to code works, and improvement suggestions). The test should be able to evaluate the coding skill of the AIs and their ability to handle concurrency, but should not rely on any third party libraries or tools or interacting with the internet beside Golang for a streamline evaluation.
+
+I will run the AIs on LM Studio and manually copy the output to `llm_outputs/programming_task/`, e.g. `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K.go` and `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K_test.go`, alongside with the speed information recorded on the UI as a comment on top of the solution code, e.g. `// 2.25 tok/sec • 1123 tokens • 0.56s to first token`.
+
+And I also need a script to automatically evaluate all of the outputs and output to the file `score-code.json`. The script should cover all the evaluation criteria that can be evaluated automatically, the three other criteria (runnable after adjustments, explanation clarity, and improvement suggestions) should also be retrieved via another comment on top of the find below the speed like this `// aadj true - expl 40 - impr 15`
+
+**Debug Prompt**: upload `staging/evaluate.go`, `staging/prompt-code.md`.
+
+This `evaluate.go` is to evaluate the outputs of local LLMs after they've generated the `Task 2` according to the `prompt-code.md`.
+
+It's now missing scoring logic according to the below:
+
+1. **Instruction Following** (70 points)
+
+   - Runnable on first try: 20 points
+   - Runnable after minor adjustment: 5 points
+   - Correct Code: 50 points
+
+2. **Coverage Quality** (80 points)
+
+   - Extensive coverage of the test case: 25 points
+   - Comprehensive explanation: 40 points
+   - Good improvement suggestions: 15 points
+
+3. **Speed** (100+ points)
+
+   - 1 point per 1 tok/s
+
+Total: 250+ points
+
+Note that:
+I will run the AIs on LM Studio and manually copy the output to `llm_outputs/programming_task/`, e.g. `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K.go` and `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K_test.go`, alongside with the speed information recorded on the UI as a comment on top of the solution code, e.g. `// 2.25 tok/sec • 1123 tokens • 0.56s to first token`.
+
+And I also need a script to automatically evaluate all of the outputs and output to the file `score-code.json`. The script should cover all the evaluation criteria that can be evaluated automatically, the three other criteria (runnable after adjustments, explanation clarity, and improvement suggestions) should also be retrieved via another comment on top of the find below the speed like this `// aadj true - expl 40 - impr 15`
+
+Please fix the code and ensure it correctness.
+
+</details>
 
 ### Combine Score
 
