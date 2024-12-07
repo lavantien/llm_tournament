@@ -2,6 +2,9 @@
 
 ## Tournament Table
 
+<details>
+    <summary>...more</summary>
+
 | LLM                                         | Size-Context-Batch-Offload | Starting Score          | FSS    | Task 1 Speed (tok/s) | Task 2 Speed (tok/s) | Task 1 Quality | Task 2 Quality | Task 1 Score | Task 2 Score | Overall Score |
 | ------------------------------------------- | -------------------------- | ----------------------- | ------ | -------------------- | -------------------- | -------------- | -------------- | ------------ | ------------ | ------------- |
 | qwen2.5-coder-32b-instruct-q5_k_m.gguf      | 23.2 - 32k - 8k - 20/64    | 2.25 - 22.46 - 24.71    | 215.35 |                      |                      |                |                |              |              |               |
@@ -21,6 +24,8 @@
 | llama-3.2-3b-instruct-q8_0.gguf             | 3.4 - 32k - 8k - 28/28     | 108.73 - 9.5 - 118.23   | 144.84 |                      |                      |                |                |              |              |               |
 | stable-code-instruct-3b-Q8_0.gguf           | 3.0 - 16k - 8k - 32/32     | 103.52 - 11.72 - 115.24 | 141.17 |                      |                      |                |                |              |              |               |
 | Phi-3.1-mini-128k-instruct-Q5_K_M.gguf      | 2.8 - 16k - 8k - 32/32     | 65.31 - 7.66 - 72.97    | 89.39  |                      |                      |                |                |              |              |               |
+
+</details>
 
 ## Prerequisites
 
@@ -63,45 +68,11 @@ go run evaluate.go
 
 ### Task 1: Documentation
 
-**Input tokens**: 1,622  
-**Expected output tokens**: 38,675  
-**Detailed breakdown**:
-
-<details>
-    <summary>...more</summary>
-
-Here’s the detailed token breakdown for each section of the **Senior Software Engineer Handbook**:
-
-#### Token Estimates by Section:
-
-1. **Section 1: Concurrency in Go** – **4,875 tokens**
-2. **Section 2: Data Structures and Algorithms** – **15,600 tokens**
-3. **Section 3: Functional Programming in Go** – **2,600 tokens**
-4. **Section 4: Design Patterns** – **2,600 tokens**
-5. **Section 5: Testing in Go** – **2,600 tokens**
-6. **Section 6: Systems Design Foundations** – **2,600 tokens**
-7. **Section 7: Advanced Software Design** – **3,250 tokens**
-8. **Section 8: Observability and Performance** – **1,300 tokens**
-9. **Section 9: Real-World Projects** – **1,950 tokens**
-10. **Section 10: Career Development and Professional Growth** – **1,300 tokens**
-
-#### Total Tokens for Full Document:
-
-~**38,675 tokens**
-
-#### Observations:
-
-- **Section 2: Data Structures and Algorithms** is the largest, accounting for **40% of the total tokens**.
-- Other sizable sections like **Concurrency in Go** and **Advanced Software Design** will also demand significant processing power.
-
-</details>
-
 **Prompt**: `prompt-doc.md`
 
 1. **Instruction Following** (125 points)
 
-   - Based on 125 distinct details across all sections
-   - Each one covered is equal to one point
+   - Based on 11 section (~10 points each)
 
 2. **Coverage Quality** (250 points)
 
