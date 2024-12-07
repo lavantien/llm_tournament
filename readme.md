@@ -66,27 +66,46 @@ go run evaluate.go
 
 **Final Starting Score (FSS)** = (TPS + tokens/50) \* (1.07^B); example: `qwen2.5-coder-32b` has FSS = 24.71 \* (1.07^32) = 215.35
 
-### Task 1: Documentation
+Total: upto 270+ points
 
-**Prompt**: `prompt-doc.md`
+### Task 1: General Becnhmark
 
-1. **Instruction Following** (125 points)
+**Prompt**: `prompt-bench.md`, 1 to 15
 
-   - Based on 11 section (~10 points each)
+1. **Instruction Following** (150 points)
 
-2. **Coverage Quality** (250 points)
+   - Follow instructions correctly: 10 points each prompt
 
-   - Have proper code (if applied) and explanation
-   - Extensive coverage of the subject
+2. **Coverage Quality** (150 points)
 
-3. **Speed** (150+ points)
+   - Good quality and comprehensiveness: 10 points each prompt
 
-   - 75+ tok/s: 150 points
-   - 0.5 TPS per 1 point
+3. **Speed** (100+ points)
 
-Total: 3x125 + 150 = 525 points
+   - 1 point per 1 tok/s
 
-### Task 2: Programming
+Total: 350+ points
+
+### Task 2: Story Telling
+
+**Prompt**: `prompt-bench.md`, 16
+
+1. **Instruction Following** (100 points)
+
+   - Follow instructions correctly: 10 points each prompt
+
+2. **Coverage Quality** (20 points)
+
+   - Good quality and comprehensiveness: 10 points each prompt
+
+3. **Speed** (10 points)
+
+   - 1 point per 5 tok/s
+   - 50+ TPS: 10 points
+
+Total: 130 points
+
+### Task 3: Software Engineering
 
 **Prompt**: `prompt-code.md`
 
@@ -157,7 +176,7 @@ Please fix the code and ensure it correctness.
 
 ### Combine Score
 
-Max: 275 + 525 + 250 = 1000 points
+Max: 270 + 350 + 130 + 250 = 1000 points
 
 ## Output
 
