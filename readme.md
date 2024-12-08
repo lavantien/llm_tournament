@@ -1,25 +1,59 @@
 # Local LLM Playground
 
-A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and outputs. (TODO)
+- **LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
+  - Golang
+  - Fyne GUI Toolkit
+  - SQLite
+- A repository playground with tools for inferencing with local LLMs.
+- Extensive prompt suites to exploring programming and life together with the AIs.
 
-A playground with all the tools for inferencing with local LLMs.
+## Why?
 
-Extensive prompt suites to exploring programming and life together with the AIs.
+Because this is super fun and I like it.
 
 ## Tournament Table
 
+- **LLM List**: `llm_list.md`
+
 <details>
     <summary>...more</summary>
+
+qwen2.5-coder-32b-instruct-q5_k_m-00001-of-00003.gguf  
+gemma-2-27b-it-Q5_K_M.gguf  
+Llama-3.3-70B-Instruct-IQ2_XXS.gguf  
+alchemonaut_QuartetAnemoi-70B-b2131-iMat-c32_ch1000-IQ2_XXS.gguf  
+Codestral-22B-v0.1-Q5_K_M.gguf  
+internlm2_5-20b-chat-q5_k_m.gguf  
+DeepSeek-Coder-V2-Lite-Instruct-Q5_K_M.gguf  
+Virtuoso-Small-Q5_K_M.gguf  
+YiffyEstopianMaid-13B.i1-Q5_K_M.gguf  
+Mistral-Nemo-Instruct-2407-Q4_K_M.gguf  
+gemma-2-9b-it-Q5_K_M.gguf  
+Llama-Doctor-3.2-3B-Instruct.F16.gguf  
+Llama-Sentient-3.2-3B-Instruct.F16.gguf  
+Nidum-Llama-3.2-3B-Uncensored-F16.gguf  
+Yi-1.5-9B-Chat-abliterated.i1-Q5_K_M.gguf  
+aya-23-8B-Q5_K_M.gguf  
+llava-v1.5-7b-Q5_K_M.gguf  
+Yi-Coder-9B-Chat-Q4_K_M.gguf  
+Mistral-7B-Instruct-v0.3-Q5_K_M.gguf  
+mathstral-7B-v0.1-Q5_K_M.gguf  
+Wizard-Vicuna-7B-Uncensored.i1-Q5_K_M.gguf  
+Phi-3.1-mini-128k-instruct-Q8_0.gguf  
+qwen2.5-coder-3b-instruct-q8_0.gguf  
+llama-3.2-3b-instruct-q8_0.gguf  
+stable-code-instruct-3b-Q8_0.gguf  
+(TODO)
 
 </details>
 
 ## Prerequisites
 
-- Python via pyenv
+- Python 3.11 via pyenv (specific version required by Ollama)
 - Go 1.21+
 - golangci-lint
 - Docker/Compose
-- LlamaCPP & LM Studio or Ollama & Open Web UI
+- LlamaCPP & LM Studio, KoboldCPP, or Ollama & Open Web UI
 - Local LLMs that runnable on your machine, example archs:
   - llama
   - deepseek2
@@ -34,7 +68,7 @@ Extensive prompt suites to exploring programming and life together with the AIs.
 
 - Place generated solution in `appropriate directory` in `llm_outputs/`
 - Name files `model-name.md`, or `<model-name>.go` and `model-name_test.go`, or `<model-name>.rs` and `model-name_test.rs`.
-- Run evaluation, and the result should be in `score-code.json`:
+- Run evaluation, and the result should be in `llm_outputs/programming_task/scores/score-<model-name>.json`:
 
 ```bash
 # Evaluate a all outputed models for swe task
@@ -43,10 +77,14 @@ go run evaluate.go
 
 ## Evaluation Criteria
 
+### Combine Score
+
+- **Max**: 100 + 1200 + 1145 + 630 + 1425 + 500 = 5000 points (5-star equivalent)
+
 ### Task 0: Booting
 
 - **My System**: 3080 10gb - 2x16gb ddr4 - 1tb m2 ssd - 12700f - windows 11
-  - idle: 11gb ram - 2.0/0.2gb vram (with wezterm, joblin, lm studio, 6 tabs and 1 youtube playback @480/360p).
+  - idle: 10gb ram - 1.5/0.1gb vram (with wezterm, joblin, lm studio, 6 tabs and 1 youtube playback @480/360p).
 - **Parameters**: all LLMs should be set to
   - 8192 context length if possible, or else, max out,
   - 512 batch size,
@@ -71,6 +109,7 @@ go run evaluate.go
 
 - **System Prompt**: `system-prompt.md`
 - **Prompt**: `prompt-programming.md`
+- **Evaluation**: read through and evaluate them manually
 - **Output**: `llm_outputs/programming_task/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
 
 1. **Warming Up**: (4 x 20 = 80 points)
@@ -93,7 +132,7 @@ go run evaluate.go
 1. **Complexity Level 6**: Transcendental Prompts (6 x 50 = 300 points)
 1. **Complexity Level 7**: The Way to the Beyond (2 x 150 = 300 points)
 
-Total: 1145 points
+- **Total**: 1145 points
 
 ### Task 3: AGI Probing
 
@@ -114,7 +153,7 @@ Total: 1145 points
 1. **Prompt 11: Creative Consciousness Emergence Narrative**: (75 points)
 1. **Prompt 12: Ultimate Philosophical Synthesis**: (80 points)
 
-Total: 630 points
+- **Total**: 630 points
 
 ### Task 4: Writing
 
@@ -123,14 +162,15 @@ Total: 630 points
 - **Output**: `llm_outputs/writing_task/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
 
 1. **Prompt 1: Near Future**: (40 points)
-1. **Prompt 2: The Resonance Cascade’s Echo**: (80 points)
-1. **Prompt 3: The Last Transit Nexus**: (120 points)
-1. **Prompt 4: The Archivist’s Dilemma**: (160 points)
-1. **Prompt 5: Journey Through Hell**: (200 points)
-1. **Prompt 6: The Quantum Consciousness Convergence**: (240 points)
-1. **Creative Writing Prompt 7: The Celestial Pilgrimage**: (280 points)
+1. **Prompt 2: The Resonance Cascade’s Echo**: (100 points)
+1. **Prompt 3: The Last Transit Nexus**: (105 points)
+1. **Prompt 4: The Archivist’s Dilemma**: (110 points)
+1. **Prompt 5: Romantic and Celibate**: (225 points)
+1. **Prompt 6: Journey Through Hell**: (240 points)
+1. **Prompt 7: The Quantum Consciousness Convergence**: (260 points)
+1. **Prompt 8: The Celestial Pilgrimage**: (345 points)
 
-Total: 1120 points
+- **Total**: 1425 points
 
 ### Task 5: Software Engineering
 
@@ -138,64 +178,48 @@ Total: 1120 points
 - **Prompt**: `prompt-swe.md`
 - **Evaluation Script**: `evaluate.go`
 - **Output**: `llm_outputs/swe_task/<model-name>.go,<model-name>_test.go`, points and speed go into [Tournament Table](#tournament-table).
+- **Added Information**: on top of the code file, add the following information:
+  - Line 1: Speed: `// 2.28 tok/sec • 476 tokens • 69.21s to first token • Stop: eosFound`
+  - Line 2: Manual checks: `// adjustment: 0; explanation: 50; suggestions: 15`
 
-1. **Instruction Following** (70 points)
-   - Runnable on first try: 20 points. Or runnable after minor adjustment: 5 points
-   - Correct Code: 50 points
-2. **Coverage Quality** (80 points)
-   - Extensive coverage of the test case: 25 points
-   - Comprehensive explanation: 40 points
-   - Good improvement suggestions: 15 points
+1. **Instruction Following** (300 points)
+   - Runnable on first try (automated, if `adjustment == 0`): 50 points.
+   - Or runnable after minor adjustment (manual check, then set `adjustment = 1`, and rerun evaluation): 10 points
+   - Or gabbage code (manual check, then set `adjustment = -1`, and disqualify the candidate): 0 point.
+   - Correct Code (automated): 250 points
+2. **Quality** (200 points)
+   - Extensive coverage of the test case (automated): 120 points
+   - Comprehensive explanation (manual check): 60 points
+   - Good improvement suggestions (manual check): 20 points
 
-Total: 250 points
+- **Total**: 500 points
 
-**Debug Prompts**:
+- **Debug Prompts**:
 
 <details>
     <summary>...more</summary>
 
-**Generate Prompt**: upload `readme.md`.
+**Generate Prompt**: upload `llm_list.md`.
 
-I'm doing a Local LLM Tournament to determine which AIs will be the best suite for my machine and my use case (fully generate a technical handbook).
+I'm doing a Local LLM Tournament to determine which AIs (the list is in `llm_list.md`) will be the best suite for my machine and my use case.
 
-Currently I need a prompt for "Task 2: Programming" which will be evaluated based on the provided criteria (should be in Golang, the AIs should also generate unit tests along side with the code, a comprehensive explanation of how to code works, and improvement suggestions). The test should be able to evaluate the coding skill of the AIs and their ability to handle concurrency, but should not rely on any third party libraries or tools or interacting with the internet beside Golang for a streamline evaluation.
+Currently I need a prompt for a software engineering task which will be evaluated based on the provided criteria (should be in Golang, the AIs should also generate unit tests along side with the code, a comprehensive explanation of how to code works, and improvement suggestions). The test should be able to evaluate the coding skill of the AIs and their ability to handle concurrency, but should not rely on any third party libraries or tools or interacting with the internet beside Golang for a streamline evaluation.
 
-I will run the AIs on LM Studio and manually copy the output to `llm_outputs/programming_task/`, e.g. `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K.go` and `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K_test.go`, alongside with the speed information recorded on the UI as a comment on top of the solution code, e.g. `// 2.25 tok/sec • 1123 tokens • 0.56s to first token`.
+I will run the AIs on LM Studio and manually copy the output to `llm_outputs/programming_task/`, e.g. `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K.go` and `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K_test.go`, alongside with the speed information recorded on the UI as a comment on top of the solution code
 
-And I also need a script to automatically evaluate all of the outputs and output to the file `score-code.json`. The script should cover all the evaluation criteria that can be evaluated automatically, the three other criteria (runnable after adjustments, explanation clarity, and improvement suggestions) should also be retrieved via another comment on top of the find below the speed like this `// aadj true - expl 40 - impr 15`
+And I also need a script to automatically evaluate the output and tests of a certain AI and output the result to the file `/llm_outputs/programming_task/scores/score-<model-name>.json`. The script should cover all the evaluation criteria that can be evaluated automatically, the three other criteria (runnable after adjustments, explanation clarity, and improvement suggestions) should also be retrieved via another comment on top of the file at 2nd line.
+
+`<paste all the above>`
+
+.
 
 **Debug Prompt**: upload `staging/evaluate.go`, `staging/prompt-code.md`.
 
-This `evaluate.go` is to evaluate the outputs of local LLMs after they've generated the `Task 2` according to the `prompt-code.md`.
+This `evaluate.go` is to evaluate the outputs of local LLMs after they've generated the `SWE Task` according to the `prompt-code.md`.
 
-It's now missing scoring logic according to the below:
-
-1. **Instruction Following** (70 points)
-   - Runnable on first try: 20 points
-   - Runnable after minor adjustment: 5 points
-   - Correct Code: 50 points
-2. **Coverage Quality** (80 points)
-   - Extensive coverage of the test case: 25 points
-   - Comprehensive explanation: 40 points
-   - Good improvement suggestions: 15 points
-3. **Speed** (100+ points)
-   - 1 point per 1 tok/s
-
-Total: 250+ points
-
-Note that:
-
-I will run the AIs on LM Studio and manually copy the output to `llm_outputs/programming_task/`, e.g. `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K.go` and `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K_test.go`, alongside with the speed information recorded on the UI as a comment on top of the solution code, e.g. `// 2.25 tok/sec • 1123 tokens • 0.56s to first token`.
-
-And I also need a script to automatically evaluate all of the outputs and output to the file `score-code.json`. The script should cover all the evaluation criteria that can be evaluated automatically, the three other criteria (runnable after adjustments, explanation clarity, and improvement suggestions) should also be retrieved via another comment on top of the find below the speed like this `// aadj true - expl 40 - impr 15`
-
-Please fix the code and ensure it correctness.
+It's now missing scoring logic. Please fix the code and ensure it correctness.
 
 </details>
-
-### Combine Score
-
-Max: 270 + 350 + 130 + 250 = 1000 points
 
 ## Output
 
