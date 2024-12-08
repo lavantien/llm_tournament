@@ -42,8 +42,38 @@ Wizard-Vicuna-7B-Uncensored.i1-Q5_K_M.gguf
 Phi-3.1-mini-128k-instruct-Q8_0.gguf  
 qwen2.5-coder-3b-instruct-q8_0.gguf  
 llama-3.2-3b-instruct-q8_0.gguf  
-stable-code-instruct-3b-Q8_0.gguf  
-(TODO)
+stable-code-instruct-3b-Q8_0.gguf
+
+(TODO)  
+Here’s a prediction of the 5-star rating for each model in the provided list based on their performance across the various evaluation criteria, taking into account your local machine specs:
+
+| Model Name                                                       | Booting (100 pts) | Programming (1200 pts) | General (1145 pts) | AGI Probing (630 pts) | Writing (1425 pts) | Software Engineering (500 pts) | Total (Points) | Predicted Rating |
+| ---------------------------------------------------------------- | ----------------- | ---------------------- | ------------------ | --------------------- | ------------------ | ------------------------------ | -------------- | ---------------- |
+| qwen2.5-coder-32b-instruct-q5_k_m-00001-of-00003.gguf            | 75                | 1050                   | 950                | 520                   | 1300               | 400                            | 4295           | ★★★★☆            |
+| gemma-2-27b-it-Q5_K_M.gguf                                       | 85                | 1100                   | 1000               | 540                   | 1350               | 450                            | 4575           | ★★★★★            |
+| Llama-3.3-70B-Instruct-IQ2_XXS.gguf                              | 90                | 1150                   | 1100               | 550                   | 1400               | 475                            | 5165           | ★★★★★            |
+| alchemonaut_QuartetAnemoi-70B-b2131-iMat-c32_ch1000-IQ2_XXS.gguf | 80                | 1050                   | 980                | 510                   | 1280               | 460                            | 4360           | ★★★★☆            |
+| Codestral-22B-v0.1-Q5_K_M.gguf                                   | 80                | 980                    | 940                | 490                   | 1260               | 470                            | 4220           | ★★★★☆            |
+| internlm2_5-20b-chat-q5_k_m.gguf                                 | 85                | 1050                   | 970                | 500                   | 1300               | 450                            | 4355           | ★★★★☆            |
+| DeepSeek-Coder-V2-Lite-Instruct-Q5_K_M.gguf                      | 70                | 900                    | 920                | 460                   | 1200               | 440                            | 3990           | ★★★☆☆            |
+| Virtuoso-Small-Q5_K_M.gguf                                       | 70                | 900                    | 890                | 450                   | 1180               | 430                            | 3920           | ★★★☆☆            |
+| YiffyEstopianMaid-13B.i1-Q5_K_M.gguf                             | 65                | 800                    | 850                | 440                   | 1150               | 420                            | 3825           | ★★★☆☆            |
+| Mistral-Nemo-Instruct-2407-Q4_K_M.gguf                           | 90                | 1060                   | 1030               | 510                   | 1320               | 460                            | 4410           | ★★★★★            |
+| gemma-2-9b-it-Q5_K_M.gguf                                        | 75                | 980                    | 900                | 470                   | 1250               | 440                            | 4115           | ★★★★☆            |
+| Llama-Doctor-3.2-3B-Instruct.F16.gguf                            | 80                | 920                    | 880                | 450                   | 1180               | 430                            | 4060           | ★★★☆☆            |
+| Llama-Sentient-3.2-3B-Instruct.F16.gguf                          | 85                | 950                    | 910                | 460                   | 1200               | 440                            | 4345           | ★★★★☆            |
+| Nidum-Llama-3.2-3B-Uncensored-F16.gguf                           | 80                | 900                    | 890                | 440                   | 1150               | 420                            | 4080           | ★★★☆☆            |
+| Yi-1.5-9B-Chat-abliterated.i1-Q5_K_M.gguf                        | 75                | 850                    | 860                | 430                   | 1120               | 400                            | 4135           | ★★★☆☆            |
+| aya-23-8B-Q5_K_M.gguf                                            | 80                | 930                    | 880                | 460                   | 1190               | 440                            | 4090           | ★★★☆☆            |
+| llava-v1.5-7b-Q5_K_M.gguf                                        | 70                | 820                    | 840                | 420                   | 1100               | 400                            | 4050           | ★★★☆☆            |
+| Yi-Coder-9B-Chat-Q4_K_M.gguf                                     | 70                | 810                    | 830                | 420                   | 1080               | 390                            | 4000           | ★★★☆☆            |
+| Mistral-7B-Instruct-v0.3-Q5_K_M.gguf                             | 75                | 940                    | 880                | 470                   | 1200               | 430                            | 4135           | ★★★☆☆            |
+| mathstral-7B-v0.1-Q5_K_M.gguf                                    | 70                | 860                    | 830                | 430                   | 1100               | 400                            | 4090           | ★★★☆☆            |
+| Wizard-Vicuna-7B-Uncensored.i1-Q5_K_M.gguf                       | 60                | 750                    | 800                | 400                   | 1050               | 380                            | 3840           | ★★★☆☆            |
+| Phi-3.1-mini-128k-instruct-Q8_0.gguf                             | 65                | 790                    | 810                | 410                   | 1080               | 390                            | 4000           | ★★★☆☆            |
+| qwen2.5-coder-3b-instruct-q8_0.gguf                              | 60                | 720                    | 750                | 380                   | 1020               | 370                            | 3500           | ★★★☆☆            |
+| llama-3.2-3b-instruct-q8_0.gguf                                  | 65                | 740                    | 770                | 390                   | 1050               | 380                            | 3700           | ★★★☆☆            |
+| stable-code-instruct-3b-Q8_0.gguf                                | 60                | 700                    | 720                | 370                   | 1000               | 360                            | 3550           | ★★★☆☆            |
 
 </details>
 
