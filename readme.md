@@ -23,13 +23,13 @@
 <details>
     <summary>**System UMLs and Sequence Diagrams** ...</summary>
 
-![App UML](llp/app-uml.png)
+![App UML](llp/design/app-uml.png)
 
-![App Sequence Diagram](llp/app-sequence-diagram.png)
+![App Sequence Diagram](llp/design/app-sequence-diagram.png)
 
-![System UML](llp/llp-uml.png)
+![System UML](llp/design/llp-uml.png)
 
-![System UML](llp/llp-sequence-diagram.png)
+![System UML](llp/design/llp-sequence-diagram.png)
 
 </details>
 
