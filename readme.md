@@ -13,12 +13,25 @@
     - Have a statistics page which render various charts and information regarding the benchmarks.
     - Full unit tests and integration test script. Initial setup script.
   - Root dir: `llp/`
-    - `llp/design/`: UI/UX design, use case document, schema document, design document (UMLs, Squence Diagrams).
+    - `llp/design/`: UI/UX design document, schema design document, detailed design document (UMLs, Squence Diagrams).
     - `llp/assets/`: all assets go here.
     - `llp/.`: all the code go here, flat structure.
 
 - A repository playground with tools for inferencing with local LLMs.
 - Extensive prompt suites to exploring programming and life together with the AIs.
+
+<details>
+    <summary>**System UMLs and Sequence Diagrams** ...</summary>
+
+![App UML](llp/app-uml.png)
+
+![App Sequence Diagram](llp/app-sequence-diagram.png)
+
+![System UML](llp/llp-uml.png)
+
+![System UML](llp/llp-sequence-diagram.png)
+
+</details>
 
 ## Why?
 
