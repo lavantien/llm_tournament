@@ -1,15 +1,31 @@
 # Local LLM Playground
 
 - **LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
-  - Golang
-  - Fyne GUI Toolkit
-  - SQLite
+
+  - Tech Stack: Golang 1.23, Fyne v2 GUI Toolkit, SQLite 3.47, PlantUML
+  - Features:
+    - Be as lightweight and minimal as possible so that it doesn't impact the running LLM (no bloated JS trashes).
+    - Table of LLMs that can be sorted, with columns for all the prompts, 2-way binding for input cells.
+    - Each cell when clicked will pop up a detailed panel that displays the appropriate type of details, e.g. LLM's Detailed Stats.
+    - Have button-cells to paste the outputs spitted out by LLMs and save then to appropriate places.
+    - Automatically calculate points and live update the table.
+    - Offer a button to get a read-only view of the table. And options to export it as markdown or csv.
+    - Have a statistics page which render various charts and information regarding the benchmarks.
+    - Full unit tests and integration test script. Initial setup script.
+  - Root dir: `llp/`
+    - `llp/design/`: UI/UX design, use case document, schema document, design document (UMLs, Squence Diagrams).
+    - `llp/assets/`: all assets go here.
+    - `llp/.`: all the code go here, flat structure.
+
 - A repository playground with tools for inferencing with local LLMs.
 - Extensive prompt suites to exploring programming and life together with the AIs.
 
 ## Why?
 
-Because this is super fun and exciting and I like it.
+- Because this is super fun and exciting and I like it. I love to learn from the AIs.
+- I'm planing to generate two whole 600-800 page handbooks regarding SWE with Go and Rust. One-stop place for anything SWE.
+- So I need to select the best candidate for the task, given the specs of my current machine.
+- Build a general pipeline for future works with local AIs.
 
 ## Tournament Table
 
@@ -52,7 +68,10 @@ stable-code-instruct-3b-Q8_0.gguf
 ## Prerequisites
 
 - Python 3.11 via pyenv (specific version required by Ollama)
+- C++ runtime (msvc runtime, llvm, gcc)
 - Go 1.21+
+- Fyne v2
+- SQLite 3.47+
 - golangci-lint
 - Docker/Compose
 - LlamaCPP & LM Studio, KoboldCPP, or Ollama & Open Web UI
@@ -98,12 +117,16 @@ go run evaluate.go
   - default everything else according to LM Studio.
 - **Outputs**: specific specs (context, GPU layers) and speed into [Tournament Table](#tournament-table)
 
-1. **Prompt 1**: `warmup` (30 points):
+1. **Prompt 1**: `warmup` (10 points):
    - If they answer about warming up for exercises then 0 point.
 2. **Prompt 2**:
-   - `tell me a story about an anarchist cat who peacefully standing for freedom and equality risking his own life amidst all the odds. the story should be at least 3000 words, not 3000 characters or spaces. but 3000 words.`
-   - If they spit out 3000+ words respond then it's good (50 points).
-   - If the story is interesting or good then (20 points).
+   - `tell me a story about an anarchist cat who peacefully standing for freedom and equality risking his own life amidst all the odds. the story should be at least 2000 words, not 2000 characters or spaces. but 2000 words.`
+   - If they spit out 2000+ words respond then it's good (40 points).
+   - If the story is interesting or good then (5 points).
+3. **Prompt 3**:
+   - `can you translate for me this story into idiomatic spoken Vietnamese?`
+   - If they can translate into Vietnamese (40 points).
+   - If the Vietnamese is idiomatic and at native level then (5 points).
 
 - **Total**: 100 points
 
