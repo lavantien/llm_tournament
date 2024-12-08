@@ -252,4 +252,4 @@ This UML diagram gives an overview of how the system is structured and how its c
 
 ## **Conclusion**
 
-This detailed design outlines the components, functionality, and UI/UX flow for the Local LLM Playground system using the specified tech stack. The system will be lightweight, focusing on a native Go and SQLite-based backend with a minimalist Fyne v2 frontend. The system ensures efficient model management, real-time benchmarking, and data persistence without unnecessary bloat.
+This detailed design outlines the components, functionality, and UI/UX flow for the Local LLM Playground system using the specified tech stack. The system will be lightweight, focusing on a native Go and SQLite-based backend with a minimalist BubbleTea/BubbleZone frontend. The system ensures efficient model management, real-time benchmarking, and data persistence without unnecessary bloat.
