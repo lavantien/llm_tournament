@@ -2,7 +2,7 @@
 
 - **LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
 
-  - Tech Stack: Golang 1.23, Fyne v2 GUI Toolkit, SQLite 3.47, PlantUML
+  - Tech Stack: Golang 1.23, BubbleTea & BubbleZone, SQLite 3.47, PlantUML
   - Features:
     - Be as lightweight and minimal as possible so that it doesn't impact the running LLM (no bloated JS trashes).
     - Table of LLMs that can be sorted, with columns for all the prompts, 2-way binding for input cells.
@@ -21,7 +21,7 @@
 - Extensive prompt suites to exploring programming and life together with the AIs.
 
 <details>
-    <summary>**System UMLs and Sequence Diagrams** ...</summary>
+    <summary>System UMLs and Sequence Diagrams ...</summary>
 
 ![App UML](llp/design/app-uml.png)
 
@@ -32,6 +32,8 @@
 ![System UML](llp/design/llp-sequence-diagram.png)
 
 </details>
+
+UI mockups: [`llp/design/ui-mockups.md`](llp/design/ui-mockups.md)
 
 ## Why?
 
@@ -78,12 +80,12 @@ stable-code-instruct-3b-Q8_0.gguf
 
 </details>
 
-## Prerequisites
+## Dependencies
 
 - Python 3.11 via pyenv (specific version required by Ollama)
 - C++ runtime (msvc runtime, llvm, gcc)
 - Go 1.21+
-- Fyne v2
+- BubbleTea & BubbleZone
 - SQLite 3.47+
 - golangci-lint
 - Docker/Compose

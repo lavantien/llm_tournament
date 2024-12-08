@@ -97,7 +97,7 @@ The Local LLM Playground (LLP) is a lightweight benchmarking tool designed to he
    - Contains tabs for different categories of information (e.g., "Stats", "Model Outputs", "Performance Metrics").
    - **Interactive Elements**: Input fields, buttons for saving or copying data.
 3. **Charts & Graphs**
-   - Visual representations of benchmarks, trends, and comparisons (using Fyne's available graphing components or external libraries).
+   - Visual representations of benchmarks, trends, and comparisons (using BubbleTea's available graphing components or external libraries).
 4. **Export Dialog**
    - A simple modal dialog to select the format for export (Markdown, CSV).
 
@@ -132,12 +132,12 @@ The Local LLM Playground (LLP) is a lightweight benchmarking tool designed to he
 - **Tech Stack**:
 
   - **Backend**: Golang 1.23.
-  - **Frontend**: Fyne v2 GUI Toolkit for creating the user interface.
+  - **Frontend**: BubbleTea/BubbleZone for creating the user interface.
   - **Database**: SQLite 3.47 for storing model statistics and outputs.
-  - **Charts**: Use Fyne's native charting components or integrate a third-party library for advanced visualizations.
+  - **Charts**: Use BubbleTea's native charting components or integrate a third-party library for advanced visualizations.
 
 - **Interactivity**:
-  - Use Fyne's two-way binding to automatically update the table and model stats.
+  - Use BubbleTea's two-way binding to automatically update the table and model stats.
   - Buttons for exporting, saving, or interacting with the model details.
 
 ---

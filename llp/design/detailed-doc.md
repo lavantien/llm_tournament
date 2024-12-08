@@ -368,4 +368,4 @@ Database -> Prompts : retrievePromptData(modelID)
 
 6. **Prompts** stores the prompt data used during LLM evaluations. It also retrieves prompt data for display in the LLM Detail View.
 
-This architecture uses simple interactions between components to ensure scalability, maintainability, and ease of understanding, adhering to the limitations of using Golang, SQLite, and Fyne as the core technologies for the system.
+This architecture uses simple interactions between components to ensure scalability, maintainability, and ease of understanding, adhering to the limitations of using Golang, SQLite, and BubbleTea/BubbleZone as the core technologies for the system.

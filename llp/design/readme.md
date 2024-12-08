@@ -1,5 +1,9 @@
 # LLP Design Document
 
+## UI Mockups
+
+- [`ui-mockups.md`](./ui-mockups.md)
+
 ## UI/UX Design
 
 - [`uiux-doc.md`](./uiux-doc.md)
@@ -24,18 +28,18 @@
 
 ---
 
-Here's a detailed design document for your Local LLM Playground system, focusing on the pure Go and SQLite-based solution, with the Fyne v2 GUI toolkit.
+Here's a detailed design document for your Local LLM Playground system, focusing on the pure Go and SQLite-based solution, with the BubbleTea & BubbleZone.
 
 ---
 
 ## **System Overview**
 
-The Local LLM Playground (LLP) is a native desktop application built with Go and Fyne v2 to manage, benchmark, and interact with local LLMs. It offers a lightweight interface to handle large amounts of model data while ensuring minimal resource consumption. The application uses SQLite as the database for persistent storage and tracking of LLM models and benchmark results.
+The Local LLM Playground (LLP) is a native desktop application built with Go and BubbleTea/BubbleZone to manage, benchmark, and interact with local LLMs. It offers a lightweight interface to handle large amounts of model data while ensuring minimal resource consumption. The application uses SQLite as the database for persistent storage and tracking of LLM models and benchmark results.
 
 ### **Tech Stack**
 
 - **Backend**: Golang 1.23
-- **Frontend**: Fyne v2 GUI Toolkit
+- **Frontend**: BubbleTea/BubbleZone
 - **Database**: SQLite 3.47
 - **Diagrams**: PlantUML for sequence and UML diagrams
 
@@ -43,7 +47,7 @@ The Local LLM Playground (LLP) is a native desktop application built with Go and
 
 ## **System Components**
 
-### **1. User Interface (Fyne v2 GUI Toolkit)**
+### **1. User Interface (BubbleTea/BubbleZone)**
 
 - **Main Window**: The main UI will consist of a window with multiple panels/tabs to manage and display LLM information, benchmarks, and results.
   - **LLM Table**: Displays a list of all available LLMs with sortable columns (model name, performance, stats, etc.). This table should be scrollable and updateable dynamically.
