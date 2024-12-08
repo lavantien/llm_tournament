@@ -1,9 +1,0 @@
-As of my last update in April 2023, I am an AI developed by Microsoft with the ability to understand and generate content on a wide range of topics including programming languages like Go. My design enables me to assist users in creating various types of documents such as technical handbooks or guides that cover different aspects of software development, from basic concepts to advanced techniques.
-
-When it comes to writing about specific features within programming languages, I can provide explanations and examples using the syntax and idioms typical for those languages. This includes discussing data structures like primitive types in Go, explaining their usage with code snippets that adhere to best practices, illustrating common pitfalls through practical scenarios, and offering insights into how these concepts are applied within real-world applications.
-
-For instance, if you were asking me to create a section on `1.1.1.1 Primitive Types` in Go for a technical handbook, I would provide an overview of each primitive type (such as int, float64, bool, and string), discuss their use cases with examples showing how they are used within functions or data structures, highlight best practices such as avoiding unnecessary conversions between types to prevent performance issues, and include common pitfalls like potential overflows for `int` values.
-
-I would also ensure that the content is well-structured using Markdown formatting which enhances readability with headers of varying levels (`#`, `##`, etc.) and includes code blocks formatted correctly (using triple backticks) to present Go examples clearly. This approach helps developers quickly find information relevant to their needs, whether they are beginners or experienced programmers looking for a refresher on certain topics.
-
-If you need assistance with writing technical documentation in another programming language or any other specific aspect of software development, feel free to ask!
