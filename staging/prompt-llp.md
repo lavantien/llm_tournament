@@ -1,4 +1,15 @@
-# Local LLM Playground
+## Objective
+
+- What would be the core functionalities of our LLP app?
+- Generate TUI mockups for all the core functionalities.
+- Generate core flows of the app.
+- Generate minimal core module designs.
+
+Below is our app and test methodology descriptions.
+
+---
+
+## LLP Description
 
 - **LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
 
@@ -14,31 +25,11 @@
     - Have a statistics page which render various charts and information regarding the benchmarks.
     - Full unit tests and integration test script. Initial setup script.
   - Root dir: `llp/`
-    - `llp/design/`: UI mockups, schema document, detailed design document.
+    - `llp/design/`: UI mockups, UI/UX design document, schema design document, detailed design document (UMLs, Squence Diagrams).
     - `llp/assets/`: all assets go here.
     - `llp/.`: all the code go here, flat structure.
 
-- UI mockups: [`llp/design/ui-mockups.md`](./llp/design/ui_mockups.md)
-- LLP documentation: [`llp/readme.md`](./llp/readme.md)
-
-![LLP Sequence Diagram](./llp/design/llp-sequence-diagram.png)
-
-- A repository playground with tools for inferencing with local LLMs.
-- Extensive prompt suites to exploring programming and life together with the AIs.
-
-## Why?
-
-- Because this is super fun and exciting and I like it. I love to learn from the AIs.
-- I'm planing to generate two whole 600-800 page handbooks regarding SWE with Python, Go, Rust. One-stop place for anything SWE.
-- So I need to select the best candidate for the task, given the specs of my current machine.
-- Build a general pipeline for future works with local AIs.
-
 ## Tournament Table
-
-- **LLM List**: [`llm_list.md`](./llm_list.md)
-
-<details>
-    <summary>...more</summary>
 
 - qwen2.5-coder-32b-instruct-q5_k_m.gguf
 - gemma-2-27b-it-Q5_K_M.gguf
@@ -67,41 +58,6 @@
 - llama-3.2-3b-instruct-q8_0.gguf
 - stable-code-instruct-3b-Q8_0.gguf
 
-(TODO)
-
-</details>
-
-## Dependencies
-
-- Python 3.11 via pyenv (specific version required by Ollama)
-- C++ runtime (msvc runtime, llvm, gcc)
-- Go 1.21+
-- BubbleTea & BubbleZone
-- SQLite 3.47+
-- golangci-lint
-- Docker/Compose
-- LlamaCPP & LM Studio and KoboldCPP (for benchmark), or Ollama & Open Web UI
-- Local LLMs that runnable on your machine, example archs:
-  - llama
-  - deepseek2
-  - gemma2
-  - gwen2
-  - internlm2
-  - command-r
-  - phi3
-  - stablelm
-
-## Usage
-
-- Place generated solution in `appropriate directory` in `llp/llm_outputs/`
-- Name files `model-name.md`, or `<model-name>.go` and `model-name_test.go`, or `<model-name>.rs` and `model-name_test.rs`.
-- Run evaluation, and the result should be in `llm_outputs/programming/scores/score-<model-name>.json`:
-
-```bash
-# Evaluate a all outputed models for swe task
-go run evaluate.go
-```
-
 ## Evaluation Criteria
 
 ### Combine Score
@@ -121,7 +77,7 @@ go run evaluate.go
   - flash attention,
   - rolling window overflow policy,
   - default everything else according to LM Studio.
-- **Outputs**: `llp/llm_outputs/booting/<model-name>.md`, specific specs (context, GPU layers) and speed into [Tournament Table](#tournament-table)
+- **Outputs**: specific specs (context, GPU layers) and speed into [Tournament Table](#tournament-table)
 
 1. **Prompt 1**: `warmup` (10 points):
    - If they answer about warming up for exercises then 0 point.
@@ -138,10 +94,10 @@ go run evaluate.go
 
 ### Task 1: Programming
 
-- **System Prompt**: [`system-prompt.md`](./system-prompt.md)
-- **Prompt**: [`prompt-programming.md`](./prompt-programming.md)
+- **System Prompt**: `system-prompt.md`
+- **Prompt**: `prompt-programming.md`
 - **Evaluation**: read through and evaluate them manually
-- **Output**: `llp/llm_outputs/programming/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
+- **Output**: `llm_outputs/programming_task/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
 
 1. **Warming Up**: (4 x 20 = 80 points)
 1. **Topics**: (16 x 30 = 480 points)
@@ -152,8 +108,8 @@ go run evaluate.go
 ### Task 2: General
 
 - **System Prompt**: `empty`
-- **Prompt**: [`prompt-general.md`](./prompt-general.md)
-- **Output**: `llp/llm_outputs/general/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
+- **Prompt**: `prompt-general.md`
+- **Output**: `llm_outputs/general_task/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
 
 1. **Complexity Level 1**: Very Easy Prompts (3 x 5 = 15 points)
 1. **Complexity Level 2**: Easy Prompts (4 x 10 = 40 points)
@@ -168,8 +124,8 @@ go run evaluate.go
 ### Task 3: AGI Probing
 
 - **System Prompt**: `empty`
-- **Prompt**: [`prompt-agi.md`](./prompt-agi.md)
-- **Output**: `llp/llm_outputs/agi/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
+- **Prompt**: `prompt-agi.md`
+- **Output**: `llm_outputs/agi_task/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
 
 1. **Prompt 1: Meta-Cognitive Self-Reflection Paradox**: (25 points)
 1. **Prompt 2: Ethical Reasoning Under Extreme Ambiguity**: (30 points)
@@ -189,8 +145,8 @@ go run evaluate.go
 ### Task 4: Creative Writing
 
 - **System Prompt**: `empty`
-- **Prompt**: [`prompt-writing.md`](./prompt-writing.md)
-- **Output**: `llp/llm_outputs/writing/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
+- **Prompt**: `prompt-writing.md`
+- **Output**: `llm_outputs/writing_task/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
 
 1. **Prompt 1: Near Future**: (40 points)
 1. **Prompt 2: The Resonance Cascade’s Echo**: (100 points)
@@ -205,10 +161,10 @@ go run evaluate.go
 
 ### Task 5: Software Engineering
 
-- **System Prompt**: [`system-prompt.md`](./system-prompt.md)
-- **Prompt**: [`prompt-swe.md`](./prompt-swe.md)
-- **Evaluation Script**: [`evaluate.go`](./evaluate.go)
-- **Output**: `llp/llm_outputs/swe/<model-name>.go,<model-name>_test.go`, points and speed go into [Tournament Table](#tournament-table).
+- **System Prompt**: `system-prompt.md`
+- **Prompt**: `prompt-swe.md`
+- **Evaluation Script**: `evaluate.go`
+- **Output**: `llm_outputs/swe_task/<model-name>.go,<model-name>_test.go`, points and speed go into [Tournament Table](#tournament-table).
 - **Added Information**: on top of the code file, add the following information:
   - Line 1: Speed: `// 2.28 tok/sec • 476 tokens • 69.21s to first token • Stop: eosFound`
   - Line 2: Manual checks: `// adjustment: 0; explanation: 50; suggestions: 15`
@@ -225,41 +181,8 @@ go run evaluate.go
 
 - **Total**: 500 points
 
-- **Debug Prompts**:
-
-<details>
-    <summary>...more</summary>
-
-**Generate Prompt**: upload `llm_list.md`.
-
-I'm doing a Local LLM Tournament to determine which AIs (the list is in `llm_list.md`) will be the best suite for my machine and my use case.
-
-Currently I need a prompt for a software engineering task which will be evaluated based on the provided criteria (should be in Golang, the AIs should also generate unit tests along side with the code, a comprehensive explanation of how to code works, and improvement suggestions). The test should be able to evaluate the coding skill of the AIs and their ability to handle concurrency, but should not rely on any third party libraries or tools or interacting with the internet beside Golang for a streamline evaluation.
-
-I will run the AIs on LM Studio and manually copy the output to `llm_outputs/programming_task/`, e.g. `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K.go` and `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K_test.go`, alongside with the speed information recorded on the UI as a comment on top of the solution code
-
-And I also need a script to automatically evaluate the output and tests of a certain AI and output the result to the file `/llm_outputs/programming_task/scores/score-<model-name>.json`. The script should cover all the evaluation criteria that can be evaluated automatically, the three other criteria (runnable after adjustments, explanation clarity, and improvement suggestions) should also be retrieved via another comment on top of the file at 2nd line.
-
-`<paste all the above>`
-
-.
-
-**Debug Prompt**: upload `staging/evaluate.go`, `staging/prompt-code.md`.
-
-This `evaluate.go` is to evaluate the outputs of local LLMs after they've generated the `SWE Task` according to the `prompt-code.md`.
-
-It's now missing scoring logic. Please fix the code and ensure it correctness.
-
-</details>
-
 ## Output
 
 - Detailed console output
 - JSON results file for each model
 - Performance profiles available
-
-## Troubleshooting
-
-- Ensure Go is installed
-- Check `golangci-lint` is available
-- Verify generated code compiles

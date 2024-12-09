@@ -1,4 +1,4 @@
-qwen2.5-coder-32b-instruct-q5_k_m-00001-of-00003.gguf  
+qwen2.5-coder-32b-instruct-q5_k_m.gguf  
 gemma-2-27b-it-Q5_K_M.gguf  
 Llama-3.3-70B-Instruct-IQ2_XXS.gguf  
 Midnight-Miqu-70B-v1.5-Safetensorsfix.i1-IQ2_XXS.gguf  
