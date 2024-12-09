@@ -95,7 +95,7 @@ llp/
 
 ## Initialization Script
 
-Here's a recommended `scripts/setup_db.go` to initialize the database:
+`scripts/setup_db.go` to initialize the database:
 
 ```go
 package main

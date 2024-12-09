@@ -2,7 +2,7 @@
 
 **LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
 
-- Tech Stack: Golang 1.23, BubbleTea & BubbleZone, SQLite 3.47, PlantUML
+- Tech Stack: Golang 1.23, BubbleTea & BubbleZone, SQLite 3.47, Mermaid
 - Features:
   - Be as lightweight and minimal as possible so that it doesn't impact the running LLM.
   - Table of LLMs that can be sorted, with columns for all the prompts, 2-way binding for input cells.
@@ -30,7 +30,7 @@
 ## Why?
 
 - Because this is super fun and exciting and I like it. I love to learn from the AIs.
-- I'm planing to generate two whole 600-800 page handbooks regarding SWE with Python, Go, Rust. One-stop place for anything SWE.
+- I'm planing to generate a couple of 600-800 page handbooks for personal use and do translation/composing works.
 - So I need to select the best candidate for the task, given the specs of my current machine.
 - Build a general pipeline for future works with local AIs.
 
