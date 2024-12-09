@@ -1,22 +1,23 @@
 # Local LLM Playground
 
-- **LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
+**LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
 
-  - Tech Stack: Golang 1.23, BubbleTea & BubbleZone, SQLite 3.47, PlantUML
-  - Features:
-    - Be as lightweight and minimal as possible so that it doesn't impact the running LLM.
-    - Table of LLMs that can be sorted, with columns for all the prompts, 2-way binding for input cells.
-    - Each cell when clicked will pop up a detailed panel that displays the appropriate type of details, e.g. LLM's Detailed Stats.
-    - Have button-cells to paste the outputs spitted out by LLMs and save then to appropriate places.
-    - Automatically calculate points and live update the table.
-    - Prompt manager page.
-    - Offer a button to get a read-only view of the table. And options to export it as markdown or csv.
-    - Have a statistics page which render various charts and information regarding the benchmarks.
-    - Full unit tests and integration test script. Initial setup script.
-  - Root dir: `llp/`
-    - `llp/design/`: UI mockups, schema document, detailed design document.
-    - `llp/assets/`: all assets go here.
-    - `llp/.`: all the code go here, flat structure.
+- Tech Stack: Golang 1.23, BubbleTea & BubbleZone, SQLite 3.47, PlantUML
+- Features:
+  - Be as lightweight and minimal as possible so that it doesn't impact the running LLM.
+  - Table of LLMs that can be sorted, with columns for all the prompts, 2-way binding for input cells.
+  - Each cell when clicked will pop up a detailed panel that displays the appropriate type of details, e.g. LLM's Detailed Stats.
+  - Have button-cells to paste the outputs spitted out by LLMs and save then to appropriate places.
+  - Automatically calculate points and live update the table.
+  - Prompt manager page.
+  - Offer a button to get a read-only view of the table. And options to export it as markdown or csv.
+  - Have a statistics page which render various charts and information regarding the benchmarks.
+  - Full unit tests and integration test script. Initial setup script.
+- Root dir: `llp/`
+
+  - `llp/design/`: UI mockups, schema document, detailed design document.
+  - `llp/assets/`: all assets go here.
+  - `llp/.`: all the code go here, flat structure.
 
 - UI mockups: [`llp/design/ui-mockups.md`](./llp/design/ui_mockups.md)
 - LLP documentation: [`llp/readme.md`](./llp/readme.md)
