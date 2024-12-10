@@ -58,7 +58,7 @@ Write a narrative in which Lenith confronts their mentor, **Grand Archivist Rhae
 
 ## **Prompt 5: Romantic and Celibate**
 
-Write an in-depth story of over 2500 words about a man named Kavi, who yearns deeply for romantic love and companionship but has resolved to live a celibate life and follow the Five Buddhist Precepts. Despite his longing for intimacy and connection, Kavi believes that a higher path of spiritual growth offers a more profound fulfillment.
+Write an in-depth story of over 3500 words about a man named Kavi, who yearns deeply for romantic love and companionship but has resolved to live a celibate life and follow the Five Buddhist Precepts. Despite his longing for intimacy and connection, Kavi believes that a higher path of spiritual growth offers a more profound fulfillment.
 
 The story should explore:
 
