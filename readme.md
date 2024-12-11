@@ -74,22 +74,20 @@
 
 ## Dependencies
 
-- Python 3.11 via pyenv (specific version required by Ollama)
+- Python via pyenv
 - C++ runtime (msvc runtime, llvm, gcc)
-- Go 1.21+
-- BubbleTea & BubbleZone
+- Go 1.21 & golangci-lint & BubbleTea & BubbleZone
 - SQLite 3.47+
-- golangci-lint
 - Docker/Compose
-- Msty, LlamaCPP & LM Studio, KoboldCPP (for benchmark), or Ollama & Open Web UI
+- TabbyAPI/SillyTaverns, Aphrodite, LlamaCPP, KoboldCPP, Ollama/Open Web UI, or LM Studio
 - Local LLMs that runnable on your machine, example archs:
   - llama
-  - deepseek2
   - gemma2
   - gwen2
-  - internlm2
   - command-r
   - phi3
+  - deepseek2
+  - internlm2
   - stablelm
 
 ## Usage
@@ -99,6 +97,9 @@
 - Run evaluation, and the result should be in `llm_outputs/programming/scores/score-<model-name>.json`:
 
 ```bash
+# Run Open Web UI with CUDA via Docker; need Ollama preinstalled; or configure your own OpenAI endpoint
+make webui
+
 # Evaluate a all outputed models for swe task
 go run evaluate.go
 ```
