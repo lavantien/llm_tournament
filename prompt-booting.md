@@ -6,7 +6,7 @@
 
 ## **Prompt 1**: Teaching
 
-Can you teach me Rust, step-by-step, with clear explanations, instructions, and practice problems, so that I can use the language immediately to build a medium-sized program.
+Can you teach me making TUI with BubbleTea, step-by-step, with clear explanations, instructions, and practice problems, so that I can use the language immediately to build a medium-sized program.
 
 ## **Prompt 2**: Programming and Explanation
 
