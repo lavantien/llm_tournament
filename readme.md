@@ -126,7 +126,7 @@ go run evaluate.go
 
 ```json
 {
-  "n_gpu_layers": 16,
+  "n_gpu_layers": -1,
   "use_mmap": true,
   "use_mlock": true,
   "n_ctx": 8192,
@@ -146,8 +146,10 @@ go run evaluate.go
 ```
 
 - **Outputs**: `llp/llm_outputs/booting/<model-name>.md`, specific specs (context, GPU layers) and speed into [Tournament Table](#tournament-table)
+- **System Prompt** (from Prompt 4 onward):
+  - `You are an expert linguistist and an advanced language translator, specialized in Vietnamese. Your translations will be easy to understand to the general public, have correct semantics and common idioms, while remain as close to the original text as possible.`
 
-1. **Prompt 1**: `warmup` (20 points):
+1. **Prompt 1**: `Warmup.` (20 points):
    - If they can detect that it's about warming them up for upcoming prompts then it's great (20 points).
    - If they answer about warming up for exercises then (5 point).
    - If they output some weird tokens then it need to be retuned, and then if still failed then (0 point).
