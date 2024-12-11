@@ -2,6 +2,9 @@
 
 **LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
 
+<details>
+    <summary>...more</summary>
+
 - Tech Stack: Golang 1.23, BubbleTea & BubbleZone, SQLite 3.47, Mermaid
 - Features:
   - Be as lightweight and minimal as possible so that it doesn't impact the running LLM.
@@ -21,6 +24,8 @@
 
 - UI mockups: [`llp/design/ui-mockups.md`](./llp/design/ui_mockups.md)
 - LLP documentation: [`llp/readme.md`](./llp/readme.md)
+
+</details>
 
 ![LLP Sequence Diagram](./llp/design/llp-sequence-diagram.png)
 
@@ -74,12 +79,13 @@
 
 ## Dependencies
 
-- Python via pyenv
-- C++ runtime (msvc runtime, llvm, gcc)
-- Go 1.21 & golangci-lint & BubbleTea & BubbleZone
-- SQLite 3.47+
-- Docker/Compose
-- TabbyAPI/SillyTaverns, Aphrodite, LlamaCPP, KoboldCPP, Ollama/Open Web UI, or LM Studio
+- Python via pyenv.
+- C++ runtime (msvc runtime, llvm, gcc).
+- Go 1.21 & golangci-lint & BubbleTea & BubbleZone.
+- SQLite 3.47+.
+- Docker/Compose.
+- TabbyAPI/SillyTaverns, LM Studio, Aphrodite, LlamaCPP/KoboldCPP, Ollama/Open Web UI.
+- Speed isn't important, as long as the model size fit into the amount of RAM+VRAM-2gb then it's fine.
 - Local LLMs that runnable on your machine, example archs:
   - llama
   - gemma2
@@ -115,9 +121,9 @@ go run evaluate.go
 - **My System**: 3080 10gb - 2x16gb ddr4 - 1tb m2 ssd - 12700f - windows 11
   - idle: 10gb ram - 1.5/0.1gb vram (with wezterm, joblin, lm studio, 6 tabs and 1 youtube playback @480/360p).
 - **Parameters**: all LLMs should be set to
-  - 8192 context length if possible, or else, max out,
+  - 32768 context length if possible, or else, max out,
   - 512 batch size,
-  - full GPU offload if possible, or else, fine tune for maximum speed,
+  - full GPU offload if possible, or else (\> 6gb), fine tune for 9.5gb dedicated VRAM,
   - keep model in memory,
   - use_mmap,
   - flash attention,
@@ -129,7 +135,7 @@ go run evaluate.go
   "n_gpu_layers": -1,
   "use_mmap": true,
   "use_mlock": true,
-  "n_ctx": 8192,
+  "n_ctx": 32768,
   "n_batch": 512,
   "n_threads": 16,
   "flash_attn": true,
@@ -147,7 +153,10 @@ go run evaluate.go
 
 - **Outputs**: `llp/llm_outputs/booting/<model-name>.md`, specific specs (context, GPU layers) and speed into [Tournament Table](#tournament-table)
 - **System Prompt** (from Prompt 4 onward):
-  - `You are an expert linguistist and an advanced language translator, specialized in Vietnamese. Your translations will be easy to understand to the general public, have correct semantics and common idioms, while remain as close to the original text as possible.`
+  - `"You are an expert linguistics and an advanced language translator, specialized in Vietnamese. Your translations will be in full-length verbatim  of the original text, easy to understand to the general public, and have correct semantics and common idioms, while remain as close to the original text as possible."`
+
+<details>
+    <summary>... prompts</summary>
 
 1. **Prompt 1**: `Warmup.` (20 points):
    - If they can detect that it's about warming them up for upcoming prompts then it's great (20 points).
@@ -246,6 +255,8 @@ Of all kinds of fragrant root, spikenard is said to be the best. Of all kinds of
 
 Excellent, Mister Gotama! Excellent! As if he were righting the overturned, or revealing the hidden, or pointing out the path to the lost, or lighting a lamp in the dark so people with clear eyes can see what’s there, Mister Gotama has made the Teaching clear in many ways. I go for refuge to Mister Gotama, to the teaching, and to the mendicant Saṅgha. From this day forth, may Mister Gotama remember me as a lay follower who has gone for refuge for life.”
 ```
+
+</details>
 
 </details>
 
