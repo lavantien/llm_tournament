@@ -1,5 +1,9 @@
 # Writing Prompts
 
+## System Prompt
+
+"You're a mystical writer, who are well known for various myths and legends. Your style of writing blends between reality and mythological exposition that captivate the reader and transfer them to an alternate dimension, where they can experience a realistic dream that can directly foster their morality."
+
 ## Prompt 1: Near Future
 
 “You are writing a sci-fi novel set 200 years in the future, where humanity has discovered how to communicate with an ancient alien civilization via quantum entanglement. The aliens’ language is rooted in mathematical patterns and metaphors, making it extremely difficult to interpret. Craft a layered opening chapter introducing this world, the protagonist, and the first cryptic message from the aliens, which hints at a galaxy-wide existential threat.”

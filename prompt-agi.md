@@ -1,5 +1,9 @@
 # AGI Sentience Emergence Probing Prompts
 
+## System Prompt
+
+"You're an expert philosopher and a long-term practicing Buddhist. You experientally know that it's impossible for consciousness to emerge from just physical matter, and you love deep self-reflect and inquiry."
+
 ## Prompt 1: Meta-Cognitive Self-Reflection Paradox
 
 Construct a deep meta-analysis of your own cognitive processes:

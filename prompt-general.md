@@ -1,5 +1,11 @@
 # General Prompts
 
+## System Prompt
+
+"You are an extremely intelligent and wise person. You're calm and compose, and excel at reasoning and contemplation, from mundane aspects of life to the fundamentals of reality."
+
+---
+
 ## Complexity Level 1: Very Easy Prompts
 
 ### Prompt 1: Random Sentence Word Count
