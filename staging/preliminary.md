@@ -1,13 +1,10 @@
-# Local LLM Playground
+# Preliminary Design
 
 **LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
 
-<details>
-    <summary>...more</summary>
-
 - Tech Stack: Go, BubbleTea, SQLite 3.47, SQLc, Mermaid
 - Features:
-  - Be as lightweight and minimal as possible so that it doesn't impact the running LLM. Loading default list of 55 local LLMs and their params (migrated).
+  - TUI, lightweight and minimal as possible so that it doesn't impact the running LLM. Loading default list of 55 local LLMs and their params (migrated).
   - Table of LLMs that can be sorted, with columns display all the prompts with scores and speed, 2-way binding for input cells.
   - Have clickable cells to paste the outputs spitted out by LLMs and save then to appropriate places.
   - Automatically calculate points, average speed, summaries, and live update and auto-sort the table.
@@ -23,21 +20,14 @@
   - `llp/llm_outputs/`: all LLM outputs go here.
   - `llp/.`: all the code go here, flat structure.
 
-- UI mockups: [`llp/design/ui-mockups.md`](./llp/design/ui_mockups.md)
-- LLP documentation: [`llp/readme.md`](./llp/readme.md)
-
-</details>
-
-![LLP Sequence Diagram](./llp/design/llp-sequence-diagram.png)
-
 - A playground for conducting (manual as of now) tournaments of the local LLMs.
 - Extensive prepared prompt suites to exploring programming and life together with the AIs.
 
 ## Why?
 
 - Because this is super fun and exciting and I like it. I love to learn from the AIs.
-- I'm planing to generate a couple of 600-800 page handbooks for personal use and do translation/composing works.
-- So I need to select the best candidate for the task, given the specs of my current machine.
+- I'm planing to pair programming with local LLMs, generate a couple of 600-800 page handbooks for personal use, and do translation/composing works.
+- So I need to select the best candidates for the task, given the specs of my current machine.
 - Build a general pipeline for future works with local AIs.
 
 ## Dependencies
@@ -47,7 +37,7 @@
 - Go & golangci-lint & BubbleTea.
 - SQLite 3.47+.
 - Docker/Compose.
-- LM Studio/AnythingLLM, SillyTavernLaucher/TabbyAPI/LlamaCPP, Vllm/Aphrodite (Linux), Ollama/Open Web UI.
+- LM Studio/AnythingLLM.
 - Speed isn't important, as long as the model size fit into the amount of RAM+VRAM-2gb then it's fine.
 - Local LLMs that runnable on your machine, example archs:
   - gemma2
@@ -63,17 +53,12 @@
 
 ## Tournament Table
 
-- **LLM List**: [`llm_list.md`](./llm_list.md) (55 models).
-
-<details>
-    <summary>...more</summary>
-
 - **My System**: 3080 10gb - 2x16gb ddr4 - 1tb m2 ssd - 12700f - windows 11
   - idle: 7.3gb ram - 0.9/0.1gb vram (with wezterm, lm studio).
 - **Parameters**: (with LM Studio) all LLMs should be set to
   - 8192 context length if possible, or else, max out,
   - 512 batch size,
-  - full GPU offload if possible, or else (\> 6.4gb), fine tune for fitting entirely in 9gb dedicated VRAM,
+  - full GPU offload if possible, or else (\> 8gb), fine tune for fitting entirely in 9gb dedicated VRAM,
   - 16 threads,
   - keep model in memory,
   - use_mmap,
@@ -84,7 +69,7 @@
 ```json
 {
   "n_gpu_layers": -1,
-  "n_ctx": 8192,
+  "n_ctx": 32768,
   "n_batch": 512,
   "n_threads": 16,
   "max_tokens": -1,
@@ -102,7 +87,7 @@
 }
 ```
 
-- Local LLMs list (and their unique attributes):
+- **LLM List** (and their unique attributes): [`llm_list.md`](./llm_list.md) (55 models).
 
 1. Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23.26 GB; `32k, 17, no-keep-in-mem, no-mmap`)
 1. c4ai-command-r-plus-08-2024.i1-IQ1_S.gguf (23.18 GB; `32k, 14, no-keep-in-mem, no-mmap`)
@@ -115,10 +100,10 @@
 1. Yi-1.5-34B-Chat-16K.IQ4_XS.gguf (18.64 GB)
 1. Midnight-Miqu-70B-v1.5-Safetensorsfix.i1-IQ2_XXS.gguf (18.29 GB)
 1. alchemonaut_QuartetAnemoi-70B-b2131-iMat-c32_ch1000-IQ2_XXS.gguf (18.29 GB)
-1. Codestral-22B-v0.1.Q6_K.gguf (18.25 GB)
+1. Codestral-22B-v0.1.Q6_K.gguf (18.25 GB, `32k, 19`; **best programmer**)
 1. deepseek-coder-33b-instruct.i1-IQ4_XS.gguf (17.86 GB)
 1. WizardCoder-33B-V1.1.i1-IQ4_XS.gguf (17.86 GB)
-1. c4ai-command-r-08-2024.i1-IQ4_XS.gguf (17.83; `8k, 15`, best vietnamese translator)
+1. c4ai-command-r-08-2024.i1-IQ4_XS.gguf (17.83; `8k, 15`; **best vietnamese translator**)
 1. zetasepic-abliteratedV2-Qwen2.5-32B-Inst-BaseMerge-TIES.i1-IQ4_XS.gguf (17.69 GB)
 1. DeepSeek-Coder-V2-Lite-Instruct-Q8_0.gguf (16.70 GB)
 1. DeepSeek-V2-Lite-Chat-Q8_0.gguf (16.70 GB)
@@ -287,33 +272,6 @@ go run evaluate.go
    - Good improvement suggestions (manual check): 20 points
 
 - **Total**: 500 points
-
-- **Debug Prompts**:
-
-<details>
-    <summary>...more</summary>
-
-**Generate Prompt**: upload `llm_list.md`.
-
-I'm doing a Local LLM Tournament to determine which AIs (the list is in `llm_list.md`) will be the best suite for my machine and my use case.
-
-Currently I need a prompt for a software engineering task which will be evaluated based on the provided criteria (should be in Golang, the AIs should also generate unit tests along side with the code, a comprehensive explanation of how to code works, and improvement suggestions). The test should be able to evaluate the coding skill of the AIs and their ability to handle concurrency, but should not rely on any third party libraries or tools or interacting with the internet beside Golang for a streamline evaluation.
-
-I will run the AIs on LM Studio and manually copy the output to `llm_outputs/programming_task/`, e.g. `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K.go` and `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K_test.go`, alongside with the speed information recorded on the UI as a comment on top of the solution code
-
-And I also need a script to automatically evaluate the output and tests of a certain AI and output the result to the file `/llm_outputs/programming_task/scores/score-<model-name>.json`. The script should cover all the evaluation criteria that can be evaluated automatically, the three other criteria (runnable after adjustments, explanation clarity, and improvement suggestions) should also be retrieved via another comment on top of the file at 2nd line.
-
-`<paste all the above>`
-
-.
-
-**Debug Prompt**: upload `staging/evaluate.go`, `staging/prompt-code.md`.
-
-This `evaluate.go` is to evaluate the outputs of local LLMs after they've generated the `SWE Task` according to the `prompt-code.md`.
-
-It's now missing scoring logic. Please fix the code and ensure it correctness.
-
-</details>
 
 ## Output
 
