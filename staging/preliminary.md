@@ -100,7 +100,7 @@
 1. Yi-1.5-34B-Chat-16K.IQ4_XS.gguf (18.64 GB)
 1. Midnight-Miqu-70B-v1.5-Safetensorsfix.i1-IQ2_XXS.gguf (18.29 GB)
 1. alchemonaut_QuartetAnemoi-70B-b2131-iMat-c32_ch1000-IQ2_XXS.gguf (18.29 GB)
-1. Codestral-22B-v0.1.Q6_K.gguf (18.25 GB, `32k, 19`; **best programmer**)
+1. Codestral-22B-v0.1.Q6_K.gguf (18.25 GB, `32k, 19`)
 1. deepseek-coder-33b-instruct.i1-IQ4_XS.gguf (17.86 GB)
 1. WizardCoder-33B-V1.1.i1-IQ4_XS.gguf (17.86 GB)
 1. c4ai-command-r-08-2024.i1-IQ4_XS.gguf (17.83; `8k, 15`; **best vietnamese translator**)
