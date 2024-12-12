@@ -103,7 +103,7 @@
 1. Codestral-22B-v0.1.Q6_K.gguf (18.25 GB, `32k, 19`)
 1. deepseek-coder-33b-instruct.i1-IQ4_XS.gguf (17.86 GB)
 1. WizardCoder-33B-V1.1.i1-IQ4_XS.gguf (17.86 GB)
-1. c4ai-command-r-08-2024.i1-IQ4_XS.gguf (17.83; `8k, 15`; **best vietnamese translator**)
+1. c4ai-command-r-08-2024.i1-IQ4_XS.gguf (17.83; `32k, 13`; **best vietnamese translator**)
 1. zetasepic-abliteratedV2-Qwen2.5-32B-Inst-BaseMerge-TIES.i1-IQ4_XS.gguf (17.69 GB)
 1. DeepSeek-Coder-V2-Lite-Instruct-Q8_0.gguf (16.70 GB)
 1. DeepSeek-V2-Lite-Chat-Q8_0.gguf (16.70 GB)
