@@ -2,7 +2,7 @@ Qwen2.5-Coder-32B-Instruct-i1-GGUF/Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23
 c4ai-command-r-plus-08-2024-i1-GGUF/c4ai-command-r-plus-08-2024.i1-IQ1_S.gguf (23.18 GB)
 Qwen2.5-72B-Instruct-i1-GGUF/Qwen2.5-72B-Instruct.i1-IQ1_S.gguf (22.69 GB)
 gemma-2-27b-it-GGUF/gemma-2-27b-it-Q6_K.gguf (22.34 GB)
-Mixtral-8x7B-Instruct-v0.1-i1-GGUF/Mixtral-8x7B-Instruct-v0.1.i1-IQ3_M.gguf (21.58 GB)
+GritLM-8x7B-i1-GGUF/GritLM-8x7B.i1-IQ3_M.gguf (21.43 GB)
 internlm2_5-20b-chat-GGUF/internlm2_5-20b-chat.Q8_0.gguf (21.11 GB)
 aya-23-35B-i1-GGUF/aya-23-35B.i1-IQ4_XS.gguf (19.20 GB)
 Llama-3.3-70B-Instruct-GGUF/Llama-3.3-70B-Instruct-IQ2_XXS.gguf (19.10 GB)

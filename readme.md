@@ -21,7 +21,7 @@
   - `llp/design/`: UI mockups, schema document, detailed design document.
   - `llp/assets/`: all assets go here.
   - `llp/llm_outputs/`: all LLM outputs go here.
-  - `llp/.`: all the code go here, flat structure.
+  - `main.go`: all the code go here, megalith architecture.
 
 - UI mockups: [`llp/design/ui-mockups.md`](./llp/design/ui_mockups.md)
 - LLP documentation: [`llp/readme.md`](./llp/readme.md)
@@ -47,7 +47,7 @@
 - Go & golangci-lint & BubbleTea.
 - SQLite 3.47+.
 - Docker/Compose.
-- LM Studio/AnythingLLM, SillyTavernLaucher/TabbyAPI/LlamaCPP, Vllm/Aphrodite (Linux), Ollama/Open Web UI.
+- Aider/AIStudioGoogle, LM Studio/AnythingLLM, SillyTavernLaucher/TabbyAPI/LlamaCPP, Vllm/Aphrodite (Linux), Ollama/Open Web UI.
 - Speed isn't important, as long as the model size fit into the amount of RAM+VRAM-2gb then it's fine.
 - Local LLMs that runnable on your machine, example archs:
   - gemma2
@@ -71,7 +71,7 @@
 - **My System**: 3080 10gb - 2x16gb ddr4 - 1tb m2 ssd - 12700f - windows 11
   - idle: 7.3gb ram - 0.9/0.1gb vram (with wezterm, lm studio).
 - **Parameters**: (with LM Studio) all LLMs should be set to
-  - 8192 context length if possible, or else, max out,
+  - 32768 context length if possible, or else, max out,
   - 512 batch size,
   - full GPU offload if possible, or else (\> 6.4gb), fine tune for fitting entirely in 9gb dedicated VRAM,
   - 16 threads,
@@ -79,12 +79,13 @@
   - use_mmap,
   - flash attention,
   - rolling window overflow policy,
+  - 0.1 temp for programming and translating, 0.5 for general, 0.9 for creative tasks.
   - default everything else.
 
 ```json
 {
   "n_gpu_layers": -1,
-  "n_ctx": 8192,
+  "n_ctx": 32768,
   "n_batch": 512,
   "n_threads": 16,
   "max_tokens": -1,
@@ -92,7 +93,7 @@
   "flash_attn": true,
   "use_mmap": true,
   "use_mlock": true,
-  "temperature": 0.2,
+  "temperature": 0.1,
   "top_k": 16,
   "top_p": 0.95,
   "min_p": 0.05,
@@ -104,21 +105,21 @@
 
 - Local LLMs list (and their unique attributes):
 
-1. Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23.26 GB; `32k, 17, no-keep-in-mem, no-mmap`)
-1. c4ai-command-r-plus-08-2024.i1-IQ1_S.gguf (23.18 GB; `32k, 14, no-keep-in-mem, no-mmap`)
-1. Qwen2.5-72B-Instruct.i1-IQ1_S.gguf (22.69 GB)
+1. Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23.26 GB; `32k, 15`)
+1. c4ai-command-r-plus-08-2024.i1-IQ1_S.gguf (23.18 GB; `32k, 13`)
+1. Qwen2.5-72B-Instruct.i1-IQ1_S.gguf (22.69 GB; `32k, 19`)
 1. gemma-2-27b-it-Q6_K.gguf (22.34 GB; `8k, 14, no-keep-in-mem, no-mmap`)
-1. Mixtral-8x7B-Instruct-v0.1.i1-IQ3_M.gguf (21.58 GB)
-1. internlm2_5-20b-chat.Q8_0.gguf (21.11 GB)
+1. GritLM-8x7B.i1-IQ3_M.gguf (21.43 GB; `32k, 9, 8e`)
+1. internlm2_5-20b-chat.Q8_0.gguf (21.11 GB; `32k, 15`)
 1. aya-23-35B.i1-IQ4_XS.gguf (19.20 GB; `4k, 12, no-keep-in-mem, no-mmap`)
-1. Llama-3.3-70B-Instruct-IQ2_XXS.gguf (19.10 GB)
+1. Llama-3.3-70B-Instruct-IQ2_XXS.gguf (19.10 GB; `32k, 21`)
 1. Yi-1.5-34B-Chat-16K.IQ4_XS.gguf (18.64 GB)
 1. Midnight-Miqu-70B-v1.5-Safetensorsfix.i1-IQ2_XXS.gguf (18.29 GB)
 1. alchemonaut_QuartetAnemoi-70B-b2131-iMat-c32_ch1000-IQ2_XXS.gguf (18.29 GB)
-1. Codestral-22B-v0.1.Q6_K.gguf (18.25 GB, `32k, 19`)
+1. Codestral-22B-v0.1.Q6_K.gguf (18.25 GB; `32k, 19`)
 1. deepseek-coder-33b-instruct.i1-IQ4_XS.gguf (17.86 GB)
 1. WizardCoder-33B-V1.1.i1-IQ4_XS.gguf (17.86 GB)
-1. c4ai-command-r-08-2024.i1-IQ4_XS.gguf (17.83; `32k, 13`, **best vietnamese translator**)
+1. c4ai-command-r-08-2024.i1-IQ4_XS.gguf (17.83; `32k, 12`; **best vietnamese translator**)
 1. zetasepic-abliteratedV2-Qwen2.5-32B-Inst-BaseMerge-TIES.i1-IQ4_XS.gguf (17.69 GB)
 1. DeepSeek-Coder-V2-Lite-Instruct-Q8_0.gguf (16.70 GB)
 1. DeepSeek-V2-Lite-Chat-Q8_0.gguf (16.70 GB)

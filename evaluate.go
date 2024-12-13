@@ -278,7 +278,7 @@ func matchesGoNamingConvention(name string) bool {
 		regexp.MustCompile(`^[a-z][a-zA-Z0-9]*$`).MatchString(name)
 }
 
-func main() {
+func Eval() {
 	modelOutputDir := "llm_outputs/programming_task"
 	results := []ModelEvaluation{}
 
