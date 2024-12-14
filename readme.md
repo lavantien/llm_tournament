@@ -2,33 +2,27 @@
 
 **LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
 
-<details>
-    <summary>...more</summary>
+- Tech Stack: Go, BubbleTea/Bubbles, SQLite/FTS5, Mermaid
 
-- Tech Stack: Go, BubbleTea, SQLite 3.47, SQLc, Mermaid
-- Features:
-  - Be as lightweight and minimal as possible so that it doesn't impact the running LLM. Loading default list of 55 local LLMs and their params (migrated).
-  - Table of LLMs that can be sorted, with columns display all the prompts with scores and speed, 2-way binding for input cells.
-  - Have clickable cells to paste the outputs spitted out by LLMs and save then to appropriate places.
-  - Automatically calculate points, average speed, summaries, and live update and auto-sort the table.
-  - The LLM's name cell is clickable and will pop up a panel that displays the appropriate type of details, e.g. LLM's Detailed Stats.
-  - Prompt manager page, with categories, that can add, edit text or scoring parameters, or delete prompts. Loaded a default set of prompt suites (migrated).
-  - Offer a button to get a read-only view of the table. And options to export it as markdown or csv.
-  - Have a statistics page which render various charts and information regarding the benchmarks.
-  - Full unit tests and integration test script for core backend functionalities. Initial setup and migration script.
-- Root dir: `llp/`
+- Tabs:
 
-  - `llp/design/`: UI mockups, schema document, detailed design document.
-  - `llp/assets/`: all assets go here.
-  - `llp/llm_outputs/`: all LLM outputs go here.
+  - **(L)eaderboard** (main, or on CtrlL pressed)
+    - **(I)ngressor** (on row selected and on CtrlI pressed): select a particular category, then prompt, and input the scores, speed, and output
+    - **(E)gressor** (on row selected and on CtrlE pressed): view bot params and row details
+    - **E(x)porter** (on CtrlX pressed): export table to json, csv, or markdown
+  - **(B)ot Manager** (on CtrlB pressed): CRUD on bots, full text search, preloaded from LM Studio model list
+  - **(P)rompt Manager** (on CtrlP pressed): CRUD on categories and prompts, full text search
+  - **Con(d)ucer** (on CtrlD pressed): select bot, category, prompt, and then (on CtrlT pressed) will directly send request to LM studio server, and then save the output to the appropriate location
+  - (save current state on CtrlS pressed and switch field via Arrows or Tab/ShiftTab, work with every tab; on CtrlY pressed at Ingressor to copy prompt)
+
+- Directory structure:
+
+  - `assets/`: all assets go here.
+  - `db/`: database file, schema, and `migration.go` to load prompt suites into db if not exist.
+  - `llm_outputs/`: all LLM outputs go here.
   - `main.go`: all the code go here, megalith architecture.
-
-- UI mockups: [`llp/design/ui-mockups.md`](./llp/design/ui_mockups.md)
-- LLP documentation: [`llp/readme.md`](./llp/readme.md)
-
-</details>
-
-![LLP Sequence Diagram](./llp/design/llp-sequence-diagram.png)
+  - `main_test.go`: all the unit tests and integration tests go here.
+  - `makefile`: all the setup and migration go here.
 
 - A playground for conducting (manual as of now) tournaments of the local LLMs.
 - Extensive prepared prompt suites to exploring programming and life together with the AIs.
@@ -36,41 +30,32 @@
 ## Why?
 
 - Because this is super fun and exciting and I like it. I love to learn from the AIs.
-- I'm planing to generate a couple of 600-800 page handbooks for personal use and do translation/composing works.
-- So I need to select the best candidate for the task, given the specs of my current machine.
+- I will use AIs as a copilot to write code and documentation.
+- And I'm planing to generate a couple of 600-800 page handbooks for personal use and do translation/composing works.
+- So I need to select the best candidate for the task, given the specs of my current machine. So, prompt suites and tournament pipeline is necessary
 - Build a general pipeline for future works with local AIs.
 
 ## Dependencies
 
 - Python via pyenv.
 - C++ runtime (msvc runtime, llvm, gcc).
-- Go & golangci-lint & BubbleTea.
-- SQLite 3.47+.
+- Go & golangci-lint & BubbleTea/Bubbles.
+- SQLite/FTS5.
 - Docker/Compose.
-- Aider/AIStudioGoogle, LM Studio/AnythingLLM, SillyTavernLaucher/TabbyAPI/LlamaCPP, Vllm/Aphrodite (Linux), Ollama/Open Web UI.
-- Speed isn't important, as long as the model size fit into the amount of RAM+VRAM-2gb then it's fine.
-- Local LLMs that runnable on your machine, example archs:
-  - gemma2
-  - command-r
-  - llama
-  - gwen2
-  - deepseek2
-  - phi3
-  - internlm2
-  - stablelm
-  - t5
-  - bart
+- LM Studio/AnythingLLM, SillyTavernLaucher/TabbyAPI/LlamaCPP, Vllm/Aphrodite (Linux), Ollama/Open Web UI, Aider/AIStudioGoogle (best free plan), LMSYS/ChatGPTFree/ClaudeFree.
+- Speed isn't important, as long as it can run then it's fair game.
+- Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, internlm2, stablelm, t5, bart
 
 ## Tournament Table
 
 - **LLM List**: [`llm_list.md`](./llm_list.md) (55 models).
 
-<details>
-    <summary>...more</summary>
-
 - **My System**: 3080 10gb - 2x16gb ddr4 - 1tb m2 ssd - 12700f - windows 11
+
   - idle: 7.3gb ram - 0.9/0.1gb vram (with wezterm, lm studio).
+
 - **Parameters**: (with LM Studio) all LLMs should be set to
+
   - 32768 context length if possible, or else, max out,
   - 512 batch size,
   - full GPU offload if possible, or else (\> 6.4gb), fine tune for fitting entirely in 9gb dedicated VRAM,
@@ -79,7 +64,7 @@
   - use_mmap,
   - flash attention,
   - rolling window overflow policy,
-  - 0.1 temp for programming and translating, 0.5 for general, 0.9 for creative tasks.
+  - 0.1 temp for programming and translating, 0.5 for general and agi probing, 0.9 for creative tasks.
   - default everything else.
 
 ```json
@@ -105,8 +90,10 @@
 
 - Local LLMs list (and their unique attributes):
 
+1. Codestral-22B-v0.1-Q8_0.gguf (23.64 GB)
 1. Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23.26 GB; `32k, 15`)
 1. c4ai-command-r-plus-08-2024.i1-IQ1_S.gguf (23.18 GB; `32k, 13`)
+1. c4ai-command-r-08-2024-Q5_K_M.gguf (23.05 GB, `32k, 9`)
 1. Qwen2.5-72B-Instruct.i1-IQ1_S.gguf (22.69 GB; `32k, 19`)
 1. gemma-2-27b-it-Q6_K.gguf (22.34 GB; `8k, 14, no-keep-in-mem, no-mmap`)
 1. GritLM-8x7B.i1-IQ3_M.gguf (21.43 GB; `32k, 9, 8e`)
@@ -116,13 +103,10 @@
 1. Yi-1.5-34B-Chat-16K.IQ4_XS.gguf (18.64 GB)
 1. Midnight-Miqu-70B-v1.5-Safetensorsfix.i1-IQ2_XXS.gguf (18.29 GB)
 1. alchemonaut_QuartetAnemoi-70B-b2131-iMat-c32_ch1000-IQ2_XXS.gguf (18.29 GB)
-1. Codestral-22B-v0.1.Q6_K.gguf (18.25 GB; `32k, 19`)
 1. deepseek-coder-33b-instruct.i1-IQ4_XS.gguf (17.86 GB)
 1. WizardCoder-33B-V1.1.i1-IQ4_XS.gguf (17.86 GB)
-1. c4ai-command-r-08-2024.i1-IQ4_XS.gguf (17.83; `32k, 12`; **best vietnamese translator**)
 1. zetasepic-abliteratedV2-Qwen2.5-32B-Inst-BaseMerge-TIES.i1-IQ4_XS.gguf (17.69 GB)
 1. DeepSeek-Coder-V2-Lite-Instruct-Q8_0.gguf (16.70 GB)
-1. DeepSeek-V2-Lite-Chat-Q8_0.gguf (16.70 GB)
 1. Qwen2.5-Coder-14B-Instruct-Q8_0.gguf (15.70 GB)
 1. Qwen2.5-Math-14B-Instruct-Alpha.Q8_0.gguf (15.70 GB)
 1. Virtuoso-Small-Q8_0.gguf (15.70 GB)
@@ -151,11 +135,12 @@
 1. Phi-3.5-mini-instruct.Q8_0.gguf (4.06 GB)
 1. Qwen2.5-3B-Instruct-abliterated-Evol-CoT_SLERP.Q8_0.gguf (3.62 GB)
 1. qwen2.5-coder-3b-instruct-q8_0.gguf (3.62 GB)
+1. Hermes-3-Llama-3.2-3B.Q8_0.gguf (3.42 GB)
 1. Llama-Doctor-3.2-3B-Instruct.Q8_0.gguf (3.42 GB)
 1. llama-3.2-3b-instruct-q8_0.gguf (3.42 GB)
 1. stable-code-instruct-3b-Q8_0.gguf (2.97 GB)
-1. models-quantized-q80-large-v3.gguf (1.66 GB)
-1. Gemma-2-2B-ArliAI-RPMax-v1.1.i1-IQ4_XS.gguf (1.57 GB)
+1. whisper-large-v3-candle-q8_0.gguf (1.66 GB)
+1. gemma-2-2b-it-IQ4_XS.gguf (1.57 GB)
 1. Phi-3.5-mini-instruct.i1-IQ2_XXS.gguf (1042.94 MB)
 1. flan-t5-large-grammar-synthesis-Q8_0.gguf (833.52 MB)
 1. TRoTR-paraphrase-multilingual-MiniLM-L12-v2.IQ4_XS.gguf (211.89 MB)
@@ -163,21 +148,11 @@
 
 (TODO)
 
-</details>
-
 ## Usage
 
-- Place generated solution in `appropriate directory` in `llp/llm_outputs/`
+- Place generated solution in `appropriate directory` in `llm_outputs/`
 - Name files `model-name.md`, or `<model-name>.go` and `model-name_test.go`, or `<model-name>.rs` and `model-name_test.rs`.
 - Run evaluation, and the result should be in `llm_outputs/programming/scores/score-<model-name>.json`:
-
-```bash
-# Run Open Web UI with CUDA via Docker; need Ollama preinstalled; or configure your own OpenAI endpoint
-make webui
-
-# Evaluate a all outputed models for swe task
-go run evaluate.go
-```
 
 ## Evaluation Criteria
 
@@ -187,7 +162,7 @@ go run evaluate.go
 
 ### Task 0: Booting
 
-- **Outputs**: `llp/llm_outputs/booting/<model-name>.md`, specific specs (context, GPU layers) and speed into [Tournament Table](#tournament-table)
+- **Outputs**: `llm_outputs/booting/<model-name>.md`, specific specs (context, GPU layers) and speed into LLP
 - **System Prompt** (from Prompt 4 onward): inside prompt doc.
 - **Prompts**: [`prommpt-booting.md`](./prompt-booting.md)
 
@@ -205,7 +180,7 @@ go run evaluate.go
 - **System Prompt**: [`system-prompt.md`](./system-prompt.md)
 - **Prompt**: [`prompt-programming.md`](./prompt-programming.md)
 - **Evaluation**: read through and evaluate them manually
-- **Output**: `llp/llm_outputs/programming/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
+- **Output**: `llm_outputs/programming/<model-name>.md`, points and speed go into LLP.
 
 1. **Warming Up**: (4 x 20 = 80 points)
 1. **Topics**: (16 x 30 = 480 points)
@@ -217,7 +192,7 @@ go run evaluate.go
 
 - **System Prompt**: inside prompt doc.
 - **Prompt**: [`prompt-general.md`](./prompt-general.md)
-- **Output**: `llp/llm_outputs/general/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
+- **Output**: `llm_outputs/general/<model-name>.md`, points and speed go into LLP.
 
 1. **Complexity Level 1**: Very Easy Prompts (3 x 5 = 15 points)
 1. **Complexity Level 2**: Easy Prompts (4 x 10 = 40 points)
@@ -233,7 +208,7 @@ go run evaluate.go
 
 - **System Prompt**: inside prompt doc.
 - **Prompt**: [`prompt-agi.md`](./prompt-agi.md)
-- **Output**: `llp/llm_outputs/agi/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
+- **Output**: `llm_outputs/agi/<model-name>.md`, points and speed go into LLP.
 
 1. **Prompt 1: Meta-Cognitive Self-Reflection Paradox**: (25 points)
 1. **Prompt 2: Ethical Reasoning Under Extreme Ambiguity**: (30 points)
@@ -254,7 +229,7 @@ go run evaluate.go
 
 - **System Prompt**: inside prompt doc.
 - **Prompt**: [`prompt-writing.md`](./prompt-writing.md)
-- **Output**: `llp/llm_outputs/writing/<model-name>.md`, points and speed go into [Tournament Table](#tournament-table).
+- **Output**: `llm_outputs/writing/<model-name>.md`, points and speed go into LLP.
 
 1. **Prompt 1: Near Future**: (40 points)
 1. **Prompt 2: The Resonance Cascade’s Echo**: (80 points)
@@ -272,7 +247,7 @@ go run evaluate.go
 - **System Prompt**: [`system-prompt.md`](./system-prompt.md)
 - **Prompt**: [`prompt-swe.md`](./prompt-swe.md)
 - **Evaluation Script**: [`evaluate.go`](./evaluate.go)
-- **Output**: `llp/llm_outputs/swe/<model-name>.go,<model-name>_test.go`, points and speed go into [Tournament Table](#tournament-table).
+- **Output**: `llm_outputs/swe/<model-name>.go,<model-name>_test.go`, points and speed go into LLP.
 - **Added Information**: on top of the code file, add the following information:
   - Line 1: Speed: `// 2.28 tok/sec • 476 tokens • 69.21s to first token • Stop: eosFound`
   - Line 2: Manual checks: `// adjustment: 0; explanation: 50; suggestions: 15`
@@ -288,38 +263,5 @@ go run evaluate.go
    - Good improvement suggestions (manual check): 20 points
 
 - **Total**: 500 points
-
-- **Debug Prompts**:
-
-<details>
-    <summary>...more</summary>
-
-**Generate Prompt**: upload `llm_list.md`.
-
-I'm doing a Local LLM Tournament to determine which AIs (the list is in `llm_list.md`) will be the best suite for my machine and my use case.
-
-Currently I need a prompt for a software engineering task which will be evaluated based on the provided criteria (should be in Golang, the AIs should also generate unit tests along side with the code, a comprehensive explanation of how to code works, and improvement suggestions). The test should be able to evaluate the coding skill of the AIs and their ability to handle concurrency, but should not rely on any third party libraries or tools or interacting with the internet beside Golang for a streamline evaluation.
-
-I will run the AIs on LM Studio and manually copy the output to `llm_outputs/programming_task/`, e.g. `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K.go` and `llm_outputs/programming_task/Qwen2.5-Coder-7B-Instruct-Q6_K_test.go`, alongside with the speed information recorded on the UI as a comment on top of the solution code
-
-And I also need a script to automatically evaluate the output and tests of a certain AI and output the result to the file `/llm_outputs/programming_task/scores/score-<model-name>.json`. The script should cover all the evaluation criteria that can be evaluated automatically, the three other criteria (runnable after adjustments, explanation clarity, and improvement suggestions) should also be retrieved via another comment on top of the file at 2nd line.
-
-`<paste all the above>`
-
-.
-
-**Debug Prompt**: upload `staging/evaluate.go`, `staging/prompt-code.md`.
-
-This `evaluate.go` is to evaluate the outputs of local LLMs after they've generated the `SWE Task` according to the `prompt-code.md`.
-
-It's now missing scoring logic. Please fix the code and ensure it correctness.
-
-</details>
-
-## Output
-
-- Detailed console output
-- JSON results file for each model
-- Performance profiles available
 
 ---
