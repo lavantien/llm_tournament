@@ -42,13 +42,13 @@
 - Go & golangci-lint & BubbleTea/Bubbles.
 - SQLite/FTS5.
 - Docker/Compose.
-- LM Studio/AnythingLLM, SillyTavernLaucher/TabbyAPI/LlamaCPP, Vllm/Aphrodite (Linux), Ollama/Open Web UI, Aider/AIStudioGoogle (best free plan), LMSYS/ChatGPTFree/ClaudeFree.
+- LM Studio/AnythingLLM, SillyTavernLaucher/TabbyAPI/LlamaCPP, Vllm/Aphrodite (Linux), Ollama/Open Web UI, Aider/AIStudioGoogle/DeepSeek (best free plans), LMSYS/ChatGPTFree/ClaudeFree.
 - Speed isn't important, as long as it can run then it's fair game.
 - Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, internlm2, stablelm, t5, bart
 
 ## Tournament Table
 
-- **LLM List**: [`llm_list.md`](./llm_list.md) (55 models).
+- **LLM List**: [`llm_list.md`](./llm_list.md) (56 models).
 
 - **My System**: 3080 10gb - 2x16gb ddr4 - 1tb m2 ssd - 12700f - windows 11
 
@@ -90,16 +90,15 @@
 
 - Local LLMs list (and their unique attributes):
 
+1. Llama-3.3-70B-Instruct-IQ2_M.gguf (24.12 GB)
 1. Codestral-22B-v0.1-Q8_0.gguf (23.64 GB)
 1. Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23.26 GB; `32k, 15`)
 1. c4ai-command-r-plus-08-2024.i1-IQ1_S.gguf (23.18 GB; `32k, 13`)
 1. c4ai-command-r-08-2024-Q5_K_M.gguf (23.05 GB, `32k, 9`)
-1. Qwen2.5-72B-Instruct.i1-IQ1_S.gguf (22.69 GB; `32k, 19`)
 1. gemma-2-27b-it-Q6_K.gguf (22.34 GB; `8k, 14, no-keep-in-mem, no-mmap`)
 1. GritLM-8x7B.i1-IQ3_M.gguf (21.43 GB; `32k, 9, 8e`)
 1. internlm2_5-20b-chat.Q8_0.gguf (21.11 GB; `32k, 15`)
 1. aya-23-35B.i1-IQ4_XS.gguf (19.20 GB; `4k, 12, no-keep-in-mem, no-mmap`)
-1. Llama-3.3-70B-Instruct-IQ2_XXS.gguf (19.10 GB; `32k, 21`)
 1. Yi-1.5-34B-Chat-16K.IQ4_XS.gguf (18.64 GB)
 1. Midnight-Miqu-70B-v1.5-Safetensorsfix.i1-IQ2_XXS.gguf (18.29 GB)
 1. alchemonaut_QuartetAnemoi-70B-b2131-iMat-c32_ch1000-IQ2_XXS.gguf (18.29 GB)
@@ -119,9 +118,11 @@
 1. madlad400-10b-mt-q8_0.gguf (11.39 GB)
 1. gemma-2-9b-it-abliterated-Q8_0.gguf (9.83 GB)
 1. Yi-1.5-9B-Chat-16K-abliterated.Q8_0.gguf (9.38 GB)
+1. stable-diffusion-3.5_large-Q8_0.gguf (8.78 GB)
 1. aya-23-8B.Q8_0.gguf (8.54 GB)
 1. Poppy_Porpoise-v0.7-L3-8B.Q8_0.gguf (8.54 GB)
 1. OpenCoder-8B-Instruct-Q8_0.gguf (8.26 GB)
+1. marco-o1-q8_0.gguf (8.10 GB)
 1. Qwen2.5-Coder-7B-Instruct.Q8_0.gguf (8.10 GB)
 1. Qwen2.5-7B-Instruct_Q8_0.gguf (8.10 GB)
 1. Mistral-7B-Instruct-v0.3.Q8_0.gguf (7.70 GB)
