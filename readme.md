@@ -88,7 +88,7 @@
 
 - Local LLMs list (and their unique attributes):
 
-1. Llama-3.3-70B-Instruct-IQ2_M.gguf (24.12 GB)
+1. Llama-3.3-70B-Instruct-IQ2_M.gguf (24.12 GB; `32k, 17`)
 1. Codestral-22B-v0.1-Q8_0.gguf (23.64 GB)
 1. Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23.26 GB; `32k, 15`)
 1. c4ai-command-r-plus-08-2024.i1-IQ1_S.gguf (23.18 GB; `32k, 13`)
