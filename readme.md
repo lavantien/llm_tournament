@@ -42,13 +42,11 @@
 - Go & golangci-lint & BubbleTea/Bubbles.
 - SQLite/FTS5.
 - Docker/Compose.
-- LM Studio/AnythingLLM, SillyTavernLaucher/TabbyAPI/LlamaCPP, Vllm/Aphrodite (Linux), Ollama/Open Web UI, Aider/AIStudioGoogle/DeepSeek (best free plans), LMSYS/ChatGPTFree/ClaudeFree.
-- Speed isn't important, as long as it can run then it's fair game.
+- LM Studio/AnythingLLM, SillyTavernLaucher/TabbyAPI/LlamaCPP, Vllm/Aphrodite (Linux), Ollama/Open Web UI, ChatWithRTX, Aider/AIStudioGoogle/DeepSeek (best free plans), LMSYS/ChatGPTFree/ClaudeFree.
+- HuggingFace, CivitAI, ComfyUI, SwarmUI, stable-diffusion-webui-forge, Speed isn't important, as long as it can run then it's fair game.
 - Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, internlm2, stablelm, t5, bart
 
 ## Tournament Table
-
-- **LLM List**: [`llm_list.md`](./llm_list.md) (56 models).
 
 - **My System**: 3080 10gb - 2x16gb ddr4 - 1tb m2 ssd - 12700f - windows 11
 
@@ -100,11 +98,8 @@
 1. internlm2_5-20b-chat.Q8_0.gguf (21.11 GB; `32k, 15`)
 1. aya-23-35B.i1-IQ4_XS.gguf (19.20 GB; `4k, 12, no-keep-in-mem, no-mmap`)
 1. Yi-1.5-34B-Chat-16K.IQ4_XS.gguf (18.64 GB)
-1. Midnight-Miqu-70B-v1.5-Safetensorsfix.i1-IQ2_XXS.gguf (18.29 GB)
-1. alchemonaut_QuartetAnemoi-70B-b2131-iMat-c32_ch1000-IQ2_XXS.gguf (18.29 GB)
 1. deepseek-coder-33b-instruct.i1-IQ4_XS.gguf (17.86 GB)
 1. WizardCoder-33B-V1.1.i1-IQ4_XS.gguf (17.86 GB)
-1. zetasepic-abliteratedV2-Qwen2.5-32B-Inst-BaseMerge-TIES.i1-IQ4_XS.gguf (17.69 GB)
 1. DeepSeek-Coder-V2-Lite-Instruct-Q8_0.gguf (16.70 GB)
 1. Qwen2.5-Coder-14B-Instruct-Q8_0.gguf (15.70 GB)
 1. Qwen2.5-Math-14B-Instruct-Alpha.Q8_0.gguf (15.70 GB)
@@ -118,30 +113,24 @@
 1. madlad400-10b-mt-q8_0.gguf (11.39 GB)
 1. gemma-2-9b-it-abliterated-Q8_0.gguf (9.83 GB)
 1. Yi-1.5-9B-Chat-16K-abliterated.Q8_0.gguf (9.38 GB)
-1. stable-diffusion-3.5_large-Q8_0.gguf (8.78 GB)
 1. aya-23-8B.Q8_0.gguf (8.54 GB)
 1. Poppy_Porpoise-v0.7-L3-8B.Q8_0.gguf (8.54 GB)
 1. OpenCoder-8B-Instruct-Q8_0.gguf (8.26 GB)
-1. marco-o1-q8_0.gguf (8.10 GB)
-1. Qwen2.5-Coder-7B-Instruct.Q8_0.gguf (8.10 GB)
 1. Qwen2.5-7B-Instruct_Q8_0.gguf (8.10 GB)
+1. marco-o1-q8_0.gguf (8.10 GB)
+1. falcon-mamba-7b-instruct-Q8_0.gguf (7.77 GB)
 1. Mistral-7B-Instruct-v0.3.Q8_0.gguf (7.70 GB)
-1. Mistral-T5-7B-v1.Q8_0.gguf (7.70 GB)
 1. llava-v1.6-mistral-7b.Q8_0.gguf (7.70 GB)
-1. mathstral-7B-v0.1.Q8_0.gguf (7.70 GB)
-1. MathCoder2-DeepSeekMath-7B.Q8_0.gguf (7.35 GB)
-1. Wizard-Vicuna-7B-Uncensored.Q8_0.gguf (7.16 GB)
-1. t5-v1_1-xxl-encoder-Q8_0.gguf (5.06 GB)
 1. Phi-3.5-3.8B-vision-instruct-Q8_0.gguf (4.71 GB)
 1. Phi-3.5-mini-instruct.Q8_0.gguf (4.06 GB)
 1. Qwen2.5-3B-Instruct-abliterated-Evol-CoT_SLERP.Q8_0.gguf (3.62 GB)
 1. qwen2.5-coder-3b-instruct-q8_0.gguf (3.62 GB)
-1. Hermes-3-Llama-3.2-3B.Q8_0.gguf (3.42 GB)
 1. Llama-Doctor-3.2-3B-Instruct.Q8_0.gguf (3.42 GB)
-1. llama-3.2-3b-instruct-q8_0.gguf (3.42 GB)
+1. Hermes-3-Llama-3.2-3B.Q8_0.gguf (3.42 GB)
 1. stable-code-instruct-3b-Q8_0.gguf (2.97 GB)
 1. whisper-large-v3-candle-q8_0.gguf (1.66 GB)
 1. gemma-2-2b-it-IQ4_XS.gguf (1.57 GB)
+1. llama-3.2-1b-instruct-q8_0.gguf (1.32 GB)
 1. Phi-3.5-mini-instruct.i1-IQ2_XXS.gguf (1042.94 MB)
 1. flan-t5-large-grammar-synthesis-Q8_0.gguf (833.52 MB)
 1. TRoTR-paraphrase-multilingual-MiniLM-L12-v2.IQ4_XS.gguf (211.89 MB)
