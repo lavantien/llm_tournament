@@ -17,12 +17,140 @@
 
 - Directory structure:
 
-  - `assets/`: all assets go here.
-  - `db/`: database file, schema, and `migration.go` to load prompt suites into db if not exist.
-  - `llm_outputs/`: all LLM outputs go here.
-  - `main.go`: all the code go here, megalith architecture.
-  - `main_test.go`: all the unit tests and integration tests go here.
-  - `makefile`: all the setup and migration go here.
+  - `assets/`: all assets.
+  - `db/`: database file, schemas, and `migration.go` to load prompt suites into db if not exist.
+  - `llm_outputs/`: all LLM outputs.
+  - `main.go`: glue all the tabs together.
+  - `leaderboard.go`: each row is dedicated to a bot, and each column is its total points for each prompt category, another column for total points overall, and another column for average speed.
+  - `ingressor.go`
+  - `egressor.go`
+  - `exporter.go`
+  - `botman.go`
+  - `promptman.go`
+  - `main_test.go`: all integration tests.
+  - `makefile`: all the setup and migration.
+  - `conducer.go`: LM Studio OpenAI's chat endpoint: `http://127.0.0.1:1234`, `POST /v1/chat/completion`, example body:
+    - `{"model": "c4ai-command-r-08-2024-i1", "stream": true, "max_tokens": -1, "messages": [{"role": "system", "content": "You are an expert translator"}, {"role": "user", "content": "Translate this text to idiomatic Vietnamese: which Sāriputta approved what the Buddha said. \r\n"}]}`
+    - Stream the respond to output, then upon complete, will offer the option to save the result.
+
+- `GET /api/v0/models` - List available models, example response:
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "qwen2-vl-7b-instruct",
+      "object": "model",
+      "type": "vlm",
+      "publisher": "mlx-community",
+      "arch": "qwen2_vl",
+      "compatibility_type": "mlx",
+      "quantization": "4bit",
+      "state": "not-loaded",
+      "max_context_length": 32768
+    },
+    {
+      "id": "meta-llama-3.1-8b-instruct",
+      "object": "model",
+      "type": "llm",
+      "publisher": "lmstudio-community",
+      "arch": "llama",
+      "compatibility_type": "gguf",
+      "quantization": "Q4_K_M",
+      "state": "not-loaded",
+      "max_context_length": 131072
+    },
+    {
+      "id": "text-embedding-nomic-embed-text-v1.5",
+      "object": "model",
+      "type": "embeddings",
+      "publisher": "nomic-ai",
+      "arch": "nomic-bert",
+      "compatibility_type": "gguf",
+      "quantization": "Q4_0",
+      "state": "not-loaded",
+      "max_context_length": 2048
+    }
+  ]
+}
+```
+
+- `GET /api/v0/models/{model}` - Get info about a specific model, example response:
+
+```json
+curl http://localhost:1234/api/v0/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "granite-3.0-2b-instruct",
+    "messages": [
+      { "role": "system", "content": "Always answer in rhymes." },
+      { "role": "user", "content": "Introduce yourself." }
+    ],
+    "temperature": 0.7,
+    "max_tokens": -1,
+    "stream": false
+  }'
+```
+
+- `POST /api/v0/chat/completions` - Chat Completions (messages -> assistant response), example request and response:
+
+```json
+curl http://localhost:1234/api/v0/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "granite-3.0-2b-instruct",
+    "messages": [
+      { "role": "system", "content": "Always answer in rhymes." },
+      { "role": "user", "content": "Introduce yourself." }
+    ],
+    "temperature": 0.7,
+    "max_tokens": -1,
+    "stream": false
+  }'
+```
+
+```json
+{
+  "id": "chatcmpl-i3gkjwthhw96whukek9tz",
+  "object": "chat.completion",
+  "created": 1731990317,
+  "model": "granite-3.0-2b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "Greetings, I'm a helpful AI, here to assist,\nIn providing answers, with no distress.\nI'll keep it short and sweet, in rhyme you'll find,\nA friendly companion, all day long you'll bind."
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 24,
+    "completion_tokens": 53,
+    "total_tokens": 77
+  },
+  "stats": {
+    "tokens_per_second": 51.43709529007664,
+    "time_to_first_token": 0.111,
+    "generation_time": 0.954,
+    "stop_reason": "eosFound"
+  },
+  "model_info": {
+    "arch": "granite",
+    "quant": "Q4_K_M",
+    "format": "gguf",
+    "context_length": 4096
+  },
+  "runtime": {
+    "name": "llama.cpp-mac-arm64-apple-metal-advsimd",
+    "version": "1.3.0",
+    "supported_formats": ["gguf"]
+  }
+}
+```
 
 - A playground for conducting (manual as of now) tournaments of the local LLMs.
 - Extensive prepared prompt suites to exploring programming and life together with the AIs.
@@ -46,7 +174,7 @@
 - HuggingFace, CivitAI, ComfyUI, SwarmUI, stable-diffusion-webui-forge, Speed isn't important, as long as it can run then it's fair game.
 - Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, internlm2, stablelm, t5, bart
 
-## Tournament Table
+## Tournament Leaderboard
 
 - **My System**: 3080 10gb - 2x16gb ddr4 - 1tb m2 ssd - 12700f - windows 11
 
@@ -91,18 +219,15 @@
 1. Llama-3.3-70B-Instruct-IQ2_M.gguf (24.12 GB; `32k, 17`)
 1. Codestral-22B-v0.1-Q8_0.gguf (23.64 GB)
 1. Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23.26 GB; `32k, 15`)
-1. c4ai-command-r-plus-08-2024.i1-IQ1_S.gguf (23.18 GB; `32k, 13`)
 1. c4ai-command-r-08-2024-Q5_K_M.gguf (23.05 GB, `32k, 9`)
-1. gemma-2-27b-it-Q6_K.gguf (22.34 GB; `8k, 14, no-keep-in-mem, no-mmap`)
+1. gemma-2-27b-it-Q6_K.gguf (22.34 GB; `8k, 13`)
 1. GritLM-8x7B.i1-IQ3_M.gguf (21.43 GB; `32k, 9, 8e`)
 1. internlm2_5-20b-chat.Q8_0.gguf (21.11 GB; `32k, 15`)
-1. aya-23-35B.i1-IQ4_XS.gguf (19.20 GB; `4k, 12, no-keep-in-mem, no-mmap`)
-1. Yi-1.5-34B-Chat-16K.IQ4_XS.gguf (18.64 GB)
-1. deepseek-coder-33b-instruct.i1-IQ4_XS.gguf (17.86 GB)
+1. aya-23-35B.i1-IQ4_XS.gguf (19.20 GB; `8k, 10`)
+1. Yi-1.5-34B-Chat-16K.IQ4_XS.gguf (18.64 GB; `16k, 23`)
 1. WizardCoder-33B-V1.1.i1-IQ4_XS.gguf (17.86 GB)
 1. DeepSeek-Coder-V2-Lite-Instruct-Q8_0.gguf (16.70 GB)
 1. Qwen2.5-Coder-14B-Instruct-Q8_0.gguf (15.70 GB)
-1. Qwen2.5-Math-14B-Instruct-Alpha.Q8_0.gguf (15.70 GB)
 1. Virtuoso-Small-Q8_0.gguf (15.70 GB)
 1. TowerInstruct-13B-v0.1.Q8_0.gguf (13.83 GB)
 1. vicuna-13b-v1.5-16k-Q8_0.gguf (13.83 GB)
@@ -131,12 +256,9 @@
 1. whisper-large-v3-candle-q8_0.gguf (1.66 GB)
 1. gemma-2-2b-it-IQ4_XS.gguf (1.57 GB)
 1. llama-3.2-1b-instruct-q8_0.gguf (1.32 GB)
-1. Phi-3.5-mini-instruct.i1-IQ2_XXS.gguf (1042.94 MB)
 1. flan-t5-large-grammar-synthesis-Q8_0.gguf (833.52 MB)
 1. TRoTR-paraphrase-multilingual-MiniLM-L12-v2.IQ4_XS.gguf (211.89 MB)
 1. all-minilm-l12-v2-q8_0.gguf (36.69 MB)
-
-(TODO)
 
 ## Usage
 
