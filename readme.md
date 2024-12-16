@@ -216,7 +216,7 @@ curl http://localhost:1234/api/v0/chat/completions \
 
 - Local LLMs list (and their unique attributes):
 
-1. Llama-3.3-70B-Instruct-IQ2_M.gguf (24.12 GB; `32k, 17`)
+1. Llama-3.3-70B-Instruct-IQ2_M.gguf (24.12 GB; `32k, 19`)
 1. Codestral-22B-v0.1-Q8_0.gguf (23.64 GB)
 1. Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23.26 GB; `32k, 15`)
 1. c4ai-command-r-08-2024-Q5_K_M.gguf (23.05 GB, `32k, 9`)
@@ -231,7 +231,7 @@ curl http://localhost:1234/api/v0/chat/completions \
 1. Virtuoso-Small-Q8_0.gguf (15.70 GB)
 1. TowerInstruct-13B-v0.1.Q8_0.gguf (13.83 GB)
 1. vicuna-13b-v1.5-16k-Q8_0.gguf (13.83 GB)
-1. Mistral-Nemo-Instruct-2407-Q8_0.gguf (13.02 GB)
+1. Mistral-Nemo-Instruct-2407-Q8_0.gguf (13.02 GB; `32k, 21`)
 1. stablelm-2-12b-chat-Q8_0.gguf (12.91 GB)
 1. Fimbulvetr-11B-Ultra-Quality-plus-Q8_0-imat.gguf (12.17 GB)
 1. phi3.1-medium-Q6_K.gguf (11.45 GB)
