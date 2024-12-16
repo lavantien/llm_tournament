@@ -33,6 +33,9 @@
     - `{"model": "c4ai-command-r-08-2024-i1", "stream": true, "max_tokens": -1, "messages": [{"role": "system", "content": "You are an expert translator"}, {"role": "user", "content": "Translate this text to idiomatic Vietnamese: which Sāriputta approved what the Buddha said. \r\n"}]}`
     - Stream the respond to output, then upon complete, will offer the option to save the result.
 
+<details>
+    <summary>LM Studio REST API integration (... more)</summary>
+
 - `GET /api/v0/models` - List available models, example response:
 
 ```json
@@ -152,6 +155,8 @@ curl http://localhost:1234/api/v0/chat/completions \
 }
 ```
 
+</details>
+
 - A playground for conducting (manual as of now) tournaments of the local LLMs.
 - Extensive prepared prompt suites to exploring programming and life together with the AIs.
 
@@ -219,7 +224,7 @@ curl http://localhost:1234/api/v0/chat/completions \
 1. Llama-3.3-70B-Instruct-IQ2_M.gguf (24.12 GB; `32k, 19`)
 1. Codestral-22B-v0.1-Q8_0.gguf (23.64 GB)
 1. Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23.26 GB; `32k, 15`)
-1. c4ai-command-r-08-2024-Q5_K_M.gguf (23.05 GB, `32k, 9`)
+1. c4ai-command-r-08-2024-Q5_K_M.gguf (23.05 GB, `32k, 9`; **best Vietnamese translator**)
 1. gemma-2-27b-it-Q6_K.gguf (22.34 GB; `8k, 13`)
 1. GritLM-8x7B.i1-IQ3_M.gguf (21.43 GB; `32k, 9, 8e`)
 1. internlm2_5-20b-chat.Q8_0.gguf (21.11 GB; `32k, 15`)
@@ -243,10 +248,10 @@ curl http://localhost:1234/api/v0/chat/completions \
 1. OpenCoder-8B-Instruct-Q8_0.gguf (8.26 GB)
 1. Qwen2.5-7B-Instruct_Q8_0.gguf (8.10 GB)
 1. marco-o1-q8_0.gguf (8.10 GB)
+1. llava-v1.5-7b-Q8_0.gguf (7.79 GB)
 1. falcon-mamba-7b-instruct-Q8_0.gguf (7.77 GB)
 1. Mistral-7B-Instruct-v0.3.Q8_0.gguf (7.70 GB)
-1. llava-v1.6-mistral-7b.Q8_0.gguf (7.70 GB)
-1. Phi-3.5-3.8B-vision-instruct-Q8_0.gguf (4.71 GB)
+1. llava-v1.6-mistral-7b.Q8_0.gguf (7.70 GB; `32k, 24`)
 1. Phi-3.5-mini-instruct.Q8_0.gguf (4.06 GB)
 1. Qwen2.5-3B-Instruct-abliterated-Evol-CoT_SLERP.Q8_0.gguf (3.62 GB)
 1. qwen2.5-coder-3b-instruct-q8_0.gguf (3.62 GB)

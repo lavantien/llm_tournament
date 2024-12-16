@@ -29,7 +29,7 @@ type ModelEvaluation struct {
 	TotalScore            int     `json:"total_score"`
 }
 
-func evaluateModelCode(modelName, codePath, testPath string) ModelEvaluation {
+func evaluateModelCode(modelName, codePath string) ModelEvaluation {
 	eval := ModelEvaluation{ModelName: modelName}
 
 	// Read file contents
@@ -288,12 +288,12 @@ func Eval() {
 		}
 		if !info.IsDir() && filepath.Ext(path) == ".go" && !strings.Contains(path, "_test.go") {
 			modelName := strings.TrimSuffix(filepath.Base(path), ".go")
-			testPath := filepath.Join(filepath.Dir(path), modelName+"_test.go")
+			// testPath := filepath.Join(filepath.Dir(path), modelName+"_test.go")
 
-			if _, err := os.Stat(testPath); !os.IsNotExist(err) {
-				modelEval := evaluateModelCode(modelName, path, testPath)
-				results = append(results, modelEval)
-			}
+			// if _, err := os.Stat(testPath); !os.IsNotExist(err) {
+			modelEval := evaluateModelCode(modelName, path)
+			results = append(results, modelEval)
+			// }
 		}
 		return nil
 	})

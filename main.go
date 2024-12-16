@@ -2,189 +2,284 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
 	"fmt"
 	"log"
 	"os"
+	"time"
 
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbles/table"
-	"github.com/charmbracelet/bubbletea"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	_ "github.com/mattn/go-sqlite3"
+
+	"llm_tournament/db"
 )
 
-type AppModel struct {
-	currentView string
-	table       table.Model
-	keys        KeyMap
+type Bot struct {
+	ID                int       `json:"id"`
+	Name              string    `json:"name"`
+	Arch              string    `json:"arch"`
+	CompatibilityType string    `json:"compatibility_type"`
+	Quantization      string    `json:"quantization"`
+	MaxContextLength  int       `json:"max_context_length"`
+	CreatedAt         time.Time `json:"created_at"`
+	UpdatedAt         time.Time `json:"updated_at"`
 }
 
-var db *sql.DB
-
-// KeyMap defines application keybindings.
-type KeyMap struct {
-	Quit   key.Binding
-	Tab    key.Binding
-	Select key.Binding
+type Category struct {
+	ID        int       `json:"id"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
-// Initialize keybindings.
-func DefaultKeyMap() KeyMap {
-	return KeyMap{
-		Quit: key.NewBinding(
-			key.WithKeys("q"),
-			key.WithHelp("q", "quit"),
-		),
-		Tab: key.NewBinding(
-			key.WithKeys("tab"),
-			key.WithHelp("tab", "switch views"),
-		),
-		Select: key.NewBinding(
-			key.WithKeys("enter"),
-			key.WithHelp("enter", "select"),
-		),
+type Prompt struct {
+	ID         int       `json:"id"`
+	CategoryID int       `json:"category_id"`
+	Content    string    `json:"content"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+}
+
+type Score struct {
+	ID         int       `json:"id"`
+	BotID      int       `json:"bot_id"`
+	PromptID   int       `json:"prompt_id"`
+	Score      int       `json:"score"`
+	Speed      float64   `json:"speed"`
+	OutputPath string    `json:"output_path"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+}
+
+type model struct {
+	db          *sql.DB
+	activeTab   int
+	leaderboard leaderboardModel
+	ingressor   ingressorModel
+	egressor    egressorModel
+	botman      botmanModel
+	promptman   promptmanModel
+	conducer    conducerModel
+	quitting    bool
+}
+
+func initialModel(db *sql.DB) model {
+	return model{
+		db:          db,
+		activeTab:   0,
+		leaderboard: initialLeaderboardModel(db),
+		ingressor:   initialIngressorModel(db),
+		egressor:    initialEgressorModel(db),
+		botman:      initialBotmanModel(db),
+		promptman:   initialPromptmanModel(db),
+		conducer:    initialConducerModel(db),
+		quitting:    false,
 	}
 }
 
-func NewModel() AppModel {
-	columns := []table.Column{
-		{Title: "ID", Width: 10},
-		{Title: "Model Name", Width: 20},
-		{Title: "Version", Width: 10},
-		{Title: "Status", Width: 15},
-	}
-	rows := []table.Row{
-		{"1", "Qwen2.5-Coder", "7B", "Active"},
-		{"2", "Gemma-2", "27B", "Inactive"},
-	}
-
-	t := table.New(
-		table.WithColumns(columns),
-		table.WithRows(rows),
-		table.WithFocused(true),
-	)
-
-	t.SetStyles(table.DefaultStyles())
-
-	return AppModel{
-		currentView: "table",
-		table:       t,
-		keys:        DefaultKeyMap(),
-	}
-}
-
-func (m AppModel) Init() tea.Cmd {
+func (m model) Init() tea.Cmd {
 	return nil
 }
 
-func (m AppModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
-		switch {
-		case key.Matches(msg, m.keys.Quit):
+		switch msg.String() {
+		case "ctrl+c", "q":
+			m.quitting = true
 			return m, tea.Quit
-
-		case key.Matches(msg, m.keys.Tab):
-			if m.currentView == "table" {
-				m.currentView = "stats"
-			} else {
-				m.currentView = "table"
+		case "ctrl+l":
+			m.activeTab = 0
+			return m, nil
+		case "ctrl+b":
+			m.activeTab = 1
+			return m, nil
+		case "ctrl+p":
+			m.activeTab = 2
+			return m, nil
+		case "ctrl+d":
+			m.activeTab = 3
+			return m, nil
+		case "ctrl+x":
+			if m.activeTab == 0 {
+				return m, m.leaderboard.exportData()
 			}
 			return m, nil
-
-		case key.Matches(msg, m.keys.Select):
-			log.Println("Selected row")
+		case "tab":
+			if m.activeTab == 0 {
+				return m, m.leaderboard.nextField()
+			} else if m.activeTab == 1 {
+				return m, m.botman.nextField()
+			} else if m.activeTab == 2 {
+				return m, m.promptman.nextField()
+			} else if m.activeTab == 3 {
+				return m, m.conducer.nextField()
+			}
+			return m, nil
+		case "shift+tab":
+			if m.activeTab == 0 {
+				return m, m.leaderboard.prevField()
+			} else if m.activeTab == 1 {
+				return m, m.botman.prevField()
+			} else if m.activeTab == 2 {
+				return m, m.promptman.prevField()
+			} else if m.activeTab == 3 {
+				return m, m.conducer.prevField()
+			}
+			return m, nil
+		case "up", "k":
+			if m.activeTab == 0 {
+				return m, m.leaderboard.prevRow()
+			} else if m.activeTab == 1 {
+				return m, m.botman.prevRow()
+			} else if m.activeTab == 2 {
+				return m, m.promptman.prevRow()
+			}
+			return m, nil
+		case "down", "j":
+			if m.activeTab == 0 {
+				return m, m.leaderboard.nextRow()
+			} else if m.activeTab == 1 {
+				return m, m.botman.nextRow()
+			} else if m.activeTab == 2 {
+				return m, m.promptman.nextRow()
+			}
+			return m, nil
+		case "enter":
+			if m.activeTab == 0 {
+				return m, m.leaderboard.selectRow()
+			} else if m.activeTab == 1 {
+				return m, m.botman.selectRow()
+			} else if m.activeTab == 2 {
+				return m, m.promptman.selectRow()
+			}
+			return m, nil
+		case "ctrl+i":
+			if m.activeTab == 0 {
+				return m, m.leaderboard.openIngressor()
+			}
+			return m, nil
+		case "ctrl+e":
+			if m.activeTab == 0 {
+				return m, m.leaderboard.openEgressor()
+			}
+			return m, nil
+		case "ctrl+t":
+			if m.activeTab == 3 {
+				return m, m.conducer.sendRequest()
+			}
+			return m, nil
+		case "ctrl+y":
+			if m.activeTab == 0 && m.leaderboard.ingressorOpen {
+				return m, m.leaderboard.ingressor.copyPrompt()
+			}
+			return m, nil
 		}
+	case tea.WindowSizeMsg:
+		m.leaderboard.width = msg.Width
+		m.leaderboard.height = msg.Height
+		m.ingressor.width = msg.Width
+		m.ingressor.height = msg.Height
+		m.egressor.width = msg.Width
+		m.egressor.height = msg.Height
+		m.botman.width = msg.Width
+		m.botman.height = msg.Height
+		m.promptman.width = msg.Width
+		m.promptman.height = msg.Height
+		m.conducer.width = msg.Width
+		m.conducer.height = msg.Height
+	case tabChangeMsg:
+		m.activeTab = int(msg)
+		return m, nil
+	case modelUpdateMsg:
+		if m.activeTab == 0 {
+			updatedModel, cmd := m.leaderboard.Update(msg.msg)
+			m.leaderboard = updatedModel.(leaderboardModel)
+			return m, cmd
+		} else if m.activeTab == 1 {
+			updatedModel, cmd := m.botman.Update(msg.msg)
+			m.botman = updatedModel.(botmanModel)
+			return m, cmd
+		} else if m.activeTab == 2 {
+			updatedModel, cmd := m.promptman.Update(msg.msg)
+			m.promptman = updatedModel.(promptmanModel)
+			return m, cmd
+		} else if m.activeTab == 3 {
+			updatedModel, cmd := m.conducer.Update(msg.msg)
+			m.conducer = updatedModel.(conducerModel)
+			return m, cmd
+		}
+	case error:
+		log.Printf("Error: %v", msg)
+		return m, nil
 	}
 
-	if m.currentView == "table" {
-		tableModel, cmd := m.table.Update(msg)
-		m.table = tableModel
+	if m.activeTab == 0 {
+		updatedModel, cmd := m.leaderboard.Update(msg)
+		m.leaderboard = updatedModel.(leaderboardModel)
+		return m, cmd
+	} else if m.activeTab == 1 {
+		updatedModel, cmd := m.botman.Update(msg)
+		m.botman = updatedModel.(botmanModel)
+		return m, cmd
+	} else if m.activeTab == 2 {
+		updatedModel, cmd := m.promptman.Update(msg)
+		m.promptman = updatedModel.(promptmanModel)
+		return m, cmd
+	} else if m.activeTab == 3 {
+		updatedModel, cmd := m.conducer.Update(msg)
+		m.conducer = updatedModel.(conducerModel)
 		return m, cmd
 	}
 
 	return m, nil
 }
 
-func (m AppModel) View() string {
-	var body string
-
-	switch m.currentView {
-	case "table":
-		body = m.table.View()
-	case "stats":
-		body = "Statistics View - Work in Progress"
+func (m model) View() string {
+	if m.quitting {
+		return "Exiting...\n"
 	}
 
-	footer := lipgloss.NewStyle().Background(lipgloss.Color("236")).Foreground(lipgloss.Color("230")).Padding(0, 1).Render("[q] Quit [Tab] Switch Views [Enter] Select")
-	return lipgloss.JoinVertical(lipgloss.Center, body, footer)
+	var view string
+	switch m.activeTab {
+	case 0:
+		view = m.leaderboard.View()
+	case 1:
+		view = m.botman.View()
+	case 2:
+		view = m.promptman.View()
+	case 3:
+		view = m.conducer.View()
+	}
+
+	return view
 }
 
-func setupDatabase() {
-	var err error
-	db, err = sql.Open("sqlite3", "llm.db")
-	if err != nil {
-		log.Fatalf("Failed to connect to database: %v", err)
-	}
-
-	createTableSQL := `CREATE TABLE IF NOT EXISTS llms (
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		name TEXT NOT NULL,
-		version TEXT NOT NULL,
-		status TEXT NOT NULL
-	);`
-
-	_, err = db.Exec(createTableSQL)
-	if err != nil {
-		log.Fatalf("Failed to create table: %v", err)
-	}
+type tabChangeMsg int
+type modelUpdateMsg struct {
+	msg tea.Msg
 }
 
-func exportData() {
-	rows, err := db.Query("SELECT * FROM llms")
-	if err != nil {
-		log.Fatalf("Failed to fetch data: %v", err)
-	}
-	defer rows.Close()
+var (
+	baseStyle = lipgloss.NewStyle().
+			BorderStyle(lipgloss.NormalBorder()).
+			BorderForeground(lipgloss.Color("240"))
 
-	var data []map[string]interface{}
-	for rows.Next() {
-		var id int
-		var name, version, status string
-		if err := rows.Scan(&id, &name, &version, &status); err != nil {
-			log.Fatalf("Failed to scan row: %v", err)
-		}
-		data = append(data, map[string]interface{}{
-			"id":      id,
-			"name":    name,
-			"version": version,
-			"status":  status,
-		})
-	}
-
-	file, err := os.Create("llms_export.json")
-	if err != nil {
-		log.Fatalf("Failed to create JSON file: %v", err)
-	}
-	defer file.Close()
-
-	encoder := json.NewEncoder(file)
-	encoder.SetIndent("", "  ")
-	if err := encoder.Encode(data); err != nil {
-		log.Fatalf("Failed to write JSON file: %v", err)
-	}
-
-	log.Println("Data exported to llms_export.json")
-}
+	focusedStyle = lipgloss.NewStyle().
+			Foreground(lipgloss.Color("229")).
+			Background(lipgloss.Color("57")).
+			Bold(true)
+)
 
 func main() {
-	setupDatabase()
+	db, err := db.Migrate()
+	if err != nil {
+		log.Fatalf("Failed to migrate database: %v", err)
+	}
 	defer db.Close()
 
-	p := tea.NewProgram(NewModel())
+	p := tea.NewProgram(initialModel(db), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
-		fmt.Printf("Error starting program: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error running program: %v\n", err)
 		os.Exit(1)
 	}
 }
