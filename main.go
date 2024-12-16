@@ -81,8 +81,10 @@ func (m model) Init() tea.Cmd {
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	log.Printf("Update: Received message of type %T", msg)
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
+		log.Printf("Update: KeyMsg: %s", msg.String())
 		switch msg.String() {
 		case "ctrl+c", "q":
 			m.quitting = true
@@ -100,12 +102,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.activeTab = 3
 			return m, nil
 		case "ctrl+x":
-			if m.activeTab == 0 {
+			if m.activeTab == 0 && m.leaderboard.table.Focused() {
 				return m, m.leaderboard.exportData()
 			}
 			return m, nil
 		case "tab":
-			if m.activeTab == 0 {
+			if m.activeTab == 0 && m.leaderboard.table.Focused() {
 				return m, m.leaderboard.nextField()
 			} else if m.activeTab == 1 {
 				return m, m.botman.nextField()
@@ -116,7 +118,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			return m, nil
 		case "shift+tab":
-			if m.activeTab == 0 {
+			if m.activeTab == 0 && m.leaderboard.table.Focused() {
 				return m, m.leaderboard.prevField()
 			} else if m.activeTab == 1 {
 				return m, m.botman.prevField()
@@ -127,7 +129,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			return m, nil
 		case "up", "k":
-			if m.activeTab == 0 {
+			if m.activeTab == 0 && m.leaderboard.table.Focused() {
 				return m, m.leaderboard.prevRow()
 			} else if m.activeTab == 1 {
 				return m, m.botman.prevRow()
@@ -136,7 +138,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			return m, nil
 		case "down", "j":
-			if m.activeTab == 0 {
+			if m.activeTab == 0 && m.leaderboard.table.Focused() {
 				return m, m.leaderboard.nextRow()
 			} else if m.activeTab == 1 {
 				return m, m.botman.nextRow()
@@ -145,7 +147,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			return m, nil
 		case "enter":
-			if m.activeTab == 0 {
+			if m.activeTab == 0 && m.leaderboard.table.Focused() {
 				return m, m.leaderboard.selectRow()
 			} else if m.activeTab == 1 {
 				return m, m.botman.selectRow()
@@ -154,12 +156,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			return m, nil
 		case "ctrl+i":
-			if m.activeTab == 0 {
+			if m.activeTab == 0 && m.leaderboard.table.Focused() {
 				return m, m.leaderboard.openIngressor()
 			}
 			return m, nil
 		case "ctrl+e":
-			if m.activeTab == 0 {
+			if m.activeTab == 0 && m.leaderboard.table.Focused() {
 				return m, m.leaderboard.openEgressor()
 			}
 			return m, nil
@@ -191,7 +193,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.activeTab = int(msg)
 		return m, nil
 	case modelUpdateMsg:
-		if m.activeTab == 0 {
+		if m.activeTab == 0 && m.leaderboard.table.Focused() {
 			updatedModel, cmd := m.leaderboard.Update(msg.msg)
 			m.leaderboard = updatedModel.(leaderboardModel)
 			return m, cmd
@@ -213,7 +215,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 	}
 
-	if m.activeTab == 0 {
+	if m.activeTab == 0 && m.leaderboard.table.Focused() {
 		updatedModel, cmd := m.leaderboard.Update(msg)
 		m.leaderboard = updatedModel.(leaderboardModel)
 		return m, cmd
@@ -233,7 +235,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	return m, nil
 }
-
 func (m model) View() string {
 	if m.quitting {
 		return "Exiting...\n"

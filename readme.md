@@ -224,7 +224,7 @@ curl http://localhost:1234/api/v0/chat/completions \
 1. Llama-3.3-70B-Instruct-IQ2_M.gguf (24.12 GB; `32k, 19`)
 1. Codestral-22B-v0.1-Q8_0.gguf (23.64 GB)
 1. Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23.26 GB; `32k, 15`)
-1. c4ai-command-r-08-2024-Q5_K_M.gguf (23.05 GB, `32k, 9`; **best Vietnamese translator**)
+1. c4ai-command-r-08-2024-Q5_K_M.gguf (23.05 GB, `32k, 8`; **best Vietnamese translator**)
 1. gemma-2-27b-it-Q6_K.gguf (22.34 GB; `8k, 13`)
 1. GritLM-8x7B.i1-IQ3_M.gguf (21.43 GB; `32k, 9, 8e`)
 1. internlm2_5-20b-chat.Q8_0.gguf (21.11 GB; `32k, 15`)

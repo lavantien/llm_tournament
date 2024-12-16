@@ -103,12 +103,13 @@ func TestIntegration(t *testing.T) {
 	defer cleanup()
 
 	m := initialModel(testDB)
-	if err := m.Init()(); err != nil {
+	if err := m.Init(); err != nil {
 		t.Fatalf("Init failed: %v", err)
 	}
 
 	// Test Leaderboard
 	t.Run("Leaderboard", func(t *testing.T) {
+		log.Println("TestIntegration: Starting Leaderboard test")
 		m.activeTab = 0
 		if _, err := m.Update(tea.KeyMsg{Type: tea.KeyEnter}); err != nil {
 			t.Fatalf("Failed to select row: %v", err)
@@ -127,10 +128,12 @@ func TestIntegration(t *testing.T) {
 		if _, err := m.Update(tea.KeyMsg{Type: tea.KeyCtrlX}); err != nil {
 			t.Fatalf("Failed to export data: %v", err)
 		}
+		log.Println("TestIntegration: Finished Leaderboard test")
 	})
 
 	// Test Bot Manager
 	t.Run("Bot Manager", func(t *testing.T) {
+		log.Println("TestIntegration: Starting Bot Manager test")
 		m.activeTab = 1
 		if _, err := m.Update(tea.KeyMsg{Type: tea.KeyCtrlN}); err != nil {
 			t.Fatalf("Failed to create bot: %v", err)
@@ -154,10 +157,12 @@ func TestIntegration(t *testing.T) {
 		if _, err := m.Update(tea.KeyMsg{Type: tea.KeyRunes, Runes: []rune{'y'}}); err != nil {
 			t.Fatalf("Failed to confirm delete bot: %v", err)
 		}
+		log.Println("TestIntegration: Finished Bot Manager test")
 	})
 
 	// Test Prompt Manager
 	t.Run("Prompt Manager", func(t *testing.T) {
+		log.Println("TestIntegration: Starting Prompt Manager test")
 		m.activeTab = 2
 		if _, err := m.Update(tea.KeyMsg{Type: tea.KeyCtrlN}); err != nil {
 			t.Fatalf("Failed to create prompt: %v", err)
@@ -175,10 +180,12 @@ func TestIntegration(t *testing.T) {
 		if _, err := m.Update(tea.KeyMsg{Type: tea.KeyRunes, Runes: []rune{'y'}}); err != nil {
 			t.Fatalf("Failed to confirm delete prompt: %v", err)
 		}
+		log.Println("TestIntegration: Finished Prompt Manager test")
 	})
 
 	// Test Conducer
 	t.Run("Conducer", func(t *testing.T) {
+		log.Println("TestIntegration: Starting Conducer test")
 		m.activeTab = 3
 		if _, err := m.Update(tea.KeyMsg{Type: tea.KeyDown}); err != nil {
 			t.Fatalf("Failed to select bot: %v", err)
@@ -199,6 +206,7 @@ func TestIntegration(t *testing.T) {
 			t.Fatalf("Failed to send request: %v", err)
 		}
 		time.Sleep(2 * time.Second)
+		log.Println("TestIntegration: Finished Conducer test")
 	})
 }
 
