@@ -1,10 +1,6 @@
-CREATE TABLE IF NOT EXISTS bots (
+CREATE TABLE IF NOT EXISTS system_prompts (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL UNIQUE,
-  arch TEXT,
-  compatibility_type TEXT,
-  quantization TEXT,
-  max_context_length INTEGER,
+  content TEXT NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -12,17 +8,21 @@ CREATE TABLE IF NOT EXISTS bots (
 CREATE TABLE IF NOT EXISTS categories (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL UNIQUE,
+  system_prompt_id INTEGER,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (system_prompt_id) REFERENCES system_prompts (id)
 );
 
 CREATE TABLE IF NOT EXISTS prompts (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   category_id INTEGER NOT NULL,
   content TEXT NOT NULL,
+  system_prompt_id INTEGER,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (category_id) REFERENCES categories (id)
+  FOREIGN KEY (category_id) REFERENCES categories (id),
+  FOREIGN KEY (system_prompt_id) REFERENCES system_prompts (id)
 );
 
 CREATE TABLE IF NOT EXISTS scores (

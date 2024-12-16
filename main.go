@@ -25,18 +25,20 @@ type Bot struct {
 }
 
 type Category struct {
-	ID        int       `json:"id"`
-	Name      string    `json:"name"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID             int       `json:"id"`
+	Name           string    `json:"name"`
+	SystemPromptID int       `json:"system_prompt_id"`
+	CreatedAt      time.Time `json:"created_at"`
+	UpdatedAt      time.Time `json:"updated_at"`
 }
 
 type Prompt struct {
-	ID         int       `json:"id"`
-	CategoryID int       `json:"category_id"`
-	Content    string    `json:"content"`
-	CreatedAt  time.Time `json:"created_at"`
-	UpdatedAt  time.Time `json:"updated_at"`
+	ID             int       `json:"id"`
+	CategoryID     int       `json:"category_id"`
+	Content        string    `json:"content"`
+	SystemPromptID int       `json:"system_prompt_id"`
+	CreatedAt      time.Time `json:"created_at"`
+	UpdatedAt      time.Time `json:"updated_at"`
 }
 
 type Score struct {
@@ -48,6 +50,13 @@ type Score struct {
 	OutputPath string    `json:"output_path"`
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
+}
+
+type SystemPrompt struct {
+	ID        int       `json:"id"`
+	Content   string    `json:"content"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type model struct {
@@ -81,10 +90,8 @@ func (m model) Init() tea.Cmd {
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	log.Printf("Update: Received message of type %T", msg)
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
-		log.Printf("Update: KeyMsg: %s", msg.String())
 		switch msg.String() {
 		case "ctrl+c", "q":
 			m.quitting = true
@@ -235,6 +242,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	return m, nil
 }
+
 func (m model) View() string {
 	if m.quitting {
 		return "Exiting...\n"

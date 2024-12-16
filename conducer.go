@@ -280,7 +280,7 @@ func (m *conducerModel) fetchPrompts() ([]Prompt, error) {
 	if m.selectedCategory == -1 {
 		return nil, nil
 	}
-	rows, err := m.db.Query("SELECT id, category_id, content, created_at, updated_at FROM prompts WHERE category_id = ?", m.categories[m.selectedCategory].ID)
+	rows, err := m.db.Query("SELECT id, category_id, content, system_prompt_id, created_at, updated_at FROM prompts WHERE category_id = ?", m.categories[m.selectedCategory].ID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to query prompts: %w", err)
 	}
@@ -289,7 +289,7 @@ func (m *conducerModel) fetchPrompts() ([]Prompt, error) {
 	var prompts []Prompt
 	for rows.Next() {
 		var prompt Prompt
-		if err := rows.Scan(&prompt.ID, &prompt.CategoryID, &prompt.Content, &prompt.CreatedAt, &prompt.UpdatedAt); err != nil {
+		if err := rows.Scan(&prompt.ID, &prompt.CategoryID, &prompt.Content, &prompt.SystemPromptID, &prompt.CreatedAt, &prompt.UpdatedAt); err != nil {
 			return nil, fmt.Errorf("failed to scan prompt: %w", err)
 		}
 		prompts = append(prompts, prompt)
@@ -314,8 +314,26 @@ type responseMsg string
 func (m *conducerModel) makeRequest(bot Bot, prompt Prompt) tea.Cmd {
 	return func() tea.Msg {
 		url := "http://127.0.0.1:1234/v1/chat/completions"
+		var systemPrompt string
+		if prompt.SystemPromptID != 0 {
+			sp, err := m.fetchSystemPromptByID(prompt.SystemPromptID)
+			if err != nil {
+				return fmt.Errorf("failed to fetch system prompt: %w", err)
+			}
+			systemPrompt = sp.Content
+		} else {
+			category, err := m.fetchCategoryByID(prompt.CategoryID)
+			if err != nil {
+				return fmt.Errorf("failed to fetch category: %w", err)
+			}
+			sp, err := m.fetchSystemPromptByID(category.SystemPromptID)
+			if err != nil {
+				return fmt.Errorf("failed to fetch system prompt: %w", err)
+			}
+			systemPrompt = sp.Content
+		}
 		messages := []map[string]string{
-			{"role": "system", "content": "You are an expert translator"},
+			{"role": "system", "content": systemPrompt},
 			{"role": "user", "content": prompt.Content},
 		}
 		requestBody := map[string]interface{}{
@@ -357,7 +375,10 @@ func (m *conducerModel) makeRequest(bot Bot, prompt Prompt) tea.Cmd {
 			if choice, ok := choices[0].(map[string]interface{}); ok {
 				if message, ok := choice["message"].(map[string]interface{}); ok {
 					if content, ok := message["content"].(string); ok {
-						m.saveOutput(bot, prompt, content)
+						err := m.saveOutput(bot, prompt, content)
+						if err != nil {
+							return err
+						}
 						return responseMsg(content)
 					}
 				}
@@ -413,4 +434,26 @@ func (m *conducerModel) nextField() tea.Cmd {
 func (m *conducerModel) prevField() tea.Cmd {
 	m.focusIndex = (m.focusIndex - 1 + 3) % 3
 	return nil
+}
+
+func (m *conducerModel) fetchSystemPromptByID(id int) (SystemPrompt, error) {
+	var systemPrompt SystemPrompt
+	err := m.db.QueryRow("SELECT id, content, created_at, updated_at FROM system_prompts WHERE id = ?", id).Scan(
+		&systemPrompt.ID, &systemPrompt.Content, &systemPrompt.CreatedAt, &systemPrompt.UpdatedAt,
+	)
+	if err != nil {
+		return SystemPrompt{}, fmt.Errorf("failed to query system prompt details: %w", err)
+	}
+	return systemPrompt, nil
+}
+
+func (m *conducerModel) fetchCategoryByID(id int) (Category, error) {
+	var category Category
+	err := m.db.QueryRow("SELECT id, name, system_prompt_id, created_at, updated_at FROM categories WHERE id = ?", id).Scan(
+		&category.ID, &category.Name, &category.SystemPromptID, &category.CreatedAt, &category.UpdatedAt,
+	)
+	if err != nil {
+		return Category{}, fmt.Errorf("failed to query category details: %w", err)
+	}
+	return category, nil
 }
