@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -21,25 +20,14 @@ func setupTestDB() (*sql.DB, func()) {
 		log.Fatalf("Failed to create temp dir: %v", err)
 	}
 	dbPath := filepath.Join(tempDir, "test.db")
+	db.SetTestDBPath(dbPath)
+	log.Println("setupTestDB: dbPath set to:", dbPath)
 
-	testDB, err := sql.Open("sqlite3", dbPath)
+	testDB, err := db.Migrate()
 	if err != nil {
-		log.Fatalf("Failed to open test database: %v", err)
+		log.Fatalf("Failed to migrate database: %v", err)
 	}
-
-	schema, err := os.ReadFile("db/schema.sql")
-	if err != nil {
-		log.Fatalf("Failed to read schema file: %v", err)
-	}
-
-	_, err = testDB.Exec(string(schema))
-	if err != nil {
-		log.Fatalf("Failed to execute schema: %v", err)
-	}
-
-	if err := seedTestData(testDB); err != nil {
-		log.Fatalf("Failed to seed test data: %v", err)
-	}
+	log.Println("setupTestDB: Database migrated successfully")
 
 	cleanup := func() {
 		testDB.Close()
@@ -47,55 +35,6 @@ func setupTestDB() (*sql.DB, func()) {
 	}
 
 	return testDB, cleanup
-}
-
-func seedTestData(db *sql.DB) error {
-	categories := []string{"Test Category 1", "Test Category 2"}
-	for _, category := range categories {
-		_, err := db.Exec("INSERT INTO categories (name) VALUES (?)", category)
-		if err != nil {
-			return fmt.Errorf("failed to insert category %s: %w", category, err)
-		}
-	}
-
-	var categoryID1 int
-	err := db.QueryRow("SELECT id FROM categories WHERE name = ?", "Test Category 1").Scan(&categoryID1)
-	if err != nil {
-		return fmt.Errorf("failed to get category ID: %w", err)
-	}
-
-	var categoryID2 int
-	err = db.QueryRow("SELECT id FROM categories WHERE name = ?", "Test Category 2").Scan(&categoryID2)
-	if err != nil {
-		return fmt.Errorf("failed to get category ID: %w", err)
-	}
-
-	prompts := []struct {
-		categoryID int
-		content    string
-	}{
-		{categoryID1, "Test Prompt 1"},
-		{categoryID1, "Test Prompt 2"},
-		{categoryID2, "Test Prompt 3"},
-	}
-	for _, prompt := range prompts {
-		_, err := db.Exec("INSERT INTO prompts (category_id, content) VALUES (?, ?)", prompt.categoryID, prompt.content)
-		if err != nil {
-			return fmt.Errorf("failed to insert prompt: %w", err)
-		}
-	}
-
-	_, err = db.Exec("INSERT INTO bots (name, arch, compatibility_type, quantization, max_context_length) VALUES (?, ?, ?, ?, ?)", "Test Bot 1", "test_arch", "test_compat", "test_quant", 1024)
-	if err != nil {
-		return fmt.Errorf("failed to insert bot: %w", err)
-	}
-
-	_, err = db.Exec("INSERT INTO bots (name, arch, compatibility_type, quantization, max_context_length) VALUES (?, ?, ?, ?, ?)", "Test Bot 2", "test_arch", "test_compat", "test_quant", 2048)
-	if err != nil {
-		return fmt.Errorf("failed to insert bot: %w", err)
-	}
-
-	return nil
 }
 
 func TestIntegration(t *testing.T) {

@@ -17,14 +17,14 @@ const dbName = "llp.db"
 var dbPath string
 
 func getDBPath() string {
-	if dbPath != "" {
-		return dbPath
+	if dbPath == "" {
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			log.Fatalf("Failed to get user home directory: %v", err)
+		}
+		dbPath = filepath.Join(homeDir, ".llp", dbName)
 	}
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		log.Fatalf("Failed to get user home directory: %v", err)
-	}
-	return filepath.Join(homeDir, ".llp", dbName)
+	return dbPath
 }
 
 func ensureDBDir() {
@@ -42,7 +42,7 @@ func ensureDBDir() {
 }
 
 func Migrate() (*sql.DB, error) {
-	ensureDBDir()
+	ensureDBDir() // Call ensureDBDir here
 	dbPath = getDBPath()
 
 	db, err := sql.Open("sqlite3", dbPath)
