@@ -183,15 +183,15 @@ func (m leaderboardModel) getBotIDFromSelectedRow() int {
 }
 
 func (m *leaderboardModel) updateRows() tea.Cmd {
-	rows, err := m.fetchLeaderboardData()
-	if err != nil {
-		return func() tea.Msg {
+	return func() tea.Msg {
+		rows, err := m.fetchLeaderboardData()
+		if err != nil {
 			return err
 		}
+		m.rows = rows
+		m.table.SetRows(rows)
+		return nil
 	}
-	m.rows = rows
-	m.table.SetRows(rows)
-	return nil
 }
 
 func (m *leaderboardModel) fetchLeaderboardData() ([]table.Row, error) {
@@ -314,7 +314,9 @@ func (m *leaderboardModel) exportData() tea.Cmd {
 		}
 		filePath := filepath.Join(homeDir, ".llp", filename)
 
-		if err := exportToJSON(data, filePath); err != nil {
+		err = exportToJSON(data, filePath)
+		if err != nil {
+			log.Printf("Failed to export data: %v", err)
 			return err
 		}
 

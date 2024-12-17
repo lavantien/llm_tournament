@@ -177,7 +177,7 @@ curl http://localhost:1234/api/v0/chat/completions \
 - Docker/Compose.
 - LM Studio/AnythingLLM, SillyTavernLaucher/TabbyAPI/LlamaCPP, Vllm/Aphrodite (Linux), Ollama/Open Web UI, ChatWithRTX, Aider/AIStudioGoogle/DeepSeek (best free plans), LMSYS/ChatGPTFree/ClaudeFree.
 - HuggingFace, CivitAI, ComfyUI, SwarmUI, stable-diffusion-webui-forge, Speed isn't important, as long as it can run then it's fair game.
-- Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, internlm2, stablelm, t5, bart
+- Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, mamba, internlm2, stablelm, t5, bart
 
 ## Tournament Leaderboard
 

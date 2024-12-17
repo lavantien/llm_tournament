@@ -243,7 +243,7 @@ func (m *conducerModel) updateCategories() tea.Cmd {
 }
 
 func (m *conducerModel) fetchCategories() ([]Category, error) {
-	rows, err := m.db.Query("SELECT id, name, created_at, updated_at FROM categories")
+	rows, err := m.db.Query("SELECT id, name, system_prompt_id, created_at, updated_at FROM categories")
 	if err != nil {
 		return nil, fmt.Errorf("failed to query categories: %w", err)
 	}
@@ -252,7 +252,7 @@ func (m *conducerModel) fetchCategories() ([]Category, error) {
 	var categories []Category
 	for rows.Next() {
 		var category Category
-		if err := rows.Scan(&category.ID, &category.Name, &category.CreatedAt, &category.UpdatedAt); err != nil {
+		if err := rows.Scan(&category.ID, &category.Name, &category.SystemPromptID, &category.CreatedAt, &category.UpdatedAt); err != nil {
 			return nil, fmt.Errorf("failed to scan category: %w", err)
 		}
 		categories = append(categories, category)

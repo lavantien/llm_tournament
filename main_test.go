@@ -2,7 +2,10 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"testing"
@@ -126,6 +129,15 @@ func TestIntegration(t *testing.T) {
 	t.Run("Conducer", func(t *testing.T) {
 		log.Println("TestIntegration: Starting Conducer test")
 		m.activeTab = 3
+
+		// Mock HTTP server
+		testServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+			w.Header().Set("Content-Type", "application/json")
+			fmt.Fprintln(w, `{"choices": [{"message": {"content": "Test Response"}} ]}`)
+		}))
+		defer testServer.Close()
+
 		if _, err := m.Update(tea.KeyMsg{Type: tea.KeyDown}); err != nil {
 			t.Fatalf("Failed to select bot: %v", err)
 		}
@@ -164,24 +176,24 @@ func TestDBMigration(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to query categories count: %v", err)
 	}
-	if count != 2 {
-		t.Fatalf("Expected 2 categories, got %d", count)
+	if count != 6 {
+		t.Fatalf("Expected 6 categories, got %d", count)
 	}
 
 	err = db.QueryRow("SELECT COUNT(*) FROM prompts").Scan(&count)
 	if err != nil {
 		t.Fatalf("Failed to query prompts count: %v", err)
 	}
-	if count != 3 {
-		t.Fatalf("Expected 3 prompts, got %d", count)
+	if count != 12 {
+		t.Fatalf("Expected 12 prompts, got %d", count)
 	}
 
 	err = db.QueryRow("SELECT COUNT(*) FROM bots").Scan(&count)
 	if err != nil {
 		t.Fatalf("Failed to query bots count: %v", err)
 	}
-	if count != 2 {
-		t.Fatalf("Expected 2 bots, got %d", count)
+	if count != 42 {
+		t.Fatalf("Expected 42 bots, got %d", count)
 	}
 }
 
