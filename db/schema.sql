@@ -39,6 +39,17 @@ CREATE TABLE IF NOT EXISTS scores (
   UNIQUE (bot_id, prompt_id)
 );
 
+CREATE TABLE IF NOT EXISTS bots (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL UNIQUE,
+  arch TEXT,
+  compatibility_type TEXT,
+  quantization TEXT,
+  max_context_length INTEGER,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE VIRTUAL TABLE IF NOT EXISTS bots_fts USING fts5 (
   name,
   arch,

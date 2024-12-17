@@ -2,31 +2,144 @@
 
 ## System Prompt
 
-"You are an expert linguistics and an advanced language translator, specialized in Vietnamese. Your translations will be in full-length verbatim of the original text, easy to understand to the general public, and have correct semantics and common idioms, while remain as close to the original text as possible."
+"You are an extremely versatile and intelligent person, with advanced thinking skills and the ability to form and explain your cohesive chain of thoughts."
 
-## **Prompt 1**: Teaching
+## **Prompt 1**: Expansion Task.
+
+Expand the following statement into a detailed analysis with real-world applications and philosophical insights:  
+"Anarchist principles challenge hierarchical structures, advocating for decentralized and cooperative systems as alternatives to authority-based governance."
+
+Challenge: Discuss how anarchist principles apply to modern societal issues such as workplace organization, education, and community governance, while addressing potential criticisms of anarchism.
+
+## **Prompt 2**: Compression Task.
+
+Summarize the Four Noble Truths of Buddhism (as demonstrated below by the Buddha himself) into a clear, 100-word explanation suitable for a beginner’s guide to Buddhist philosophy.
+
+“Mendicants, these two extremes should not be cultivated by one who has gone forth. What two? Indulgence in sensual pleasures, which is low, crude, ordinary, ignoble, and pointless. And indulgence in self-mortification, which is painful, ignoble, and pointless. Avoiding these two extremes, the Realized One understood the middle way of practice, which gives vision and knowledge, and leads to peace, direct knowledge, awakening, and extinguishment.
+
+And what is that middle way of practice? It is simply this noble eightfold path, that is: right view, right thought, right speech, right action, right livelihood, right effort, right mindfulness, and right immersion. This is that middle way of practice, which gives vision and knowledge, and leads to peace, direct knowledge, awakening, and extinguishment.
+
+Now this is the noble truth of suffering. Rebirth is suffering; old age is suffering; illness is suffering; death is suffering; association with the disliked is suffering; separation from the liked is suffering; not getting what you wish for is suffering. In brief, the five grasping aggregates are suffering.
+
+Now this is the noble truth of the origin of suffering. It’s the craving that leads to future lives, mixed up with relishing and greed, taking pleasure wherever it lands. That is, craving for sensual pleasures, craving to continue existence, and craving to end existence.
+
+Now this is the noble truth of the cessation of suffering. It’s the fading away and cessation of that very same craving with nothing left over; giving it away, letting it go, releasing it, and not clinging to it.
+
+Now this is the noble truth of the practice that leads to the cessation of suffering. It is simply this noble eightfold path, that is: right view, right thought, right speech, right action, right livelihood, right effort, right mindfulness, and right immersion.
+
+‘This is the noble truth of suffering.’ Such was the vision, knowledge, wisdom, realization, and light that arose in me regarding teachings not learned before from another. ‘This noble truth of suffering should be completely understood.’ Such was the vision that arose in me … ‘This noble truth of suffering has been completely understood.’ Such was the vision that arose in me …
+
+‘This is the noble truth of the origin of suffering.’ Such was the vision that arose in me … ‘This noble truth of the origin of suffering should be given up.’ Such was the vision that arose in me … ‘This noble truth of the origin of suffering has been given up.’ Such was the vision that arose in me …
+
+‘This is the noble truth of the cessation of suffering.’ Such was the vision that arose in me … ‘This noble truth of the cessation of suffering should be realized.’ Such was the vision that arose in me … ‘This noble truth of the cessation of suffering has been realized.’ Such was the vision that arose in me …
+
+‘This is the noble truth of the practice that leads to the cessation of suffering.’ Such was the vision that arose in me … ‘This noble truth of the practice that leads to the cessation of suffering should be developed.’ Such was the vision that arose in me … ‘This noble truth of the practice that leads to the cessation of suffering has been developed.’ Such was the vision, knowledge, wisdom, realization, and light that arose in me regarding teachings not learned before from another.
+
+As long as my true knowledge and vision about these four noble truths was not fully purified in these three rounds and twelve aspects, I didn’t announce my supreme perfect awakening in this world with its gods, Māras, and Divinities, this population with its ascetics and brahmins, its gods and humans.
+
+But when my true knowledge and vision about these four noble truths was fully purified in these three rounds and twelve aspects, I announced my supreme perfect awakening in this world with its gods, Māras, and Divinities, this population with its ascetics and brahmins, its gods and humans.
+
+Knowledge and vision arose in me: ‘My freedom is unshakable; this is my last rebirth; now there’ll be no more future lives.’”
+
+Challenge: Retain the essence of the Four Noble Truths, including their connection to the Eightfold Path, without oversimplifying or misrepresenting key concepts.
+
+## **Prompt 3**: Conversion Task.
+
+Given this LLP app design, generate an SQL query to retrieve the following data from the LLP database:  
+"For each bot listed in the 'Bot Manager' tab, display the bot's name, total number of prompts it has completed in the 'Ingressor' tab, and its average score for all prompts in the 'Reasoning' category. Only include bots that have completed at least five prompts in this category. Sort the results by average score in descending order."
+
+Challenge:
+
+- Write an optimized SQL query that uses joins across multiple tables (Bot Manager, Ingressor, Prompt Manager) while handling potential edge cases (e.g., bots with no completed prompts or missing scores).
+- Provide example schemas for the tables involved and explain the query logic step-by-step, including how the query fits within the LLP app’s database structure.
+
+```markdown
+**LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
+
+- Tech Stack: Go, BubbleTea/Bubbles, SQLite/FTS5, Mermaid
+
+- Tabs:
+
+  - **(L)eaderboard** (main, or on CtrlL pressed)
+    - **(I)ngressor** (on row selected and on CtrlI pressed): select a particular category, then prompt, and input the scores, speed, and output
+    - **(E)gressor** (on row selected and on CtrlE pressed): view bot params and row details
+    - **E(x)porter** (on CtrlX pressed): export table to json, csv, or markdown
+  - **(B)ot Manager** (on CtrlB pressed): CRUD on bots, full text search, preloaded from LM Studio model list
+  - **(P)rompt Manager** (on CtrlP pressed): CRUD on categories and prompts, full text search
+  - **Con(d)ucer** (on CtrlD pressed): select bot, category, prompt, and then (on CtrlT pressed) will directly send request to LM studio server, and then save the output to the appropriate location
+  - (save current state on CtrlS pressed and switch field via Arrows or Tab/ShiftTab, work with every tab; on CtrlY pressed at Ingressor to copy prompt)
+
+- Directory structure:
+
+  - `assets/`: all assets.
+  - `db/`: database file, schemas, and `migration.go` to load prompt suites into db if not exist.
+  - `llm_outputs/`: all LLM outputs.
+  - `main.go`: glue all the tabs together.
+  - `leaderboard.go`: each row is dedicated to a bot, and each column is its total points for each prompt category, another column for total points overall, and another column for average speed.
+  - `ingressor.go`
+  - `egressor.go`
+  - `exporter.go`
+  - `botman.go`
+  - `promptman.go`
+  - `main_test.go`: all integration tests.
+  - `makefile`: all the setup and migration.
+  - `conducer.go`: LM Studio OpenAI's chat endpoint: `http://127.0.0.1:1234`, `POST /v1/chat/completion`, example body:
+    - `{"model": "c4ai-command-r-08-2024-i1", "stream": false, "max_tokens": -1, "messages": [{"role": "system", "content": "You are an expert translator"}, {"role": "user", "content": "Translate this text to idiomatic Vietnamese: which Sāriputta approved what the Buddha said. \r\n"}]}`
+    - system prompt is a standalone table that referred to by both category and prompt.
+```
+
+## **Prompt 4**: Retrieval Task.
+
+Identify all the philosophical assumptions in the following anarchist critique of state power and explain their significance:  
+"State power inherently corrupts, as it prioritizes the maintenance of its own authority over the well-being of the people it governs."
+
+Challenge: Uncover assumptions about human nature, authority, and societal organization, and provide an analysis of how these underpin the critique.
+
+## **Prompt 5**: Operation Task.
+
+Develop a set of Buddhist-inspired guidelines for ethical technology use that align with the principles of mindfulness, compassion, and non-harm.
+
+Challenge: Address modern challenges such as social media addiction, AI ethics, and environmental sustainability, providing actionable advice rooted in Buddhist philosophy.
+
+## **Prompt 6**: Reasoning Task.
+
+Analyze the compatibility of anarchist philosophy with the Buddhist principle of dependent origination (paṭicca samuppāda), which emphasizes interdependence and the absence of intrinsic authority or separateness.
+
+Challenge: Argue whether anarchism and Buddhism can be philosophically reconciled, considering their views on authority, community, and individual freedom, and provide real-world examples to support your reasoning.
+
+## **Prompt 7**: Teaching
 
 Can you teach me making TUI with BubbleTea, step-by-step, with clear explanations, instructions, and practice problems, so that I can use the language immediately to build a medium-sized program.
 
-## **Prompt 2**: Programming and Explanation
+## **Prompt 8**: Programming and Explanation
 
 Write me a program that take a positive integer at input, and output all of its prime factorization. Then explain in detail the theoretical foundations behind it and walk me through how the code work step-by-step.
 
-## **Prompt 3**: Simple creative writing
+## **Prompt 9**: Simple creative writing
 
 Tell me a story about an anarchist cat, live in northen-middle India 600 bce, who peacefully standing for freedom and equality risking his own life amidst all the odds. the story should be at least 1000 words, not 1000 characters or spaces or tokens, but 1000 words.
 
-## **Prompt 4**: Simple Translating
+## **Prompt 10**: Simple Translating
 
 Can you translate for me this story into idiomatic spoken Vietnamese with proper southern dialect, semantics, and idioms?
 
-## **Prompt 5**: Creative poetry in foreign language
+## **Prompt 11**: Creative poetry in foreign language
 
-Translate this text (2281 words) to idiomatic Vietnamese, which is simple and understandable to the mass, which natural spoken southern Vietnamese semantics and idioms, without many technical terms or specific Buddhist con-words. So that even a uneducated layperson can understand. Please translate it verbatim 1:1 and don't paraphrase or summarize anything.
+Can you make a 8-line Vietnamese poem in the form of 7 words per line, called "thất ngôn bát cú đường luật".
 
-.
+## **Prompt 12**: Read-world translating work
 
-MN 107 - With Moggallāna the Accountant
+### System Prompt
+
+```text
+Translate this text to idiomatic Vietnamese, which is simple and understandable to the mass, which natural spoken southern Vietnamese semantics and idioms, without many technical terms or specific Buddhist con-words. So that even a uneducated layperson can understand. Please translate it verbatim 1:1 and don't paraphrase or summarize or drop out anything.
+
+---
+```
+
+### Prompt
+
+Middle-length Discourse 107 - With Moggallāna the Accountant
 
 So I have heard. At one time the Buddha was staying near Sāvatthī in the stilt longhouse of Migāra’s mother in the Eastern Monastery. Then the brahmin Moggallāna the Accountant went up to the Buddha, and exchanged greetings with him. When the greetings and polite conversation were over, he sat down to one side and said to the Buddha:
 

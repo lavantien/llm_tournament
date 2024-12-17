@@ -2,11 +2,11 @@
 
 **LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
 
-- Tech Stack: Go, BubbleTea/Bubbles, SQLite/FTS5, Mermaid
+- Tech Stack: Go, BubbleTea/Bubbles, SQLite/FTS5
 
 - Tabs:
 
-  - **(L)eaderboard** (main, or on CtrlL pressed)
+  - **(L)eaderboard** (main, or on CtrlL pressed): have pagination and sorting for each column
     - **(I)ngressor** (on row selected and on CtrlI pressed): select a particular category, then prompt, and input the scores, speed, and output
     - **(E)gressor** (on row selected and on CtrlE pressed): view bot params and row details
     - **E(x)porter** (on CtrlX pressed): export table to json, csv, or markdown
@@ -235,6 +235,7 @@ curl http://localhost:1234/api/v0/chat/completions \
 1. DeepSeek-Coder-V2-Lite-Instruct-Q8_0.gguf (16.70 GB)
 1. Qwen2.5-Coder-14B-Instruct-Q8_0.gguf (15.70 GB)
 1. Virtuoso-Small-Q8_0.gguf (15.70 GB)
+1. phi-4-Q8_0.gguf (15.58 GB)
 1. TowerInstruct-13B-v0.1.Q8_0.gguf (13.83 GB)
 1. vicuna-13b-v1.5-16k-Q8_0.gguf (13.83 GB)
 1. Mistral-Nemo-Instruct-2407-Q8_0.gguf (13.02 GB; `32k, 21`)
@@ -284,12 +285,18 @@ curl http://localhost:1234/api/v0/chat/completions \
 - **System Prompt** (from Prompt 4 onward): inside prompt doc.
 - **Prompts**: [`prommpt-booting.md`](./prompt-booting.md)
 
-1. **Prompt 1**: Teaching (40 points):
-2. **Prompt 2**: Programming and Explanation (45 points)
-3. **Prompt 3**: Simple creative writing (40 points).
-4. **Prompt 4**: Simple Translating (45 points).
-5. **Prompt 5**: Creative poetry in foreign language (45 points).
-6. **Prompt 6**: Real-world Translating Work (170 points).
+1. **Prompt 1**: Expansion Task (30 points).
+1. **Prompt 2**: Compression Task (35 points).
+1. **Prompt 3**: Conversion Task (35 points).
+1. **Prompt 4**: Retrieval Task (30 points).
+1. **Prompt 5**: Operation Task (35 points).
+1. **Prompt 6**: Reasoning Task (40 points).
+1. **Prompt 7**: Teaching (30 points):
+1. **Prompt 8**: Programming and Explanation (35 points)
+1. **Prompt 9**: Simple creative writing (30 points).
+1. **Prompt 10**: Simple Translating (30 points).
+1. **Prompt 11**: Creative poetry in foreign language (15 points).
+1. **Prompt 12**: Real-world Translating Work (40 points).
 
 - **Total**: 385 points
 

@@ -20,8 +20,8 @@ func setupTestDB() (*sql.DB, func()) {
 		log.Fatalf("Failed to create temp dir: %v", err)
 	}
 	dbPath := filepath.Join(tempDir, "test.db")
+	log.Println("setupTestDB: Setting dbPath to:", dbPath)
 	db.SetTestDBPath(dbPath)
-	log.Println("setupTestDB: dbPath set to:", dbPath)
 
 	testDB, err := db.Migrate()
 	if err != nil {
