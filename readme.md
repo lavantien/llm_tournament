@@ -188,7 +188,7 @@ curl http://localhost:1234/api/v0/chat/completions \
 1. Codestral-22B-v0.1-Q8_0.gguf (23.64 GB)
 1. granite-34b-code-instruct.i1-Q5_K_S.gguf (23.41 GB)
 1. Qwen2.5-Coder-32B-Instruct.i1-Q5_K_M.gguf (23.26 GB; `32k, 15`)
-1. c4ai-command-r-08-2024-Q5_K_M.gguf (23.05 GB, `32k, 10`; **best Vietnamese translator**)
+1. c4ai-command-r-08-2024-Q5_K_M.gguf (23.05 GB, `32k, 9`; **best Vietnamese translator**)
 1. gemma-2-27b-it-Q6_K.gguf (22.34 GB; `8k, 13`)
 1. GritLM-8x7B.i1-IQ3_M.gguf (21.43 GB; `32k, 9, 8e`)
 1. internlm2_5-20b-chat.Q8_0.gguf (21.11 GB; `32k, 15`)
@@ -289,7 +289,7 @@ curl http://localhost:1234/api/v0/chat/completions \
 - min_p: 0.05
 - temperature: 0.1
 
-### Translation Profile (TP)
+### Translating Profile (TP)
 
 - **System prompt**: "Translate the given text into idiomatic, simple, and accessible Vietnamese with natural southern Vietnamese semantics and idioms. The translation should be straightforward enough for uneducated laypersons to understand, avoiding technical terms or specific Buddhist connotations. Stay faithful to the original text by providing a verbatim 1:1 translation without paraphrasing, summarizing, or omitting any content. Ensure that the translation flows cohesively while preserving cultural and spiritual connotations in a way that resonates with the target audience."
 - repeat_penalty: 1.02
@@ -338,11 +338,12 @@ curl http://localhost:1234/api/v0/chat/completions \
 - dry_allowed_length: 2
 - dry_penalty_last_n: 512
 
-### Promppts
-
 Each prompt when passed is equal 10 elo, 30 prompts total so maximum 3000 elo.
 
 ---
+
+<details>
+    <summary>Programming ...</summary>
 
 #### 1. use PP
 
@@ -613,6 +614,11 @@ Deliverables:
 
 ---
 
+</details>
+
+<details>
+    <summary>Translating ...</summary>
+
 #### 11. use TP
 
 **Logical Fallacies**
@@ -692,3 +698,144 @@ Moral Equivalence: This fallacy compares minor misdeeds with major atrocities, s
 That parking attendant who gave me a ticket is as bad as Hitler.
 
 In this example, the author is comparing the relatively harmless actions of a person doing their job with the horrific actions of Hitler. This comparison is unfair and inaccurate.
+
+---
+
+#### 12. use TP
+
+Anthology of Discourses 2.4 - Blessings
+
+So I have heard. At one time the Buddha was staying near Sāvatthī in Jeta’s Grove, Anāthapiṇḍika’s monastery. Then, late at night, a glorious deity, lighting up the entire Jeta’s Grove, went up to the Buddha, bowed, and stood to one side. Standing to one side, that deity addressed the Buddha in verse:
+
+    “Many gods and humans have thought about blessings desiring well-being: declare the highest blessing.”
+
+    “Not to fraternize with fools, but to fraternize with the wise, and honoring those worthy of honor: this is the highest blessing.
+
+    Living in a suitable region, having made merit in the past, being rightly resolved in oneself, this is the highest blessing.
+
+    Education and a craft, discipline and training, and well-spoken speech: this is the highest blessing.
+
+    Caring for mother and father, kindness to children and partners, and unstressful work: this is the highest blessing.
+
+    Giving and righteous conduct, kindness to relatives, blameless deeds: this is the highest blessing.
+
+    Desisting and abstaining from evil, avoiding drinking liquor, diligence in good qualities: this is the highest blessing.
+
+    Respect and humility, contentment and gratitude, and timely listening to the teaching: this is the highest blessing.
+
+    Patience, being easy to admonish, the sight of ascetics, and timely discussion of the teaching: this is the highest blessing.
+
+    Fervor and celibacy seeing the noble truths, and realization of extinguishment: this is the highest blessing.
+
+    Though touched by worldly things, their mind does not tremble; sorrowless, stainless, secure, this is the highest blessing.
+
+    Having completed these things, undefeated everywhere; everywhere they go in safety: this is their highest blessing.”
+
+---
+
+#### 13. use TP
+
+Numbered Discourses 7.64 - 6. The Undeclared Points - Irritable
+
+1.1“Mendicants, these seven things that please and assist an enemy happen to an irritable woman or man. 1.2What seven?
+
+1.3Firstly, an enemy wishes for an enemy: 1.4‘If only they’d become ugly!’ 1.5Why is that? 1.6Because an enemy doesn’t like to have a beautiful enemy. 1.7An irritable individual, overcome and overwhelmed by anger, is ugly, even though they’re nicely bathed and anointed, with hair and beard dressed, and wearing white clothes. 1.81.9This is the first thing that pleases and assists an enemy which happens to an irritable woman or man.
+
+2.1Furthermore, an enemy wishes for an enemy: 2.2‘If only they’d sleep badly!’ 2.3Why is that? 2.4Because an enemy doesn’t like to have an enemy who sleeps at ease. 2.5An irritable individual, overcome and overwhelmed by anger, sleeps badly, even though they sleep on a couch spread with woolen covers—shag-piled, pure white, or embroidered with flowers—and spread with a fine deer hide, with a canopy above and red pillows at both ends. 2.62.7This is the second thing …
+
+3.1Furthermore, an enemy wishes for an enemy: 3.2‘If only they don’t get all they need!’ 3.3Why is that? 3.4Because an enemy doesn’t like to have an enemy who gets all they need. 3.5When an irritable individual, overcome and overwhelmed by anger, gets what they don’t need they think, ‘I’ve got what I need.’ When they get what they need they think, ‘I’ve got what I don’t need.’ 3.6When an angry person gets these things that are the exact opposite of what they need, it’s for their lasting harm and suffering. 3.7This is the third thing …
+
+4.1Furthermore, an enemy wishes for an enemy: 4.2‘If only they weren’t wealthy!’ 4.3Why is that? 4.4Because an enemy doesn’t like to have an enemy who is wealthy. 4.5When an individual is irritable, overcome and overwhelmed by anger, the rulers seize the legitimate wealth they’ve earned by their efforts, built up with their own hands, gathered by the sweat of their brow. 4.6This is the fourth thing …
+
+5.1Furthermore, an enemy wishes for an enemy: 5.2‘If only they weren’t famous!’ 5.3Why is that? 5.4Because an enemy doesn’t like to have a famous enemy. 5.5When an individual is irritable, overcome and overwhelmed by anger, any fame they have acquired by diligence falls to dust. 5.6This is the fifth thing …
+
+6.1Furthermore, an enemy wishes for an enemy: 6.2‘If only they had no friends!’ 6.3Why is that? 6.4Because an enemy doesn’t like to have an enemy with friends. 6.5When an individual is irritable, overcome and overwhelmed by anger, their friends and colleagues, relatives and kin avoid them from afar. 6.6This is the sixth thing …
+
+7.1Furthermore, an enemy wishes for an enemy: 7.2‘If only, when their body breaks up, after death, they’re reborn in a place of loss, a bad place, the underworld, hell!’ 7.3Why is that? 7.4Because an enemy doesn’t like to have an enemy who goes to a good place. 7.5When an individual is irritable, overcome and overwhelmed by anger, they do bad things by way of body, speech, and mind. 7.67.7When their body breaks up, after death, they’re reborn in a place of loss, a bad place, the underworld, hell. 7.8This is the seventh thing that pleases and assists an enemy which happens to an irritable woman or man.
+
+8.1These are the seven things that please and assist an enemy which happen to an irritable woman or man.
+
+    9.1An irritable person is ugly 9.2and they sleep badly. 9.3When they get what they need, 9.4they take it to be what they don’t need.
+
+    10.1An angry person 10.2kills with body or speech; 10.3overcome with anger, 10.4they lose their wealth.
+
+    11.1Mad with anger, 11.2they fall into disgrace. 11.3Family, friends, and loved ones 11.4avoid an irritable person.
+
+    12.1Anger creates harm; 12.2anger upsets the mind. 12.3That person doesn’t recognize 12.4the danger that arises within.
+
+    13.1An angry person doesn’t know the good. 13.2An angry person doesn’t see the truth. 13.3When a person is beset by anger, 13.4only blind darkness is left.
+
+    14.1An angry person destroys with ease 14.2what was hard to build. 14.3Afterwards, when the anger is spent, 14.4they’re tormented as if burnt by fire.
+
+    15.1Their look betrays their sulkiness 15.2like a fire’s smoky plume. 15.3And when their anger flares up, 15.4they make others angry.
+
+    16.1They have no conscience or prudence, 16.2nor any respectful speech. 16.3One overcome by anger 16.4has no island refuge anywhere.
+
+    17.1The deeds that torment a man 17.2are far from those that are good. 17.3I’ll explain them now; 17.4listen to this, for it is the truth.
+
+    18.1An angry person slays their father; 18.2their mother, too, they slay. 18.3An angry person slays a saint; 18.4a normal person, too, they slay.
+
+    19.1A man is raised by his mother, 19.2who shows him the world. 19.3But an angry ordinary person slays 19.4even that good woman who gave him life.
+
+    20.1Like oneself, all sentient beings 20.2hold themselves most dear. 20.3But angry people kill themselves all kinds of ways, 20.4distraught for many reasons.
+
+    21.1Some kill themselves with swords, 21.2some, distraught, take poison. 21.3Some hang themselves with rope, 21.4or fling themselves down a mountain gorge.
+
+    22.1When they commit deeds of killing babes 22.2and killing themselves, 22.3they don’t realize what they do, 22.4for anger leads to their downfall.
+
+    23.1The snare of death in the form of anger 23.2lies hidden in the heart. 23.3You should cut it out by self-control, 23.4by wisdom, energy, and right ideas.
+
+    24.1An astute person should cut out 24.2this unskillful thing. 24.3And they’d train in the teaching in just the same way, 24.4not yielding to sulkiness.
+
+    25.1Free of anger, free of despair, 25.2free of greed, with no more longing, 25.3tamed, having given up anger, 25.4the undefiled become fully quenched.
+
+25.5
+
+---
+
+#### 14. use TP
+
+Linked Discourses 45.8 - 1. Ignorance - Analysis
+
+1.1At Sāvatthī.
+
+1.2“Mendicants, I will teach and analyze for you the noble eightfold path. 1.3Listen and apply your mind well, I will speak.”
+
+1.4“Yes, sir,” they replied. 1.5The Buddha said this:
+
+2.1“And what is the noble eightfold path? 2.2It is right view, right thought, right speech, right action, right livelihood, right effort, right mindfulness, and right immersion.
+
+3.1And what is right view? 3.2Knowing about suffering, the origin of suffering, the cessation of suffering, and the practice that leads to the cessation of suffering. 3.3This is called right view.
+
+4.1And what is right thought? 4.2It is the thought of renunciation, good will, and harmlessness. 4.3This is called right thought.
+
+5.1And what is right speech? 5.2Avoiding speech that’s false, divisive, harsh, or nonsensical. 5.3This is called right speech.
+
+6.1And what is right action? 6.2Avoiding killing living creatures, stealing, and sexual activity. 6.3This is called right action.
+
+7.1And what is right livelihood? 7.2It’s when a noble disciple gives up wrong livelihood and earns a living by right livelihood. 7.3This is called right livelihood.
+
+8.1And what is right effort? 8.2It’s when a mendicant generates enthusiasm, tries, makes an effort, exerts the mind, and strives so that bad, unskillful qualities don’t arise. 8.3They generate enthusiasm, try, make an effort, exert the mind, and strive so that bad, unskillful qualities that have arisen are given up. 8.4They generate enthusiasm, try, make an effort, exert the mind, and strive so that skillful qualities that have not arisen do arise. 8.5They generate enthusiasm, try, make an effort, exert the mind, and strive so that skillful qualities that have arisen remain, are not lost, but increase, mature, and are fulfilled by development. 8.6This is called right effort.
+
+9.1And what is right mindfulness? 9.2It’s when a mendicant meditates by observing an aspect of the body—keen, aware, and mindful, rid of covetousness and displeasure for the world. 9.3They meditate observing an aspect of feelings—keen, aware, and mindful, rid of covetousness and displeasure for the world. 9.4They meditate observing an aspect of the mind—keen, aware, and mindful, rid of covetousness and displeasure for the world. 9.5They meditate observing an aspect of principles—keen, aware, and mindful, rid of covetousness and displeasure for the world. 9.6This is called right mindfulness.
+
+10.1And what is right immersion? 10.2It’s when a mendicant, quite secluded from sensual pleasures, secluded from unskillful qualities, enters and remains in the first absorption, which has the rapture and bliss born of seclusion, while placing the mind and keeping it connected. 10.3As the placing of the mind and keeping it connected are stilled, they enter and remain in the second absorption, which has the rapture and bliss born of immersion, with internal clarity and mind at one, without placing the mind and keeping it connected. 10.4And with the fading away of rapture, they enter and remain in the third absorption, where they meditate with equanimity, mindful and aware, personally experiencing the bliss of which the noble ones declare, ‘Equanimous and mindful, one meditates in bliss.’ 10.5Giving up pleasure and pain, and ending former happiness and sadness, they enter and remain in the fourth absorption, without pleasure or pain, with pure equanimity and mindfulness. 10.6This is called right immersion.”
+
+10.7
+
+---
+
+</details>
+
+<details>
+    <summary>Reasoning ...</summary>
+
+</details>
+<details>
+    <summary>Generalist...</summary>
+
+</details>
+<details>
+    <summary>Writing ...</summary>
+
+</details>
