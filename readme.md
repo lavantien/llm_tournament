@@ -57,7 +57,7 @@
 - SQLite/FTS5.
 - C++ runtime (msvc runtime, llvm, gcc).
 - Docker/Compose.
-- **Neovim/Aider/LlamaCpp/SillyTavern**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, ChatWithRTX, Aider/AIStudioGoogle/ProjectIDX/Mistral/SambaNova/DeepSeek (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree.
+- **Neovim/Aider/LlamaCpp/SillyTavern**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, ChatWithRTX, Aider/AIStudioGoogle/ProjectIDX/Mistral/Groq/SambaNova/DeepSeek (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree.
 - HuggingFace, CivitAI, ComfyUI, SwarmUI, stable-diffusion-webui-forge, Speed isn't important, as long as it can run then it's fair game.
 - Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, mamba, internlm2, stablelm, t5, bart
 
@@ -72,6 +72,11 @@
 1. Codestral
 1. Codestral 2405
 1. Codestral Mamba 2407
+
+#### Groq
+
+1. Llama 3.2 90B Text Preview
+1. Llama 3.3 70B Versatile
 
 #### SambaNova Cloud
 
@@ -117,6 +122,7 @@
 - Qwen2.5-14B-Instruct-Q8_0 (15.70 GB)
 - Virtuoso-Small-Q8_0 (15.70 GB)
 - phi-4-Q8_0 (15.58 GB)
+- DeepSeek-Coder-V2-Lite-Instruct-Q6_K (14.07 GB)
 - Mistral-Nemo-Instruct-2407-Q8_0 (13.02 GB)
 - CodeLlama-13b-Instruct-hf-abliterated.Q6_K (10.68 GB)
 - vicuna-13b-v1.5-Q6_K (10.68 GB)
@@ -191,7 +197,7 @@
 
 ```powershell
 # Define the model path and parameters
-$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\tensorblock\c4ai-command-r-08-2024-GGUF\c4ai-command-r-08-2024-Q5_K_M.gguf"
+$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\tensorblock\c4ai-command-r-08-2024-GGUF\-Q5_K_M.gguf"
 
 # Define parameters as an object for readability
 $params = @{
@@ -240,7 +246,7 @@ curl http://localhost:8080/v1/chat/completion `
 -H "Authorization: Bearer no-key" `
 -d @'
 {
-    "model": "gpt-3.5-turbo",
+    "model": "c4ai-command-r-08-2024",
     "messages": [
     {
         "role": "system",
