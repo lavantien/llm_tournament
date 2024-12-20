@@ -2,37 +2,11 @@
 
 ## Tooling
 
-**LLP**: A lightweight LLM Benchmarking native desktop app to manage the LLMs stats and ingest outputs. (TODO)
-
-- Tech Stack: C#, .NET MAUI, SQLite/FTS5
-
-- Tabs:
-
-  - **(L)eaderboard** (main, or on CtrlL pressed): have pagination and sorting for each column
-    - **(I)ngressor** (on row selected and on CtrlI pressed): select a particular category, then prompt, and input the scores, speed, and output
-    - **(E)gressor** (on row selected and on CtrlE pressed): view bot params and row details
-    - **E(x)porter** (on CtrlX pressed): export table to json, csv, or markdown
-  - **(B)ot Manager** (on CtrlB pressed): CRUD on bots, full text search, preloaded from the model list below
-  - **(P)rompt Manager** (on CtrlP pressed): CRUD on categories and prompts, full text search
-  - **Con(d)ucer** (on CtrlD pressed): select bot, category, prompt, and then (on CtrlT pressed) will directly send request to LM studio server, and then save the output to the appropriate location
-  - (save current state on CtrlS pressed and switch field via Arrows or Tab/ShiftTab, work with every tab; on CtrlY pressed at Ingressor to copy prompt)
-
 - Directory structure:
 
   - `assets/`: all assets.
-  - `db/`: database file, schemas, and `migration` to load prompt suites into db if not exist.
   - `llm_outputs/`: all LLM outputs.
-  - `main`: glue all the tabs together.
-  - `leaderboard`: each row is dedicated to a bot, and each column is its total points for each prompt category, another column for total points overall, and another column for average speed.
-  - `ingressor`
-  - `egressor`
-  - `exporter`
-  - `botman`
-  - `promptman`
-  - `main_test`: all integration tests.
-  - `makefile`: all the setup and migration.
-  - `conducer`: `llama-server` OpenAI chat endpoint: `http://127.0.0.1:8080`, `POST v1/chat/completion`, example body:
-    - system prompt is a standalone table that referred to by both category and prompt.
+  - `t5encoder.py`: GUI to run T5 models for direct translating from English to Vietnamese
 
 <details>
     <summary>llama.cpp REST API integration (... more)</summary>
@@ -52,7 +26,8 @@
 
 ### Dependencies
 
-- Python via pyenv.
+- Python via pyenv. `pip install torch transformers ctransformers accelerate sentencepiece tk`
+- `pip install llama-cpp-python --prefer-binary --extra-index-url=https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu122`
 - C#, .NET MAUI.
 - SQLite/FTS5.
 - C++ runtime (msvc runtime, llvm, gcc).
@@ -142,7 +117,6 @@
 - codegemma-7B-it-Q8_0 (9.08 GB)
 - Nous-Hermes-2-SOLAR-10.7B-Q6_K (8.81 GB)
 - Fimbulvetr-11B-v2-Q6_K (8.81 GB)
-- madlad400-10B-mt-Q6_K (8.79 GB)
 - c4ai-command-r7b-12-2024-q8_0 (8.54 GB)
 - aya-23-8B-Q8_0 (8.54 GB)
 - Ministral-8B-Instruct-2410-Q8_0 (8.53 GB)
@@ -163,6 +137,7 @@
 
 #### 0.1B - 4B
 
+- madlad400-3b-mt.safetensors (11.80 GB)
 - Nemotron-Mini-4B-Instruct-Q8_0 (4.46 GB)
 - Phi-3.5-mini-instruct-Q8_0 (4.06 GB)
 - granite-3B-code-instruct-Q8_0 (3.71 GB)
@@ -204,12 +179,10 @@
 - Example profile for `./llama_bootstrap/c4ai-command-r-08-2024-Q5_K_M.ps1` using `llama.cpp` to start OpenAI server:
 
 ```powershell
-# Define the model path and parameters
-$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\tensorblock\c4ai-command-r-08-2024-GGUF\-Q5_K_M.gguf"
+$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\tensorblock\c4ai-command-r-08-2024-GGUF\c4ai-command-r-08-2024-Q5_K_M.gguf"
 
-# Define parameters as an object for readability
 $params = @{
-    "gpu-layers" = 9
+    "gpu-layers" = 10
     "ctx-size" = 32768
     "batch-size" = 512
     "threads" = 8
@@ -219,10 +192,12 @@ $params = @{
     "mlock" = $true
     "cache-type-k" = "q8_0"
     "cache-type-v" = "q8_0"
+    "verbose-prompt" = $true
+    #"verbose" = $true
+    "log-prefix" = $true
+    "log-colors" = $true
 }
 
-# Build the llama-server command with the specified parameters
-# Assumed `llama-server` binaries are in the $PATH
 $cmd = "llama-server --model $modelPath"
 
 foreach ($key in $params.Keys)
@@ -230,7 +205,6 @@ foreach ($key in $params.Keys)
     $value = $params[$key]
     if ($value -is [bool])
     {
-        # Convert boolean parameters to --flag or --no-flag format
         $cmd += if ($value)
         { " --$key"
         } else
@@ -242,7 +216,6 @@ foreach ($key in $params.Keys)
     }
 }
 
-# Run the command
 Start-Process -FilePath "pwsh" -ArgumentList "-Command $cmd" -NoNewWindow -Wait
 ```
 
@@ -398,7 +371,7 @@ Each prompt when passed is equal 10 points, 10 prompts total so maximum 100 poin
 <details>
     <summary>Prompt ... more</summary>
 
-Teach me C# and .NET MAUI comprehensively so that I can do practical projects right away.
+Write a Python/PyGame program to simulate the 3-body problem in a solar system.
 
 </details>
 
