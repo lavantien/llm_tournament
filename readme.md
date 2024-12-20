@@ -29,7 +29,7 @@
 - Python3.12 via pyenv.
 - `pip install llama-cpp-python --prefer-binary --extra-index-url=https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu122`
 - `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124`
-- `pip install transformers ctransformers accelerate sentencepiece bitsandbytes onnxruntime-gpu tk`
+- `pip install transformers ctransformers accelerate sentencepiece bitsandbytes tk`
 - C++ runtime (msvc runtime or llvm).
 - (Docker/Compose) if use Ollama.
 - **Neovim/Aider/LlamaCpp/SillyTavern/GLHF**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, ChatWithRTX, Cline/AIStudioGoogle/ProjectIDX/Mistral/Groq/SambaNova/GLHF (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree/DeepSeek.
