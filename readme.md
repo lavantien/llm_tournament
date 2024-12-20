@@ -57,13 +57,22 @@
 - SQLite/FTS5.
 - C++ runtime (msvc runtime, llvm, gcc).
 - Docker/Compose.
-- **Neovim/Aider/LlamaCpp/SillyTavern**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, ChatWithRTX, Cline/AIStudioGoogle/ProjectIDX/Mistral/Groq/SambaNova/GLHF (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree/DeepSeek.
+- **Neovim/Aider/LlamaCpp/SillyTavern/GLHF**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, ChatWithRTX, Cline/AIStudioGoogle/ProjectIDX/Mistral/Groq/SambaNova/GLHF (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree/DeepSeek.
 - HuggingFace, CivitAI, ComfyUI, SwarmUI, stable-diffusion-webui-forge, Speed isn't important, as long as it can run then it's fair game.
 - Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, mamba, internlm2, stablelm, t5, bart
 
 ## Tournament Leaderboard
 
-### Free Remote LLMs list:
+### Free LLM API list:
+
+#### GLHF
+
+1. Llama 3.1 405B Instruct
+1. Deepseek 2.5
+1. Magnum v4 123B
+1. Command R Plus
+1. Athene v2 Chat
+1. Llama 3.1 Nemotron 70B Instruct HF
 
 #### Mistral
 
@@ -80,7 +89,6 @@
 
 #### SambaNova Cloud
 
-1. Llama 3.1 405B Instruct
 1. LLama 3.2 90B Vision Instruct
 1. Qwen 2.5 72B Instruct
 1. QwQ 32B Preview
@@ -89,13 +97,6 @@
 
 1. Gemini 2.0 Flash Experimental
 1. Gemini Experimental 1206
-
-#### GLHF
-
-1. Command R Plus
-1. Magnum v4 123B
-1. Athene v2 Chat
-1. Llama 3.1 Nemotron 70B Instruct HF
 
 #### DeepSeek
 
