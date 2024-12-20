@@ -119,7 +119,6 @@
 - Codestral-22B-v0.1-Q6_K (18.25 GB)
 - granite-20b-code-instruct.r1.1.i1-Q6_K (16.63 GB)
 - internlm2.5-20B-Chat.Q6_K (16.30 GB)
-- Qwen2.5-14B-Instruct-Q8_0 (15.70 GB)
 - Virtuoso-Small-Q8_0 (15.70 GB)
 - phi-4-Q8_0 (15.58 GB)
 - DeepSeek-Coder-V2-Lite-Instruct-Q6_K (14.07 GB)
@@ -293,7 +292,7 @@ curl http://localhost:8080/v1/chat/completion `
 
 ### Translating Profile (TP)
 
-- **System prompt**: "Translate the given text into idiomatic, simple, and accessible Vietnamese with natural southern Vietnamese semantics and idioms. The translation should be straightforward enough for uneducated laypersons to understand, avoiding technical terms or specific Buddhist connotations. Stay faithful to the original text by providing a verbatim 1:1 translation without paraphrasing, summarizing, or omitting any content. Ensure that the translation flows cohesively while preserving cultural and spiritual connotations in a way that resonates with the target audience."
+- **System prompt**: Translate the given text into idiomatic, simple, and accessible Vietnamese with natural southern Vietnamese semantics and idioms. The translation should be straightforward enough for uneducated laypersons to understand, avoiding technical terms or specific Buddhist connotations. Stay faithful to the original text by providing a verbatim 1:1 translation without paraphrasing, summarizing, or omitting any content. Keep all the numbering so that we won't miss any sentence. Ensure that the translation flows cohesively while preserving cultural and spiritual connotations in a way that resonates with the target audience. ---
 - dry_multiplier: 0.8
 - dry_base: 1.75
 - dry_allowed_length: 2

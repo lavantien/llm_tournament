@@ -1,9 +1,9 @@
 # Define the model path and parameters
-$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\tensorblock\c4ai-command-r-08-2024-GGUF\c4ai-command-r-08-2024-Q5_K_M.gguf"
+$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\DevQuasar\Mistral-Small-Instruct-2409-GGUF\Mistral-Small-Instruct-2409.Q8_0.gguf"
 
 # Define parameters as an object for readability
 $params = @{
-    "gpu-layers" = 10
+    "gpu-layers" = 17
     "ctx-size" = 32768
     "batch-size" = 512
     "threads" = 8
