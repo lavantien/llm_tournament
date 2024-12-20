@@ -57,7 +57,7 @@
 - SQLite/FTS5.
 - C++ runtime (msvc runtime, llvm, gcc).
 - Docker/Compose.
-- **Neovim/Aider/LlamaCpp/SillyTavern**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, ChatWithRTX, Aider/AIStudioGoogle/ProjectIDX/Mistral/Groq/SambaNova/DeepSeek (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree.
+- **Neovim/Aider/LlamaCpp/SillyTavern**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, ChatWithRTX, Cline/AIStudioGoogle/ProjectIDX/Mistral/Groq/SambaNova/GLHF (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree/DeepSeek.
 - HuggingFace, CivitAI, ComfyUI, SwarmUI, stable-diffusion-webui-forge, Speed isn't important, as long as it can run then it's fair game.
 - Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, mamba, internlm2, stablelm, t5, bart
 
@@ -89,6 +89,13 @@
 
 1. Gemini 2.0 Flash Experimental
 1. Gemini Experimental 1206
+
+#### GLHF
+
+1. Command R Plus
+1. Magnum v4 123B
+1. Athene v2 Chat
+1. Llama 3.1 Nemotron 70B Instruct HF
 
 #### DeepSeek
 
@@ -128,6 +135,7 @@
 
 #### 6.7B - 12B
 
+- magnum-12b-v2.5-kto.Q6_K (10.06 GB)
 - stablelm-2-12b-chat.Q6_K (9.97 GB)
 - gemma-2-9B-it-abliterated-Q8_0 (9.83 GB)
 - codegemma-7B-it-Q8_0 (9.08 GB)
