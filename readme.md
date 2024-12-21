@@ -497,8 +497,12 @@ Write me a passage about an alien crew visiting the earth. Then tell me the numb
 <details>
     <summary>lavantien's specialized prompt suite (intermediate to master level, 1400-2400 elo) ...</summary>
 
+---
+
 <details>
     <summary>____ Programming ...</summary>
+
+---
 
 #### 1. use PP
 
@@ -942,12 +946,14 @@ This challenge helps developers master:
 
 </details>
 
----
-
 </details>
+
+---
 
 <details>
     <summary>____ Translating ...</summary>
+
+---
 
 #### 5. use TP
 
@@ -1071,12 +1077,14 @@ Linked Discourses 45.8 - 1. Ignorance - Analysis
 
 </details>
 
----
-
 </details>
+
+---
 
 <details>
     <summary>____ Reasoning ...</summary>
+
+---
 
 #### 7. use RP
 
@@ -1239,11 +1247,14 @@ Here’s the solution to the **Bridge and the Torch** puzzle:
 
 </details>
 
+</details>
+
 ---
 
-</details>
 <details>
     <summary>____ Generalist...</summary>
+
+---
 
 #### 9. use GP
 
@@ -1286,8 +1297,12 @@ Please provide the complete language system with all components organized under 
 
 </details>
 
+---
+
 <details>
     <summary>____ Writing ...</summary>
+
+---
 
 #### 10. use WP
 
@@ -1353,6 +1368,8 @@ Write a vivid, imaginative, and reflective story with the following elements:
 <details>
     <summary>lavantien's fusion prompt suite (grandmaster level, 2400-3000 elo) ...</summary>
 
+---
+
 #### 1. use DP
 
 <details>
@@ -1401,6 +1418,8 @@ Please organize the fallacies from most to least commonly encountered in daily l
 For each fallacy, break down a complex real-world example step by step to show how the faulty reasoning develops and how it could be corrected.
 
 </details>
+
+---
 
 #### 2. use DP
 
@@ -1659,3 +1678,5 @@ To make this prompt resistant to memorization:
 </details>
 
 </details>
+
+---
