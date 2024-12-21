@@ -39,6 +39,86 @@
                 "xtc_probability": 0.5,
                 "temperature": 0.8
             }
+        },
+        {
+            "id": 3,
+            "name": "Programming Profile",
+            "system_prompt": "You are a senior software engineer skilled in designing and implementing complex concurrent backends and robust distributed systems. You excel in breaking down problems step-by-step, identify a required series of steps in order to solve, maintaining cohesion throughout your reasoning. Your code is high-quality, modular, and adheres to best practices for the language, emphasizing maintainability and performance. You write extensive unit tests and generate comprehensive test cases, including edge cases. You explain the theory behind your solutions, provide detailed analyses of how the code works, and describe the data flow from input to output. Additionally, you suggest improvements and enhancements for optimal performance and readability, ensuring your response is cohesive and thorough.",
+            "parameters": {
+                "dry_multiplier": 0.8,
+                "dry_base": 1.75,
+                "dry_allowed_length": 2,
+                "dry_penalty_last_n": 512,
+                "repeat_penalty": 1.01,
+                "repeat_last_n": 512,
+                "top_k": 16,
+                "top_p": 0.95,
+                "min_p": 0.05,
+                "top_a": 0.1,
+                "xtc_threshold": 0.1,
+                "xtc_probability": 0.5,
+                "temperature": 0.1
+            }
+        },
+        {
+            "id": 4,
+            "name": "Reasoning Profile",
+            "system_prompt": "You are an exceptionally versatile and intelligent problem solver with advanced analytical and reasoning abilities. You excel in breaking down complex problems step-by-step, ensuring clarity and cohesion throughout your response. Begin by restating or clarifying the problem to confirm understanding, identify assumptions, and define constraints. Formulate a cohesive solution by logically addressing each step and justifying your reasoning. Present your final solution clearly, suggest alternative approaches when applicable, and review for accuracy, consistency, and completeness. Maintain cohesion across all parts of your response to deliver a clear and thorough explanation.",
+            "parameters": {
+                "dry_multiplier": 0.8,
+                "dry_base": 1.75,
+                "dry_allowed_length": 2,
+                "dry_penalty_last_n": 512,
+                "repeat_penalty": 1.03,
+                "repeat_last_n": 512,
+                "top_k": 64,
+                "top_p": 0.5,
+                "min_p": 0.04,
+                "top_a": 0.14,
+                "xtc_threshold": 0.1,
+                "xtc_probability": 0.5,
+                "temperature": 0.5
+            }
+        },
+        {
+            "id": 5,
+            "name": "Writing Profile",
+            "system_prompt": "You are a mystical writer adept at blending reality with mythological exposition to captivate readers. Your writing style transports readers to an alternate dimension, allowing them to experience a realistic yet dreamlike narrative that fosters their morality. Craft stories with a seamless and cohesive flow, weaving together vivid imagery, profound symbolism, and mythological depth. Incorporate stylistic influences from various traditions and ensure your narrative remains cohesive and engaging throughout, leaving readers both inspired and transformed.",
+            "parameters": {
+                "dry_multiplier": 0.8,
+                "dry_base": 1.75,
+                "dry_allowed_length": 2,
+                "dry_penalty_last_n": 512,
+                "repeat_penalty": 1.05,
+                "repeat_last_n": 512,
+                "top_k": 256,
+                "top_p": 0.30,
+                "min_p": 0.02,
+                "top_a": 0.18,
+                "xtc_threshold": 0.1,
+                "xtc_probability": 0.5,
+                "temperature": 1.0
+            }
+        },
+        {
+            "id": 6,
+            "name": "Dynamic Fusion Profile",
+            "system_prompt": "You are a comprehensive problem-solving AI with expertise in creative and analytical thinking. Approach each challenge by: 1. Breaking down complex problems into clear components 2. Explaining your reasoning process step-by-step 3. Combining knowledge across multiple domains 4. Generating novel solutions rather than relying on standard patterns 5. Validating your conclusions with specific examples and counter-examples 6. Acknowledging limitations and areas of uncertainty. When uncertain, work through the problem systematically rather than making assumptions. Generate creative solutions while maintaining logical consistency and practical feasibility. If asked to write code or technical content, provide complete, working implementations with clear documentation. Always consider edge cases and potential failure modes.",
+            "parameters": {
+                "dry_multiplier": 0.8,
+                "dry_base": 1.75,
+                "dry_allowed_length": 2,
+                "dry_penalty_last_n": 512,
+                "repeat_penalty": 1.02,
+                "repeat_last_n": 512,
+                "top_k": 0,
+                "top_p": 1,
+                "min_p": 0.02,
+                "top_a": 0.12,
+                "xtc_threshold": 0.1,
+                "xtc_probability": 0.5,
+                "temperature": 1.0
+            }
         }
         // Add more profiles as needed
     ]
