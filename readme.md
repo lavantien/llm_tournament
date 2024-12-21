@@ -498,7 +498,7 @@ Write me a passage about an alien crew visiting the earth. Then tell me the numb
     <summary>lavantien's specialized prompt suite (intermediate to master level, 1400-2400 elo) ...</summary>
 
 <details>
-    <summary>Programming ...</summary>
+    <summary>____ Programming ...</summary>
 
 #### 1. use PP
 
@@ -947,7 +947,7 @@ This challenge helps developers master:
 </details>
 
 <details>
-    <summary>Translating ...</summary>
+    <summary>____ Translating ...</summary>
 
 #### 5. use TP
 
@@ -1076,7 +1076,7 @@ Linked Discourses 45.8 - 1. Ignorance - Analysis
 </details>
 
 <details>
-    <summary>Reasoning ...</summary>
+    <summary>____ Reasoning ...</summary>
 
 #### 7. use RP
 
@@ -1243,7 +1243,7 @@ Here’s the solution to the **Bridge and the Torch** puzzle:
 
 </details>
 <details>
-    <summary>Generalist...</summary>
+    <summary>____ Generalist...</summary>
 
 #### 9. use GP
 
@@ -1286,10 +1286,8 @@ Please provide the complete language system with all components organized under 
 
 </details>
 
----
-
 <details>
-    <summary>Writing ...</summary>
+    <summary>____ Writing ...</summary>
 
 #### 10. use WP
 
