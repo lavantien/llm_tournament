@@ -152,7 +152,7 @@ class VisualizationTab(QWidget):
 
         self.chart.addSeries(series)
         self.chart.setTitle("LLM Scores Comparison")
-        self.chart.setAnimationOptions(QChart.SeriesAnimations)
+        self.chart.setAnimationOptions(QChart.AnimationOption.SeriesAnimations)
 
         categories = ["Prompt 1", "Prompt 2", "Prompt 3", "Prompt 4"]
         axisX = QBarCategoryAxis()
