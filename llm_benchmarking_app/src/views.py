@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QMainWindow, QTabWidget, QVBoxLayout, QWidget, QListWidget, QPushButton, QHBoxLayout, QFormLayout, QLineEdit, QTableWidget, QTableWidgetItem, QInputDialog, QDialog, QDialogButtonBox
+from PyQt6.QtWidgets import QMainWindow, QTabWidget, QVBoxLayout, QWidget, QListWidget, QPushButton, QHBoxLayout, QFormLayout, QLineEdit, QTableWidget, QTableWidgetItem, QInputDialog, QDialog, QDialogButtonBox, QListWidgetItem
 from PyQt6.QtCharts import QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QChart, QValueAxis
 from PyQt6.QtCore import Qt
 from db_manager import DBManager
