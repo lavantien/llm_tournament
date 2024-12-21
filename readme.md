@@ -1,12 +1,19 @@
 # Local LLM Playground
 
+## Benchmarking & Prompt Suites
+
+- 3 levels of difficulty and complexity, 30 quality prompts.
+- [jump](#prompt-suites)
+
 ## Tooling
 
 - Directory structure:
 
   - `assets/`: all assets.
   - `llm_outputs/`: all LLM outputs.
-  - `t5encoder.py`: GUI to run T5 models for direct translating from English to Vietnamese
+  - `llm_reciples/`: all preconfigured LLM's llama-server running scripts. (based on my specs)
+  - `t5_runner.py`: GUI to run T5 models for direct translating from English to Vietnamese
+  - `temp.py`: temporary stores AI's output for evaluation.
 
 <details>
     <summary>llama.cpp REST API integration (... more)</summary>
@@ -40,6 +47,10 @@
 - Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, mamba, internlm2, stablelm, t5, bart
 
 ## Tournament Leaderboard
+
+### TODO
+
+- Desktop app or spreadsheet for managing and visualizing the tournament
 
 ### Free LLM API list:
 
@@ -177,7 +188,7 @@
   - rolling window overflow policy,
   - default everything else.
 
-- Example profile for `./llama_bootstrap/c4ai-command-r-08-2024-Q5_K_M.ps1` using `llama.cpp` to start OpenAI server:
+- Example profile for `./llm_recipes/c4ai-command-r-08-2024-Q5_K_M.ps1` using `llama.cpp` to start OpenAI server:
 
 ```powershell
 $modelPath = "C:\Users\lavantien\.cache\lm-studio\models\tensorblock\c4ai-command-r-08-2024-GGUF\c4ai-command-r-08-2024-Q5_K_M.gguf"
