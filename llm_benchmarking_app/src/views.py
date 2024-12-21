@@ -1,4 +1,3 @@
-```python
 from PyQt6.QtWidgets import QMainWindow, QTabWidget, QVBoxLayout, QWidget, QListWidget, QPushButton, QHBoxLayout, QFormLayout, QLineEdit, QTableWidget, QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
 from PyQt6.QtChart import QChart, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
 from PyQt6.QtCore import Qt
@@ -179,4 +178,3 @@ class VisualizationTab(QWidget):
                 llm_scores[llm_name] = [score]
 
         return llm_scores
-```
