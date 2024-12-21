@@ -5,7 +5,6 @@ class DBManager:
     def __init__(self, db_path):
         self.db_path = db_path
         self.create_database_if_not_exists()
-        self.create_tables()
 
     def create_database_if_not_exists(self):
         if not os.path.exists(self.db_path):
