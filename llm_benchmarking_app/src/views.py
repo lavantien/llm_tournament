@@ -1,9 +1,8 @@
-from PyQt6.QtWidgets import QMainWindow, QTabWidget, QVBoxLayout, QWidget, QListWidget, QPushButton, QHBoxLayout, QFormLayout, QLineEdit, QTableWidget, QTableWidgetItem, QInputDialog, QDialog, QDialogButtonBox, QListWidgetItem
+from PyQt6.QtWidgets import QMainWindow, QTabWidget, QVBoxLayout, QWidget, QListWidget, QPushButton, QHBoxLayout, QFormLayout, QLineEdit, QTableWidget, QTableWidgetItem, QInputDialog, QDialog, QDialogButtonBox, QListWidgetItem, QMessageBox
 from PyQt6.QtCharts import QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QChart, QValueAxis
 from PyQt6.QtCore import Qt
 from db_manager import DBManager
 import json
-from PyQt6.QtWidgets import QMessageBox
 
 class MainWindow(QMainWindow):
     def __init__(self, db_manager: DBManager):
@@ -119,7 +118,7 @@ class PromptManagementTab(QWidget):
 
                 layout.addLayout(form_layout)
 
-                buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, Qt.Horizontal, dialog)
+                buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel, Qt.Horizontal, dialog)
                 buttons.accepted.connect(dialog.accept)
                 buttons.rejected.connect(dialog.reject)
                 layout.addWidget(buttons)
@@ -155,7 +154,7 @@ class PromptManagementTab(QWidget):
 
         layout.addLayout(form_layout)
 
-        buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, Qt.Horizontal, dialog)
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel, Qt.Horizontal, dialog)
         buttons.accepted.connect(dialog.accept)
         buttons.rejected.connect(dialog.reject)
         layout.addWidget(buttons)
