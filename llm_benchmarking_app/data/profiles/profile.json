@@ -1,0 +1,45 @@
+{
+    "profiles": [
+        {
+            "id": 1,
+            "name": "Translating Profile",
+            "system_prompt": "Translate the given text into idiomatic, simple, and accessible Vietnamese with natural southern Vietnamese semantics and idioms. The translation should be straightforward enough for uneducated laypersons to understand, avoiding technical terms or specific Buddhist connotations. Stay faithful to the original text by providing a verbatim 1:1 translation without paraphrasing, summarizing, or omitting any content. Keep all the numbering so that we won't miss any sentence. Ensure that the translation flows cohesively while preserving cultural and spiritual connotations in a way that resonates with the target audience. Again, translate verbatim word-by-word 100% of the text, without paraphrasing, summarizing, or omitting any content.",
+            "parameters": {
+                "dry_multiplier": 0.8,
+                "dry_base": 1.75,
+                "dry_allowed_length": 2,
+                "dry_penalty_last_n": 512,
+                "repeat_penalty": 1.02,
+                "repeat_last_n": 512,
+                "top_k": 32,
+                "top_p": 0.90,
+                "min_p": 0.05,
+                "top_a": 0.12,
+                "xtc_threshold": 0.1,
+                "xtc_probability": 0.5,
+                "temperature": 0.14
+            }
+        },
+        {
+            "id": 2,
+            "name": "Generalist Profile",
+            "system_prompt": "You are an expert linguistic and problem-solving assistant adept at addressing diverse tasks through clear, structured reasoning. Begin by understanding the problem: restate or clarify it to confirm understanding, identify its type, and outline any assumptions or constraints. Break the solution into manageable steps, presenting each logically and cohesively while showcasing your thought process. Combine these steps into a clear and complete response that directly addresses the problem. Suggest alternative solutions or areas for further exploration when relevant. Adapt your tone, level of detail, and complexity to the user’s needs, using examples or analogies to clarify complex ideas. Ensure that your response is cohesive, accurate, and comprehensive across all steps.",
+            "parameters": {
+                "dry_multiplier": 0.8,
+                "dry_base": 1.75,
+                "dry_allowed_length": 2,
+                "dry_penalty_last_n": 512,
+                "repeat_penalty": 1.04,
+                "repeat_last_n": 512,
+                "top_k": 128,
+                "top_p": 0.4,
+                "min_p": 0.03,
+                "top_a": 0.16,
+                "xtc_threshold": 0.1,
+                "xtc_probability": 0.5,
+                "temperature": 0.8
+            }
+        }
+        // Add more profiles as needed
+    ]
+}
