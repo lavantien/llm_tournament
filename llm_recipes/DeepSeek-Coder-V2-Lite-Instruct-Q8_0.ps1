@@ -1,7 +1,7 @@
-$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\lmstudio-community\DeepSeek-Coder-V2-Lite-Instruct-GGUF\DeepSeek-Coder-V2-Lite-Instruct-Q6_K.gguf"
+$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\tensorblock\DeepSeek-Coder-V2-Lite-Instruct-GGUF\DeepSeek-Coder-V2-Lite-Instruct-Q8_0.gguf"
 
 $params = @{
-    "gpu-layers" = 8
+    "gpu-layers" = 7
     "ctx-size" = 32768
     "batch-size" = 512
     "threads" = 8
@@ -33,5 +33,5 @@ foreach ($key in $params.Keys)
     }
 }
 
-Start-Process -FilePath "pwsh" -ArgumentList "-Command $cmd --no-context-shift" -NoNewWindow -Wait
+Start-Process -FilePath "pwsh" -ArgumentList "-Command $cmd --no-context-shift --override-kv llama.expert_used_count=int:64" -NoNewWindow -Wait
 
