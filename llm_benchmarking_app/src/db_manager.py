@@ -8,14 +8,17 @@ class DBManager:
 
     def create_database_if_not_exists(self):
         if not os.path.exists(self.db_path):
+            print(f"Database file does not exist. Creating new file at {self.db_path}")
             open(self.db_path, 'w').close()
             self.conn = sqlite3.connect(self.db_path)
             self.create_tables()
         else:
+            print(f"Database file already exists at {self.db_path}")
             self.conn = sqlite3.connect(self.db_path)
 
     def create_tables(self):
         with self.conn:
+            print("Creating tables...")
             self.conn.execute('''CREATE TABLE IF NOT EXISTS prompt_suites (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
@@ -44,6 +47,7 @@ class DBManager:
                 FOREIGN KEY (llm_id) REFERENCES llms (id),
                 FOREIGN KEY (prompt_id) REFERENCES prompts (id)
             )''')
+            print("Tables created successfully.")
 
     def insert_prompt_suite(self, name, description):
         with self.conn:
