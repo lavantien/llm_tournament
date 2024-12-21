@@ -5,12 +5,15 @@ class DBManager:
     def __init__(self, db_path):
         self.db_path = db_path
         self.create_database_if_not_exists()
-        self.conn = sqlite3.connect(db_path)
         self.create_tables()
 
     def create_database_if_not_exists(self):
         if not os.path.exists(self.db_path):
             open(self.db_path, 'w').close()
+            self.conn = sqlite3.connect(self.db_path)
+            self.create_tables()
+        else:
+            self.conn = sqlite3.connect(self.db_path)
 
     def create_tables(self):
         with self.conn:
