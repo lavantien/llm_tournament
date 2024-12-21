@@ -157,11 +157,11 @@ class VisualizationTab(QWidget):
         categories = ["Prompt 1", "Prompt 2", "Prompt 3", "Prompt 4"]
         axisX = QBarCategoryAxis()
         axisX.append(categories)
-        self.chart.addAxis(axisX, Qt.AlignBottom)
+        self.chart.addAxis(axisX, Qt.AlignmentFlag.AlignBottom)
         series.attachAxis(axisX)
 
         axisY = QValueAxis()
-        self.chart.addAxis(axisY, Qt.AlignLeft)
+        self.chart.addAxis(axisY, Qt.AlignmentFlag.AlignLeft)
         series.attachAxis(axisY)
 
     def get_llm_scores(self):
