@@ -1,3 +1,4 @@
+```python
 from PyQt6.QtWidgets import QMainWindow, QTabWidget, QVBoxLayout, QWidget, QListWidget, QPushButton, QHBoxLayout, QFormLayout, QLineEdit, QTableWidget, QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
 from PyQt6.QtChart import QChart, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
 from PyQt6.QtCore import Qt
@@ -44,6 +45,15 @@ class PromptManagementTab(QWidget):
         self.layout.addLayout(self.button_layout)
         self.setLayout(self.layout)
 
+        # Connect the load button to a method that loads prompts
+        self.load_button.clicked.connect(self.load_prompts)
+
+    def load_prompts(self):
+        prompts = self.db_manager.fetch_all_prompts()
+        self.prompt_list.clear()
+        for prompt in prompts:
+            self.prompt_list.addItem(f"{prompt[2]} - {prompt[3]}")
+
 class ScoreEntryTab(QWidget):
     def __init__(self, db_manager: DBManager):
         super().__init__()
@@ -65,6 +75,20 @@ class ScoreEntryTab(QWidget):
 
         self.setLayout(self.layout)
 
+        # Connect the submit button to a method that saves the score
+        self.submit_button.clicked.connect(self.submit_score)
+
+    def submit_score(self):
+        llm_name = self.llm_name_field.text()
+        score = float(self.score_field.text())
+        output = self.output_field.text()
+
+        # For simplicity, assume llm_id and prompt_id are known
+        llm_id = 1  # Replace with actual LLM ID
+        prompt_id = 1  # Replace with actual Prompt ID
+
+        self.db_manager.insert_attempt(llm_id, prompt_id, score, output)
+
 class LeaderboardTab(QWidget):
     def __init__(self, db_manager: DBManager):
         super().__init__()
@@ -78,6 +102,31 @@ class LeaderboardTab(QWidget):
         self.layout.addWidget(self.table)
         self.setLayout(self.layout)
 
+        # Load leaderboard data
+        self.load_leaderboard_data()
+
+    def load_leaderboard_data(self):
+        attempts = self.db_manager.fetch_all_attempts()
+        llm_scores = {}
+
+        for attempt in attempts:
+            llm_id = attempt[1]
+            score = attempt[3]
+            if llm_id in llm_scores:
+                llm_scores[llm_id]['total_score'] += score
+                llm_scores[llm_id]['attempts'] += 1
+            else:
+                llm_scores[llm_id] = {'total_score': score, 'attempts': 1}
+
+        self.table.setRowCount(len(llm_scores))
+        row = 0
+        for llm_id, data in llm_scores.items():
+            llm_name = self.db_manager.fetch_llm_by_id(llm_id)[1]  # Assuming a method to fetch LLM by ID
+            self.table.setItem(row, 0, QTableWidgetItem(llm_name))
+            self.table.setItem(row, 1, QTableWidgetItem(str(data['total_score'])))
+            self.table.setItem(row, 2, QTableWidgetItem(str(data['attempts'])))
+            row += 1
+
 class VisualizationTab(QWidget):
     def __init__(self, db_manager: DBManager):
         super().__init__()
@@ -90,18 +139,17 @@ class VisualizationTab(QWidget):
 
         self.setLayout(self.layout)
 
+        # Load and update the chart with data
         self.update_chart()
 
     def update_chart(self):
         series = QBarSeries()
-        set0 = QBarSet("LLM 1")
-        set1 = QBarSet("LLM 2")
+        llm_scores = self.get_llm_scores()
 
-        set0.append([1, 2, 3, 4])
-        set1.append([2, 3, 4, 5])
-
-        series.append(set0)
-        series.append(set1)
+        for llm_name, scores in llm_scores.items():
+            set = QBarSet(llm_name)
+            set.append(scores)
+            series.append(set)
 
         self.chart.addSeries(series)
         self.chart.setTitle("LLM Scores Comparison")
@@ -116,3 +164,19 @@ class VisualizationTab(QWidget):
         axisY = QValueAxis()
         self.chart.addAxis(axisY, Qt.AlignLeft)
         series.attachAxis(axisY)
+
+    def get_llm_scores(self):
+        attempts = self.db_manager.fetch_all_attempts()
+        llm_scores = {}
+
+        for attempt in attempts:
+            llm_id = attempt[1]
+            score = attempt[3]
+            llm_name = self.db_manager.fetch_llm_by_id(llm_id)[1]  # Assuming a method to fetch LLM by ID
+            if llm_name in llm_scores:
+                llm_scores[llm_name].append(score)
+            else:
+                llm_scores[llm_name] = [score]
+
+        return llm_scores
+```

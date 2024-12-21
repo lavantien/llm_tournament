@@ -1,3 +1,4 @@
+```python
 import sqlite3
 
 class DBManager:
@@ -67,3 +68,8 @@ class DBManager:
     def fetch_all_attempts(self):
         with self.conn:
             return self.conn.execute('SELECT * FROM attempts').fetchall()
+
+    def fetch_llm_by_id(self, llm_id):
+        with self.conn:
+            return self.conn.execute('SELECT * FROM llms WHERE id = ?', (llm_id,)).fetchone()
+```
