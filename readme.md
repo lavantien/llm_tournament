@@ -4,7 +4,7 @@
 
 - 6 comprehensive specialized system prompt and sampler profiles. [jump](#programming-profile-pp)
 - 3 levels of difficulty and complexity, 30 quality prompts. [jump](#prompt-suites)
-- Full solution dataset: [`benchmark.json`](./benchmark.json)
+- Full solution dataset: [`profiles_and_prompt_suites.md`](./profiles_and_prompt_suites.md)
 - Quickly chat with a local LLM with correct sampler profile by running [`conversation.ps1`](./conversation.ps1)
   - Required `llama.cpp` setup for `llama-cli`.
   - Manually switch the profile and model path.
@@ -47,7 +47,7 @@
 - C++ runtime (msvc runtime or llvm).
 - C# and .NET MAUI.
 - (Docker/Compose) if use Ollama.
-- **Neovim/Aider/LlamaCpp/SillyTavern/GLHF**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, ChatWithRTX, Cline/AIStudioGoogle/ProjectIDX/Mistral/Groq/SambaNova/GLHF (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree/DeepSeek.
+- **Neovim/Aider/Mistral**, **LlamaCpp/SillyTavern**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, ChatWithRTX, Cline/AIStudioGoogle/ProjectIDX/Mistral/Groq/SambaNova/GLHF (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree/DeepSeek.
 - HuggingFace, CivitAI, ComfyUI, SwarmUI, stable-diffusion-webui-forge, Speed isn't important, as long as it can run then it's fair game.
 - Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, mamba, internlm2, stablelm, t5, bart
 
@@ -180,7 +180,7 @@
 ## LLM Benchmarking
 
 - **My System**: 3080 10gb - 2x16gb ddr4 - 1tb m2 ssd - 12700f - windows 11
-
+- **My Setup**: Neovim/Aider/Mistral (remote API), lamaCpp/SillyTavern (local inference)
 - Example profile for `./llm_recipes/c4ai-command-r-08-2024-Q5_K_M.ps1` using `llama.cpp` to start OpenAI server:
 
 ```powershell

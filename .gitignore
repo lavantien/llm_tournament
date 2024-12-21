@@ -1,0 +1,3 @@
+.env
+.aider*
+llm_benchmarking_app/src/__pycache__
