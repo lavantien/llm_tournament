@@ -1,9 +1,9 @@
 # Local LLM Playground
 
-## Benchmarking & Prompt Suites
+## Benchmarking, Profiles, and Prompt Suites
 
-- 3 levels of difficulty and complexity, 30 quality prompts.
-- [jump](#prompt-suites)
+- 6 comprehensive specialized system prompt and sampler profiles. [jump](#programming-profile-pp)
+- 3 levels of difficulty and complexity, 30 quality prompts. [jump](#prompt-suites)
 
 ## Tooling
 
