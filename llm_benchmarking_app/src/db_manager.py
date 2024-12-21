@@ -95,3 +95,15 @@ class DBManager:
     def fetch_llm_by_id(self, llm_id):
         with self.conn:
             return self.conn.execute('SELECT * FROM llms WHERE id = ?', (llm_id,)).fetchone()
+
+    def fetch_prompt_by_id(self, prompt_id):
+        with self.conn:
+            return self.conn.execute('SELECT * FROM prompts WHERE id = ?', (prompt_id,)).fetchone()
+
+    def update_prompt(self, prompt_id, content, category):
+        with self.conn:
+            self.conn.execute('UPDATE prompts SET content = ?, category = ? WHERE id = ?', (content, category, prompt_id))
+
+    def delete_prompt(self, prompt_id):
+        with self.conn:
+            self.conn.execute('DELETE FROM prompts WHERE id = ?', (prompt_id,))
