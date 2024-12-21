@@ -13,8 +13,19 @@ class DBManager:
             self.conn = sqlite3.connect(self.db_path)
             self.create_tables()
         else:
-            print(f"Database file already exists at {self.db_path}")
-            self.conn = sqlite3.connect(self.db_path)
+            try:
+                self.conn = sqlite3.connect(self.db_path)
+                # Check if the database is valid by querying the sqlite_master table
+                self.conn.execute("SELECT name FROM sqlite_master WHERE type='table'")
+            except sqlite3.DatabaseError:
+                print(f"Database file is not valid. Recreating the database at {self.db_path}")
+                self.conn.close()
+                os.remove(self.db_path)
+                open(self.db_path, 'w').close()
+                self.conn = sqlite3.connect(self.db_path)
+                self.create_tables()
+            else:
+                print(f"Database file already exists at {self.db_path}")
 
     def create_tables(self):
         with self.conn:
