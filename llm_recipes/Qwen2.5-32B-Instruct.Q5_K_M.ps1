@@ -1,7 +1,7 @@
-$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\lmstudio-community\Mistral-Nemo-Instruct-2407-GGUF\Mistral-Nemo-Instruct-2407-Q8_0.gguf"
+$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\DevQuasar\Qwen2.5-32B-Instruct-GGUF\Qwen2.5-32B-Instruct.Q5_K_M.gguf"
 
 $params = @{
-    "gpu-layers" = 22
+    "gpu-layers" = 18
     "ctx-size" = 32768
     "batch-size" = 512
     "threads" = 8
@@ -24,7 +24,6 @@ foreach ($key in $params.Keys)
     $value = $params[$key]
     if ($value -is [bool])
     {
-        # Convert boolean parameters to --flag or --no-flag format
         $cmd += if ($value)
         { " --$key" 
         } else

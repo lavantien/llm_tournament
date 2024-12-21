@@ -5,6 +5,10 @@
 - 6 comprehensive specialized system prompt and sampler profiles. [jump](#programming-profile-pp)
 - 3 levels of difficulty and complexity, 30 quality prompts. [jump](#prompt-suites)
 - Full solution dataset: [`benchmark.json`](./benchmark.json)
+- Quickly chat with a local LLM with correct sampler profile by running [`conversation.ps1`](./conversation.ps1)
+  - Required `llama.cpp` setup for `llama-cli`.
+  - Manually switch the profile and model path.
+- Server-only run with a specific preconfigured model recipe with `llama-server` API in [`llm_recipes/`](./llm_recipes) directory.
 
 ## Tooling
 
@@ -416,7 +420,12 @@ When uncertain, work through the problem systematically rather than making assum
 
 ### Prompt Suites
 
-Each prompt when passed is equal 100 elo, 30 prompts total so maximum 3000 elo.
+- Each prompt when passed is:
+  - pass on first shot, equal 100 elo,
+  - pass on second shot, equal 50 elo,
+  - pass on third shot, equal 20 elo,
+  - unable to pass after 3 attemps, equal 0 elo.
+- 32 prompts total so maximum 3200 elo.
 
 <details>
     <summary>AICodeKing's prompt suite (beginner to semi-intermediate level, 0-1500 elo) ...</summary>
@@ -487,13 +496,13 @@ Create a landing page for an AI company. The landing page should have 4 sections
 
 Write a game of life in python that works on the terminal.
 
-#### 14. use DP (Digital Spaceport's)
+#### 14. use DP (Digital Spaceport)
 
 Write me a passage about an alien crew visiting the earth. Then tell me the number of words you wrote in that sentence. Then tell me the third letter in the second word in that sentence. Is that letter a vowel or a consonant?
 
-#### 15. use DP (bycloud's)
+#### 15. use DP (bycloud + lavantien)
 
-How many days are between September 12th and November 27th
+How many days are between September 12th and November 27th. And which is the best coding agent for using with a local LLM like you: Cline or Aider. And why?
 
 </details>
 
@@ -1506,19 +1515,32 @@ Please provide:
 <details>
     <summary>Prompt ...</summary>
 
-"The Time-Traveling Code Library"
+You are a polymath working at the crossroads of philosophy, literature, and technology. Your task is to resolve the following challenge, demonstrating reasoning, creative writing, and programming skills in a single cohesive response:
 
-Design a prompt that asks to:
+1. **Reasoning**:  
+   A group of researchers has developed an experimental AI system capable of understanding ethical dilemmas. However, the system cannot decide whether it should prioritize collective well-being over individual autonomy. Develop a concise ethical framework that balances these two principles, citing at least two philosophical theories to support your reasoning.
 
-- Write a short story about a mysterious programming library that affects time itself
-- Each code snippet in the story must be real, working Python code that demonstrates the concept being described
-- Create a companion Python package that implements all the time-manipulation functions mentioned in the story
-- Include unit tests that verify both the regular functionality and edge cases
-- The story and code should explore concepts like:
-  - Temporal paradoxes through recursive functions
-  - Causality violations through async/await
-  - Timeline branching through tree data structures
-  - Memory persistence across time loops
+2. **Creative Writing**:  
+   Using the ethical framework you just developed, write a short story (300-500 words) about a futuristic society where an AI is responsible for governing the allocation of scarce resources. The story should include:
+
+   - A conflict where the AI's ethical framework is tested.
+   - A resolution that showcases the strength or weakness of the framework.
+   - Vivid descriptions and compelling character interactions.
+
+3. **Programming**:  
+   Based on the story's premise, write a Python program that simulates the AI's decision-making process. The program should:
+
+   - Take inputs for "resource availability," "number of individuals affected," and "severity of individual needs."
+   - Use the ethical framework to calculate the optimal allocation of resources.
+   - Output a detailed explanation of the decision made.
+
+4. Additional Instructions:
+
+- Ensure each part of your response aligns logically with the others.
+- Use clear and concise language for reasoning, vivid prose for the story, and well-commented code for programming.
+- Highlight the interplay between abstract concepts and their practical implementation.
+
+Good luck!
 
 </details>
 
@@ -1529,20 +1551,42 @@ Design a prompt that asks to:
 <details>
     <summary>Prompt ...</summary>
 
-"Neural Network Fairytale Generator"
+You are the architect of a revolutionary psychohistorical AI, inspired by Hari Seldon’s work in Isaac Asimov's _Foundation_. Your task is to create a multi-disciplinary response that showcases your capabilities in reasoning, storytelling, and programming. Complete the following challenges cohesively:
 
-Create a prompt requesting:
+**1. Reasoning**:
 
-- Development of a machine learning system that generates fairytales
-- The system should combine:
-  - Natural language processing for story generation
-  - Neural networks for plot structure
-  - Genetic algorithms for character development
-  - Rule-based systems for maintaining fairytale themes
-- Write an epic poem about the AI system becoming self-aware
-- Each stanza must contain actual code snippets that implement the described functionality
-- Include a working implementation of the complete system
-- The stories generated should maintain internal consistency and proper story structure
+Explain how an AI system could realistically model psychohistory—a mathematical framework for predicting large-scale societal trends—given modern computational limits. Address:
+
+- The ethical dilemmas of using psychohistorical predictions to manipulate society.
+- How the system would handle outlier individuals or events (e.g., a "Mule"-like figure in _Foundation_).
+- The safeguards required to prevent misuse of such a powerful tool.
+
+**2. Creative Writing**:
+
+Write a short story (500–700 words) set in a distant future where a psychohistorical AI governs humanity's major decisions. Include:
+
+- A protagonist who becomes aware of an anomaly (akin to the "Mule") that threatens the AI's predictions.
+- A critical moment where the protagonist must decide whether to inform the AI or hide the anomaly to protect human autonomy.
+- Themes of free will, determinism, and the tension between individual actions and societal trends.
+- The story should echo the tone and complexity of Asimov’s _Foundation_ series.
+
+**3. Programming**:
+
+Implement a Python program that simulates a simplified psychohistorical model. The program should:
+
+- Take inputs such as population size, social stability index, and external stressors.
+- Use probabilistic methods (e.g., Monte Carlo simulations) to predict societal trends over time.
+- Identify and flag anomalies in the data (outliers that deviate significantly from predicted trends).
+- Provide a visualization (e.g., a simple graph) of the predictions and anomalies over a simulated timeline.
+- Include comments explaining how the program aligns with the reasoning and story elements.
+
+4. Additional Instructions:
+
+- Ensure that all parts are interconnected: the reasoning should inform the ethical considerations in the story, and the programming should simulate concepts discussed in both.
+- The story and code should explore how psychohistory could impact human agency.
+- Demonstrate the interplay between deterministic models and the unpredictability of human behavior.
+
+Good luck creating your masterpiece!
 
 </details>
 
@@ -1553,29 +1597,51 @@ Create a prompt requesting:
 <details>
     <summary>Prompt ...</summary>
 
-"Procedural Universe Chronicles"
+You are tasked with exploring whether a society based on **Buddhist principles** (e.g., non-attachment, ethical living, and pursuit of liberation) and **anarchist ideals** (e.g., absence of hierarchical authority, voluntary cooperation, and mutual aid) could thrive, given the realities of human nature. This challenge requires **world-building**, **reasoning**, **creative writing**, and **programming** to develop a cohesive exploration.
 
-Design a prompt that combines:
+**1. World-Building**:
 
-- Writing a series of interconnected stories about different civilizations in a procedurally generated universe
-- Creating a complete simulation system that generates:
-  - Star systems with realistic physics
-  - Planetary environments and ecosystems
-  - Alien civilizations with distinct characteristics
-  - Languages and cultural systems
-  - Technology development paths
-- Each story should be generated from the simulation's output
-- Include working code for:
-  - The universe generation system
-  - Civilization simulation
-  - Story generation based on simulation events
-  - Interactive visualization of the universe
-- The stories and code should maintain consistent internal logic and scientific accuracy
-- Implementation should use advanced programming concepts:
-  - Multi-threading for parallel universe simulation
-  - Complex data structures for tracking civilizations
-  - AI systems for generating coherent narratives
-  - 3D visualization of the universe
+Design a society that merges Buddhist and anarchist principles:
+
+- Describe its core tenets, such as how it handles governance, resource distribution, conflict resolution, and spiritual practice.
+- Consider human tendencies toward greed, anger, and delusion (the "three poisons" in Buddhism) and how these are addressed without centralized authority.
+- Explain how the society balances individual freedom and communal responsibility, ensuring fairness and ethical behavior.
+
+**2. Reasoning**:
+
+Analyze the feasibility of such a society by answering the following:
+
+- Can Buddhist principles of self-restraint and compassion overcome tendencies toward selfishness and power-seeking?
+- How might decentralized systems maintain order and address conflicts arising from human imperfections?
+- What safeguards could prevent the breakdown of cooperation in the face of crises, such as resource scarcity or external threats?
+- What role, if any, could technology or AI play in maintaining societal harmony?
+
+**3. Creative Writing**:
+
+Write a story (500–800 words) set in this Buddhist-anarchist society. Include:
+
+- A conflict arising from a breakdown in mutual cooperation, such as theft or misuse of shared resources.
+- A protagonist who grapples with reconciling anarchist ideals with Buddhist teachings to resolve the crisis.
+- Exploration of human imperfection and the tension between idealism and pragmatism.
+- A resolution that highlights the strengths or limitations of the societal model, leaving room for interpretation.
+
+**4. Programming**:
+
+Develop a Python program to simulate this society:
+
+- Model individuals with varying levels of adherence to Buddhist ethics and anarchist ideals.
+- Include parameters such as trust, resource availability, and propensity for cooperative or selfish behavior.
+- Simulate interactions over time, showing how societal dynamics evolve under different conditions (e.g., abundance vs. scarcity).
+- Introduce random or programmed "crises" (e.g., natural disasters, interpersonal conflicts) and observe how the society adapts.
+- Provide visualizations (e.g., graphs or charts) showing trends like cooperation levels, resource distribution, and conflict frequency.
+
+5. Additional Instructions:
+
+- Ensure all elements are interconnected. The world-building informs the reasoning, the reasoning shapes the story, and the program tests the viability of your societal model.
+- Incorporate Buddhist concepts like _anicca_ (impermanence) and _sīla_ (ethical conduct), and anarchist ideas such as mutual aid and direct action.
+- Address human nature holistically, including altruism, selfishness, and adaptability.
+
+Good luck exploring the delicate balance between freedom, ethics, and human imperfection!
 
 </details>
 
@@ -1586,101 +1652,130 @@ Design a prompt that combines:
 <details>
     <summary>Prompt ...</summary>
 
-"The Metamorphic Challenge"
+You are tasked with designing a multi-faceted response that integrates **reasoning**, **creative writing**, **world-building**, and **programming**. This challenge draws inspiration from Buddhist cosmology, psychohistory, and the themes of societal balance and individual freedom.
 
-Create a prompt that requires:
+**1. World-Building**:
 
-1. Dynamic Problem Generation:
+Imagine a future society where Buddhist cosmology is the foundation for psychohistorical modeling. This society spans across the _31 planes of existence_ described in Buddhist texts, from the formless realms of pure consciousness to the human and animal realms.
 
-- Create a unique problem by combining:
-  - 3 randomly selected academic fields
-  - 2 contrasting philosophical perspectives
-  - 1 real-world current event
-  - 1 hypothetical future scenario
-- The combination must be novel and unlikely to exist in training data
+- Describe this multi-realm society, its governance structures, and the interactions between beings in different planes.
+- Include technological, philosophical, and cultural elements that emerge from integrating psychohistory with the concept of _kamma_ (karma) and _samsara_ (cycle of rebirth).
+- Address how the society handles ethical dilemmas involving beings of vastly different capabilities and lifespans.
 
-2. Multi-layer Analysis:
+**2. Reasoning**:
 
-- Analyze the generated problem through multiple frameworks:
-  - Systems thinking approach
-  - Game theory perspective
-  - Ethical implications
-  - Technical feasibility
-  - Sociological impact
-- Each analysis must reference specific elements from all combined fields
+Develop a framework for using psychohistorical modeling in this multi-realm society. Address:
 
-3. Solution Development:
+- How psychohistory adapts to the varying laws of causality and time across the 31 planes.
+- The role of _kamma_ as a probabilistic input in psychohistorical calculations.
+- Ethical considerations of influencing karmic trajectories to steer societal outcomes, balancing collective well-being and individual liberation.
 
-- Create multiple solution pathways that:
-  - Cross disciplinary boundaries
-  - Challenge common assumptions
-  - Require novel combinations of existing concepts
-  - Demonstrate clear causality chains
-- Solutions must be testable and falsifiable
+**3. Creative Writing**:
 
-4. Implementation Details:
+Write a story (700–1,000 words) set in this multi-realm society. Include:
 
-- Provide detailed steps for each solution:
-  - Technical specifications
-  - Resource requirements
-  - Timeline estimations
-  - Risk assessments
-  - Success metrics
-- Include edge cases and failure modes
+- A protagonist who uncovers a disruption in the psychohistorical model—a karmic anomaly that threatens the balance across realms.
+- A dramatic confrontation between the protagonist and a faction that seeks to exploit the anomaly for personal gain.
+- Themes of impermanence, interdependence, and the struggle between determinism (psychohistory) and liberation (_nibbana_).
+- Vivid depictions of how beings from different planes interact and perceive reality.
 
-5. Meta-cognitive Elements:
+**4. Programming**:
 
-- Explain the reasoning process behind:
-  - Why certain connections were made
-  - How conclusions were reached
-  - What alternatives were considered
-  - Which assumptions were challenged
-- Include explicit logical steps
+Create a Python program that simulates a simplified version of psychohistorical modeling for this society. The program should:
 
-6. Validation Framework:
+- Model populations in multiple planes of existence, each with unique parameters (e.g., lifespan, karmic weight, inter-realm interactions).
+- Integrate _kamma_ as a probabilistic factor influencing societal trends across realms.
+- Allow the user to introduce anomalies (e.g., sudden karmic imbalances or external influences) and observe the ripple effects.
+- Visualize the system's evolution over simulated cycles of rebirth, showing shifts in population and karmic balance across realms.
 
-- Create tests to verify:
-  - Internal consistency
-  - Logical soundness
-  - Practical feasibility
-  - Ethical considerations
-- Include specific success criteria
+5. Additional Instructions:
 
-7. Counter-arguments:
+- Ensure all components are tightly integrated. The world-building should inform the reasoning, which shapes the story, and the program should simulate the principles and dynamics described.
+- Use Buddhist philosophical concepts like _anicca_ (impermanence), _dukkha_ (suffering), and _anatta_ (non-self) as thematic undercurrents.
+- The response should explore the interplay between cosmic order (psychohistory) and the individual's path to liberation.
 
-- Generate strong counter-arguments that:
-  - Challenge core assumptions
-  - Identify potential flaws
-  - Propose alternative interpretations
-  - Question methodological choices
-
-8. Synthesis Requirements:
-
-- Combine all elements into:
-  - A coherent narrative
-  - A structured implementation plan
-  - A comprehensive analysis framework
-  - A detailed evaluation system
-
-9. Application Guidelines:
-
-- Provide clear instructions for:
-  - How to apply the solution
-  - When to use different approaches
-  - How to adapt to changing conditions
-  - How to measure success
-
-To make this prompt resistant to memorization:
-
-1. Require explicit reasoning for every step
-2. Ask for novel combinations of concepts
-3. Demand specific examples from current events
-4. Request multiple perspective analyses
-5. Require adaptation to changing parameters
-6. Include meta-cognitive reflection
-7. Demand explicit testing methodologies
+Good luck balancing the scales of karma and cosmic prediction!
 
 </details>
+
+---
+
+#### 7. use DP
+
+<details>
+    <summary>Prompt ...</summary>
+
+**The Ultimate General Intelligence Challenge: Uncharted Problem-Space Exploration**
+
+**Scenario**:
+
+You have entered an alternate reality with a fundamental difference:
+
+- **Laws of physics, logic, and causality are dynamic** and change based on societal consensus and collective belief.
+- Knowledge is decentralized, fragmented, and encoded in a living, evolving language that combines symbols, emotions, and physical sensations.
+- Technology functions through "conceptual engineering," where devices are created and operated by aligning abstract ideas with collective will.
+
+Your task is to design, analyze, and simulate the functioning of a society thriving in this reality.
+
+**1. Conceptual Reasoning**:
+
+Develop a theoretical framework for understanding this society:
+
+- How does a society operate when physical laws can shift according to belief?
+- How do individuals and groups maintain stability and continuity in such a fluid reality?
+- What safeguards might exist to prevent dangerous or chaotic changes to the laws of existence?
+- Propose a method for translating fragmented and multi-sensory language into actionable and sharable knowledge.
+
+**2. Creative World-Building**:
+
+Describe the world and its inhabitants:
+
+- What does day-to-day life look like when causality is fluid?
+- How do governance, education, and communication function?
+- Describe one major city, its culture, and its unique technological or philosophical innovations.
+- Highlight the tension between individual beliefs and collective agreements in shaping reality.
+
+**3. Narrative Exploration**:
+
+Write a short story (1,000–1,500 words) set in this world, incorporating:
+
+- A protagonist who must resolve a crisis caused by a shift in reality's laws—perhaps due to conflicting beliefs or misuse of conceptual engineering.
+- A secondary character who embodies a radically different perspective, challenging the protagonist’s approach.
+- A resolution that reveals whether the society's structure is ultimately stable or fragile.
+- Explore themes of adaptability, consensus, and the boundaries between knowledge and belief.
+
+**4. Adaptive Simulation**:
+
+Create a Python program that models the dynamics of this world:
+
+- Simulate a society where individuals have beliefs that collectively shape laws of physics (e.g., gravity or time).
+- Define agents with unique belief systems and "strength of belief" parameters that influence reality.
+- Introduce events where conflicting beliefs cause instability, and allow the simulation to resolve the conflicts based on consensus-building algorithms.
+- Visualize the evolution of reality's rules over time as beliefs shift, showing stability and chaos points.
+- Include mechanisms to model how "fragments" of the evolving language are shared and interpreted between agents.
+
+**5. Meta-Analysis**:
+
+After completing the reasoning, world-building, story, and simulation:
+
+- Critique your own response. Where are the gaps or contradictions?
+- Propose improvements to the society or simulation that would address these issues.
+- Reflect on whether this reality is truly sustainable, or if it is inherently prone to collapse under its own complexity.
+
+**Additional Instructions**:
+
+- The scenario introduces fundamentally new concepts, so any reliance on pre-trained knowledge will be insufficient. Leverage reasoning and adaptability to address the challenges.
+- Ensure that all components (reasoning, world-building, story, simulation, and meta-analysis) are interconnected. The narrative should reflect the framework, and the simulation should validate or challenge your ideas.
+- Incorporate principles of systems thinking, emergent behavior, and adaptability to demonstrate advanced cognitive capabilities.
+
+</details>
+
+<details>
+    <summary>Solution ...</summary>
+
+This prompt is designed to test an AI's ability to think beyond its pre-trained data, requiring it to tackle entirely novel, interconnected challenges that span reasoning, creativity, adaptability, and problem-solving. The challenge introduces new contexts, concepts, and scenarios that cannot be solved through rote memorization or pre-existing patterns.
+
+**Goal**: This challenge tests whether an AI can demonstrate true general intelligence or artificial superintelligence by creating novel solutions in a completely unprecedented context. Success requires integration, creativity, and adaptability beyond pre-trained data.
 
 </details>
 

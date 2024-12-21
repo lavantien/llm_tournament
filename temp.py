@@ -1,93 +1,91 @@
 import pygame
 import math
+import sys
 
 # Constants
-G = 6.67430e-11  # Gravitational constant
-M_EARTH = 5.972e24  # Mass of the Earth in kg
-M_MARS = 6.42e23  # Mass of Mars in kg
-M_JUPITER = 1.898e27  # Mass of Jupiter in kg
-
-# Colors
+WIDTH, HEIGHT = 800, 600
+G = 1  # Gravitational constant
+TIME_STEP = 0.5  # Time step for simulation
 WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
+BLACK = (0, 0, 0)
+
+# Boundary limits
+X_MIN, X_MAX = 0, WIDTH
+Y_MIN, Y_MAX = 0, HEIGHT
+
+# Body class
 
 
 class Body:
-    def __init__(self, x, y, vx, vy, mass, color):
+    def __init__(self, mass, x, y, vx, vy, color):
+        self.mass = mass
         self.x = x
         self.y = y
         self.vx = vx
         self.vy = vy
-        self.mass = mass
         self.color = color
-
-    def update(self):
-        self.x += self.vx
-        self.y += self.vy
 
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), 5)
 
+    def update(self, bodies):
+        ax = 0
+        ay = 0
+        for other in bodies:
+            if self != other:
+                dx = other.x - self.x
+                dy = other.y - self.y
+                dist = math.hypot(dx, dy)
+                force = G * self.mass * other.mass / (dist ** 2)
+                ax += force * dx / (dist * self.mass)
+                ay += force * dy / (dist * self.mass)
+        self.vx += ax * TIME_STEP
+        self.vy += ay * TIME_STEP
+        self.x += self.vx * TIME_STEP
+        self.y += self.vy * TIME_STEP
 
-def calculate_force(body1, body2):
-    dx = body2.x - body1.x
-    dy = body2.y - body1.y
-    distance = math.sqrt(dx**2 + dy**2)
-    if distance == 0:
-        return 0, 0
-    force = G * body1.mass * body2.mass / distance**2
-    angle = math.atan2(dy, dx)
-    fx = force * math.cos(angle)
-    fy = force * math.sin(angle)
-    return fx, fy
-
-
-def simulate(bodies):
-    for i, body1 in enumerate(bodies):
-        fx, fy = 0, 0
-        for j, body2 in enumerate(bodies):
-            if i != j:
-                fx1, fy1 = calculate_force(body1, body2)
-                fx += fx1 / body1.mass
-                fy += fy1 / body1.mass
-        body1.vx += fx
-        body1.vy += fy
-
-
-def main():
-    pygame.init()
-    screen_width, screen_height = 800, 600
-    screen = pygame.display.set_mode((screen_width, screen_height))
-    clock = pygame.time.Clock()
-
-    bodies = [
-        Body(100, 100, 0, 0, M_EARTH, RED),
-        Body(300, 300, 0, 0, M_MARS, GREEN),
-        Body(500, 500, 0, 0, M_JUPITER, BLUE)
-    ]
-
-    for i in range(1000):
-        simulate(bodies)
-
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
-        screen.fill(WHITE)
-
-        for body in bodies:
-            body.update()
-            body.draw(screen)
-
-        pygame.display.flip()
-        clock.tick(60)
-
-    pygame.quit()
+        # Boundary conditions
+        if self.x < X_MIN:
+            self.x = X_MIN
+            self.vx = -self.vx * 0.8  # Dampen velocity a bit
+        elif self.x > X_MAX:
+            self.x = X_MAX
+            self.vx = -self.vx * 0.8
+        if self.y < Y_MIN:
+            self.y = Y_MIN
+            self.vy = -self.vy * 0.8
+        elif self.y > Y_MAX:
+            self.y = Y_MAX
+            self.vy = -self.vy * 0.8
 
 
-if __name__ == "__main__":
-    main()
+# Initialize Pygame
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("3-Body Problem Simulation")
+
+# Create bodies
+bodies = [
+    Body(1, 200, 300, 0, 1, (255, 0, 0)),  # Red body
+    Body(1, 400, 300, 0, -1, (0, 255, 0)),  # Green body
+    Body(1, 300, 200, 1, 0, (0, 0, 255))   # Blue body
+]
+
+# Main loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    screen.fill(BLACK)
+
+    for body in bodies:
+        body.update(bodies)
+        body.draw(screen)
+
+    pygame.display.flip()
+    pygame.time.delay(10)
+
+pygame.quit()
+sys.exit()
