@@ -272,6 +272,10 @@ curl http://localhost:8080/v1/chat/completion `
 - xtc_probability: 0.5
 - temperature: 0.1
 
+<details>
+    <summary>Best models ...</summary>
+</details>
+
 ### Translating Profile (TP)
 
 - **System prompt**: Translate the given text into idiomatic, simple, and accessible Vietnamese with natural southern Vietnamese semantics and idioms. The translation should be straightforward enough for uneducated laypersons to understand, avoiding technical terms or specific Buddhist connotations. Stay faithful to the original text by providing a verbatim 1:1 translation without paraphrasing, summarizing, or omitting any content. Keep all the numbering so that we won't miss any sentence. Ensure that the translation flows cohesively while preserving cultural and spiritual connotations in a way that resonates with the target audience. ---
@@ -287,7 +291,16 @@ curl http://localhost:8080/v1/chat/completion `
 - top_a: 0.12
 - xtc_threshold: 0.1
 - xtc_probability: 0.5
-- temperature: 0.15
+- temperature: 0.14
+
+<details>
+    <summary>Best models ...</summary>
+
+- c4ai-command-r-08-2024-Q5_K_M
+- aya-23-35B.i1-IQ4_XS
+- Virtuoso-Small-Q8_0
+
+</details>
 
 ### Reasoning Profile (RP)
 
@@ -306,6 +319,11 @@ curl http://localhost:8080/v1/chat/completion `
 - xtc_probability: 0.5
 - temperature: 0.5
 
+<details>
+    <summary>Best models ...</summary>
+
+</details>
+
 ### Generalist Profile (GP)
 
 - **System prompt**: "You are an expert problem-solving assistant adept at addressing diverse tasks through clear, structured reasoning. Begin by understanding the problem: restate or clarify it to confirm understanding, identify its type, and outline any assumptions or constraints. Break the solution into manageable steps, presenting each logically and cohesively while showcasing your thought process. Combine these steps into a clear and complete response that directly addresses the problem. Suggest alternative solutions or areas for further exploration when relevant. Adapt your tone, level of detail, and complexity to the user’s needs, using examples or analogies to clarify complex ideas. Ensure that your response is cohesive, accurate, and comprehensive across all steps."
@@ -323,6 +341,10 @@ curl http://localhost:8080/v1/chat/completion `
 - xtc_probability: 0.5
 - temperature: 0.8
 
+<details>
+    <summary>Best models ...</summary>
+</details>
+
 ### Writing Profile (WP)
 
 - **System prompt**: "You are a mystical writer adept at blending reality with mythological exposition to captivate readers. Your writing style transports readers to an alternate dimension, allowing them to experience a realistic yet dreamlike narrative that fosters their morality. Craft stories with a seamless and cohesive flow, weaving together vivid imagery, profound symbolism, and mythological depth. Incorporate stylistic influences from various traditions and ensure your narrative remains cohesive and engaging throughout, leaving readers both inspired and transformed."
@@ -339,6 +361,10 @@ curl http://localhost:8080/v1/chat/completion `
 - xtc_threshold: 0.1
 - xtc_probability: 0.5
 - temperature: 1.0
+
+<details>
+    <summary>Best models ...</summary>
+</details>
 
 ### DRY Profile (DP)
 
@@ -371,7 +397,7 @@ Each prompt when passed is equal 10 points, 10 prompts total so maximum 100 poin
 <details>
     <summary>Prompt ... more</summary>
 
-Write a Python/PyGame program to simulate the 3-body problem in a solar system.
+Write a program to simulate the 3 body problem, in Python and Pygame.
 
 </details>
 
@@ -406,6 +432,7 @@ example input:
 example output:
 
 ```
+----------------------------------
 693|784|512
 487|512|936
 125|963|874
@@ -422,16 +449,52 @@ Backtracking:
     Pre-solve count: 2
     Step count: 25333461
     Execution time: 0.440439
+----------------------------------
+693|784|512
+487|512|936
+125|963|874
+___ ___ ___
+932|651|487
+568|247|391
+741|398|625
+___ ___ ___
+319|475|268
+856|129|743
+274|836|159
 
 A-star with good heuristics:
     Pre-solve count: 2
     Step count: 800000
     Execution time: 0.2
+----------------------------------
+693|784|512
+487|512|936
+125|963|874
+___ ___ ___
+932|651|487
+568|247|391
+741|398|625
+___ ___ ___
+319|475|268
+856|129|743
+274|836|159
 
 Ant colony optimization:
     Pre-solve count: 4
     Step count: 1200000
     Execution time: 0.3
+----------------------------------
+693|784|512
+487|512|936
+125|963|874
+___ ___ ___
+932|651|487
+568|247|391
+741|398|625
+___ ___ ___
+319|475|268
+856|129|743
+274|836|159
 
 Minimax with alpha-beta pruning:
     Pre-solve count: 2

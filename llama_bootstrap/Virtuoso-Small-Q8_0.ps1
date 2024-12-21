@@ -1,8 +1,8 @@
-$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\tensorblock\gemma-2-27b-it-GGUF\gemma-2-27b-it-Q6_K.gguf"
+$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\arcee-ai\Virtuoso-Small-GGUF\Virtuoso-Small-Q8_0.gguf"
 
 $params = @{
-    "gpu-layers" = 14
-    "ctx-size" = 8192
+    "gpu-layers" = 21
+    "ctx-size" = 32768
     "batch-size" = 512
     "threads" = 8
     "keep" = 4096
