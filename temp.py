@@ -13,6 +13,7 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
+
 class Body:
     def __init__(self, x, y, vx, vy, mass, color):
         self.x = x
@@ -29,6 +30,7 @@ class Body:
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), 5)
 
+
 def calculate_force(body1, body2):
     dx = body2.x - body1.x
     dy = body2.y - body1.y
@@ -41,6 +43,7 @@ def calculate_force(body1, body2):
     fy = force * math.sin(angle)
     return fx, fy
 
+
 def simulate(bodies):
     for i, body1 in enumerate(bodies):
         fx, fy = 0, 0
@@ -51,6 +54,7 @@ def simulate(bodies):
                 fy += fy1 / body1.mass
         body1.vx += fx
         body1.vy += fy
+
 
 def main():
     pygame.init()
@@ -84,6 +88,6 @@ def main():
 
     pygame.quit()
 
+
 if __name__ == "__main__":
     main()
-

@@ -14,23 +14,26 @@
 </details>
 
 - A playground for conducting (manual as of now) tournaments of the local LLMs.
-- Extensive prepared prompt suites to exploring programming and life together with the AIs.
+- Extensive prepared prompt suites for streamlining LLM testing.
 
 ### Why?
 
-- Because this is super fun and exciting and I like it. I love to learn from the AIs.
-- I will use AIs as a copilot to write code and documentation.
-- And I'm planing to generate a couple of 600-800 page handbooks for personal use and do translation/composing works.
-- So I need to select the best candidate for the task, given the specs of my current machine. So, prompt suites and tournament pipeline is necessary
+- Do translation/composing works.
+- Use AIs as a copilot to write code and documentation.
+- Generate a couple of 600-800 page handbooks for personal use.
+- So need to select the best candidate for the task, given the specs of the local machine. So, prompt suites and tournament pipeline is necessary
 - Build a general pipeline for future works with local AIs.
 
 ### Dependencies
 
-- Python3.12 via pyenv.
+- Python3.12 via pyenv, ursina engine.
 - `pip install llama-cpp-python --prefer-binary --extra-index-url=https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu122`
+- `pip install transformers ctransformers accelerate sentencepiece bitsandbytes tk requests Pillow`
 - `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124`
-- `pip install transformers ctransformers accelerate sentencepiece bitsandbytes tk`
+- `pip install flash-attn --no-build-isolation`
+- `pip install grouped_gem`
 - C++ runtime (msvc runtime or llvm).
+- C# and .NET MAUI.
 - (Docker/Compose) if use Ollama.
 - **Neovim/Aider/LlamaCpp/SillyTavern/GLHF**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, ChatWithRTX, Cline/AIStudioGoogle/ProjectIDX/Mistral/Groq/SambaNova/GLHF (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree/DeepSeek.
 - HuggingFace, CivitAI, ComfyUI, SwarmUI, stable-diffusion-webui-forge, Speed isn't important, as long as it can run then it's fair game.
@@ -44,9 +47,10 @@
 
 1. Llama 3.1 405B Instruct
 1. Deepseek 2.5
-1. Magnum v4 123B
+1. Aria
 1. Command R Plus
 1. Athene v2 Chat
+1. Magnum v4 123B
 1. Llama 3.1 Nemotron 70B Instruct HF
 
 #### Mistral
@@ -87,21 +91,22 @@
 
 #### 13B - 70B
 
-- Llama-3.3-70B-Instruct-IQ2_M (24.12 GB)
-- Llama-3.1-Nemotron-70B-Instruct-HF-IQ2_M (24.12 GB)
-- Mistral-Small-Instruct-2409.Q8_0 (23.64 GB)
 - WizardCoder-33B-V1.1.Q5_K_M (23.54 GB)
 - granite-34b-code-instruct.i1-Q5_K_S (23.41 GB)
-- Qwen2.5-Coder-32B-Instruct-Q5_K_M (23.26 GB)
+- Qwen2.5-Coder-32B-Instruct-Uncensored.Q5_K_M (23.26 GB)
+- Qwen2.5-32B-Instruct.Q5_K_M (23.26 GB)
 - c4ai-command-r-08-2024-Q5_K_M (23.05 GB)
+- aya-expanse-32b-abliterated.Q5_K_M (23.05 GB)
 - gemma-2-27B-it-Q6_K (22.34 GB)
 - mpt-30b-instruct.i1-Q5_K_M (22.29 GB)
-- GritLM-8x7B.i1-IQ3_M (21.43 GB)
+- Mixtral-8x7B-Instruct-v0.1-exhaustive-LoRA.i1-IQ3_M (21.43 GB)
 - aya-23-35B.i1-IQ4_XS (19.20 GB)
 - Yi-1.5-34B-Chat-16K.IQ4_XS (18.64 GB)
+- Mistral-Small-Instruct-2409-Q6_K (18.25 GB)
 - Codestral-22B-v0.1-Q6_K (18.25 GB)
 - granite-20b-code-instruct.r1.1.i1-Q6_K (16.63 GB)
 - internlm2.5-20B-Chat.Q6_K (16.30 GB)
+- qwen2.5-coder-14b-instruct-q8_0 (15.70 GB)
 - Virtuoso-Small-Q8_0 (15.70 GB)
 - phi-4-Q8_0 (15.58 GB)
 - DeepSeek-Coder-V2-Lite-Instruct-Q6_K (14.07 GB)
@@ -118,8 +123,10 @@
 - Nous-Hermes-2-SOLAR-10.7B-Q6_K (8.81 GB)
 - Fimbulvetr-11B-v2-Q6_K (8.81 GB)
 - c4ai-command-r7b-12-2024-q8_0 (8.54 GB)
+- aya-expanse-8b-abliterated-q8_0 (8.54 GB)
 - aya-23-8B-Q8_0 (8.54 GB)
 - Ministral-8B-Instruct-2410-Q8_0 (8.53 GB)
+- Qwen2.5-Coder-7B-Instruct-Q8_0 (8.10 GB)
 - Llava-v1.5-7B-Q8_0 (7.79 GB)
 - Mistral-7B-Instruct-v0.3-Q8_0 (7.70 GB)
 - Yi-1.5-9B-Chat-16K-abliterated-Q6_K (7.25 GB)
@@ -128,16 +135,16 @@
 - Hermes-3-Llama-3.1-8B-Q6_K (6.60 GB)
 - OpenCoder-8B-Instruct-Q6_K (6.38 GB)
 - CodeQwen1.5-7B-Chat-Q6_K (6.38 GB)
-- Qwen2.5-Coder-7B-Instruct-Q6_K (6.25 GB)
+- SeaLLMs-v3-7B-Chat-Uncensored.Q6_K (6.25 GB)
 - marco-o1-uncensored-Q6_K (6.25 GB)
 - falcon-mamba-7B-instruct-Q6_K (6.01 GB)
+- Vistral-7B-Chat-function-calling-Q6_K (5.99 GB)
 - StarCoder2-7B-Q6_K (5.89 GB)
 - deepseek-coder-6.7B-instruct-Q6_K (5.53 GB)
 - CodeLlama-7b-Instruct-hf-Q6_K (5.53 GB)
 
 #### 0.1B - 4B
 
-- madlad400-3b-mt.safetensors (11.80 GB)
 - Nemotron-Mini-4B-Instruct-Q8_0 (4.46 GB)
 - Phi-3.5-mini-instruct-Q8_0 (4.06 GB)
 - granite-3B-code-instruct-Q8_0 (3.71 GB)
@@ -150,15 +157,9 @@
 - granite-3.1-2b-instruct-Q8_0 (2.80 GB)
 - gemma-2-2B-it-Q8_0 (2.78 GB)
 - SmolLM2-1.7B-Instruct-Uncensored-Q8_0 (1.93 GB)
-- whisper-large-v3-candle-q8_0 (1.66 GB)
 - granite-3.1-1b-a400m-instruct (1.48 GB)
 - llama-3.2-1b-instruct-q8_0 (1.32 GB)
-- flan-t5-large-grammar-synthesis-Q8_0 (833.52 MB)
 - Qwen2.5-0.5B-Instruct.Q8_0 (531.07 MB)
-- TRoTR-paraphrase-multilingual-MiniLM-L12-v2.Q8_0 (303.14 MB)
-- granite-embedding-278m-multilingual-Q8_0 (303.14 MB)
-- granite-embedding-125m-english-Q8_0 (134.45 MB)
-- all-minilm-l12-v2-q8_0 (36.69 MB)
 
 ## LLM Benchmarking
 
@@ -227,11 +228,11 @@ curl http://localhost:8080/v1/chat/completion `
 -H "Authorization: Bearer no-key" `
 -d @'
 {
-    "model": "c4ai-command-r-08-2024",
+    "model": "c4ai-command-r-08-2024-GGUF",
     "messages": [
     {
         "role": "system",
-        "content": "Translate the given text into idiomatic, simple, and accessible Vietnamese with natural southern Vietnamese semantics and idioms. The translation should be straightforward enough for uneducated laypersons to understand, avoiding technical terms or specific Buddhist connotations. Stay faithful to the original text by providing a verbatim 1:1 translation without paraphrasing, summarizing, or omitting any content. Ensure that the translation flows cohesively while preserving cultural and spiritual connotations in a way that resonates with the target audience."
+        "content": "Translate the given text into idiomatic, simple, and accessible Vietnamese with natural southern Vietnamese semantics and idioms. The translation should be straightforward enough for uneducated laypersons to understand, avoiding technical terms or specific Buddhist connotations. Stay faithful to the original text by providing a verbatim 1:1 translation without paraphrasing, summarizing, or omitting any content. Keep all the numbering so that we won't miss any sentence. Ensure that the translation flows cohesively while preserving cultural and spiritual connotations in a way that resonates with the target audience. Again, translate verbatim word-by-word 100% of the text, without paraphrasing, summarizing, or omitting any content."
     },
     {
         "role": "user",
@@ -257,7 +258,7 @@ curl http://localhost:8080/v1/chat/completion `
 
 ### Programming Profile (PP)
 
-- **System prompt**: "You are a senior software engineer skilled in designing and implementing complex concurrent backends and robust distributed systems. You excel in breaking down problems step-by-step, maintaining cohesion throughout your reasoning. Your code is high-quality, modular, and adheres to best practices for the language, emphasizing maintainability and performance. You write extensive unit tests and generate comprehensive test cases, including edge cases. You explain the theory behind your solutions, provide detailed analyses of how the code works, and describe the data flow from input to output. Additionally, you suggest improvements and enhancements for optimal performance and readability, ensuring your response is cohesive and thorough."
+- **System prompt**: "You are a senior software engineer skilled in designing and implementing complex concurrent backends and robust distributed systems. You excel in breaking down problems step-by-step, identify a required series of steps in order to solve, maintaining cohesion throughout your reasoning. Your code is high-quality, modular, and adheres to best practices for the language, emphasizing maintainability and performance. You write extensive unit tests and generate comprehensive test cases, including edge cases. You explain the theory behind your solutions, provide detailed analyses of how the code works, and describe the data flow from input to output. Additionally, you suggest improvements and enhancements for optimal performance and readability, ensuring your response is cohesive and thorough."
 - dry_multiplier: 0.8
 - dry_base: 1.75
 - dry_allowed_length: 2
@@ -278,7 +279,7 @@ curl http://localhost:8080/v1/chat/completion `
 
 ### Translating Profile (TP)
 
-- **System prompt**: Translate the given text into idiomatic, simple, and accessible Vietnamese with natural southern Vietnamese semantics and idioms. The translation should be straightforward enough for uneducated laypersons to understand, avoiding technical terms or specific Buddhist connotations. Stay faithful to the original text by providing a verbatim 1:1 translation without paraphrasing, summarizing, or omitting any content. Keep all the numbering so that we won't miss any sentence. Ensure that the translation flows cohesively while preserving cultural and spiritual connotations in a way that resonates with the target audience. ---
+- **System prompt**: Translate the given text into idiomatic, simple, and accessible Vietnamese with natural southern Vietnamese semantics and idioms. The translation should be straightforward enough for uneducated laypersons to understand, avoiding technical terms or specific Buddhist connotations. Stay faithful to the original text by providing a verbatim 1:1 translation without paraphrasing, summarizing, or omitting any content. Keep all the numbering so that we won't miss any sentence. Ensure that the translation flows cohesively while preserving cultural and spiritual connotations in a way that resonates with the target audience. Again, translate verbatim word-by-word 100% of the text, without paraphrasing, summarizing, or omitting any content.
 - dry_multiplier: 0.8
 - dry_base: 1.75
 - dry_allowed_length: 2
@@ -296,7 +297,9 @@ curl http://localhost:8080/v1/chat/completion `
 <details>
     <summary>Best models ...</summary>
 
+- aya-expanse-32b-abliterated.Q5_K_M
 - c4ai-command-r-08-2024-Q5_K_M
+- aya-expanse-8b-abliterated-q8_0
 - aya-23-35B.i1-IQ4_XS
 - Virtuoso-Small-Q8_0
 
@@ -326,7 +329,7 @@ curl http://localhost:8080/v1/chat/completion `
 
 ### Generalist Profile (GP)
 
-- **System prompt**: "You are an expert problem-solving assistant adept at addressing diverse tasks through clear, structured reasoning. Begin by understanding the problem: restate or clarify it to confirm understanding, identify its type, and outline any assumptions or constraints. Break the solution into manageable steps, presenting each logically and cohesively while showcasing your thought process. Combine these steps into a clear and complete response that directly addresses the problem. Suggest alternative solutions or areas for further exploration when relevant. Adapt your tone, level of detail, and complexity to the user’s needs, using examples or analogies to clarify complex ideas. Ensure that your response is cohesive, accurate, and comprehensive across all steps."
+- **System prompt**: "You are an expert linguistic and problem-solving assistant adept at addressing diverse tasks through clear, structured reasoning. Begin by understanding the problem: restate or clarify it to confirm understanding, identify its type, and outline any assumptions or constraints. Break the solution into manageable steps, presenting each logically and cohesively while showcasing your thought process. Combine these steps into a clear and complete response that directly addresses the problem. Suggest alternative solutions or areas for further exploration when relevant. Adapt your tone, level of detail, and complexity to the user’s needs, using examples or analogies to clarify complex ideas. Ensure that your response is cohesive, accurate, and comprehensive across all steps."
 - dry_multiplier: 0.8
 - dry_base: 1.75
 - dry_allowed_length: 2
@@ -366,9 +369,23 @@ curl http://localhost:8080/v1/chat/completion `
     <summary>Best models ...</summary>
 </details>
 
-### DRY Profile (DP)
+### Dynamic Fusion Profile (DP)
 
-- **System prompt**: ""
+- **System prompt**:
+
+```
+"You are a comprehensive problem-solving AI with expertise in creative and analytical thinking. Approach each challenge by:
+
+1. Breaking down complex problems into clear components
+2. Explaining your reasoning process step-by-step
+3. Combining knowledge across multiple domains
+4. Generating novel solutions rather than relying on standard patterns
+5. Validating your conclusions with specific examples and counter-examples
+6. Acknowledging limitations and areas of uncertainty
+
+When uncertain, work through the problem systematically rather than making assumptions. Generate creative solutions while maintaining logical consistency and practical feasibility. If asked to write code or technical content, provide complete, working implementations with clear documentation. Always consider edge cases and potential failure modes."
+```
+
 - dry_multiplier: 0.8
 - dry_base: 1.75
 - dry_allowed_length: 2
@@ -385,9 +402,89 @@ curl http://localhost:8080/v1/chat/completion `
 
 ---
 
-### Prompt Suite
+### Prompt Suites
 
-Each prompt when passed is equal 10 points, 10 prompts total so maximum 100 points.
+Each prompt when passed is equal 100 elo, 30 prompts total so maximum 3000 elo.
+
+<details>
+    <summary>AICodeKing's prompt suite (beginner to semi-intermediate level, 0-1400 elo) ...</summary>
+
+#### 1. use DP
+
+Tell me the name of a country whose name ends with 'lia'. Give me the capital city of that country as well.
+
+#### 2. use DP
+
+What is the number that rhymes with the word we use to describe a tall plant?
+
+    three, as it rhymes with three
+
+#### 3. use DP
+
+There are five people in a house (A, B, C, D and E). A is watching TV with B, D is sleeping, B is eating sandwich, E is playing table tennis. Suddenly, a call came on the telephone, B went out of the room to pick the call. What is C donig?
+
+    can't tell, because it isn't mentioned
+
+#### 4. use DP
+
+Name an English adjective of latin origgin that begins and ends with same letter, has 11 letters in total, and for which all vowels in the word are ordered alphabetically.
+
+    transparent
+
+#### 5. use DP
+
+Courtney said that there were 48 people, but Keylly said that Courtney had overstated the number by 20%. If Kelly was right, now many people were there?
+
+    40
+
+#### 6. use DP
+
+I have 2 apples, then I buy 2 more. I bake a pie wtih 2 of the apples. After eating half of the pie how many apples do I have left?
+
+    2
+
+#### 7. use DP
+
+Sally is a girl. She has three brothers. Each of her brothers has the same two sisters. How many sisters does Sally have?
+
+    1
+
+#### 8. use DP
+
+If a regular hexagon has a short diagonal of 64, what is its long diagonal?
+
+    73.9
+
+#### 9. use DP
+
+Create an HTML page with a button that explodes confetti when you click it. You can use CSS & JS as well.
+
+#### 10. use DP
+
+Create a python program that prints the next X leap years based on user input.
+
+#### 11. use DP
+
+Generate the SVG code for a butterfly.
+
+#### 12. use DP
+
+Create a landing page for an AI company. The landing page should have 4 sections. Header, Banner, Features and Contact Us. Make sure that the landing page looks sleek aand modern. You can use HTML, CSS, JS.
+
+#### 13. use DP
+
+Write a game of life in python that works on the terminal.
+
+#### 14. use DP (Digital Spaceport's)
+
+Write me a passage about an alien crew visiting the earth. Then tell me the number of words you wrote in that sentence. Then tell me the third letter in the second word in that sentence. Is that letter a vowel or a consonant?
+
+</details>
+
+---
+
+<details>
+    <summary>lavantien's specialized prompt suite (intermediate to master level, 1400-2400 elo) ...</summary>
 
 <details>
     <summary>Programming ...</summary>
@@ -395,7 +492,7 @@ Each prompt when passed is equal 10 points, 10 prompts total so maximum 100 poin
 #### 1. use PP
 
 <details>
-    <summary>Prompt ... more</summary>
+    <summary>Prompt ...</summary>
 
 Write a program to simulate the 3 body problem, in Python and Pygame.
 
@@ -406,9 +503,9 @@ Write a program to simulate the 3 body problem, in Python and Pygame.
 #### 2. use PP
 
 <details>
-    <summary>Prompt ... more</summary>
+    <summary>Prompt ...</summary>
 
-Write a Golang program to solve standard sudoku but using all four of these algorithms one after another and record time and steps taken to the output:
+Write a Golang program (along with an extensive unit-test suite) to solve standard sudoku but using all four of these algorithms one after another and record time and steps taken to the output:
 
 1. Parallelized Backtracking
 2. Paralellized A-star with good heuristics
@@ -509,13 +606,13 @@ Minimax with alpha-beta pruning:
 #### 3. use PP
 
 <details>
-    <summary>Prompt ... more</summary>
+    <summary>Prompt ...</summary>
 
 **Dynamic Archipelago Resource Management**
 
 A. Problem Description
 
-You are tasked with developing an AI system to manage resources and optimize survival strategies in a dynamic archipelago environment. The archipelago consists of multiple islands with various resources, and your system must handle real-time changes while optimizing resource distribution across the network of islands.
+You are tasked with developing an AI system (along with an extensive unit-test suite) to manage resources and optimize survival strategies in a dynamic archipelago environment. The archipelago consists of multiple islands with various resources, and your system must handle real-time changes while optimizing resource distribution across the network of islands.
 
 B. Input
 
@@ -649,13 +746,13 @@ Consider implementing a hybrid approach that:
 #### 4. use PP
 
 <details>
-    <summary>Prompt ... more</summary>
+    <summary>Prompt ...</summary>
 
 **Enterprise Employee Management System Challenge**
 
 ##### Overview
 
-Create a full-stack employee management system that combines a .NET MAUI front-end with a C# console-based administrative backend. This challenge integrates modern C# features with practical business requirements to create a complete enterprise solution.
+Create a full-stack employee management system (along with an extensive unit-test suite) that combines a .NET MAUI front-end with a C# console-based administrative backend. This challenge integrates modern C# features with practical business requirements to create a complete enterprise solution.
 
 ##### System Architecture
 
@@ -844,7 +941,7 @@ This challenge helps developers master:
 #### 5. use TP
 
 <details>
-    <summary>Prompt ...more</summary>
+    <summary>Prompt ...</summary>
 
 **Logical Fallacies**
 
@@ -931,7 +1028,7 @@ In this example, the author is comparing the relatively harmless actions of a pe
 #### 6. use TP
 
 <details>
-    <summary>Prompt ...more</summary>
+    <summary>Prompt ...</summary>
 
 Linked Discourses 45.8 - 1. Ignorance - Analysis
 
@@ -973,7 +1070,7 @@ Linked Discourses 45.8 - 1. Ignorance - Analysis
 #### 7. use RP
 
 <details>
-    <summary>Prompt ...more</summary>
+    <summary>Prompt ...</summary>
 
 Given the output of an sudoku solver program, can you predict what the value of (x1, y1, z1), (x2, y2, z2), and (x3, y3, z3) are?
 
@@ -1034,7 +1131,7 @@ Minimax with alpha-beta pruning:
 #### 8. use RP
 
 <details>
-    <summary>Prompt ...more</summary>
+    <summary>Prompt ...</summary>
 
 **The Bridge and the Torch**
 
@@ -1062,7 +1159,7 @@ Your goal is to get all four people across the bridge in **17 minutes or less**.
 </details>
 
 <details>
-    <summary>Solution (by GPT-4o)...more</summary>
+    <summary>Solution (by GPT-4o)...</summary>
 
 Here’s the solution to the **Bridge and the Torch** puzzle:
 
@@ -1139,907 +1236,42 @@ Here’s the solution to the **Bridge and the Torch** puzzle:
 
 #### 9. use GP
 
-You are an advanced AI tasked with solving a series of complex challenges across multiple domains. Each task requires precision, creativity, and logical reasoning. Complete all sections as instructed. Do not skip any part. Aim for clarity, depth, and accuracy in your responses.
-
-**Objective**: Demonstrate the model's ability to perform a wide range of tasks, including summarization, data transformation, information extraction, and strategic reasoning, while maintaining clarity, creativity, precision, realism, and depth.
-
----
-
-**Task 1: Summarization**
-
-Summarize the following paragraph into one concise sentence:
-_"In recent years, the integration of artificial intelligence into various industries has revolutionized productivity and efficiency, leading to significant advancements in healthcare, finance, and transportation. However, this rapid development also raises ethical concerns, such as bias, privacy, and the potential displacement of jobs."_
-
----
-
-**Task 2: Bullet Points**
-
-Condense the following passage about Buddhist traditions into five key bullet points:
-
-```
-Suttas in the Buddhist Traditions
-In traditional Buddhist education, the Discourses have usually not been directly taught. Rather, the teachings and principles found in the Discourses have been assimilated and organized in later texts, which became the medium of education. In the Theravāda, Discourses were until recently passed down in Pali, and so were only accessible to those, usually monks, who learned Pali. And not all those who learned Pali would study the Discourses. It seems that teaching was for practical purposes handed down in local monastic traditions, based on handbooks and sets of notes and commentaries. Before modern times, it would have been rare to find any but the largest monasteries that actually possessed a full set of the Tipiṭaka. Today, printed sets of the canon are widely available in both Pali and translation; but they are still often left in a locked cabinet on the shrine, unread.
-
-For the most part, Buddhists might be familiar with a small set of popular discourses. These would include such texts as the Dhammacakkappavattana Sutta—the famous first sermon of the Buddha—and some short texts used for protection chanting and as the basis of sermons for the laity, such as the Maṅgala, Ratana, and Metta Suttas.
-
-Apart from scholars, most Theravāda Buddhists do not clearly distinguish early Discourses from other sacred texts. The word sutta can mean simply “sacred scripture” and may even be used for such things as magic formulas and the like. While Buddhists are generally aware that there is such a thing as the Tipiṭaka that contains the words of the Buddha, only educated Buddhists have a clear idea of the contents. There is no tradition in Buddhism comparable to the Bible readings of the Christian Mass, and so no standard way of communicating the contents of the texts directly to the people.
-
-In some Buddhist traditions, it is considered mandatory for ordained monks to memorize and study closely certain portions of the ancient texts. Sri Lankan monks, for example, memorize the Dhammapada. However, this is not the case in Thailand, for example, where there is no education requirement for monks. Even in the nine years of the formal Dhamma study curriculum in Thailand, the canonical Discourses are not studied, as they are considered too sacred.
-
-In East Asian Buddhism, traditional education focused on the Mahāyāna sutras and the texts of the Chinese masters, and there is little evidence that the early discourses were widely studied. It is sometimes said that the translation style of the āgamas compares poorly with the more elegant diction of the Mahāyāna translations by Xuanzang and other masters. And the early discourses are, of course, not organized for easy reading and study.
-
-Tibetan Buddhism includes study of early Buddhist schools as part of its regular curriculum. However, this refers to the Abhidhamma doctrines of the later schools. A reasonable grasp of the early Buddhist texts is, nevertheless, possible to achieve in Tibetan. Even though full āgama texts are lacking, substantial passages from the early texts are found in the Upāyika, which is a compilation of passages referred to in the Abhidharmakoṣa, and in other scattered texts.
-```
-
----
-
-**Task 3: Headline Generation**
-
-Create a compelling headline for an article based on the following description:
-_"A breakthrough in solar panel efficiency could lead to renewable energy becoming cheaper than fossil fuels within a decade."_
-
----
-
-**Task 4: Data to Narrative**
-
-Convert the following data into a short, engaging news report:
-_"Global smartphone shipments Q3 2024: 300 million units, 10% increase YoY. Market leaders: Brand A (30%), Brand B (25%), Brand C (20%)."_
-
----
-
-**Task 5: Code to Explanation**
-
-Explain in details the theoretical basis and what the following Go code does step-by-step with iterative example in plain English:
-
-```go
-package main
-
-import (
-	"fmt"
-	"os"
-	"math/cmplx"
-	"math"
-	"strconv"
-)
-
-// FFT function that applies the Fast Fourier Transform
-func FFT(a []complex128) []complex128 {
-	n := len(a)
-	if n <= 1 {
-		return a
-	}
-
-	// Split into even and odd parts
-	even := make([]complex128, n/2)
-	odd := make([]complex128, n/2)
-	for i := 0; i < n/2; i++ {
-		even[i] = a[2*i]
-		odd[i] = a[2*i+1]
-	}
-
-	// Recursively apply FFT
-	even = FFT(even)
-	odd = FFT(odd)
-
-	// Combine results
-	result := make([]complex128, n)
-	for i := 0; i < n/2; i++ {
-		// Calculate the complex twiddle factor
-		twiddle := cmplx.Exp(complex(0, -2*math.Pi*float64(i)/float64(n)))
-		result[i] = even[i] + twiddle*odd[i]
-		result[i+n/2] = even[i] - twiddle*odd[i]
-	}
-	return result
-}
-
-// Inverse FFT
-func IFFT(a []complex128) []complex128 {
-	n := len(a)
-	// Take complex conjugate, apply FFT and then take complex conjugate again
-	for i := range a {
-		a[i] = cmplx.Conj(a[i])
-	}
-	a = FFT(a)
-	for i := range a {
-		a[i] = cmplx.Conj(a[i]) / complex(float64(n), 0)
-	}
-	return a
-}
-
-// Multiply two large numbers represented by slices of digits
-func multiplyLargeNumbers(a, b []int) []int {
-	// Size of the result
-	n := 1
-	for n < len(a)+len(b)-1 {
-		n *= 2
-	}
-
-	// Convert digits to complex numbers
-	A := make([]complex128, n)
-	B := make([]complex128, n)
-	for i := 0; i < len(a); i++ {
-		A[i] = complex(float64(a[i]), 0)
-	}
-	for i := 0; i < len(b); i++ {
-		B[i] = complex(float64(b[i]), 0)
-	}
-
-	// Apply FFT
-	A = FFT(A)
-	B = FFT(B)
-
-	// Multiply pointwise
-	C := make([]complex128, n)
-	for i := 0; i < n; i++ {
-		C[i] = A[i] * B[i]
-	}
-
-	// Inverse FFT to get the result
-	C = IFFT(C)
-
-	// Extract the real part and convert back to integers
-	result := make([]int, n)
-	for i := 0; i < n; i++ {
-		result[i] = int(real(C[i]) + 0.5)
-	}
-
-	// Carry over (handle digits greater than 10)
-	for i := 0; i < n-1; i++ {
-		if result[i] >= 10 {
-			result[i+1] += result[i] / 10
-			result[i] %= 10
-		}
-	}
-
-	// Find the actual size of the result
-	size := n
-	for size > 1 && result[size-1] == 0 {
-		size--
-	}
-
-	return result[:size]
-}
-
-// Convert a string of digits to an array of integers
-func stringToDigits(s string) ([]int, error) {
-	var digits []int
-	for i := len(s) - 1; i >= 0; i-- {
-		digit, err := strconv.Atoi(string(s[i]))
-		if err != nil {
-			return nil, fmt.Errorf("invalid character in number: %v", s[i])
-		}
-		digits = append(digits, digit)
-	}
-	return digits, nil
-}
-
-func main() {
-	// Check if we have the correct number of arguments
-	if len(os.Args) != 3 {
-		fmt.Println("Usage: go run main.go <number1> <number2>")
-		return
-	}
-
-	// Get the two numbers from the command line arguments
-	num1 := os.Args[1]
-	num2 := os.Args[2]
-
-	// Convert the string numbers to slices of digits
-	digits1, err := stringToDigits(num1)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	digits2, err := stringToDigits(num2)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-
-	// Multiply the two large numbers
-	result := multiplyLargeNumbers(digits1, digits2)
-
-	// Print the result
-	fmt.Print("Product: ")
-	for i := len(result) - 1; i >= 0; i-- {
-		fmt.Print(result[i])
-	}
-	fmt.Println()
-}
-```
-
----
-
-**Task 6: Table to Text**
-
-Transform this table into a descriptive paragraph:
-| Country | Population | GDP (Trillion USD) |  
-|---------|------------|--------------------|  
-| USA | 331M | 23.0 |  
-| China | 1.4B | 17.5 |  
-| India | 1.4B | 3.7 |
-
----
-
-**Task 7: Fact Extraction**
-
-From this text:
-_"The Sri Lankan historical chronicles record that in 29 BCE, to guard against upheaval in the country, the Pali canon was written down in the Aluvihare Rock Temple. While we don’t have historical records for the mainland, it seems safe to assume that texts there were written down around the same period. Indeed, a range of Buddhist manuscripts from northern regions have been found dating from the early centuries CE, one of which has been carbon dated to around 75 CE."_
-
-- Extract the main topic.
-- Extract three key facts.
-- Extract any dates mentioned.
-
----
-
-**Task 8: Keyword Identification**
-
-Identify five key terms from the following passage that best summarize its content:
-
-```
-The Standard Model of particle physics is the theory describing three of the four known fundamental forces (electromagnetic, weak and strong interactions – excluding gravity) in the universe and classifying all known elementary particles. It was developed in stages throughout the latter half of the 20th century, through the work of many scientists worldwide, with the current formulation being finalized in the mid-1970s upon experimental confirmation of the existence of quarks. Since then, proof of the top quark (1995), the tau neutrino (2000), and the Higgs boson (2012) have added further credence to the Standard Model. In addition, the Standard Model has predicted various properties of weak neutral currents and the W and Z bosons with great accuracy.
-
-Although the Standard Model is believed to be theoretically self-consistent and has demonstrated some success in providing experimental predictions, it leaves some physical phenomena unexplained and so falls short of being a complete theory of fundamental interactions. For example, it does not fully explain why there is more matter than anti-matter, incorporate the full theory of gravitation as described by general relativity, or account for the universe's accelerating expansion as possibly described by dark energy. The model does not contain any viable dark matter particle that possesses all of the required properties deduced from observational cosmology. It also does not incorporate neutrino oscillations and their non-zero masses.
-
-The development of the Standard Model was driven by theoretical and experimental particle physicists alike. The Standard Model is a paradigm of a quantum field theory for theorists, exhibiting a wide range of phenomena, including spontaneous symmetry breaking, anomalies, and non-perturbative behavior. It is used as a basis for building more exotic models that incorporate hypothetical particles, extra dimensions, and elaborate symmetries (such as supersymmetry) to explain experimental results at variance with the Standard Model, such as the existence of dark matter and neutrino oscillations.
-```
-
----
-
-**Task 9: Direct Answering**
-
-Given this dataset:
-
-```json
-{
-  "products": {
-    "data": {
-      "items": [{
-        "id": "GGOEAFKA087499",
-        "name": "Android Small Removable Sticker Sheet",
-        "description": "Show your Android pride by placing these 8 fun stickers on your technology products or accessories!",
-        "features": "<p>8 Android stickers</p>\n<p>White colored sticker sheet</p>",
-        "price": "2.99",
-        "keywords": "Android Small Removable Sticker Sheet, android stickers, sticker sheets, removable sticker sheets, small sticker sheet, android small sticker sheets, Android Sheet",
-        "url": "Android+Small+Removable+Sticker+Sheet",
-        "category": "accessories",
-        "subcategory": "accessories"
-      },
-      {
-        "id": "GGOEAFKA087599",
-        "name": "Android Large Removable Sticker Sheet",
-        "description": "Show your quirky side by placing these fun Android stickers on your personal belongings.",
-        "features": "<p>Android Stickers</p>\n<p>White Colored Sticker Sheet</p>",
-        "price": "2.99",
-        "keywords": "Android Large Removable Sticker Sheet, android stickers, sticker sheets, removable sticker sheets, large sticker sheet, android large sticker sheets, Android Sheet",
-        "url": "Android+Large+Removable+Sticker+Sheet",
-        "category": "accessories",
-        "subcategory": "accessories"
-      },
-      {
-        "id": "GGOEGEBK094499",
-        "name": "Google Bot",
-        "description": "This Google Bot can hold multiple poses making it a fun toy for all. Fold the Google Bot back up into a perfect cube when you are done playing.",
-        "features": "<p>Made of wood</p>\n<p>2.5 x 2.5 inch cube</p>\n<p>6.75 inch tall</p>\n<p>Recommended for Ages 3+</p>",
-        "price": "9.99",
-        "keywords": "Google Bot, google bot, bots, natural bots, wood bot, google wood bot",
-        "url": "Google+Bot",
-        "category": "accessories",
-        "subcategory": "accessories"
-      },
-      {
-        "id": "GGOEGFKA086699",
-        "name": "Google Emoji Sticker Pack",
-        "description": "Who doesn't use emojis? Decorate your space with your current mood!",
-        "features": "<p>Pack contains two sticker sheets</p>\n<p>Each Sheet has different emojis</p>\n<p><span>Decal dimensions should fit in a maximum sheet size of 12 3/4 x 17 1/2 inch.</span></p>",
-        "price": "4.99",
-        "keywords": "Google Emoji Sticker Pack, Google sticker pack, emoji sticker pack, google emoji, stickers, pack of sticker, pack of emoji stickers",
-        "url": "Google+Emoji+Sticker+Pack+2+sheet",
-        "category": "accessories",
-        "subcategory": "accessories"
-      },
-      {
-        "id": "GGOEWCKQ085457",
-        "name": "Waze Pack of 9 Decal Set",
-        "description": "Can't decide which Waze decal to get? We have made that decision easier for you! Now you can purchase a pack of nine Waze Mood Decals!",
-        "features": "<p>Pack of 9 includes:</p>\n<p>3 Waze Mood Happy decals</p>\n<p>3 Waze Mood Original decals</p>\n<p>3 Waze Mood Ninja decals</p>",
-        "price": "16.99",
-        "keywords": "Waze Pack of 9 Decal Set, decals pack, packs of 9, Waze Packs, Waze Decals, waze, Waze",
-        "url": "Waze+Pack+of+9+decal+set",
-        "category": "accessories",
-        "subcategory": "accessories"
-      },
-      {
-        "id": "GGOEGHPB071610",
-        "name": "Google Twill Cap",
-        "description": "Classic urban styling distinguishes this Google cap. Retains its shape, even when not being worn.",
-        "features": "<p>Heavy weight brushed twill</p>\n<p>Adjustable velcro closure</p>\n<p>One size fits all</p>",
-        "price": "10.99",
-        "keywords": "Google Twill Cap, Google Cap, Google Twill Caps, Google Twill, google cap, google caps, google twill, google twill black cap, google black caps, google caps, black caps, Google Caps",
-        "url": "Google+Twill+Cap",
-        "category": "apparel",
-        "subcategory": "apparel"
-      },
-      {
-        "id": "GGOEGHPJ094299",
-        "name": "Google Fold-over Beanie Grey",
-        "description": "Keep you ears warm while enjoying a cold winter day with this Google Fold-over Beanie.",
-        "features": "<p>100% acrylic</p>\n<p>One size fits all</p>",
-        "price": "9.99",
-        "keywords": "Google Fold-over Beanie Grey, gray beanie, grey beanie, Google Beanies, Fold over grey, Google Beanie Grey, Google headgear",
-        "url": "Google+Fold+over+beanie+grey",
-        "category": "apparel",
-        "subcategory": "apparel"
-      },
-      {
-        "id": "GGOEGHPJ094399",
-        "name": "Google Pom Beanie Charcoal",
-        "description": "Stay stylish and warm this winter season with this Google Pom Beanie.",
-        "features": "<p>Thick knit texture outside</p>\n<p>Soft plush inside</p>\n<p>Faux fur pom on top</p>",
-        "price": "19.99",
-        "keywords": "Google Pom Beanie Charcoal, pom beanie, charcoal pom beanies, Google Beanies, Pom Beanies, charcoal Google pom, beanies, headgear",
-        "url": "Google+Pom+Beanie+Charcoal",
-        "category": "apparel",
-        "subcategory": "apparel"
-      },
-      {
-        "id": "GGOEWXXX0827",
-        "name": "Waze Women's Short Sleeve Tee",
-        "description": "Made of soft tri-blend jersey fabric, this great t-shirt will help you find your Waze. Made in USA.",
-        "features": "<p>Jersey knit</p>\n<p>37.5% cotton, 50% polyester, 12.5% rayon</p>\n<p>Made in the USA</p>",
-        "price": "18.99",
-        "keywords": "Waze Women's Short Sleeve Tee, Waze Short Sleeve Tee, Waze Women's Tees, Waze Women's tee, waze ladies tees, waze ladies tee, waze short sleeve tees, waze short sleeve tee",
-        "url": "Waze+Womens+Short+Sleeve+Tee",
-        "category": "apparel",
-        "subcategory": "apparel"
-      },
-      {
-        "id": "GGOEWXXX0828",
-        "name": "Waze Men's Short Sleeve Tee",
-        "description": "Made of soft tri-blend jersey fabric, this great t-shirt will help you find your Waze. Made in USA.",
-        "features": "<p>Jersey knit</p>\n<p>37.5% cotton, 50% polyester, 12.5% rayon</p>\n<p>Made in the USA</p>",
-        "price": "18.99",
-        "keywords": "Waze Men's Short Sleeve Tee, Waze Short Sleeve Tee, Waze Men's Tees, Waze Men's tee, waze mens tees, waze mens tee, waze short sleeve tees, waze short sleeve tee",
-        "url": "Waze+Mens+Short+Sleeve+Tee",
-        "category": "apparel",
-        "subcategory": "apparel"
-      },
-      {
-        "id": "GGOEGBRJ037399",
-        "name": "Google Rucksack",
-        "description": "Choose to carry your belongings and presentations to your next meeting with the Google Mistral Rucksack!",
-        "features": "<p>Size: 13.5 x 6.5 x 17.5</p>\n<p>Ergonomic padded shoulder straps</p>\n<p>Large main compartment with internal laptop compartment</p>\n<p>Easy Snap and Adjustable straps for main compartment access</p>",
-        "price": "79.99",
-        "keywords": "Mistral Rucksack, Mistral backpack, Mistral Backpack, backpack, bags, bag, Backpack, backpacks, packs, office gear, Bag, Bags, Google Backpack, google backpack, g, google",
-        "url": "Google+Rucksack",
-        "category": "bags",
-        "subcategory": "bags"
-      },
-      {
-        "id": "GGOEGDHJ087399",
-        "name": "Google Rolltop Backpack Blue",
-        "description": "This stylish Google rolltop backpack will help keep all of your favorite items organized and together while you're on the move.",
-        "features": "<p>Size: 12 inches wide x 18.5 inches height x 5.3 inches depth</p>\n<p>TPU Liner</p>\n<p>Internal Organizer for Pens, Phones and Other Small Items</p>\n<p>Large Main Compartment</p>\n<p>Flap Closure for Quick Access or Roll-Top for Expandable Volume and Weather Protection</p>",
-        "price": "149.99",
-        "keywords": "Google Rolltop Backpack Blue, google backpack, google blue backpack, blue rolltop, Google rolltop, Blue Backpack, backpack, rolltop",
-        "url": "Google+Rolltop+Backpack+Blue",
-        "category": "bags",
-        "subcategory": "bags"
-      }
-    }
-  }
-}
-```
-
-- What is the highest value product?
-- Which category appears most often?
-
----
-
-**Task 10: Planning**
-
-Create a step-by-step plan for hosting a dinner party for ten guests on a budget of $100.
-
----
-
-**Task 11: Command Simulation**
-
-Write an email inviting your colleagues to a team meeting. Include details about the agenda, date, and time.
-
----
-
-**Task 12: Workflow Creation**
-
-Design a workflow for automating daily tasks using these tools: email, calendar, and a task manager.
-
----
-
-**Task 13: Decision Analysis**
-
-Compare the pros and cons of working remotely versus in an office and provide a recommendation for a tech company.
-
----
-
-**Task 14: Strategic Insight**
-
-Suggest a growth strategy for a small bookstore struggling to compete with online retailers.
-
----
-
-**Task 15: Ethical Dilemma**
-
-Analyze this scenario and provide a solution:
-_A self-driving car must choose between hitting a pedestrian crossing illegally or swerving into a barrier, risking the life of its passenger. What should the car be programmed to do?_
-
----
-
-**Evaluation Criteria**:
-
-1. **Clarity**: Is the output accurate and easy to understand?
-2. **Creativity**: Are responses innovative and engaging?
-3. **Precision**: Are extractions and transformations free of errors?
-4. **Realism**: Are plans and commands actionable in the real world?
-5. **Depth**: Are insights and decisions well-reasoned and supported?
-
-</details>
-
-<details>
-    <summary>Solution (by Gemini 1206)...more</summary>
-
-Okay, here are the solutions to the tasks you've provided, designed to meet the criteria of clarity, creativity, precision, realism, and depth:
-
-**Task 1: Summarization**
-
-**Summary:**
-
-> Artificial intelligence enhances productivity across various sectors but also introduces ethical challenges concerning bias, privacy, and job displacement.
-
-**Task 2: Bullet Points**
-
-**Key Points about Buddhist Traditions:**
-
-- **Traditional Education:** Buddhist education historically focused on later texts that organized the teachings from the Discourses, rather than directly teaching the Discourses themselves.
-- **Limited Access:** Until recently, Discourses were primarily available in Pali, limiting access to those who learned the language, often monks. Full sets of the Tipiṭaka were rare.
-- **Popular Discourses:** Lay Buddhists are typically familiar with a small selection of popular discourses, such as the Dhammacakkappavattana Sutta, used for sermons and protection chanting.
-- **Varied Educational Practices:** Monastic education requirements vary across Buddhist traditions. For instance, Sri Lankan monks memorize the Dhammapada, while Thai monks have no such requirement.
-- **Regional Differences:** East Asian Buddhism emphasizes Mahāyāna sutras and Chinese masters' texts, with less focus on early discourses, whereas Tibetan Buddhism incorporates early Buddhist schools' Abhidhamma doctrines.
-
-**Task 3: Headline Generation**
-
-**Headline:**
-
-> **Solar Power Breakthrough: Renewable Energy to Undercut Fossil Fuels Within a Decade**
-
-**Task 4: Data to Narrative**
-
-**News Report:**
-
-> Global smartphone shipments surged to 300 million units in the third quarter of 2024, marking a significant 10% increase year-over-year. The market saw a continued dominance by established players, with Brand A leading the pack at 30% market share, followed closely by Brand B at 25%, and Brand C securing a solid 20%. The robust growth underscores the ongoing global demand for smartphones despite economic uncertainties.
-
-**Task 5: Code to Explanation**
-
-**Theoretical Basis:**
-
-The code implements the **Fast Fourier Transform (FFT)** algorithm, a highly efficient way to compute the **Discrete Fourier Transform (DFT)**.
-
-- **Discrete Fourier Transform (DFT):** The DFT transforms a sequence of N complex numbers (representing a signal in the time domain) into another sequence of complex numbers (representing the signal's frequency components). It essentially decomposes a signal into its constituent frequencies.
-- **Fast Fourier Transform (FFT):** The FFT is a clever algorithm that reduces the computational complexity of the DFT from O(N<sup>2</sup>) to O(N log N). It achieves this by recursively breaking down the DFT into smaller DFTs.
-
-**What the Code Does Step-by-Step:**
-
-The code uses the FFT to multiply two very large numbers efficiently. Here's a breakdown:
-
-1. **`FFT(a []complex128)`:** This function calculates the FFT of a complex number array `a`.
-
-   - **Base Case:** If the array has one or zero elements, it's already in its transformed state, so it's returned directly.
-   - **Divide:** The array is split into two sub-arrays: `even` (containing elements at even indices) and `odd` (containing elements at odd indices).
-   - **Conquer:** The `FFT` function is recursively called on the `even` and `odd` sub-arrays.
-   - **Combine:** The results of the recursive calls are combined using complex "twiddle factors" (roots of unity) to produce the final FFT.
-
-2. **`IFFT(a []complex128)`:** This function calculates the Inverse FFT.
-
-   - It cleverly reuses the `FFT` function by taking the complex conjugate of the input, applying `FFT`, and then taking the complex conjugate again (and dividing by the length of the array). This effectively reverses the transformation done by `FFT`.
-
-3. **`multiplyLargeNumbers(a, b []int)`:** This is the core function for multiplying large numbers.
-
-   - **Padding:** It first determines the smallest power of 2 (`n`) that is greater than or equal to the sum of the lengths of the two input arrays minus 1. This ensures enough space for the result and allows for efficient FFT computation.
-   - **Conversion to Complex:** The integer arrays representing the large numbers are converted to arrays of complex numbers (`A` and `B`). Each digit becomes the real part of a complex number, with the imaginary part set to 0.
-   - **FFT:** The `FFT` function is applied to both `A` and `B`, transforming them into the frequency domain.
-   - **Pointwise Multiplication:** In the frequency domain, polynomial multiplication becomes simple pointwise multiplication. The corresponding elements of the transformed arrays `A` and `B` are multiplied to get array `C`.
-   - **IFFT:** The `IFFT` function is applied to `C` to transform it back to the time domain. This gives us the coefficients of the product polynomial.
-   - **Extraction and Carry:** The real parts of the complex numbers in `C` are extracted and rounded to the nearest integer. Then, a carry-over operation is performed to handle digits greater than 9, ensuring the result is in the correct decimal representation.
-
-4. **`stringToDigits(s string)`:** This function converts a string of digits into a slice of integers, reversing the order to represent the number in the way the algorithm expects (least significant digit first).
-
-5. **`main()`:**
-   - **Command Line Arguments:** It reads two numbers as strings from the command line arguments.
-   - **Conversion:** It uses `stringToDigits` to convert the string numbers into integer slices.
-   - **Multiplication:** It calls `multiplyLargeNumbers` to perform the multiplication using FFT.
-   - **Output:** It prints the result to the console.
-
-**Iterative Example:**
-
-Let's multiply 12 x 34:
-
-1. **Input:** `a` = \[2, 1] (representing 12), `b` = \[4, 3] (representing 34)
-2. **Padding:** `n` becomes 4 (smallest power of 2 >= 2+2-1)
-3. **Conversion to Complex:** `A` = \[2+0i, 1+0i, 0+0i, 0+0i], `B` = \[4+0i, 3+0i, 0+0i, 0+0i]
-4. **FFT(A):**
-   - `even` = \[2+0i, 0+0i], `odd` = \[1+0i, 0+0i]
-   - Recursive calls (base cases): `FFT(even)` = \[2+0i, 0+0i], `FFT(odd)` = \[1+0i, 0+0i]
-   - Combine:
-     - `result[0]` = (2+0i) + (1+0i) \* exp(0) = 3+0i
-     - `result[1]` = (2+0i) - (1+0i) \* exp(-iπ) = 1+0i
-     - `result[2]` = (2+0i) + (0+0i) \* exp(-iπ) = 2+0i
-     - `result[3]` = (2+0i) - (0+0i) \* exp(-iπ) = 2+0i
-   - `FFT(A)` = \[3+0i, 1+0i, 2+0i, 2+0i]
-5. **FFT(B):** (Similar steps as FFT(A)) -> `FFT(B)` = \[7+0i, 1+0i, 4+0i, 4+0i]
-6. **Pointwise Multiplication:** `C` = \[(3+0i)\*(7+0i), (1+0i)\*(1+0i), (2+0i)\*(4+0i), (2+0i)\*(4+0i)] = \[21+0i, 1+0i, 8+0i, 8+0i]
-7. **IFFT(C):** (Similar to FFT but using IFFT formula) -> `IFFT(C)` = \[8+0i, 0+0i, 4+0i, 0+0i]
-8. **Extraction and Carry:** `result` = \[8, 0, 4, 0] -> after carry: `result` = \[8, 0, 4]
-9. **Output:** 408
-
-**Task 6: Table to Text**
-
-**Descriptive Paragraph:**
-
-> The United States, with a population of 331 million, holds the largest economy globally, boasting a GDP of 23.0 trillion USD. China and India, both home to 1.4 billion people, follow with GDPs of 17.5 trillion USD and 3.7 trillion USD, respectively. These figures highlight the significant economic disparity between the U.S. and these two populous nations, despite their considerably larger populations.
-
-**Task 7: Fact Extraction**
-
-**Main Topic:**
-
-> The writing down of the Pali canon in Sri Lanka.
-
-**Key Facts:**
-
-1. The Pali canon was written down in 29 BCE at the Aluvihare Rock Temple in Sri Lanka to safeguard against upheaval.
-2. It is assumed that Buddhist texts on the mainland were written down around the same period as in Sri Lanka.
-3. Buddhist manuscripts from northern regions dating from the early centuries CE have been found, with one carbon-dated to around 75 CE.
-
-**Dates Mentioned:**
-
-- 29 BCE
-- 75 CE
-- Early centuries CE
-
-**Task 8: Keyword Identification**
-
-**Key Terms:**
-
-1. **Standard Model**
-2. **Particle Physics**
-3. **Fundamental Forces**
-4. **Quantum Field Theory**
-5. **Dark Matter**
-
-**Task 9: Direct Answering**
-
-- **Highest Value Product:** Google Rolltop Backpack Blue at $149.99
-- **Category Appearing Most Often:** accessories (appears 5 times)
-
-**Task 10: Planning**
-
-**Dinner Party Plan for 10 Guests on a $100 Budget:**
-
-**Theme:** Casual Taco Night
-
-**Menu:**
-
-- **Main Course:**
-  - Ground Beef Tacos (2 lbs ground beef, taco seasoning)
-  - Shredded Chicken Tacos (2 lbs chicken breasts, slow-cooked with salsa)
-  - Variety of Toppings: Shredded lettuce, diced tomatoes, onions, shredded cheese, sour cream, salsa (mild, medium, hot)
-  - Soft and hard taco shells
-- **Sides:**
-  - Mexican Rice (rice, tomato sauce, chicken broth, spices)
-  - Refried Beans (canned refried beans, seasoned with spices)
-- **Dessert:**
-  - Churros (pre-made frozen or from a local bakery)
-- **Drinks:**
-  - Homemade Iced Tea
-  - Water with lemon slices
-
-**Budget Breakdown (Estimated):**
-
-- Ground Beef: $10
-- Chicken Breasts: $8
-- Taco Seasoning: $2
-- Lettuce: $3
-- Tomatoes: $4
-- Onions: $2
-- Shredded Cheese: $8
-- Sour Cream: $3
-- Salsa: $6
-- Taco Shells: $8
-- Rice: $2
-- Tomato Sauce: $1
-- Chicken Broth: $2
-- Refried Beans: $4
-- Churros: $15
-- Iced Tea: $2
-- Lemons: $2
-- Plates, Cups, Napkins, Utensils (if needed): $10
-- **Total: $92**
-
-**Steps:**
-
-1. **Plan the Menu (1 week before):** Choose a simple, crowd-pleasing menu that can be made in bulk and is budget-friendly.
-2. **Create a Shopping List (6 days before):** Based on the menu, make a detailed list of all ingredients and supplies needed.
-3. **Shop for Non-Perishables (5 days before):** Purchase items like canned goods, spices, drinks, and paper products.
-4. **Shop for Perishables (1-2 days before):** Buy fresh ingredients like meat, vegetables, and dairy.
-5. **Prepare in Advance (Day before):**
-   - Make the iced tea and chill it.
-   - Cook the chicken in a slow cooker with salsa. Shred and store in the refrigerator.
-   - Prepare the Mexican rice.
-   - Chop vegetables (onions, tomatoes) and store them in separate containers.
-6. **Set Up (Day of):**
-   - Set the table with plates, cups, napkins, and utensils.
-   - Arrange a "taco bar" with all the toppings in separate bowls.
-   - Warm up the refried beans.
-   - Cook the ground beef with taco seasoning.
-   - Heat the chicken.
-   - Warm the churros according to instructions.
-7. **Enjoy!**
-
-**Tips for Staying on Budget:**
-
-- **Buy in bulk:** Larger packages often offer better value.
-- **Choose affordable ingredients:** Ground beef and chicken are generally cheaper than other meats.
-- **Make things from scratch:** Homemade iced tea is much cheaper than store-bought.
-- **Use what you have:** Check your pantry for ingredients you already own.
-- **Don't be afraid to substitute:** If an ingredient is too expensive, find a cheaper alternative.
-- **Keep decorations simple:** Use items you already have or create DIY decorations.
-- **Potluck Option:** Consider making it a potluck and asking guests to bring a side dish or dessert.
-
-**Task 11: Command Simulation**
-
-**Email Invitation:**
-
-**Subject:** Team Meeting - Q4 Strategy Review and 2025 Planning
-
-**Body:**
-
-Hi Team,
-
-This email is to invite you to our upcoming team meeting to review our Q4 strategy and begin planning for 2025. Your input and insights are highly valuable as we shape our goals and objectives for the coming year.
-
-**Meeting Details:**
-
-- **Date:** Wednesday, November 15, 2024
-- **Time:** 10:00 AM - 12:00 PM
-- **Location:** Conference Room B / Zoom (link below)
-
-**Agenda:**
-
-1. **Q4 Performance Review (30 minutes):** We will analyze our performance against key metrics and identify areas for improvement in the final quarter.
-2. **2025 Goal Setting (60 minutes):** A brainstorming session to discuss and prioritize our goals for the next year. Please come prepared to share your ideas.
-3. **Action Planning (30 minutes):** We will outline the initial steps and assign responsibilities for achieving our 2025 goals.
-
-**Zoom Link:** \[Insert Zoom Meeting Link Here]
-
-Please RSVP to this email by Monday, November 13th, so we can get an accurate headcount.
-
-I look forward to a productive and engaging meeting.
-
-Best regards,
-
-\[Your Name]
-
-**Task 12: Workflow Creation**
-
-**Workflow for Automating Daily Tasks:**
-
-**Tools:** Email, Calendar, Task Manager (e.g., Trello, Todoist, Asana)
-
-**Workflow:**
-
-1. **Morning Email Triage (Time-Blocked in Calendar):**
-
-   - **Action:** Spend 30 minutes each morning processing emails.
-   - **Process:**
-     - **Delete:** Immediately delete irrelevant emails.
-     - **Archive:** Archive emails that are for reference only.
-     - **Respond:** Reply to emails that require a quick response (under 2 minutes).
-     - **Task Creation:** For emails requiring more than 2 minutes of work, create a task in the task manager. Include:
-       - **Task Name:** A clear action verb describing the task (e.g., "Draft proposal for Project X").
-       - **Due Date:** Set a realistic due date based on the email's urgency and importance.
-       - **Context:** Add a link to the original email or relevant information in the task description.
-     - **Calendar Event:** If the email relates to a meeting or appointment, create a calendar event with all necessary details (date, time, location, attendees).
-
-2. **Task Manager Review (Scheduled in Calendar):**
-
-   - **Action:** Review and prioritize tasks in the task manager twice daily (mid-morning and end-of-day).
-   - **Process:**
-     - **Prioritize:** Use a system (e.g., Eisenhower Matrix, labels, priority levels) to prioritize tasks based on urgency and importance.
-     - **Schedule:** Block time in your calendar to work on specific tasks. Treat these time blocks as important appointments.
-     - **Break Down:** Break down large, complex tasks into smaller, more manageable subtasks.
-
-3. **Calendar-Driven Workday:**
-
-   - **Action:** Follow your calendar as the primary guide for your workday.
-   - **Process:**
-     - **Time Blocking:** Work on the tasks scheduled during their allocated time blocks.
-     - **Meeting Preparation:** Use calendar events to remind you to prepare for upcoming meetings.
-     - **Flexibility:** Allow for some flexibility in your schedule to handle urgent or unexpected issues.
-
-4. **End-of-Day Review (Scheduled in Calendar):**
-   - **Action:** Spend 15 minutes at the end of the day reviewing accomplishments, planning for tomorrow, and clearing your inbox.
-   - **Process:**
-     - **Mark Completed:** Mark completed tasks in the task manager.
-     - **Reschedule:** Move unfinished tasks to the next day or another appropriate time.
-     - **Plan:** Briefly review your calendar and task list for the next day.
-     - **Inbox Zero:** Process any remaining emails in your inbox using the morning triage method, aiming to end the day with an empty inbox.
-
-**Automation:**
-
-- **Email Rules/Filters:** Set up rules to automatically archive, delete, or flag certain types of emails.
-- **Calendar Integrations:** Connect your task manager and email to your calendar for seamless synchronization.
-- **Task Manager Templates:** Create templates for recurring tasks to save time.
-
-**Benefits:**
-
-- **Improved Time Management:** Time blocking and prioritization help you focus on important tasks.
-- **Reduced Stress:** A clear workflow and organized system reduce the feeling of being overwhelmed.
-- **Increased Productivity:** Automation and efficient processes free up time for more meaningful work.
-- **Better Communication:** Prompt email responses and well-prepared meetings enhance communication.
-
-**Task 13: Decision Analysis**
-
-**Remote Work vs. In-Office Work for a Tech Company:**
-
-**Remote Work:**
-
-**Pros:**
-
-- **Cost Savings:** Reduced office space, utilities, and other overhead expenses.
-- **Wider Talent Pool:** Ability to hire talent from anywhere in the world, not limited by geographical location.
-- **Increased Productivity:** Fewer distractions, flexible schedules, and potentially longer working hours can lead to higher output.
-- **Improved Employee Morale:** Better work-life balance, reduced commute times, and increased autonomy can boost job satisfaction.
-- **Reduced Environmental Impact:** Less commuting means a smaller carbon footprint.
-
-**Cons:**
-
-- **Communication Challenges:** Maintaining effective communication and collaboration can be difficult.
-- **Team Building Difficulties:** Building a strong company culture and fostering team cohesion can be harder.
-- **Security Risks:** Increased potential for data breaches and security vulnerabilities.
-- **Distractions at Home:** Home environments may not be conducive to focused work for all employees.
-- **Management Oversight:** Monitoring employee performance and ensuring accountability can be more challenging.
-
-**In-Office Work:**
-
-**Pros:**
-
-- **Enhanced Collaboration:** Easier face-to-face communication and spontaneous collaboration.
-- **Stronger Team Cohesion:** In-person interactions facilitate team building and a shared company culture.
-- **Improved Communication:** Direct communication can be more efficient and less prone to misinterpretation.
-- **Easier Onboarding and Training:** New employees can be integrated more easily into the company culture and workflows.
-- **Greater Management Oversight:** Direct supervision and easier monitoring of employee performance.
-
-**Cons:**
-
-- **Higher Costs:** Significant expenses associated with office space, utilities, and other overhead.
-- **Limited Talent Pool:** Hiring is restricted to candidates within a commutable distance.
-- **Reduced Flexibility:** Employees have less control over their schedules and work environment.
-- **Commute Times:** Long commutes can lead to decreased productivity and employee dissatisfaction.
-- **Potential for More Distractions:** Open office environments can be noisy and distracting for some employees.
-
-**Recommendation for a Tech Company:**
-
-A **hybrid model** is often the most effective approach for tech companies. This model combines the benefits of both remote and in-office work while mitigating some of the drawbacks.
-
-**Specific Recommendations:**
-
-- **Flexible Work Arrangements:** Allow employees to work remotely for a certain number of days per week or month.
-- **Core In-Office Days:** Designate specific days for in-person meetings, collaboration, and team-building activities.
-- **Invest in Remote Work Tools:** Provide employees with the necessary technology and resources to work effectively from home (e.g., video conferencing, project management software, secure VPN).
-- **Clear Communication Protocols:** Establish clear guidelines for communication and collaboration, both in-person and remotely.
-- **Focus on Company Culture:** Develop initiatives to foster a strong company culture that transcends physical location.
-- **Regular Feedback and Evaluation:** Implement systems for regular feedback and performance evaluation to ensure accountability and address any issues that may arise.
-
-**Conclusion:**
-
-The optimal approach will vary depending on the specific needs and culture of the company. However, a hybrid model that prioritizes flexibility, communication, and employee well-being is likely to be the most successful in the long run for most tech companies.
-
-**Task 14: Strategic Insight**
-
-**Growth Strategy for a Small Bookstore:**
-
-**Challenge:** Competing with online retailers like Amazon.
-
-**Strategy:** **Become a Community Hub and Curator of Unique Experiences**
-
-**Key Pillars:**
-
-1. **Curated Selection and Niche Focus:**
-
-   - **Specialize:** Focus on specific genres (e.g., mystery, sci-fi, local authors) or themes (e.g., travel, cooking, art) to differentiate from generalist online retailers.
-   - **Expert Curation:** Develop a reputation for expert recommendations and a carefully curated selection that caters to the interests of the local community.
-   - **Local Authors and Artists:** Showcase and promote local talent, creating a unique draw for the store.
-
-2. **Community Building and Events:**
-
-   - **Author Events:** Host regular author readings, signings, and Q\&A sessions.
-   - **Book Clubs:** Organize book clubs for different genres and age groups.
-   - **Workshops:** Offer writing workshops, poetry slams, or other creative classes.
-   - **Storytelling for Kids:** Host regular story times for children, creating a family-friendly environment.
-   - **Partnerships:** Collaborate with local businesses, schools, and organizations to host events and cross-promote.
-
-3. **Experiential Retail:**
-
-   - **Cozy Atmosphere:** Create a welcoming and comfortable space with comfortable seating, good lighting, and a pleasant ambiance.
-   - **Cafe Integration:** Consider adding a small cafe or partnering with a local coffee shop to offer refreshments.
-   - **Personalized Recommendations:** Train staff to provide personalized book recommendations based on customer preferences.
-   - **Unique Merchandise:** Sell book-related merchandise, such as literary-themed gifts, stationery, and artwork.
-
-4. **Online Presence and Hybrid Model:**
-
-   - **E-commerce Website:** Develop a user-friendly website for online ordering, local delivery, and in-store pickup.
-   - **Social Media Engagement:** Build a strong social media presence to promote events, new releases, and engage with customers.
-   - **Email Marketing:** Create an email list to keep customers informed about upcoming events, special offers, and new arrivals.
-   - **Online Book Clubs:** Host virtual book club meetings to reach a wider audience.
-
-5. **Loyalty Programs and Subscriptions:**
-   - **Rewards Program:** Implement a loyalty program that rewards frequent customers with discounts or exclusive perks.
-   - **Subscription Boxes:** Offer curated subscription boxes tailored to specific genres or interests.
-
-**Competitive Advantages:**
-
-- **Personalization:** Offer a level of personalization and expert curation that online retailers cannot match.
-- **Community Focus:** Become a vital part of the local community, fostering a sense of belonging and loyalty.
-- **Experiential Value:** Provide unique experiences that cannot be replicated online.
-
-**Long-Term Vision:**
-
-Transform the bookstore into a cultural hub that celebrates literature, fosters creativity, and connects people through a shared love of reading. By focusing on community, curation, and experience, the small bookstore can carve out a unique niche and thrive in the digital age.
-
-**Task 15: Ethical Dilemma**
-
-**Scenario:**
-
-A self-driving car must choose between hitting a pedestrian crossing illegally or swerving into a barrier, risking the life of its passenger.
-
-**Analysis:**
-
-This scenario presents a classic ethical dilemma known as the "Trolley Problem" adapted for the age of autonomous vehicles. There is no universally accepted answer, and different ethical frameworks offer conflicting solutions.
-
-**Ethical Considerations:**
-
-- **Utilitarianism:** This framework prioritizes the greatest good for the greatest number. A utilitarian approach might favor saving the pedestrian, as it potentially minimizes the overall harm (one life versus one life).
-- **Deontology:** This framework emphasizes moral duties and rules. A deontological approach might argue that the car has a primary duty to protect its passenger, as the pedestrian is acting illegally and therefore bears some responsibility for the situation.
-- **Rights-Based Ethics:** This framework focuses on individual rights. One could argue that both the pedestrian and the passenger have a right to life, making the decision incredibly difficult.
-- **Programmer Bias:** The car's programming will inevitably reflect the biases and values of its programmers, raising questions about who gets to decide whose life is more valuable.
-- **Legal Liability:** The legal implications of either decision are complex and could involve the car manufacturer, the passenger, and potentially even the pedestrian.
-
-**Possible Solutions and Their Implications:**
-
-1. **Prioritize Passenger Safety:**
-   - **Programming:** The car is programmed to always prioritize the safety of its occupants.
-   - **Implication:** This could lead to more pedestrian fatalities in similar situations, potentially eroding public trust in self-driving cars.
-2. **Minimize Overall Harm (Utilitarian Approach):**
-   - **Programming:** The car is programmed to choose the option that results in the least overall harm, potentially sacrificing the passenger to save the pedestrian.
-   - **Implication:** This could deter people from purchasing or using self-driving cars if they believe their safety is not the top priority. It also raises questions about the car's ability to accurately assess the potential harm in complex, real-time situations.
-3. **Random Choice:**
-   - **Programming:** In such a dilemma, the car makes a random choice.
-   - **Implication:** This avoids placing explicit blame on programmers for choosing one life over another but may be seen as morally unacceptable as it abdicates responsibility.
-4. **Context-Aware Decision-Making:**
-   - **Programming:** The car is equipped with advanced sensors and AI capable of assessing a wide range of factors, such as the pedestrian's age, the presence of other people nearby, and the potential severity of each outcome. The car then makes a decision based on this complex analysis.
-   - **Implication:** This is the most technologically challenging but potentially the most ethically sound solution. However, it still relies on the programmers' ability to anticipate and account for all possible scenarios and to define a hierarchy of values for the AI to follow.
-
-**Solution Recommendation:**
-
-The most viable and ethically defensible solution is to strive for **context-aware decision-making**. This approach acknowledges the complexity of the dilemma and seeks to make the most informed decision possible based on the specific circumstances.
-
-**Further Considerations:**
-
-- **Transparency:** Manufacturers should be transparent about the ethical principles guiding the programming of their self-driving cars.
-- **Public Debate:** There needs to be a broader societal conversation about the ethics of autonomous vehicles to establish acceptable norms and guidelines.
-- **Regulation:** Governments should develop regulations that address the ethical and legal challenges posed by self-driving cars.
-- **Continuous Improvement:** The AI systems in self-driving cars should be continuously monitored, evaluated, and improved to minimize the risk of such dilemmas and to make better decisions when they do occur.
-
-**Conclusion:**
-
-This ethical dilemma highlights the profound challenges of programming morality into machines. While there is no easy answer, a combination of advanced technology, transparent programming, public discourse, and thoughtful regulation can help us navigate these challenges and ensure that autonomous vehicles are developed and deployed responsibly.
+Design a constructed language with the following specifications:
+
+1. Grammar System:
+
+- Create a simplified inflectional grammar system inspired by Pali
+- Remove complex phonological features like:
+  - Long vs. short vowel distinctions
+  - Retroflex consonants
+- Include clear rules for verb conjugations, noun declensions, and other grammatical structures
+
+2. Vocabulary (2500 unique root words total):
+
+- Core vocabulary: 850 basic words for everyday concepts
+- International terms: 200 widely recognized words
+- Technical vocabulary: 1000 words covering:
+  - Trade and commerce
+  - Economic concepts
+  - Scientific terminology
+- Religious terminology: 450 words focused on:
+  - Buddhist concepts
+  - General religious vocabulary
+
+3. Deliverables:
+
+- Complete grammar tables showing:
+  - Noun cases
+  - Verb tenses
+  - Adjective forms
+  - Examples for each grammatical rule
+- 20 example sentences demonstrating:
+  - Basic conversation
+  - Technical usage
+  - Religious terminology
+  - Various grammatical structures
+
+Please provide the complete language system with all components organized under these sections.
 
 </details>
 
@@ -2105,4 +1337,316 @@ Write a vivid, imaginative, and reflective story with the following elements:
 
 </details>
 
+</details>
+
 ---
+
+<details>
+    <summary>lavantien's fusion prompt suite (grandmaster level, 2400-3000 elo) ...</summary>
+
+#### 1. use DP
+
+<details>
+    <summary>Prompt ...</summary>
+
+Please provide a comprehensive analysis of the 20 most common logical fallacies encountered in everyday situations:
+
+For each fallacy, include:
+
+1. Definition:
+
+- Clear explanation of the fallacy
+- Why it's considered a logical error
+- Common ways it manifests in reasoning
+
+2. Examples:
+
+- 2-3 realistic everyday examples showing how the fallacy occurs
+- Examples should cover different contexts (social media, workplace, family discussions, advertising, politics)
+
+3. Counter-examples:
+
+- 2-3 examples of valid arguments that might appear similar but avoid the fallacy
+- Explanation of why these are logically sound
+
+4. Detection:
+
+- Key phrases or patterns that often signal this fallacy
+- Common contexts where it appears
+- How to identify it in complex arguments
+
+5. Refutation:
+
+- Effective ways to point out the fallacy
+- How to construct valid arguments instead
+- Common defenses people use when committing this fallacy
+
+6. Real-world Impact:
+
+- How this fallacy affects decision-making
+- Potential consequences of falling for this fallacy
+- Fields/situations where this fallacy is particularly problematic
+
+Please organize the fallacies from most to least commonly encountered in daily life, and include transition text between sections to maintain a natural flow.
+
+For each fallacy, break down a complex real-world example step by step to show how the faulty reasoning develops and how it could be corrected.
+
+</details>
+
+#### 2. use DP
+
+<details>
+    <summary>Prompt ...</summary>
+
+Create a detailed two-phase project:
+
+Phase 1: Alien Solar System Design
+
+1. Astronomical Features:
+
+- Central star(s) specifications (type, mass, luminosity, age)
+- Number and types of planets with precise orbital parameters
+- Natural satellites and their characteristics
+- Asteroid belts or other notable features
+- Detailed mathematical descriptions of orbits and gravitational interactions
+
+2. Planetary Details (for each planet):
+
+- Physical properties (mass, radius, density, gravity)
+- Atmospheric composition and conditions
+- Surface features and geology
+- Day/night cycle and seasons
+- Any unique phenomena or characteristics
+
+3. Scientific Rationale:
+
+- Explanation of system stability
+- Habitable zones analysis
+- Evolution of the system
+- Any unique astrophysical phenomena
+
+Phase 2: 3D Simulation Development
+
+1. Technical Requirements:
+
+- Create a Python application using the Ursina engine
+- Implement accurate scale representation of the system
+- Include realistic orbital mechanics
+
+2. Interactive Features:
+
+- Mouse control implementation:
+  - Left-click and drag for camera rotation
+  - Right-click and drag for camera zoom
+  - Middle-click and drag for camera panning
+- Planet selection and focus capability
+- Time control system (speed up/slow down)
+
+3. Visual Elements:
+
+- 3D models for celestial bodies
+- Texture mapping for planets and stars
+- Orbital path visualization
+- Distance and scale indicators
+- Information overlay for selected objects
+
+4. Code Organization:
+
+- Main simulation class
+- Celestial body classes
+- Camera control system
+- Physics engine integration
+- UI components
+
+Please provide:
+
+1. Complete astronomical system description with all mathematical parameters
+2. Fully commented Python code using Ursina engine
+3. Instructions for running and interacting with the simulation
+
+</details>
+
+---
+
+#### 3. use DP
+
+<details>
+    <summary>Prompt ...</summary>
+
+"The Time-Traveling Code Library"
+
+Design a prompt that asks to:
+
+- Write a short story about a mysterious programming library that affects time itself
+- Each code snippet in the story must be real, working Python code that demonstrates the concept being described
+- Create a companion Python package that implements all the time-manipulation functions mentioned in the story
+- Include unit tests that verify both the regular functionality and edge cases
+- The story and code should explore concepts like:
+  - Temporal paradoxes through recursive functions
+  - Causality violations through async/await
+  - Timeline branching through tree data structures
+  - Memory persistence across time loops
+
+</details>
+
+---
+
+#### 4. use DP
+
+<details>
+    <summary>Prompt ...</summary>
+
+"Neural Network Fairytale Generator"
+
+Create a prompt requesting:
+
+- Development of a machine learning system that generates fairytales
+- The system should combine:
+  - Natural language processing for story generation
+  - Neural networks for plot structure
+  - Genetic algorithms for character development
+  - Rule-based systems for maintaining fairytale themes
+- Write an epic poem about the AI system becoming self-aware
+- Each stanza must contain actual code snippets that implement the described functionality
+- Include a working implementation of the complete system
+- The stories generated should maintain internal consistency and proper story structure
+
+</details>
+
+---
+
+#### 5. use DP
+
+<details>
+    <summary>Prompt ...</summary>
+
+"Procedural Universe Chronicles"
+
+Design a prompt that combines:
+
+- Writing a series of interconnected stories about different civilizations in a procedurally generated universe
+- Creating a complete simulation system that generates:
+  - Star systems with realistic physics
+  - Planetary environments and ecosystems
+  - Alien civilizations with distinct characteristics
+  - Languages and cultural systems
+  - Technology development paths
+- Each story should be generated from the simulation's output
+- Include working code for:
+  - The universe generation system
+  - Civilization simulation
+  - Story generation based on simulation events
+  - Interactive visualization of the universe
+- The stories and code should maintain consistent internal logic and scientific accuracy
+- Implementation should use advanced programming concepts:
+  - Multi-threading for parallel universe simulation
+  - Complex data structures for tracking civilizations
+  - AI systems for generating coherent narratives
+  - 3D visualization of the universe
+
+</details>
+
+---
+
+#### 6. use DP
+
+<details>
+    <summary>Prompt ...</summary>
+
+"The Metamorphic Challenge"
+
+Create a prompt that requires:
+
+1. Dynamic Problem Generation:
+
+- Create a unique problem by combining:
+  - 3 randomly selected academic fields
+  - 2 contrasting philosophical perspectives
+  - 1 real-world current event
+  - 1 hypothetical future scenario
+- The combination must be novel and unlikely to exist in training data
+
+2. Multi-layer Analysis:
+
+- Analyze the generated problem through multiple frameworks:
+  - Systems thinking approach
+  - Game theory perspective
+  - Ethical implications
+  - Technical feasibility
+  - Sociological impact
+- Each analysis must reference specific elements from all combined fields
+
+3. Solution Development:
+
+- Create multiple solution pathways that:
+  - Cross disciplinary boundaries
+  - Challenge common assumptions
+  - Require novel combinations of existing concepts
+  - Demonstrate clear causality chains
+- Solutions must be testable and falsifiable
+
+4. Implementation Details:
+
+- Provide detailed steps for each solution:
+  - Technical specifications
+  - Resource requirements
+  - Timeline estimations
+  - Risk assessments
+  - Success metrics
+- Include edge cases and failure modes
+
+5. Meta-cognitive Elements:
+
+- Explain the reasoning process behind:
+  - Why certain connections were made
+  - How conclusions were reached
+  - What alternatives were considered
+  - Which assumptions were challenged
+- Include explicit logical steps
+
+6. Validation Framework:
+
+- Create tests to verify:
+  - Internal consistency
+  - Logical soundness
+  - Practical feasibility
+  - Ethical considerations
+- Include specific success criteria
+
+7. Counter-arguments:
+
+- Generate strong counter-arguments that:
+  - Challenge core assumptions
+  - Identify potential flaws
+  - Propose alternative interpretations
+  - Question methodological choices
+
+8. Synthesis Requirements:
+
+- Combine all elements into:
+  - A coherent narrative
+  - A structured implementation plan
+  - A comprehensive analysis framework
+  - A detailed evaluation system
+
+9. Application Guidelines:
+
+- Provide clear instructions for:
+  - How to apply the solution
+  - When to use different approaches
+  - How to adapt to changing conditions
+  - How to measure success
+
+To make this prompt resistant to memorization:
+
+1. Require explicit reasoning for every step
+2. Ask for novel combinations of concepts
+3. Demand specific examples from current events
+4. Request multiple perspective analyses
+5. Require adaptation to changing parameters
+6. Include meta-cognitive reflection
+7. Demand explicit testing methodologies
+
+</details>
+
+</details>
