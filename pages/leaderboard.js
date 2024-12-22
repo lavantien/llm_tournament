@@ -36,52 +36,52 @@ export default function Leaderboard() {
       });
   }, []);
 
-  const calculateScores = (modelId) => {
-    console.log('Calculating scores for modelId:', modelId);
-    const modelScores = scores.filter(score => score.modelId === modelId);
-    console.log('Model scores for modelId', modelId, ':', modelScores);
+  const memoizedScores = useMemo(() => {
+    const calculateScores = (modelId) => {
+      console.log('Calculating scores for modelId:', modelId);
+      const modelScores = scores.filter(score => score.modelId === modelId);
+      console.log('Model scores for modelId', modelId, ':', modelScores);
 
-    if (modelScores.length === 0) {
-      console.log('No scores found for modelId:', modelId);
-      return { overall: 0 };
-    }
+      if (modelScores.length === 0) return { overall: 0 };
 
-    const categoryScores = {};
-    let overallScore = 0;
-    let totalPrompts = 0;
+      const categoryScores = {};
+      let overallScore = 0;
+      let totalPrompts = 0;
 
-    categories.forEach(category => {
-      const categoryPrompts = prompts.filter(prompt => prompt.category.toLowerCase() === category);
-      console.log('Category prompts for', category, ':', categoryPrompts);
-      let totalScore = 0;
-      let promptCount = 0;
+      categories.forEach(category => {
+        const categoryPrompts = prompts.filter(prompt => prompt.category.toLowerCase() === category);
+        console.log('Category prompts for', category, ':', categoryPrompts);
+        let totalScore = 0;
+        let promptCount = 0;
 
-      categoryPrompts.forEach(prompt => {
-        const promptScores = modelScores.filter(score => score.promptId === prompt.id);
-        console.log('Prompt scores for promptId', prompt.id, ':', promptScores);
-        if (promptScores.length > 0) {
-          totalScore += promptScores[0].score;
-          promptCount++;
-        }
+        categoryPrompts.forEach(prompt => {
+          const promptScores = modelScores.filter(score => score.promptId === prompt.id);
+          console.log('Prompt scores for promptId', prompt.id, ':', promptScores);
+          if (promptScores.length > 0) {
+            totalScore += promptScores[0].score;
+            promptCount++;
+          }
+        });
+
+        categoryScores[category] = promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
+        console.log('Category score for', category, ':', categoryScores[category]);
+        overallScore += totalScore;
+        totalPrompts += promptCount;
       });
 
-      categoryScores[category] = promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
-      console.log('Category score for', category, ':', categoryScores[category]);
-      overallScore += totalScore;
-      totalPrompts += promptCount;
-    });
+      overallScore = totalPrompts > 0 ? (overallScore / totalPrompts).toFixed(2) : 0;
+      console.log('Overall score for modelId', modelId, ':', overallScore);
+      console.log('Calculated scores for modelId', modelId, ':', { ...categoryScores, overall: overallScore });
+      return { ...categoryScores, overall: overallScore };
+    };
 
-    overallScore = totalPrompts > 0 ? (overallScore / totalPrompts).toFixed(2) : 0;
-    console.log('Overall score for modelId', modelId, ':', overallScore);
-    console.log('Calculated scores for modelId', modelId, ':', { ...categoryScores, overall: overallScore });
-    return { ...categoryScores, overall: overallScore };
-  };
-
-  const memoizedScores = useMemo(() => {
-    return models.map(model => ({
+    const memoizedScores = models.map(model => ({
       id: model.id,
       scores: calculateScores(model.id),
     }));
+
+    console.log('Memoized scores:', memoizedScores);
+    return memoizedScores;
   }, [models, scores, categories, prompts]);
 
   const sortTable = (key) => {
@@ -125,13 +125,16 @@ export default function Leaderboard() {
         <tbody>
           {memoizedScores.map(({ id, scores }) => {
             const model = models.find(m => m.id === id);
+            if (!model) return null; // Skip if model not found
+            console.log('Rendering model:', model);
+            console.log('Rendering scores:', scores);
             return (
               <tr key={id} onClick={() => handleModelClick(model)}>
                 <td>{model.name}</td>
                 {categories.map((category, idx) => (
-                  <td key={idx}>{scores[category.toLowerCase()]}</td>
+                  <td key={idx}>{scores[category] || 0}</td>
                 ))}
-                <td>{scores.overall}</td>
+                <td>{scores.overall || 0}</td>
               </tr>
             );
           })}
