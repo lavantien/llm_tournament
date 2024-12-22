@@ -53,12 +53,12 @@ export default function Leaderboard() {
         const modelScores = scores.filter(
           (score) => Number(score.modelId) === Number(modelDerivedId),
         );
-        // console.log(
-        //   "Filtered modelScores for derivedId",
-        //   modelDerivedId,
-        //   ":",
-        //   modelScores,
-        // );
+        console.log(
+          "Filtered modelScores for derivedId",
+          modelDerivedId,
+          ":",
+          modelScores,
+        );
 
         if (!modelScores.length) return { overall: 0 };
 
@@ -68,15 +68,22 @@ export default function Leaderboard() {
 
         categories.forEach((category) => {
           const categoryPrompts = prompts.filter((prompt) => {
-            prompt.category.toLowerCase() === category;
+            return prompt.category.toLowerCase() === category;
           });
+
+          console.log(
+            "Category Prompts for category",
+            category,
+            ":",
+            categoryPrompts,
+          );
 
           let totalScore = 0;
           let promptCount = 0;
 
           categoryPrompts.forEach((prompt) => {
             const promptScores = modelScores.filter((score) => {
-              String(score.promptId) === String(prompt.id);
+              return String(score.promptId) === String(prompt.id);
             });
             if (promptScores.length > 0) {
               totalScore += promptScores[0].score;
@@ -111,12 +118,12 @@ export default function Leaderboard() {
         const modelScores = scores.filter(
           (score) => Number(score.modelId) === Number(modelDerivedId),
         );
-        // console.log(
-        //   "Filtered modelScores for derivedId",
-        //   modelDerivedId,
-        //   ":",
-        //   modelScores,
-        // );
+        console.log(
+          "Filtered modelScores for derivedId",
+          modelDerivedId,
+          ":",
+          modelScores,
+        );
 
         if (!modelScores.length) return { overall: 0 };
 
@@ -126,9 +133,15 @@ export default function Leaderboard() {
 
         categories.forEach((category) => {
           const categoryPrompts = prompts.filter((prompt) => {
-            prompt.category.toLowerCase() === category;
-            console.log(prompt.category.toLowerCase(), category);
+            return prompt.category.toLowerCase() === category;
           });
+
+          console.log(
+            "Category Prompts for category",
+            category,
+            ":",
+            categoryPrompts,
+          );
 
           let totalScore = 0;
           let promptCount = 0;
@@ -136,8 +149,7 @@ export default function Leaderboard() {
           console.log(categoryPrompts);
           categoryPrompts.forEach((prompt) => {
             const promptScores = modelScores.filter((score) => {
-              String(score.promptId) === String(prompt.id);
-              // console.log(score.promptId, prompt.id);
+              return String(score.promptId) === String(prompt.id);
             });
             if (promptScores.length > 0) {
               totalScore += promptScores[0].score;
