@@ -16,20 +16,29 @@ export default function PromptManager() {
 
   useEffect(() => {
     // Fetch prompts from the API route
-    fetch('/api/prompts')
-      .then(response => response.json())
-      .then(data => setPrompts(data))
-      .catch(error => console.error('Error fetching prompts:', error));
+    const fetchPrompts = async () => {
+      try {
+        const response = await fetch('/api/prompts');
+        const data = await response.json();
+        setPrompts(data);
+      } catch (error) {
+        console.error('Error fetching prompts:', error);
+      }
+    };
 
     // Fetch profiles from the API route
-    fetch('/api/profiles')
-      .then(response => response.json())
-      .then(data => setProfiles(data))
-      .catch(error => console.error('Error fetching profiles:', error));
+    const fetchProfiles = async () => {
+      try {
+        const response = await fetch('/api/profiles');
+        const data = await response.json();
+        setProfiles(data);
+      } catch (error) {
+        console.error('Error fetching profiles:', error);
+      }
+    };
 
-    // Fetch categories from the prompts
-    const uniqueCategories = [...new Set(prompts.map(prompt => prompt.category))];
-    setCategories(uniqueCategories);
+    fetchPrompts();
+    fetchProfiles();
 
     // Listen for dataWiped event
     const handleDataWiped = () => {
@@ -43,6 +52,12 @@ export default function PromptManager() {
     return () => {
       window.removeEventListener('dataWiped', handleDataWiped);
     };
+  }, []);
+
+  useEffect(() => {
+    // Fetch categories from the prompts
+    const uniqueCategories = [...new Set(prompts.map(prompt => prompt.category))];
+    setCategories(uniqueCategories);
   }, [prompts]);
 
   const handleChange = (e) => {
