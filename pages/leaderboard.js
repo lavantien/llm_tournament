@@ -55,7 +55,7 @@ export default function Leaderboard() {
         let promptCount = 0;
 
         categoryPrompts.forEach(prompt => {
-          const promptScores = modelScores.filter(score => score.promptId === prompt.id);
+          const promptScores = modelScores.filter(score => `${score.promptId}` === `${prompt.id}`);
           console.log('Prompt scores for promptId', prompt.id, ':', promptScores);
           if (promptScores.length > 0) {
             totalScore += promptScores[0].score;
@@ -75,14 +75,13 @@ export default function Leaderboard() {
       return { ...categoryScores, overall: overallScore };
     };
 
-    const memoizedScores = models.map(model => ({
+    return models.map(model => ({
       id: model.id,
       scores: calculateScores(model.id),
     }));
-
-    console.log('Memoized scores:', memoizedScores);
-    return memoizedScores;
   }, [models, scores, categories, prompts]);
+
+  console.log('Memoized scores:', memoizedScores);
 
   const sortTable = (key) => {
     const sortedModels = [...models].sort((a, b) => ((a[key] || 0) < (b[key] || 0) ? 1 : -1));
