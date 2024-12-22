@@ -30,6 +30,8 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
       } else {
         setAttempts(1);
       }
+    } else {
+      setAttempts(1);
     }
   }, [selectedPrompt, prompts, scores, item.id]);
 
@@ -42,6 +44,7 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
 
   const handlePromptChange = (e) => {
     setSelectedPrompt(e.target.value);
+    setAttempts(1); // Reset attempts to 1 when a new prompt is selected
     console.log('Selected prompt set:', e.target.value);
   };
 
