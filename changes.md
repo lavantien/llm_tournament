@@ -29,3 +29,10 @@
   - `pages/prompt-manager.js`
   - `pages/leaderboard.js`
   - `changes.md`
+
+## Update Profile Field in Prompt Manager
+- **Summary**: Updated the profile field in the Prompt Manager page to be a dropdown selection from added profiles.
+- **Files Changed**:
+  - `pages/profile-manager.js`
+  - `pages/prompt-manager.js`
+  - `changes.md`

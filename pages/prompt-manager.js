@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
+import { getProfiles } from './profile-manager';
 
 export default function PromptManager() {
   const [prompts, setPrompts] = useState([]);
@@ -9,6 +10,13 @@ export default function PromptManager() {
     profile: '',
     category: ''
   });
+  const [profiles, setProfiles] = useState([]);
+
+  useEffect(() => {
+    // Fetch profiles from the ProfileManager
+    const profilesData = getProfiles();
+    setProfiles(profilesData);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,7 +52,12 @@ export default function PromptManager() {
         </div>
         <div>
           <label>Profile:</label>
-          <input type="text" name="profile" value={formData.profile} onChange={handleChange} />
+          <select name="profile" value={formData.profile} onChange={handleChange}>
+            <option value="">Select a profile</option>
+            {profiles.map((profile, index) => (
+              <option key={index} value={profile.name}>{profile.name}</option>
+            ))}
+          </select>
         </div>
         <div>
           <label>Category:</label>

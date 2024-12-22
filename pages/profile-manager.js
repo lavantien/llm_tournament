@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 
 export default function ProfileManager() {
@@ -20,6 +20,15 @@ export default function ProfileManager() {
     xtcProbability: '',
     temperature: ''
   });
+
+  useEffect(() => {
+    // Fetch profiles from the database or any other source
+    // For now, we'll use dummy data
+    setProfiles([
+      { name: 'Profile 1', systemPrompt: 'Prompt 1' },
+      { name: 'Profile 2', systemPrompt: 'Prompt 2' }
+    ]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -125,4 +134,12 @@ export default function ProfileManager() {
       </ul>
     </Layout>
   );
+}
+
+export function getProfiles() {
+  // This function will be used to get the list of profiles
+  return [
+    { name: 'Profile 1', systemPrompt: 'Prompt 1' },
+    { name: 'Profile 2', systemPrompt: 'Prompt 2' }
+  ];
 }
