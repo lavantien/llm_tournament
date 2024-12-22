@@ -82,10 +82,7 @@ export default function Leaderboard() {
           totalPrompts += promptCount;
         });
 
-        console.log(categoryScores);
-
         overallScore = totalPrompts > 0 ? overallScore.toFixed(2) : 0;
-        console.log(overallScore);
         return { ...categoryScores, overall: overallScore };
       };
 
