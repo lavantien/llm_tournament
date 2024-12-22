@@ -21,6 +21,18 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
     }
   }, [selectedCategory, prompts]);
 
+  useEffect(() => {
+    if (selectedPrompt) {
+      const prompt = prompts.find(p => p.content === selectedPrompt);
+      const score = scores.find(s => s.modelId === item.id && s.promptId === prompt.id);
+      if (score) {
+        setAttempts(score.attempts);
+      } else {
+        setAttempts(1);
+      }
+    }
+  }, [selectedPrompt, prompts, scores, item.id]);
+
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
     setSelectedPrompt('');
@@ -30,7 +42,6 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
 
   const handlePromptChange = (e) => {
     setSelectedPrompt(e.target.value);
-    setAttempts(1);
     console.log('Selected prompt set:', e.target.value);
   };
 
