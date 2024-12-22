@@ -24,7 +24,8 @@ export default function ModelManager() {
     // Fetch models from the JSON file
     fetch('/mocks/models.json')
       .then(response => response.json())
-      .then(data => setModels(data));
+      .then(data => setModels(data))
+      .catch(error => console.error('Error fetching models:', error));
   }, []);
 
   const handleChange = (e) => {

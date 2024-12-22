@@ -18,12 +18,14 @@ export default function PromptManager() {
     // Fetch prompts from the JSON file
     fetch('/mocks/prompts.json')
       .then(response => response.json())
-      .then(data => setPrompts(data));
+      .then(data => setPrompts(data))
+      .catch(error => console.error('Error fetching prompts:', error));
 
     // Fetch profiles from the JSON file
     fetch('/mocks/profiles.json')
       .then(response => response.json())
-      .then(data => setProfiles(data));
+      .then(data => setProfiles(data))
+      .catch(error => console.error('Error fetching profiles:', error));
 
     // Fetch categories from the prompts
     const uniqueCategories = [...new Set(prompts.map(prompt => prompt.category))];

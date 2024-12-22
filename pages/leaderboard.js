@@ -12,7 +12,8 @@ export default function Leaderboard() {
     // Fetch models from the JSON file
     fetch('/mocks/models.json')
       .then(response => response.json())
-      .then(data => setModels(data));
+      .then(data => setModels(data))
+      .catch(error => console.error('Error fetching models:', error));
 
     // Fetch prompts from the JSON file
     fetch('/mocks/prompts.json')
@@ -21,7 +22,8 @@ export default function Leaderboard() {
         setPrompts(data);
         const uniqueCategories = [...new Set(data.map(prompt => prompt.category))];
         setCategories(uniqueCategories);
-      });
+      })
+      .catch(error => console.error('Error fetching prompts:', error));
   }, []);
 
   const sortTable = (key) => {

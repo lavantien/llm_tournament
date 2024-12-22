@@ -27,7 +27,8 @@ export default function ProfileManager() {
     // Fetch profiles from the JSON file
     fetch('/mocks/profiles.json')
       .then(response => response.json())
-      .then(data => setProfiles(data));
+      .then(data => setProfiles(data))
+      .catch(error => console.error('Error fetching profiles:', error));
   }, []);
 
   const handleChange = (e) => {
