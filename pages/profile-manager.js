@@ -84,6 +84,10 @@ export default function ProfileManager() {
     setSelectedProfile(profile);
   };
 
+  const handleClosePopup = () => {
+    setSelectedProfile(null);
+  };
+
   return (
     <Layout>
       <h1>Profile Manager</h1>
