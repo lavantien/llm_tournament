@@ -102,10 +102,15 @@ export default function Leaderboard() {
     return <div>Loading...</div>;
   }
 
-  const memoizedScores = useMemo(() => models.map(model => ({
-    id: model.id,
-    scores: calculateScores(model.id),
-  })), [models, scores, categories, prompts]);
+  const memoizedScores = useMemo(() => {
+    if (models.length && scores.length && categories.length && prompts.length) {
+      return models.map(model => ({
+        id: model.id,
+        scores: calculateScores(model.id),
+      }));
+    }
+    return [];
+  }, [models, scores, categories, prompts]);
 
   return (
     <Layout>
