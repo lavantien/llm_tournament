@@ -41,6 +41,7 @@ export default function Leaderboard() {
   }, []);
 
   const calculateScores = (modelId) => {
+    console.log('Calculating scores for modelId:', modelId);
     const modelScores = scores.filter(score => score.modelId === modelId);
     console.log('Model scores for modelId', modelId, ':', modelScores);
     const categoryScores = {};
@@ -48,11 +49,13 @@ export default function Leaderboard() {
 
     categories.forEach(category => {
       const categoryPrompts = prompts.filter(prompt => prompt.category === category);
+      console.log('Category prompts for', category, ':', categoryPrompts);
       let totalScore = 0;
       let promptCount = 0;
 
       categoryPrompts.forEach(prompt => {
         const promptScores = modelScores.filter(score => score.promptId === prompt.id);
+        console.log('Prompt scores for promptId', prompt.id, ':', promptScores);
         if (promptScores.length > 0) {
           totalScore += promptScores[0].score;
           promptCount++;
@@ -60,10 +63,12 @@ export default function Leaderboard() {
       });
 
       categoryScores[category.toLowerCase()] = promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
+      console.log('Category score for', category, ':', categoryScores[category.toLowerCase()]);
       overallScore += totalScore;
     });
 
     overallScore = (overallScore / (categories.length * prompts.length)).toFixed(2);
+    console.log('Overall score for modelId', modelId, ':', overallScore);
     console.log('Calculated scores for modelId', modelId, ':', { ...categoryScores, overall: overallScore });
     return { ...categoryScores, overall: overallScore };
   };
