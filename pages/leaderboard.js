@@ -61,71 +61,71 @@ export default function Leaderboard() {
   }, []);
 
   useEffect(() => {
-    if (models.length && scores.length && categories.length && prompts.length) {
-      const calculateScores = (modelId) => {
-        console.log("---- scores: ", scores);
-        console.log("Calculating scores for modelId:", modelId);
-        console.log("score.modelId type:", typeof scores[0]?.modelId);
-        console.log("model.id type:", typeof models[0]?.id);
-        console.log("score.promptId type:", typeof scores[0]?.promptId);
-        console.log("prompt.id type:", typeof prompts[0]?.id);
+    const calculateScores = (modelId) => {
+      console.log("---- scores: ", scores);
+      console.log("Calculating scores for modelId:", modelId);
+      console.log("score.modelId type:", typeof scores[0]?.modelId);
+      console.log("model.id type:", typeof models[0]?.id);
+      console.log("score.promptId type:", typeof scores[0]?.promptId);
+      console.log("prompt.id type:", typeof prompts[0]?.id);
 
-        const modelScores = scores.filter((score) => score.modelId == modelId);
-        console.log("Model scores for modelId", modelId, ":", modelScores);
+      const modelScores = scores.filter((score) => score.modelId == modelId);
+      console.log("Model scores for modelId", modelId, ":", modelScores);
 
-        if (modelScores.length === 0) return { overall: 0 };
+      if (modelScores.length === 0) return { overall: 0 };
 
-        const categoryScores = {};
-        let overallScore = 0;
-        let totalPrompts = 0;
+      const categoryScores = {};
+      let overallScore = 0;
+      let totalPrompts = 0;
 
-        categories.forEach((category) => {
-          console.log("Processing category:", category);
-          const categoryPrompts = prompts.filter(
-            (prompt) => prompt.category.toLowerCase() === category,
+      categories.forEach((category) => {
+        console.log("Processing category:", category);
+        const categoryPrompts = prompts.filter(
+          (prompt) => prompt.category.toLowerCase() === category,
+        );
+        console.log("Category prompts for", category, ":", categoryPrompts);
+        let totalScore = 0;
+        let promptCount = 0;
+
+        categoryPrompts.forEach((prompt) => {
+          const promptScores = modelScores.filter(
+            (score) => `${score.promptId}` === `${prompt.id}`,
           );
-          console.log("Category prompts for", category, ":", categoryPrompts);
-          let totalScore = 0;
-          let promptCount = 0;
-
-          categoryPrompts.forEach((prompt) => {
-            const promptScores = modelScores.filter(
-              (score) => `${score.promptId}` === `${prompt.id}`,
-            );
-            console.log(
-              "Prompt scores for promptId",
-              prompt.id,
-              ":",
-              promptScores,
-            );
-            if (promptScores.length > 0) {
-              totalScore += promptScores[0].score;
-              promptCount++;
-            }
-          });
-
-          categoryScores[category] =
-            promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
           console.log(
-            "Category score for",
-            category,
+            "Prompt scores for promptId",
+            prompt.id,
             ":",
-            categoryScores[category],
+            promptScores,
           );
-          overallScore += totalScore;
-          totalPrompts += promptCount;
+          if (promptScores.length > 0) {
+            totalScore += promptScores[0].score;
+            promptCount++;
+          }
         });
 
-        overallScore =
-          totalPrompts > 0 ? (overallScore / totalPrompts).toFixed(2) : 0;
-        console.log("Overall score for modelId", modelId, ":", overallScore);
-        console.log("Calculated scores for modelId", modelId, ":", {
-          ...categoryScores,
-          overall: overallScore,
-        });
-        return { ...categoryScores, overall: overallScore };
-      };
+        categoryScores[category] =
+          promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
+        console.log(
+          "Category score for",
+          category,
+          ":",
+          categoryScores[category],
+        );
+        overallScore += totalScore;
+        totalPrompts += promptCount;
+      });
 
+      overallScore =
+        totalPrompts > 0 ? (overallScore / totalPrompts).toFixed(2) : 0;
+      console.log("Overall score for modelId", modelId, ":", overallScore);
+      console.log("Calculated scores for modelId", modelId, ":", {
+        ...categoryScores,
+        overall: overallScore,
+      });
+      return { ...categoryScores, overall: overallScore };
+    };
+
+    if (models.length && scores.length && categories.length && prompts.length) {
       const memoized = models.map((model) => ({
         id: model.id,
         scores: calculateScores(model.id),
