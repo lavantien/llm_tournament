@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import Layout from "../components/Layout";
 import InputPopup from "../components/InputPopup";
+import { Table, Container } from 'react-bootstrap';
 
 export default function Leaderboard() {
   const [models, setModels] = useState([]);
@@ -167,44 +168,46 @@ export default function Leaderboard() {
 
   return (
     <Layout>
-      <h1 className="h3 mb-4">Leaderboard</h1>
-      <table className="table table-dark table-striped">
-        <thead>
-          <tr>
-            <th className="cursor-pointer" onClick={() => sortTable("name")}>Model Name</th>
-            {categories.map((category, index) => (
-              <th key={index} className="cursor-pointer" onClick={() => sortTable(category.toLowerCase())}>
-                {category}
-              </th>
-            ))}
-            <th className="cursor-pointer" onClick={() => sortTable("overall")}>Overall Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {calculatedScores.map(({ id, scores }) => {
-            const model = models.find((m) => m.id === id);
-            if (!model) return null; // Skip if model not found
-            return (
-              <tr key={id} className="cursor-pointer" onClick={() => handleModelClick(model)}>
-                <td>{model.name}</td>
-                {categories.map((category, idx) => (
-                  <td key={idx}>{scores[category] || 0}</td>
-                ))}
-                <td>{scores.overall || 0}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      {selectedModel && (
-        <InputPopup
-          item={selectedModel}
-          onClose={handleClosePopup}
-          onSave={handleSaveModel}
-          categories={categories}
-          prompts={prompts}
-        />
-      )}
+      <Container>
+        <h1 className="h3 mb-4">Leaderboard</h1>
+        <Table striped bordered hover variant="dark">
+          <thead>
+            <tr>
+              <th className="cursor-pointer" onClick={() => sortTable("name")}>Model Name</th>
+              {categories.map((category, index) => (
+                <th key={index} className="cursor-pointer" onClick={() => sortTable(category.toLowerCase())}>
+                  {category}
+                </th>
+              ))}
+              <th className="cursor-pointer" onClick={() => sortTable("overall")}>Overall Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {calculatedScores.map(({ id, scores }) => {
+              const model = models.find((m) => m.id === id);
+              if (!model) return null; // Skip if model not found
+              return (
+                <tr key={id} className="cursor-pointer" onClick={() => handleModelClick(model)}>
+                  <td>{model.name}</td>
+                  {categories.map((category, idx) => (
+                    <td key={idx}>{scores[category] || 0}</td>
+                  ))}
+                  <td>{scores.overall || 0}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+        {selectedModel && (
+          <InputPopup
+            item={selectedModel}
+            onClose={handleClosePopup}
+            onSave={handleSaveModel}
+            categories={categories}
+            prompts={prompts}
+          />
+        )}
+      </Container>
     </Layout>
   );
 }

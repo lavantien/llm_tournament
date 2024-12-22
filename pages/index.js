@@ -1,4 +1,5 @@
 import Layout from '../components/Layout';
+import { Button, Container } from 'react-bootstrap';
 
 export default function Home() {
   const loadMockData = async () => {
@@ -45,10 +46,12 @@ export default function Home() {
 
   return (
     <Layout>
-      <h1 className="h3 mb-4">Welcome to LLM Benchmark</h1>
-      <p className="mb-4">Use the navigation menu to access different sections of the app.</p>
-      <button className="btn btn-primary me-2" onClick={loadMockData}>Load Mock Data into DB</button>
-      <button className="btn btn-primary" onClick={wipeData}>Wipe All Data from DB</button>
+      <Container>
+        <h1 className="h3 mb-4">Welcome to LLM Benchmark</h1>
+        <p className="mb-4">Use the navigation menu to access different sections of the app.</p>
+        <Button className="me-2" onClick={loadMockData}>Load Mock Data into DB</Button>
+        <Button onClick={wipeData}>Wipe All Data from DB</Button>
+      </Container>
     </Layout>
   );
 }

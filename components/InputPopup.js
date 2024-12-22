@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/DetailPopup.module.css';
+import { Modal, Button, Form } from 'react-bootstrap';
 
 const InputPopup = ({ item, onClose, onSave, categories, prompts, scores }) => {
   const [editedItem, setEditedItem] = useState({ ...item });
@@ -86,69 +86,69 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts, scores }) => {
   const modelScores = scores.filter(score => score.modelId === item.id);
 
   return (
-    <div className={`modal show d-block`} tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-      <div className="modal-dialog modal-dialog-centered" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Edit Scores</h5>
-            <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
-          </div>
-          <div className="modal-body">
-            <div className="mb-3">
-              <label className="form-label">Category:</label>
-              <select value={selectedCategory} onChange={handleCategoryChange} className="form-select">
-                <option value="">Select a category</option>
-                {categories.map((category, index) => (
-                  <option key={index} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {selectedCategory && (
-              <div className="mb-3">
-                <label className="form-label">Prompt:</label>
-                <select value={selectedPrompt} onChange={handlePromptChange} className="form-select">
-                  <option value="">Select a prompt</option>
-                  {filteredPrompts.map((prompt, index) => (
-                    <option key={index} value={prompt.content}>
-                      {prompt.content}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-            {selectedPrompt && (
-              <div className="mb-3">
-                <label className="form-label">Attempts:</label>
-                <input type="number" value={attempts} onChange={handleAttemptsChange} min="1" className="form-control" />
-              </div>
-            )}
-            <button className="btn btn-primary" onClick={handleSave}>Save</button>
-            <h3 className="h4 mt-4 mb-2">Scores for {item.name}</h3>
-            <table className="table table-dark table-striped">
-              <thead>
-                <tr>
-                  <th>Prompt</th>
-                  <th>Score</th>
+    <Modal show onHide={onClose} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Edit Scores</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form.Group controlId="formCategory">
+          <Form.Label>Category:</Form.Label>
+          <Form.Select value={selectedCategory} onChange={handleCategoryChange}>
+            <option value="">Select a category</option>
+            {categories.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+        {selectedCategory && (
+          <Form.Group controlId="formPrompt">
+            <Form.Label>Prompt:</Form.Label>
+            <Form.Select value={selectedPrompt} onChange={handlePromptChange}>
+              <option value="">Select a prompt</option>
+              {filteredPrompts.map((prompt, index) => (
+                <option key={index} value={prompt.content}>
+                  {prompt.content}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+        )}
+        {selectedPrompt && (
+          <Form.Group controlId="formAttempts">
+            <Form.Label>Attempts:</Form.Label>
+            <Form.Control type="number" value={attempts} onChange={handleAttemptsChange} min="1" />
+          </Form.Group>
+        )}
+        <Button onClick={handleSave}>Save</Button>
+        <h3 className="h4 mt-4 mb-2">Scores for {item.name}</h3>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Prompt</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {modelScores.map((score, index) => {
+              const prompt = prompts.find(p => p.id === score.promptId);
+              return (
+                <tr key={index}>
+                  <td>{prompt ? prompt.content : 'Unknown Prompt'}</td>
+                  <td>{score.score}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {modelScores.map((score, index) => {
-                  const prompt = prompts.find(p => p.id === score.promptId);
-                  return (
-                    <tr key={index}>
-                      <td>{prompt ? prompt.content : 'Unknown Prompt'}</td>
-                      <td>{score.score}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+              );
+            })}
+          </tbody>
+        </Table>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onClose}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

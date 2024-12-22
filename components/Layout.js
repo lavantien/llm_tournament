@@ -1,26 +1,36 @@
 import Link from 'next/link';
+import { Navbar, Nav, Container, Row, Col } from 'react-bootstrap';
 
 export default function Layout({ children }) {
   return (
-    <div className="d-flex flex-column min-vh-100 bg-dark text-light">
-      <header className="bg-secondary p-3 shadow-sm">
-        <h1 className="h2">LLM Benchmark</h1>
-        <nav>
-          <ul className="nav">
-            <li className="nav-item"><Link href="/" className="nav-link text-light">Home</Link></li>
-            <li className="nav-item"><Link href="/model-manager" className="nav-link text-light">Model Manager</Link></li>
-            <li className="nav-item"><Link href="/profile-manager" className="nav-link text-light">Profile Manager</Link></li>
-            <li className="nav-item"><Link href="/prompt-manager" className="nav-link text-light">Prompt Manager</Link></li>
-            <li className="nav-item"><Link href="/leaderboard" className="nav-link text-light">Leaderboard</Link></li>
-          </ul>
-        </nav>
+    <Container fluid className="d-flex flex-column min-vh-100 bg-dark text-light">
+      <header>
+        <Navbar bg="secondary" variant="dark" expand="lg">
+          <Container fluid>
+            <Navbar.Brand href="#">LLM Benchmark</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <Link href="/" passHref><Nav.Link>Home</Nav.Link></Link>
+                <Link href="/model-manager" passHref><Nav.Link>Model Manager</Nav.Link></Link>
+                <Link href="/profile-manager" passHref><Nav.Link>Profile Manager</Nav.Link></Link>
+                <Link href="/prompt-manager" passHref><Nav.Link>Prompt Manager</Nav.Link></Link>
+                <Link href="/leaderboard" passHref><Nav.Link>Leaderboard</Nav.Link></Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
       </header>
       <main className="flex-grow-1 p-3">
-        {children}
+        <Container>
+          {children}
+        </Container>
       </main>
-      <footer className="bg-secondary p-3 text-center shadow-sm">
-        <p>&copy; lavantien</p>
+      <footer className="bg-secondary text-center p-3">
+        <Container>
+          <p className="text-light">&copy; lavantien</p>
+        </Container>
       </footer>
-    </div>
+    </Container>
   );
 }

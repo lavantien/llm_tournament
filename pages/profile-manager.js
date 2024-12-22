@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import DetailPopup from '../components/DetailPopup';
+import { Form, Button, Container, ListGroup } from 'react-bootstrap';
 
 export default function ProfileManager() {
   const [profiles, setProfiles] = useState([]);
@@ -97,78 +98,80 @@ export default function ProfileManager() {
 
   return (
     <Layout>
-      <h1 className="h3 mb-4">Profile Manager</h1>
-      <form onSubmit={handleSubmit} className="bg-secondary p-3 rounded shadow">
-        <div className="mb-3">
-          <label className="form-label">Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">System Prompt:</label>
-          <textarea name="systemPrompt" value={formData.systemPrompt} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Dry Multiplier:</label>
-          <input type="number" name="dryMultiplier" value={formData.dryMultiplier} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Dry Base:</label>
-          <input type="number" name="dryBase" value={formData.dryBase} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Dry Allowed Length:</label>
-          <input type="number" name="dryAllowedLength" value={formData.dryAllowedLength} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Dry Penalty Last N:</label>
-          <input type="number" name="dryPenaltyLastN" value={formData.dryPenaltyLastN} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Repeat Penalty:</label>
-          <input type="number" name="repeatPenalty" value={formData.repeatPenalty} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Repeat Last N:</label>
-          <input type="number" name="repeatLastN" value={formData.repeatLastN} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Top K:</label>
-          <input type="number" name="topK" value={formData.topK} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Top P:</label>
-          <input type="number" name="topP" value={formData.topP} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Min P:</label>
-          <input type="number" name="minP" value={formData.minP} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Top A:</label>
-          <input type="number" name="topA" value={formData.topA} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">XTC Threshold:</label>
-          <input type="number" name="xtcThreshold" value={formData.xtcThreshold} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">XTC Probability:</label>
-          <input type="number" name="xtcProbability" value={formData.xtcProbability} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Temperature:</label>
-          <input type="number" name="temperature" value={formData.temperature} onChange={handleChange} className="form-control" />
-        </div>
-        <button type="submit" className="btn btn-primary">Add Profile</button>
-      </form>
-      <ul className="list-group">
-        {profiles.map((profile, index) => (
-          <li key={index} className="list-group-item list-group-item-action" onClick={() => handleProfileClick(profile)}>
-            {profile.name}
-          </li>
-        ))}
-      </ul>
-      <DetailPopup item={selectedProfile} onClose={handleClosePopup} />
+      <Container>
+        <h1 className="h3 mb-4">Profile Manager</h1>
+        <Form onSubmit={handleSubmit} className="bg-secondary p-3 rounded shadow">
+          <Form.Group controlId="formName">
+            <Form.Label>Name:</Form.Label>
+            <Form.Control type="text" name="name" value={formData.name} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formSystemPrompt">
+            <Form.Label>System Prompt:</Form.Label>
+            <Form.Control as="textarea" name="systemPrompt" value={formData.systemPrompt} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formDryMultiplier">
+            <Form.Label>Dry Multiplier:</Form.Label>
+            <Form.Control type="number" name="dryMultiplier" value={formData.dryMultiplier} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formDryBase">
+            <Form.Label>Dry Base:</Form.Label>
+            <Form.Control type="number" name="dryBase" value={formData.dryBase} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formDryAllowedLength">
+            <Form.Label>Dry Allowed Length:</Form.Label>
+            <Form.Control type="number" name="dryAllowedLength" value={formData.dryAllowedLength} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formDryPenaltyLastN">
+            <Form.Label>Dry Penalty Last N:</Form.Label>
+            <Form.Control type="number" name="dryPenaltyLastN" value={formData.dryPenaltyLastN} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formRepeatPenalty">
+            <Form.Label>Repeat Penalty:</Form.Label>
+            <Form.Control type="number" name="repeatPenalty" value={formData.repeatPenalty} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formRepeatLastN">
+            <Form.Label>Repeat Last N:</Form.Label>
+            <Form.Control type="number" name="repeatLastN" value={formData.repeatLastN} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formTopK">
+            <Form.Label>Top K:</Form.Label>
+            <Form.Control type="number" name="topK" value={formData.topK} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formTopP">
+            <Form.Label>Top P:</Form.Label>
+            <Form.Control type="number" name="topP" value={formData.topP} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formMinP">
+            <Form.Label>Min P:</Form.Label>
+            <Form.Control type="number" name="minP" value={formData.minP} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formTopA">
+            <Form.Label>Top A:</Form.Label>
+            <Form.Control type="number" name="topA" value={formData.topA} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formXtcThreshold">
+            <Form.Label>XTC Threshold:</Form.Label>
+            <Form.Control type="number" name="xtcThreshold" value={formData.xtcThreshold} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formXtcProbability">
+            <Form.Label>XTC Probability:</Form.Label>
+            <Form.Control type="number" name="xtcProbability" value={formData.xtcProbability} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group controlId="formTemperature">
+            <Form.Label>Temperature:</Form.Label>
+            <Form.Control type="number" name="temperature" value={formData.temperature} onChange={handleChange} />
+          </Form.Group>
+          <Button type="submit">Add Profile</Button>
+        </Form>
+        <ListGroup>
+          {profiles.map((profile, index) => (
+            <ListGroup.Item key={index} action onClick={() => handleProfileClick(profile)}>
+              {profile.name}
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+        <DetailPopup item={selectedProfile} onClose={handleClosePopup} />
+      </Container>
     </Layout>
   );
 }
