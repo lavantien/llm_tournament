@@ -1,215 +1,216 @@
 import { useState, useEffect, useMemo } from "react";
 import Layout from "../components/Layout";
 import InputPopup from "../components/InputPopup";
+ititem,
+    onClose,
+    onSave,
+    categories,
+    prompts = [],
+    scores = [],
+}) => {
+    const [editedItem, setEditedItem] = useState({ ...item });
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedPrompt, setSelectedPrompt] = useState("");
+    const [attempts, setAttempts] = useState(1);
+    const [filteredPrompts, setFilteredPrompts] = useState([]);
 
-export default function Leaderboard() {
-  const [models, setModels] = useState([]);
-  const [selectedModel, setSelectedModel] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [prompts, setPrompts] = useState([]);
-  const [scores, setScores] = useState([]);
-  const [calculatedScores, setCalculatedScores] = useState([]);
-  const [sortConfig, setSortConfig] = useState({
-    key: "",
-    direction: "ascending",
-  });
+    useEffect(() => {
+        setEditedItem({ ...item });
+    }, [item]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch all required data
-        const [modelsData, promptsData, scoresData] = await Promise.all([
-          fetch("/api/models").then((res) => res.json()),
-          fetch("/api/prompts").then((res) => res.json()),
-          fetch("/api/scores").then((res) => res.json()),
-        ]);
+    useEffect(() => {
+        if (selectedCategory) {
+            const filtered = prompts.filter(
+                (prompt) =>
+                    prompt.category.toLowerCase() === selectedCategory.toLowerCase(),
+            );
+            setFilteredPrompts(filtered);
+        } else {
+            setFilteredPrompts([]);
+        }
+    }, [selectedCategory, prompts]);
 
-        // Preprocess models to extract numeric ID from name
-        const processedModels = modelsData.map((model) => {
-          const match = model.name.match(/Model (\d+)/);
-          const derivedId = match ? parseInt(match[1], 10) : null; // Extract number from name
-          return { ...model, derivedId };
-        });
+    useEffect(() => {
+        if (selectedPrompt) {
+            const prompt = prompts.find((p) => p.content === selectedPrompt);
+            const score = scores.find(
+                (s) => s.modelId === item.id && s.promptId === prompt.id,
+            );
+            if (score) {
+                setAttempts(score.attempts);
+            } else {
+                setAttempts(1);
+            }
+        } else {
+            setAttempts(1);
+        }
+    }, [selectedPrompt, prompts, scores, item.id]);
 
-        // Update states
-        setModels(processedModels);
-        setPrompts(promptsData);
-        setScores(scoresData);
-
-        // Derive unique categories
-        const uniqueCategories = [
-          ...new Set(
-            promptsData.map((prompt) => prompt.category.toLowerCase()),
-          ),
-        ];
-        setCategories(uniqueCategories);
-      } catch (error) {
-      }
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+        setSelectedPrompt("");
+        setAttempts(1);
     };
 
-    fetchData();
-  }, []); // Run only once on mount
+    const handlePromptChange = (e) => {
+        setSelectedPrompt(e.target.value);
+        setAttempts(1); // Reset attempts to 1 when a new prompt is selected
+    };
 
-  const memoizedScores = useMemo(() => {
-    if (models.length && scores.length && categories.length && prompts.length) {
-      const calculateScores = (modelDerivedId) => {
-        const modelScores = scores.filter(
-          (score) => Number(score.modelId) === Number(modelDerivedId),
-        );
+    const handleAttemptsChange = (e) => {
+        setAttempts(parseInt(e.target.value));
+    };
 
-        if (!modelScores.length) return { overall: 0 };
+    const handleSave = async () => {
+        const categoryKey = selectedCategory.toLowerCase();
+        const prompt = prompts.find((p) => p.content === selectedPrompt);
+        const modelId = item.id;
+        const promptId = prompt.id;
+        let score = 0;
 
-        const categoryScores = {};
-        let overallScore = 0;
-        let totalPrompts = 0;
+        if (attempts === 1) {
+            score = 100;
+        } else if (attempts === 2) {
+            score = 50;
+        } else if (attempts === 3) {
+            score = 20;
+        }
 
-        let totalScore = 0;
-        let promptCount = 0;
-        categories.forEach((category) => {
-          const categoryPrompts = prompts.filter((prompt) => {
-            const promptScores = modelScores.filter((score) => {
-              const match = prompt.content.match(/Prompt (\d+) content/);
-              const derivedId = match ? parseInt(match[1], 10) : null; // Extract number from name
-              return String(score.promptId) === String(derivedId);
-            });
-            if (promptScores.length > 0) {
-              totalScore += promptScores[0].score;
-              promptCount++;
-            }
-            return prompt.category.toLowerCase() === category;
-          });
-
-          categoryScores[category] =
-            promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
-          overallScore += Number(categoryScores[category]);
-          totalPrompts += promptCount;
+        const response = await fetch("/api/scores", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ modelId, promptId, attempts, score }),
         });
 
-        overallScore = totalPrompts > 0 ? overallScore.toFixed(2) : 0;
-        return { ...categoryScores, overall: overallScore };
-      };
+        if (response.ok) {
+            const updatedItem = {
+                ...editedItem,
+                [categoryKey]: score,
+                overall: calculateOverallScore(editedItem, categoryKey, score),
+            };
 
-      // Calculate scores for all models
-      const calculated = models.map((model) => ({
-        id: model.id,
-        scores: calculateScores(model.derivedId), // Use derived ID
-      }));
-
-      return calculated;
-    }
-    return [];
-  }, [models, scores, categories, prompts]); // Dependency array ensures this runs only when all states update
-
-  useEffect(() => {
-    setCalculatedScores(memoizedScores);
-  }, [memoizedScores]);
-
-  const sortTable = (key) => {
-    let direction = "ascending";
-    if (sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending";
-    }
-    setSortConfig({ key, direction });
-
-    const sortedModels = [...calculatedScores].sort((a, b) => {
-      if (key === "name") {
-        const nameA = models.find((model) => model.id === a.id)?.name || "";
-        const nameB = models.find((model) => model.id === b.id)?.name || "";
-        if (nameA < nameB) {
-          return direction === "ascending" ? -1 : 1;
+            onSave(updatedItem);
+            onClose();
+        } else {
+            console.error("Error saving score:", await response.json());
         }
-        if (nameA > nameB) {
-          return direction === "ascending" ? 1 : -1;
-        }
-        return 0;
-      } else {
-        const valueA = a.scores[key] || 0;
-        const valueB = b.scores[key] || 0;
-        if (valueA < valueB) {
-          return direction === "ascending" ? -1 : 1;
-        }
-        if (valueA > valueB) {
-          return direction === "ascending" ? 1 : -1;
-        }
-        return 0;
-      }
-    });
-    setCalculatedScores(sortedModels);
-  };
+    };
 
-  const handleModelClick = (model) => {
-    setSelectedModel(model);
-  };
+    const calculateOverallScore = (item, categoryKey, newScore) => {
+        const currentScore = item[categoryKey] || 0;
+        const newOverallScore =
+            ((Object.keys(item)
+                .filter((key) => key.startsWith("category"))
+                .reduce((sum, key) => sum + (item[key] || 0), 0) +
+                newScore -
+                currentScore) /
+                (categories.length + 1)) *
+            100;
+        return newOverallScore.toFixed(2);
+    };
 
-  const handleClosePopup = () => {
-    setSelectedModel(null);
-  };
+    const modelScores = scores.filter((score) => score.modelId === item.id);
 
-  const handleSaveModel = (editedModel) => {
-    setModels(
-      models.map((model) =>
-        model.id === editedModel.id ? editedModel : model,
-      ),
-    );
-  };
-
-  if (!models.length || !categories.length || !prompts.length) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <Layout>
-      <h1>Leaderboard</h1>
-      <table className="table">
-        <thead>
-          <tr>
-            <th className="cursor-pointer" onClick={() => sortTable("name")}>
-              Model Name
-            </th>
+    return (
+    <div id="myModal" className="modal">
+      <div className="modal-content">
+        <span className="close" onClick={onClose}>
+          &times;
+        </span>
+        <h2>Edit Scores</h2>
+        <div className="form-group">
+          <label className="form-label">Category:</label>
+          <select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            className="form-select"
+          >
+            <option value="">Select a category</option>
             {categories.map((category, index) => (
-              <th
-                key={index}
-                className="cursor-pointer"
-                onClick={() => sortTable(category.toLowerCase())}
-              >
+              <option key={index} value={category}>
                 {category}
-              </th>
+              </option>
             ))}
-            <th className="cursor-pointer" onClick={() => sortTable("overall")}>
-              Overall Score
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {calculatedScores.map(({ id, scores }) => {
-            const model = models.find((m) => m.id === id);
-            if (!model) return null; // Skip if model not found
-            return (
-              <tr
-                key={id}
-                className="cursor-pointer"
-                onClick={() => handleModelClick(model)}
-              >
-                <td>{model.name}</td>
-                {categories.map((category, idx) => (
-                  <td key={idx}>{scores[category] || 0}</td>
-                ))}
-                <td>{scores.overall || 0}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      {selectedModel && (
+          </select>
+        </div>
+        {selectedCategory && (
+          <div className="form-group">
+            <label className="form-label">Prompt:</label>
+            <select
+              value={selectedPrompt}
+              onChange={handlePromptChange}
+              className="form-select"
+            >
+              <option value="">Select a prompt</option>
+              {filteredPrompts.map((prompt, index) => (
+                <option key={index} value={prompt.content}>
+                  {prompt.content}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {selectedPrompt && (
+          <div className="form-group">
+            <label className="form-label">Attempts:</label>
+            <input
+              type="number"
+              value={attempts}
+              onChange={handleAttemptsChange}
+              min="1"
+              className="form-control"
+            />
+          </div>
+        )}
+        <button onClick={handleSave} className="btn">
+          Save
+        </button>
+        <h3>Scores for {item.name}</h3>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Prompt</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {modelScores.map((score, index) => {
+              const prompt = prompts.find((p) => p.id === score.promptId);
+              return (
+                <tr key={index}>
+                  <td>{prompt ? prompt.content : "Unknown Prompt"}</td>
+                  <td>{score.score}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+                            <td>{model.name}</td>
+                                {
+        categories.map((category, idx) => (
+            <td key={idx}>{scores[category] || 0}</td>
+        ))
+    }
+    <td>{scores.overall || 0}</td>
+                            </tr >
+                        );
+})}
+                </tbody >
+            </table >
+    { selectedModel && (
         <InputPopup
-          item={selectedModel}
-          onClose={handleClosePopup}
-          onSave={handleSaveModel}
-          categories={categories}
-          prompts={prompts}
-          scores={scores}
+            item={selectedModel}
+            onClose={handleClosePopup}
+            onSave={handleSaveModel}
+            categories={categories}
+            prompts={prompts}
+            scores={scores}
         />
-      )}
-    </Layout>
-  );
+    )}
+        </Layout >
+    );
 }

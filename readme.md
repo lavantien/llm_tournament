@@ -4,7 +4,8 @@
 
 - 6 comprehensive specialized system prompt and sampler profiles. [jump](#programming-profile-pp)
 - 3 levels of difficulty and complexity, 30 quality prompts. [jump](#prompt-suites)
-- Full solution dataset: [`profiles_and_prompt_suites.md`](./profiles_and_prompt_suites.md), or [`./llm_benchmarking_app/data/prompts/prompt_suite.json`](./llm_benchmarking_app/data/prompts/prompt_suite.json)
+- `npm install && npm run dev` to start `LLM Benchmarking` app on localhost (Next, React Bootstrap, Mermaid, SQLite).
+- Full solution dataset: [`profiles_and_prompt_suites.md`](./profiles_and_prompt_suites.md).
 - Quickly chat with a local LLM with correct sampler profile by running [`conversation.ps1`](./conversation.ps1)
   - Required `llama.cpp` setup for `llama-cli`.
   - Manually switch the profile and model path.

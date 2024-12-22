@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = [] }) => {
+const InputPopup = ({
+  item,
+  onClose,
+  onSave,
+  categories,
+  prompts = [],
+  scores = [],
+}) => {
   const [editedItem, setEditedItem] = useState({ ...item });
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedPrompt, setSelectedPrompt] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedPrompt, setSelectedPrompt] = useState("");
   const [attempts, setAttempts] = useState(1);
   const [filteredPrompts, setFilteredPrompts] = useState([]);
 
@@ -13,7 +20,10 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
 
   useEffect(() => {
     if (selectedCategory) {
-      const filtered = prompts.filter(prompt => prompt.category.toLowerCase() === selectedCategory.toLowerCase());
+      const filtered = prompts.filter(
+        (prompt) =>
+          prompt.category.toLowerCase() === selectedCategory.toLowerCase(),
+      );
       setFilteredPrompts(filtered);
     } else {
       setFilteredPrompts([]);
@@ -22,8 +32,10 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
 
   useEffect(() => {
     if (selectedPrompt) {
-      const prompt = prompts.find(p => p.content === selectedPrompt);
-      const score = scores.find(s => s.modelId === item.id && s.promptId === prompt.id);
+      const prompt = prompts.find((p) => p.content === selectedPrompt);
+      const score = scores.find(
+        (s) => s.modelId === item.id && s.promptId === prompt.id,
+      );
       if (score) {
         setAttempts(score.attempts);
       } else {
@@ -36,7 +48,7 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
-    setSelectedPrompt('');
+    setSelectedPrompt("");
     setAttempts(1);
   };
 
@@ -51,7 +63,7 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
 
   const handleSave = async () => {
     const categoryKey = selectedCategory.toLowerCase();
-    const prompt = prompts.find(p => p.content === selectedPrompt);
+    const prompt = prompts.find((p) => p.content === selectedPrompt);
     const modelId = item.id;
     const promptId = prompt.id;
     let score = 0;
@@ -64,25 +76,25 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
       score = 20;
     }
 
-    const response = await fetch('/api/scores', {
-      method: 'POST',
+    const response = await fetch("/api/scores", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ modelId, promptId, attempts, score })
+      body: JSON.stringify({ modelId, promptId, attempts, score }),
     });
 
     if (response.ok) {
       const updatedItem = {
         ...editedItem,
         [categoryKey]: score,
-        overall: calculateOverallScore(editedItem, categoryKey, score)
+        overall: calculateOverallScore(editedItem, categoryKey, score),
       };
 
       onSave(updatedItem);
       onClose();
     } else {
-      console.error('Error saving score:', await response.json());
+      console.error("Error saving score:", await response.json());
     }
   };
 
@@ -90,7 +102,7 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
     const currentScore = item[categoryKey] || 0;
     const newOverallScore =
       ((Object.keys(item)
-        .filter((key) => key.startsWith('category'))
+        .filter((key) => key.startsWith("category"))
         .reduce((sum, key) => sum + (item[key] || 0), 0) +
         newScore -
         currentScore) /
@@ -99,16 +111,22 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
     return newOverallScore.toFixed(2);
   };
 
-  const modelScores = scores.filter(score => score.modelId === item.id);
+  const modelScores = scores.filter((score) => score.modelId === item.id);
 
   return (
     <div id="myModal" className="modal">
       <div className="modal-content">
-        <span className="close" onClick={onClose}>&times;</span>
+        <span className="close" onClick={onClose}>
+          &times;
+        </span>
         <h2>Edit Scores</h2>
         <div className="form-group">
           <label className="form-label">Category:</label>
-          <select value={selectedCategory} onChange={handleCategoryChange} className="form-select">
+          <select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            className="form-select"
+          >
             <option value="">Select a category</option>
             {categories.map((category, index) => (
               <option key={index} value={category}>
@@ -120,7 +138,11 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
         {selectedCategory && (
           <div className="form-group">
             <label className="form-label">Prompt:</label>
-            <select value={selectedPrompt} onChange={handlePromptChange} className="form-select">
+            <select
+              value={selectedPrompt}
+              onChange={handlePromptChange}
+              className="form-select"
+            >
               <option value="">Select a prompt</option>
               {filteredPrompts.map((prompt, index) => (
                 <option key={index} value={prompt.content}>
@@ -133,10 +155,18 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
         {selectedPrompt && (
           <div className="form-group">
             <label className="form-label">Attempts:</label>
-            <input type="number" value={attempts} onChange={handleAttemptsChange} min="1" className="form-control" />
+            <input
+              type="number"
+              value={attempts}
+              onChange={handleAttemptsChange}
+              min="1"
+              className="form-control"
+            />
           </div>
         )}
-        <button onClick={handleSave} className="btn">Save</button>
+        <button onClick={handleSave} className="btn">
+          Save
+        </button>
         <h3>Scores for {item.name}</h3>
         <table className="table">
           <thead>
@@ -147,10 +177,10 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
           </thead>
           <tbody>
             {modelScores.map((score, index) => {
-              const prompt = prompts.find(p => p.id === score.promptId);
+              const prompt = prompts.find((p) => p.id === score.promptId);
               return (
                 <tr key={index}>
-                  <td>{prompt ? prompt.content : 'Unknown Prompt'}</td>
+                  <td>{prompt ? prompt.content : "Unknown Prompt"}</td>
                   <td>{score.score}</td>
                 </tr>
               );
