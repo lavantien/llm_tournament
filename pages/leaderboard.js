@@ -103,13 +103,10 @@ export default function Leaderboard() {
   }
 
   const memoizedScores = useMemo(() => {
-    if (models.length && scores.length && categories.length && prompts.length) {
-      return models.map(model => ({
-        id: model.id,
-        scores: calculateScores(model.id),
-      }));
-    }
-    return [];
+    return models.map(model => ({
+      id: model.id,
+      scores: calculateScores(model.id),
+    }));
   }, [models, scores, categories, prompts]);
 
   return (
