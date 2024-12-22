@@ -7,6 +7,7 @@ export default function Leaderboard() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [categories, setCategories] = useState([]);
   const [prompts, setPrompts] = useState([]);
+  const [scores, setScores] = useState([]);
 
   useEffect(() => {
     // Fetch models from the API route
@@ -24,6 +25,12 @@ export default function Leaderboard() {
         setCategories(uniqueCategories);
       })
       .catch(error => console.error('Error fetching prompts:', error));
+
+    // Fetch scores from the API route
+    fetch('/api/scores')
+      .then(response => response.json())
+      .then(data => setScores(data))
+      .catch(error => console.error('Error fetching scores:', error));
   }, []);
 
   const sortTable = (key) => {
@@ -75,6 +82,7 @@ export default function Leaderboard() {
           onSave={handleSaveModel}
           categories={categories}
           prompts={prompts}
+          scores={scores}
         />
       )}
     </Layout>

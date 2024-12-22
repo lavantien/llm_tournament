@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/DetailPopup.module.css';
 
-const InputPopup = ({ item, onClose, onSave, categories, prompts }) => {
+const InputPopup = ({ item, onClose, onSave, categories, prompts, scores }) => {
   const [editedItem, setEditedItem] = useState({ ...item });
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedPrompt, setSelectedPrompt] = useState('');
-  const [score, setScore] = useState('');
+  const [attempts, setAttempts] = useState(1);
 
   useEffect(() => {
     setEditedItem({ ...item });
@@ -14,39 +14,66 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts }) => {
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
     setSelectedPrompt('');
-    setScore('');
+    setAttempts(1);
   };
 
   const handlePromptChange = (e) => {
     setSelectedPrompt(e.target.value);
-    setScore('');
+    setAttempts(1);
   };
 
-  const handleScoreChange = (e) => {
-    setScore(e.target.value);
+  const handleAttemptsChange = (e) => {
+    setAttempts(parseInt(e.target.value));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const categoryKey = selectedCategory.toLowerCase();
-    const newScore = parseFloat(score);
-    const currentScore = editedItem[categoryKey] || 0;
+    const prompt = prompts.find(p => p.content === selectedPrompt);
+    const modelId = item.id;
+    const promptId = prompt.id;
+    let score = 0;
+
+    if (attempts === 1) {
+      score = 100;
+    } else if (attempts === 2) {
+      score = 50;
+    } else if (attempts === 3) {
+      score = 20;
+    }
+
+    const response = await fetch('/api/scores', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ modelId, promptId, attempts, score })
+    });
+
+    if (response.ok) {
+      const updatedItem = {
+        ...editedItem,
+        [categoryKey]: score,
+        overall: calculateOverallScore(editedItem, categoryKey, score)
+      };
+
+      onSave(updatedItem);
+      onClose();
+    } else {
+      console.error('Error saving score:', await response.json());
+    }
+  };
+
+  const calculateOverallScore = (item, categoryKey, newScore) => {
+    const currentScore = item[categoryKey] || 0;
     const newOverallScore =
-      ((Object.keys(editedItem)
+      ((Object.keys(item)
         .filter((key) => key.startsWith('category'))
-        .reduce((sum, key) => sum + (editedItem[key] || 0), 0) +
+        .reduce((sum, key) => sum + (item[key] || 0), 0) +
         newScore -
         currentScore) /
         (categories.length + 1)) *
       100;
-
-    const updatedItem = {
-      ...editedItem,
-      [categoryKey]: newScore,
-      overall: newOverallScore.toFixed(2)
-    };
-
-    onSave(updatedItem);
-    onClose();
+    return newOverallScore.toFixed(2);
   };
 
   const filteredPrompts = prompts.filter(prompt => prompt.category === selectedCategory);
@@ -84,8 +111,8 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts }) => {
         )}
         {selectedPrompt && (
           <div>
-            <label>Score:</label>
-            <input type="number" value={score} onChange={handleScoreChange} />
+            <label>Attempts:</label>
+            <input type="number" value={attempts} onChange={handleAttemptsChange} min="1" />
           </div>
         )}
         <button onClick={handleSave}>Save</button>
