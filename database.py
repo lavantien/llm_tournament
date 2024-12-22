@@ -16,7 +16,21 @@ class Database:
             self.conn.execute('''
                 CREATE TABLE IF NOT EXISTS profiles (
                     id INTEGER PRIMARY KEY,
-                    name TEXT NOT NULL
+                    name TEXT NOT NULL,
+                    system_prompt TEXT,
+                    dry_multiplier REAL,
+                    dry_base REAL,
+                    dry_allowed_length INTEGER,
+                    dry_penalty_last_n INTEGER,
+                    repeat_penalty REAL,
+                    repeat_last_n INTEGER,
+                    top_k INTEGER,
+                    top_p REAL,
+                    min_p REAL,
+                    top_a REAL,
+                    xtc_threshold REAL,
+                    xtc_probability REAL,
+                    temperature REAL
                 )
             ''')
             self.conn.execute('''

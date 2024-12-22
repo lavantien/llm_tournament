@@ -61,15 +61,143 @@ class ProfileManager(tk.Frame):
         name_entry = tk.Entry(dialog)
         name_entry.pack()
 
+        system_prompt_label = tk.Label(dialog, text='System Prompt')
+        system_prompt_label.pack()
+
+        system_prompt_entry = tk.Entry(dialog)
+        system_prompt_entry.pack()
+
+        dry_multiplier_label = tk.Label(dialog, text='Dry Multiplier')
+        dry_multiplier_label.pack()
+
+        dry_multiplier_entry = tk.Entry(dialog)
+        dry_multiplier_entry.pack()
+
+        dry_base_label = tk.Label(dialog, text='Dry Base')
+        dry_base_label.pack()
+
+        dry_base_entry = tk.Entry(dialog)
+        dry_base_entry.pack()
+
+        dry_allowed_length_label = tk.Label(dialog, text='Dry Allowed Length')
+        dry_allowed_length_label.pack()
+
+        dry_allowed_length_entry = tk.Entry(dialog)
+        dry_allowed_length_entry.pack()
+
+        dry_penalty_last_n_label = tk.Label(dialog, text='Dry Penalty Last N')
+        dry_penalty_last_n_label.pack()
+
+        dry_penalty_last_n_entry = tk.Entry(dialog)
+        dry_penalty_last_n_entry.pack()
+
+        repeat_penalty_label = tk.Label(dialog, text='Repeat Penalty')
+        repeat_penalty_label.pack()
+
+        repeat_penalty_entry = tk.Entry(dialog)
+        repeat_penalty_entry.pack()
+
+        repeat_last_n_label = tk.Label(dialog, text='Repeat Last N')
+        repeat_last_n_label.pack()
+
+        repeat_last_n_entry = tk.Entry(dialog)
+        repeat_last_n_entry.pack()
+
+        top_k_label = tk.Label(dialog, text='Top K')
+        top_k_label.pack()
+
+        top_k_entry = tk.Entry(dialog)
+        top_k_entry.pack()
+
+        top_p_label = tk.Label(dialog, text='Top P')
+        top_p_label.pack()
+
+        top_p_entry = tk.Entry(dialog)
+        top_p_entry.pack()
+
+        min_p_label = tk.Label(dialog, text='Min P')
+        min_p_label.pack()
+
+        min_p_entry = tk.Entry(dialog)
+        min_p_entry.pack()
+
+        top_a_label = tk.Label(dialog, text='Top A')
+        top_a_label.pack()
+
+        top_a_entry = tk.Entry(dialog)
+        top_a_entry.pack()
+
+        xtc_threshold_label = tk.Label(dialog, text='XTC Threshold')
+        xtc_threshold_label.pack()
+
+        xtc_threshold_entry = tk.Entry(dialog)
+        xtc_threshold_entry.pack()
+
+        xtc_probability_label = tk.Label(dialog, text='XTC Probability')
+        xtc_probability_label.pack()
+
+        xtc_probability_entry = tk.Entry(dialog)
+        xtc_probability_entry.pack()
+
+        temperature_label = tk.Label(dialog, text='Temperature')
+        temperature_label.pack()
+
+        temperature_entry = tk.Entry(dialog)
+        temperature_entry.pack()
+
         if profile:
             name_entry.insert(0, profile[1])
+            system_prompt_entry.insert(0, profile[2])
+            dry_multiplier_entry.insert(0, profile[3])
+            dry_base_entry.insert(0, profile[4])
+            dry_allowed_length_entry.insert(0, profile[5])
+            dry_penalty_last_n_entry.insert(0, profile[6])
+            repeat_penalty_entry.insert(0, profile[7])
+            repeat_last_n_entry.insert(0, profile[8])
+            top_k_entry.insert(0, profile[9])
+            top_p_entry.insert(0, profile[10])
+            min_p_entry.insert(0, profile[11])
+            top_a_entry.insert(0, profile[12])
+            xtc_threshold_entry.insert(0, profile[13])
+            xtc_probability_entry.insert(0, profile[14])
+            temperature_entry.insert(0, profile[15])
 
         def save_profile():
             name = name_entry.get()
+            system_prompt = system_prompt_entry.get()
+            dry_multiplier = dry_multiplier_entry.get()
+            dry_base = dry_base_entry.get()
+            dry_allowed_length = dry_allowed_length_entry.get()
+            dry_penalty_last_n = dry_penalty_last_n_entry.get()
+            repeat_penalty = repeat_penalty_entry.get()
+            repeat_last_n = repeat_last_n_entry.get()
+            top_k = top_k_entry.get()
+            top_p = top_p_entry.get()
+            min_p = min_p_entry.get()
+            top_a = top_a_entry.get()
+            xtc_threshold = xtc_threshold_entry.get()
+            xtc_probability = xtc_probability_entry.get()
+            temperature = temperature_entry.get()
+
             if mode == 'Add':
-                self.db.execute_non_query('INSERT INTO profiles (name) VALUES (?)', (name,))
+                self.db.execute_non_query('''
+                    INSERT INTO profiles (name, system_prompt, dry_multiplier, dry_base, dry_allowed_length,
+                                         dry_penalty_last_n, repeat_penalty, repeat_last_n, top_k, top_p, min_p,
+                                         top_a, xtc_threshold, xtc_probability, temperature)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (name, system_prompt, dry_multiplier, dry_base, dry_allowed_length, dry_penalty_last_n,
+                      repeat_penalty, repeat_last_n, top_k, top_p, min_p, top_a, xtc_threshold, xtc_probability,
+                      temperature))
             elif mode == 'Edit':
-                self.db.execute_non_query('UPDATE profiles SET name = ? WHERE id = ?', (name, profile[0]))
+                self.db.execute_non_query('''
+                    UPDATE profiles
+                    SET name = ?, system_prompt = ?, dry_multiplier = ?, dry_base = ?, dry_allowed_length = ?,
+                        dry_penalty_last_n = ?, repeat_penalty = ?, repeat_last_n = ?, top_k = ?, top_p = ?, min_p = ?,
+                        top_a = ?, xtc_threshold = ?, xtc_probability = ?, temperature = ?
+                    WHERE id = ?
+                ''', (name, system_prompt, dry_multiplier, dry_base, dry_allowed_length, dry_penalty_last_n,
+                      repeat_penalty, repeat_last_n, top_k, top_p, min_p, top_a, xtc_threshold, xtc_probability,
+                      temperature, profile[0]))
             self.load_profiles()
             dialog.destroy()
 
