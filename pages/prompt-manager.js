@@ -3,7 +3,27 @@ import Layout from '../components/Layout';
 import { getProfiles } from './profile-manager';
 
 export default function PromptManager() {
-  const [prompts, setPrompts] = useState([]);
+  const [prompts, setPrompts] = useState([
+    {
+      content: 'Prompt 1 content',
+      solution: 'Prompt 1 solution',
+      profile: 'Profile 1',
+      category: 'Category 1'
+    },
+    {
+      content: 'Prompt 2 content',
+      solution: 'Prompt 2 solution',
+      profile: 'Profile 2',
+      category: 'Category 2'
+    },
+    {
+      content: 'Prompt 3 content',
+      solution: 'Prompt 3 solution',
+      profile: 'Profile 3',
+      category: 'Category 3'
+    }
+    // Add more mock data as needed
+  ]);
   const [formData, setFormData] = useState({
     content: '',
     solution: '',

@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 
 export default function Leaderboard() {
-  const [models, setModels] = useState([]);
+  const [models, setModels] = useState([
+    { name: 'Model 1', category1: 90, category2: 85, overall: 87 },
+    { name: 'Model 2', category1: 88, category2: 92, overall: 90 },
+    { name: 'Model 3', category1: 95, category2: 80, overall: 87 },
+    { name: 'Model 4', category1: 78, category2: 89, overall: 83 },
+    { name: 'Model 5', category1: 92, category2: 77, overall: 84 }
+    // Add more mock data as needed
+  ]);
 
   useEffect(() => {
     // Fetch models from the database
@@ -10,7 +17,9 @@ export default function Leaderboard() {
     setModels([
       { name: 'Model 1', category1: 90, category2: 85, overall: 87 },
       { name: 'Model 2', category1: 88, category2: 92, overall: 90 },
-      { name: 'Model 3', category1: 95, category2: 80, overall: 87 }
+      { name: 'Model 3', category1: 95, category2: 80, overall: 87 },
+      { name: 'Model 4', category1: 78, category2: 89, overall: 83 },
+      { name: 'Model 5', category1: 92, category2: 77, overall: 84 }
     ]);
   }, []);
 
