@@ -6,11 +6,21 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedPrompt, setSelectedPrompt] = useState('');
   const [attempts, setAttempts] = useState(1);
+  const [filteredPrompts, setFilteredPrompts] = useState([]);
 
   useEffect(() => {
     setEditedItem({ ...item });
     console.log('Edited item set:', { ...item });
   }, [item]);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      const filtered = prompts.filter(prompt => prompt.category.toLowerCase() === selectedCategory.toLowerCase());
+      setFilteredPrompts(filtered);
+    } else {
+      setFilteredPrompts([]);
+    }
+  }, [selectedCategory, prompts]);
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
@@ -81,7 +91,6 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
     return newOverallScore.toFixed(2);
   };
 
-  const filteredPrompts = selectedCategory ? prompts.filter(prompt => prompt.category === selectedCategory) : [];
   const modelScores = scores.filter(score => score.modelId === item.id);
 
   return (
