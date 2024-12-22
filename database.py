@@ -72,3 +72,43 @@ class Database:
     def execute_non_query(self, query, params=()):
         with self.conn:
             self.conn.execute(query, params)
+
+    def populate_mock_data(self):
+        with self.conn:
+            # Insert mock data for models
+            self.conn.executemany('''
+                INSERT INTO models (name, path, gpu_layers, ctx_size, batch_size, threads, keep, predict, flash_attn, mlock, cache_type_k, cache_type_v)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', [
+                ('Model1', '/path/to/model1', 10, 2048, 4, 8, 1, 1, True, True, 'type_k1', 'type_v1'),
+                ('Model2', '/path/to/model2', 15, 4096, 8, 16, 2, 2, False, False, 'type_k2', 'type_v2'),
+            ])
+
+            # Insert mock data for profiles
+            self.conn.executemany('''
+                INSERT INTO profiles (name, system_prompt, dry_multiplier, dry_base, dry_allowed_length, dry_penalty_last_n, repeat_penalty, repeat_last_n, top_k, top_p, min_p, top_a, xtc_threshold, xtc_probability, temperature)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', [
+                ('Profile1', 'System prompt 1', 1.0, 1.0, 100, 5, 1.0, 5, 50, 0.9, 0.1, 0.5, 0.5, 0.5, 0.7),
+                ('Profile2', 'System prompt 2', 1.5, 1.5, 200, 10, 1.5, 10, 100, 0.8, 0.2, 0.6, 0.6, 0.6, 0.8),
+            ])
+
+            # Insert mock data for prompts
+            self.conn.executemany('''
+                INSERT INTO prompts (content, solution, profile, category)
+                VALUES (?, ?, ?, ?)
+            ''', [
+                ('Prompt content 1', 'Solution 1', 'Profile1', 'Category1'),
+                ('Prompt content 2', 'Solution 2', 'Profile2', 'Category2'),
+            ])
+
+            # Insert mock data for scores
+            self.conn.executemany('''
+                INSERT INTO scores (model_id, prompt_id, score)
+                VALUES (?, ?, ?)
+            ''', [
+                (1, 1, 85),
+                (1, 2, 90),
+                (2, 1, 80),
+                (2, 2, 88),
+            ])
