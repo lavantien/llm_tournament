@@ -10,34 +10,26 @@ export default function Leaderboard() {
   const [scores, setScores] = useState([]);
 
   useEffect(() => {
-    // Fetch models from the database
-    fetch('/api/models')
-      .then(response => response.json())
-      .then(data => {
-        console.log('Fetched models:', data);
-        setModels(data);
-      })
-      .catch(error => console.error('Error fetching models:', error));
+    const fetchModels = fetch('/api/models').then(response => response.json());
+    const fetchPrompts = fetch('/api/prompts').then(response => response.json());
+    const fetchScores = fetch('/api/scores').then(response => response.json());
 
-    // Fetch prompts from the database
-    fetch('/api/prompts')
-      .then(response => response.json())
-      .then(data => {
-        console.log('Fetched prompts:', data);
-        setPrompts(data);
-        const uniqueCategories = [...new Set(data.map(prompt => prompt.category))];
+    Promise.all([fetchModels, fetchPrompts, fetchScores])
+      .then(([modelsData, promptsData, scoresData]) => {
+        console.log('Fetched models:', modelsData);
+        console.log('Fetched prompts:', promptsData);
+        console.log('Fetched scores:', scoresData);
+
+        setModels(modelsData);
+        setPrompts(promptsData);
+        setScores(scoresData);
+
+        const uniqueCategories = [...new Set(promptsData.map(prompt => prompt.category))];
         setCategories(uniqueCategories);
       })
-      .catch(error => console.error('Error fetching prompts:', error));
-
-    // Fetch scores from the database
-    fetch('/api/scores')
-      .then(response => response.json())
-      .then(data => {
-        console.log('Fetched scores:', data);
-        setScores(data);
-      })
-      .catch(error => console.error('Error fetching scores:', error));
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
   }, []);
 
   const calculateScores = (modelId) => {
