@@ -88,15 +88,18 @@ export default function Leaderboard() {
           </tr>
         </thead>
         <tbody>
-          {models.map((model, index) => (
-            <tr key={index} onClick={() => handleModelClick(model)}>
-              <td>{model.name}</td>
-              {categories.map((category, idx) => (
-                <td key={idx}>{calculateScores(model.id)[category.toLowerCase()]}</td>
-              ))}
-              <td>{calculateScores(model.id).overall}</td>
-            </tr>
-          ))}
+          {models.map((model, index) => {
+            const scores = calculateScores(model.id);
+            return (
+              <tr key={index} onClick={() => handleModelClick(model)}>
+                <td>{model.name}</td>
+                {categories.map((category, idx) => (
+                  <td key={idx}>{scores[category.toLowerCase()]}</td>
+                ))}
+                <td>{scores.overall}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       {selectedModel && (
