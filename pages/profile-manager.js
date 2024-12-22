@@ -30,6 +30,7 @@ export default function ProfileManager() {
         const response = await fetch('/api/profiles');
         const data = await response.json();
         setProfiles(data);
+        console.log('Profiles set:', data);
       } catch (error) {
         console.error('Error fetching profiles:', error);
       }
@@ -40,6 +41,7 @@ export default function ProfileManager() {
     // Listen for dataWiped event
     const handleDataWiped = () => {
       setProfiles([]);
+      console.log('Data wiped, profiles reset');
     };
 
     window.addEventListener('dataWiped', handleDataWiped);
@@ -55,12 +57,14 @@ export default function ProfileManager() {
       ...formData,
       [name]: value
     });
+    console.log('Form data set:', { ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission (e.g., add profile to the database)
     setProfiles([...profiles, formData]);
+    console.log('Profiles set:', [...profiles, formData]);
     setFormData({
       name: '',
       systemPrompt: '',
@@ -78,14 +82,17 @@ export default function ProfileManager() {
       xtcProbability: '',
       temperature: ''
     });
+    console.log('Form data reset');
   };
 
   const handleProfileClick = (profile) => {
     setSelectedProfile(profile);
+    console.log('Selected profile set:', profile);
   };
 
   const handleClosePopup = () => {
     setSelectedProfile(null);
+    console.log('Selected profile reset');
   };
 
   return (

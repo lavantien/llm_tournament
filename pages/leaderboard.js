@@ -21,11 +21,15 @@ export default function Leaderboard() {
         console.log('Fetched scores:', scoresData);
 
         setModels(modelsData);
+        console.log('Models set:', modelsData);
         setPrompts(promptsData);
+        console.log('Prompts set:', promptsData);
         setScores(scoresData);
+        console.log('Scores set:', scoresData);
 
         const uniqueCategories = [...new Set(promptsData.map(prompt => prompt.category))];
         setCategories(uniqueCategories);
+        console.log('Categories set:', uniqueCategories);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -68,18 +72,22 @@ export default function Leaderboard() {
   const sortTable = (key) => {
     const sortedModels = [...models].sort((a, b) => (a[key] < b[key] ? 1 : -1));
     setModels(sortedModels);
+    console.log('Models sorted by', key, ':', sortedModels);
   };
 
   const handleModelClick = (model) => {
     setSelectedModel(model);
+    console.log('Selected model set:', model);
   };
 
   const handleClosePopup = () => {
     setSelectedModel(null);
+    console.log('Selected model reset');
   };
 
   const handleSaveModel = (editedModel) => {
     setModels(models.map(model => (model.id === editedModel.id ? editedModel : model)));
+    console.log('Models set:', models.map(model => (model.id === editedModel.id ? editedModel : model)));
   };
 
   return (

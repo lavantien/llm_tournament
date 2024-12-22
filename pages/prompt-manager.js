@@ -21,6 +21,7 @@ export default function PromptManager() {
         const response = await fetch('/api/prompts');
         const data = await response.json();
         setPrompts(data);
+        console.log('Prompts set:', data);
       } catch (error) {
         console.error('Error fetching prompts:', error);
       }
@@ -32,6 +33,7 @@ export default function PromptManager() {
         const response = await fetch('/api/profiles');
         const data = await response.json();
         setProfiles(data);
+        console.log('Profiles set:', data);
       } catch (error) {
         console.error('Error fetching profiles:', error);
       }
@@ -45,6 +47,7 @@ export default function PromptManager() {
       setPrompts([]);
       setProfiles([]);
       setCategories([]);
+      console.log('Data wiped, state reset');
     };
 
     window.addEventListener('dataWiped', handleDataWiped);
@@ -58,6 +61,7 @@ export default function PromptManager() {
     // Fetch categories from the prompts
     const uniqueCategories = [...new Set(prompts.map(prompt => prompt.category))];
     setCategories(uniqueCategories);
+    console.log('Categories set:', uniqueCategories);
   }, [prompts]);
 
   const handleChange = (e) => {
@@ -66,26 +70,31 @@ export default function PromptManager() {
       ...formData,
       [name]: value
     });
+    console.log('Form data set:', { ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission (e.g., add prompt to the database)
     setPrompts([...prompts, formData]);
+    console.log('Prompts set:', [...prompts, formData]);
     setFormData({
       content: '',
       solution: '',
       profile: '',
       category: ''
     });
+    console.log('Form data reset');
   };
 
   const handlePromptClick = (prompt) => {
     setSelectedPrompt(prompt);
+    console.log('Selected prompt set:', prompt);
   };
 
   const handleClosePopup = () => {
     setSelectedPrompt(null);
+    console.log('Selected prompt reset');
   };
 
   return (

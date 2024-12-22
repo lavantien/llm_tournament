@@ -24,12 +24,16 @@ export default function ModelManager() {
     // Fetch models from the API route
     fetch('/api/models')
       .then(response => response.json())
-      .then(data => setModels(data))
+      .then(data => {
+        setModels(data);
+        console.log('Models set:', data);
+      })
       .catch(error => console.error('Error fetching models:', error));
 
     // Listen for dataWiped event
     const handleDataWiped = () => {
       setModels([]);
+      console.log('Data wiped, models reset');
     };
 
     window.addEventListener('dataWiped', handleDataWiped);
@@ -45,12 +49,14 @@ export default function ModelManager() {
       ...formData,
       [name]: type === 'checkbox' ? checked : value
     });
+    console.log('Form data set:', { ...formData, [name]: type === 'checkbox' ? checked : value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission (e.g., add model to the database)
     setModels([...models, formData]);
+    console.log('Models set:', [...models, formData]);
     setFormData({
       name: '',
       path: '',
@@ -65,14 +71,17 @@ export default function ModelManager() {
       cacheTypeK: '',
       cacheTypeV: ''
     });
+    console.log('Form data reset');
   };
 
   const handleModelClick = (model) => {
     setSelectedModel(model);
+    console.log('Selected model set:', model);
   };
 
   const handleClosePopup = () => {
     setSelectedModel(null);
+    console.log('Selected model reset');
   };
 
   return (

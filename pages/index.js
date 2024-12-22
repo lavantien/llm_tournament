@@ -34,6 +34,7 @@ export default function Home() {
         // Send signal to components to empty their state
         const event = new Event('dataWiped');
         window.dispatchEvent(event);
+        console.log('Data wiped event dispatched');
       } else {
         alert('Failed to wipe data');
       }
