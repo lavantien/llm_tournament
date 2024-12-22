@@ -44,7 +44,6 @@ export default function Leaderboard() {
         ];
         setCategories(uniqueCategories);
       } catch (error) {
-        console.error("Error fetching data:", error);
       }
     };
 
@@ -56,11 +55,6 @@ export default function Leaderboard() {
       const calculateScores = (modelDerivedId) => {
         const modelScores = scores.filter(
           (score) => Number(score.modelId) === Number(modelDerivedId),
-        );
-
-        console.log(
-          `ModelScores for modelDerivedId ${modelDerivedId}:`,
-          modelScores,
         );
 
         if (!modelScores.length) return { overall: 0 };
@@ -101,7 +95,6 @@ export default function Leaderboard() {
         scores: calculateScores(model.derivedId), // Use derived ID
       }));
 
-      console.log("Calculated scores:", calculated);
       return calculated;
     }
     return [];
@@ -112,7 +105,6 @@ export default function Leaderboard() {
   }, [memoizedScores]);
 
   const sortTable = (key) => {
-    console.log(`Sorting by key: ${key}`);
     let direction = "ascending";
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";

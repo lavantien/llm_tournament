@@ -9,7 +9,6 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
 
   useEffect(() => {
     setEditedItem({ ...item });
-    console.log('Edited item set:', { ...item });
   }, [item]);
 
   useEffect(() => {
@@ -39,18 +38,15 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
     setSelectedCategory(e.target.value);
     setSelectedPrompt('');
     setAttempts(1);
-    console.log('Selected category set:', e.target.value);
   };
 
   const handlePromptChange = (e) => {
     setSelectedPrompt(e.target.value);
     setAttempts(1); // Reset attempts to 1 when a new prompt is selected
-    console.log('Selected prompt set:', e.target.value);
   };
 
   const handleAttemptsChange = (e) => {
     setAttempts(parseInt(e.target.value));
-    console.log('Attempts set:', parseInt(e.target.value));
   };
 
   const handleSave = async () => {
@@ -84,7 +80,6 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
       };
 
       onSave(updatedItem);
-      console.log('Item saved:', updatedItem);
       onClose();
     } else {
       console.error('Error saving score:', await response.json());
