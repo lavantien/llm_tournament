@@ -32,12 +32,14 @@ export default function PromptManager() {
     category: ''
   });
   const [profiles, setProfiles] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [selectedPrompt, setSelectedPrompt] = useState(null);
 
   useEffect(() => {
     // Fetch profiles from the ProfileManager
-    const profilesData = getProfiles();
+    const { profilesData, categoriesData } = getProfiles();
     setProfiles(profilesData);
+    setCategories(categoriesData);
   }, []);
 
   const handleChange = (e) => {
@@ -91,7 +93,12 @@ export default function PromptManager() {
         </div>
         <div>
           <label>Category:</label>
-          <input type="text" name="category" value={formData.category} onChange={handleChange} />
+          <select name="category" value={formData.category} onChange={handleChange}>
+            <option value="">Select a category</option>
+            {categories.map((category, index) => (
+              <option key={index} value={category}>{category}</option>
+            ))}
+          </select>
         </div>
         <button type="submit">Add Prompt</button>
       </form>

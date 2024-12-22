@@ -203,10 +203,12 @@ export default function ProfileManager() {
 }
 
 export function getProfiles() {
-  // This function will be used to get the list of profiles
-  return [
+  // This function will be used to get the list of profiles and categories
+  const profilesData = [
     { name: 'Profile 1', systemPrompt: 'Prompt 1' },
     { name: 'Profile 2', systemPrompt: 'Prompt 2' },
     { name: 'Profile 3', systemPrompt: 'Prompt 3' }
   ];
+  const categoriesData = ['Category 1', 'Category 2', 'Category 3'];
+  return { profilesData, categoriesData };
 }
