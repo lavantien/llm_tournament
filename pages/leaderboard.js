@@ -13,13 +13,17 @@ export default function Leaderboard() {
     // Fetch models from the database
     fetch('/api/models')
       .then(response => response.json())
-      .then(data => setModels(data))
+      .then(data => {
+        console.log('Fetched models:', data);
+        setModels(data);
+      })
       .catch(error => console.error('Error fetching models:', error));
 
     // Fetch prompts from the database
     fetch('/api/prompts')
       .then(response => response.json())
       .then(data => {
+        console.log('Fetched prompts:', data);
         setPrompts(data);
         const uniqueCategories = [...new Set(data.map(prompt => prompt.category))];
         setCategories(uniqueCategories);
@@ -29,12 +33,16 @@ export default function Leaderboard() {
     // Fetch scores from the database
     fetch('/api/scores')
       .then(response => response.json())
-      .then(data => setScores(data))
+      .then(data => {
+        console.log('Fetched scores:', data);
+        setScores(data);
+      })
       .catch(error => console.error('Error fetching scores:', error));
   }, []);
 
   const calculateScores = (modelId) => {
     const modelScores = scores.filter(score => score.modelId === modelId);
+    console.log('Model scores for modelId', modelId, ':', modelScores);
     const categoryScores = {};
     let overallScore = 0;
 
@@ -56,6 +64,7 @@ export default function Leaderboard() {
     });
 
     overallScore = (overallScore / (categories.length * prompts.length)).toFixed(2);
+    console.log('Calculated scores for modelId', modelId, ':', { ...categoryScores, overall: overallScore });
     return { ...categoryScores, overall: overallScore };
   };
 
