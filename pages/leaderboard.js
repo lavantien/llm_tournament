@@ -58,7 +58,10 @@ export default function Leaderboard() {
           (score) => Number(score.modelId) === Number(modelDerivedId),
         );
 
-        console.log(`ModelScores for modelDerivedId ${modelDerivedId}:`, modelScores);
+        console.log(
+          `ModelScores for modelDerivedId ${modelDerivedId}:`,
+          modelScores,
+        );
 
         if (!modelScores.length) return { overall: 0 };
 
@@ -98,7 +101,7 @@ export default function Leaderboard() {
         scores: calculateScores(model.derivedId), // Use derived ID
       }));
 
-      console.log('Calculated scores:', calculated);
+      console.log("Calculated scores:", calculated);
       return calculated;
     }
     return [];
@@ -118,8 +121,8 @@ export default function Leaderboard() {
 
     const sortedModels = [...calculatedScores].sort((a, b) => {
       if (key === "name") {
-        const nameA = models.find(model => model.id === a.id)?.name || '';
-        const nameB = models.find(model => model.id === b.id)?.name || '';
+        const nameA = models.find((model) => model.id === a.id)?.name || "";
+        const nameB = models.find((model) => model.id === b.id)?.name || "";
         if (nameA < nameB) {
           return direction === "ascending" ? -1 : 1;
         }

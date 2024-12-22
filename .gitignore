@@ -1,3 +1,7 @@
 .env
 .aider*
 llm_benchmarking_app/src/__pycache__
+.next
+node_modules
+package-lock.json
+database.sqlite
