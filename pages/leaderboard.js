@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import InputPopup from "../components/InputPopup";
 
@@ -8,7 +8,7 @@ export default function Leaderboard() {
   const [categories, setCategories] = useState([]);
   const [prompts, setPrompts] = useState([]);
   const [scores, setScores] = useState([]);
-  const [memoizedScores, setMemoizedScores] = useState([]);
+  const [calculatedScores, setCalculatedScores] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,13 +89,13 @@ export default function Leaderboard() {
         return { ...categoryScores, overall: overallScore };
       };
 
-      // Memoize scores for all models
-      const memoized = models.map((model) => ({
+      // Calculate scores for all models
+      const calculated = models.map((model) => ({
         id: model.id,
         scores: calculateScores(model.derivedId), // Use derived ID
       }));
 
-      setMemoizedScores(memoized);
+      setCalculatedScores(calculated);
     }
   }, [models, scores, categories, prompts]); // Dependency array ensures this runs only when all states update
 
@@ -142,7 +142,7 @@ export default function Leaderboard() {
           </tr>
         </thead>
         <tbody>
-          {memoizedScoresCalculation.map(({ id, scores }) => {
+          {calculatedScores.map(({ id, scores }) => {
             const model = models.find((m) => m.id === id);
             if (!model) return null; // Skip if model not found
             return (
