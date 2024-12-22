@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form, Table } from 'react-bootstrap';
 
 const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = [] }) => {
   const [editedItem, setEditedItem] = useState({ ...item });
@@ -94,44 +93,43 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
   const modelScores = scores.filter(score => score.modelId === item.id);
 
   return (
-    <Modal show onHide={onClose} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Edit Scores</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form.Group controlId="formCategory">
-          <Form.Label>Category:</Form.Label>
-          <Form.Select value={selectedCategory} onChange={handleCategoryChange}>
+    <div id="myModal" className="modal">
+      <div className="modal-content">
+        <span className="close" onClick={onClose}>&times;</span>
+        <h2>Edit Scores</h2>
+        <div className="form-group">
+          <label className="form-label">Category:</label>
+          <select value={selectedCategory} onChange={handleCategoryChange} className="form-select">
             <option value="">Select a category</option>
             {categories.map((category, index) => (
               <option key={index} value={category}>
                 {category}
               </option>
             ))}
-          </Form.Select>
-        </Form.Group>
+          </select>
+        </div>
         {selectedCategory && (
-          <Form.Group controlId="formPrompt">
-            <Form.Label>Prompt:</Form.Label>
-            <Form.Select value={selectedPrompt} onChange={handlePromptChange}>
+          <div className="form-group">
+            <label className="form-label">Prompt:</label>
+            <select value={selectedPrompt} onChange={handlePromptChange} className="form-select">
               <option value="">Select a prompt</option>
               {filteredPrompts.map((prompt, index) => (
                 <option key={index} value={prompt.content}>
                   {prompt.content}
                 </option>
               ))}
-            </Form.Select>
-          </Form.Group>
+            </select>
+          </div>
         )}
         {selectedPrompt && (
-          <Form.Group controlId="formAttempts">
-            <Form.Label>Attempts:</Form.Label>
-            <Form.Control type="number" value={attempts} onChange={handleAttemptsChange} min="1" />
-          </Form.Group>
+          <div className="form-group">
+            <label className="form-label">Attempts:</label>
+            <input type="number" value={attempts} onChange={handleAttemptsChange} min="1" className="form-control" />
+          </div>
         )}
-        <Button onClick={handleSave}>Save</Button>
-        <h3 className="h4 mt-4 mb-2">Scores for {item.name}</h3>
-        <Table striped bordered hover>
+        <button onClick={handleSave} className="btn">Save</button>
+        <h3>Scores for {item.name}</h3>
+        <table className="table">
           <thead>
             <tr>
               <th>Prompt</th>
@@ -149,14 +147,9 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = 
               );
             })}
           </tbody>
-        </Table>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
+        </table>
+      </div>
+    </div>
   );
 };
 

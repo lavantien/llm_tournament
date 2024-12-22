@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import DetailPopup from '../components/DetailPopup';
-import { Form, Button, Container, ListGroup } from 'react-bootstrap';
 
 export default function PromptManager() {
   const [prompts, setPrompts] = useState([]);
@@ -100,46 +99,44 @@ export default function PromptManager() {
 
   return (
     <Layout>
-      <Container>
-        <h1 className="h3 mb-4">Prompt Manager</h1>
-        <Form onSubmit={handleSubmit} className="bg-secondary p-3 rounded shadow">
-          <Form.Group controlId="formContent">
-            <Form.Label>Content:</Form.Label>
-            <Form.Control as="textarea" name="content" value={formData.content} onChange={handleChange} />
-          </Form.Group>
-          <Form.Group controlId="formSolution">
-            <Form.Label>Solution:</Form.Label>
-            <Form.Control as="textarea" name="solution" value={formData.solution} onChange={handleChange} />
-          </Form.Group>
-          <Form.Group controlId="formProfile">
-            <Form.Label>Profile:</Form.Label>
-            <Form.Select name="profile" value={formData.profile} onChange={handleChange}>
-              <option value="">Select a profile</option>
-              {profiles.map((profile, index) => (
-                <option key={index} value={profile.name}>{profile.name}</option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-          <Form.Group controlId="formCategory">
-            <Form.Label>Category:</Form.Label>
-            <Form.Select name="category" value={formData.category} onChange={handleChange}>
-              <option value="">Select a category</option>
-              {categories.map((category, index) => (
-                <option key={index} value={category}>{category}</option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-          <Button type="submit">Add Prompt</Button>
-        </Form>
-        <ListGroup>
-          {prompts.map((prompt, index) => (
-            <ListGroup.Item key={index} action onClick={() => handlePromptClick(prompt)}>
-              {prompt.content}
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-        <DetailPopup item={selectedPrompt} onClose={handleClosePopup} />
-      </Container>
+      <h1>Prompt Manager</h1>
+      <form onSubmit={handleSubmit} className="form-group">
+        <div className="form-group">
+          <label className="form-label">Content:</label>
+          <textarea name="content" value={formData.content} onChange={handleChange} className="form-control" />
+        </div>
+        <div className="form-group">
+          <label className="form-label">Solution:</label>
+          <textarea name="solution" value={formData.solution} onChange={handleChange} className="form-control" />
+        </div>
+        <div className="form-group">
+          <label className="form-label">Profile:</label>
+          <select name="profile" value={formData.profile} onChange={handleChange} className="form-select">
+            <option value="">Select a profile</option>
+            {profiles.map((profile, index) => (
+              <option key={index} value={profile.name}>{profile.name}</option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Category:</label>
+          <select name="category" value={formData.category} onChange={handleChange} className="form-select">
+            <option value="">Select a category</option>
+            {categories.map((category, index) => (
+              <option key={index} value={category}>{category}</option>
+            ))}
+          </select>
+        </div>
+        <button type="submit" className="btn">Add Prompt</button>
+      </form>
+      <ul className="list-group">
+        {prompts.map((prompt, index) => (
+          <li key={index} className="list-group-item" onClick={() => handlePromptClick(prompt)}>
+            {prompt.content}
+          </li>
+        ))}
+      </ul>
+      <DetailPopup item={selectedPrompt} onClose={handleClosePopup} />
     </Layout>
   );
 }
