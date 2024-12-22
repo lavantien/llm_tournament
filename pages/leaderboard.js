@@ -40,6 +40,12 @@ export default function Leaderboard() {
     console.log('Calculating scores for modelId:', modelId);
     const modelScores = scores.filter(score => score.modelId === modelId);
     console.log('Model scores for modelId', modelId, ':', modelScores);
+
+    if (modelScores.length === 0) {
+      console.log('No scores found for modelId:', modelId);
+      return { overall: 0 };
+    }
+
     const categoryScores = {};
     let overallScore = 0;
     let totalPrompts = 0;
