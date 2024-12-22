@@ -68,10 +68,6 @@ const DetailPopup = ({ item, onClose, onSave, categories, prompts }) => {
         <button className={styles.closeButton} onClick={onClose}>Close</button>
         <h2>Details</h2>
         <div>
-          <label>Name:</label>
-          <input type="text" name="name" value={editedItem.name} onChange={handleChange} readOnly />
-        </div>
-        <div>
           <label>Category:</label>
           <select name="category" value={selectedCategory} onChange={handleCategoryChange}>
             <option value="">Select a category</option>
@@ -103,10 +99,6 @@ const DetailPopup = ({ item, onClose, onSave, categories, prompts }) => {
             <input type="number" name={key} value={editedItem[key]} onChange={handleChange} readOnly />
           </div>
         ))}
-        <div>
-          <label>Overall Score:</label>
-          <input type="number" name="overall" value={editedItem.overall} onChange={handleChange} readOnly />
-        </div>
         <button onClick={handleSave}>Save</button>
       </div>
     </div>
