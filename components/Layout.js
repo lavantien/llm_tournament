@@ -1,11 +1,13 @@
 import Link from 'next/link';
+import styles from '../styles/Layout.module.css';
 
 export default function Layout({ children }) {
   return (
     <div>
-      <header>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Spreadsheet-like Web App</h1>
         <nav>
-          <ul>
+          <ul className={styles.navList}>
             <li><Link href="/">Home</Link></li>
             <li><Link href="/model-manager">Model Manager</Link></li>
             <li><Link href="/profile-manager">Profile Manager</Link></li>
@@ -14,10 +16,10 @@ export default function Layout({ children }) {
           </ul>
         </nav>
       </header>
-      <main>
+      <main className={styles.main}>
         {children}
       </main>
-      <footer>
+      <footer className={styles.footer}>
         <p>&copy; 2023 Spreadsheet-like Web App</p>
       </footer>
     </div>
