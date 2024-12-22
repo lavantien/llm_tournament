@@ -5,7 +5,7 @@ export default function Layout({ children }) {
   return (
     <div>
       <header className={styles.header}>
-        <h1 className={styles.title}>Spreadsheet-like Web App</h1>
+        <h1 className={styles.title}>LLM Benchmark</h1>
         <nav>
           <ul className={styles.navList}>
             <li><Link href="/">Home</Link></li>
@@ -20,7 +20,7 @@ export default function Layout({ children }) {
         {children}
       </main>
       <footer className={styles.footer}>
-        <p>&copy; 2023 Spreadsheet-like Web App</p>
+        <p>© lavantien</p>
       </footer>
     </div>
   );
