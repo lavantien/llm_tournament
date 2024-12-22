@@ -97,73 +97,73 @@ export default function ProfileManager() {
 
   return (
     <Layout>
-      <h1>Profile Manager</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} />
+      <h1 className="text-3xl font-bold mb-4">Profile Manager</h1>
+      <form onSubmit={handleSubmit} className="bg-mystic-secondary p-4 rounded shadow-lg">
+        <div className="mb-4">
+          <label className="font-semibold">Name:</label>
+          <input type="text" name="name" value={formData.name} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>System Prompt:</label>
-          <textarea name="systemPrompt" value={formData.systemPrompt} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">System Prompt:</label>
+          <textarea name="systemPrompt" value={formData.systemPrompt} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>Dry Multiplier:</label>
-          <input type="number" name="dryMultiplier" value={formData.dryMultiplier} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">Dry Multiplier:</label>
+          <input type="number" name="dryMultiplier" value={formData.dryMultiplier} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>Dry Base:</label>
-          <input type="number" name="dryBase" value={formData.dryBase} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">Dry Base:</label>
+          <input type="number" name="dryBase" value={formData.dryBase} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>Dry Allowed Length:</label>
-          <input type="number" name="dryAllowedLength" value={formData.dryAllowedLength} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">Dry Allowed Length:</label>
+          <input type="number" name="dryAllowedLength" value={formData.dryAllowedLength} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>Dry Penalty Last N:</label>
-          <input type="number" name="dryPenaltyLastN" value={formData.dryPenaltyLastN} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">Dry Penalty Last N:</label>
+          <input type="number" name="dryPenaltyLastN" value={formData.dryPenaltyLastN} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>Repeat Penalty:</label>
-          <input type="number" name="repeatPenalty" value={formData.repeatPenalty} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">Repeat Penalty:</label>
+          <input type="number" name="repeatPenalty" value={formData.repeatPenalty} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>Repeat Last N:</label>
-          <input type="number" name="repeatLastN" value={formData.repeatLastN} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">Repeat Last N:</label>
+          <input type="number" name="repeatLastN" value={formData.repeatLastN} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>Top K:</label>
-          <input type="number" name="topK" value={formData.topK} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">Top K:</label>
+          <input type="number" name="topK" value={formData.topK} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>Top P:</label>
-          <input type="number" name="topP" value={formData.topP} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">Top P:</label>
+          <input type="number" name="topP" value={formData.topP} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>Min P:</label>
-          <input type="number" name="minP" value={formData.minP} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">Min P:</label>
+          <input type="number" name="minP" value={formData.minP} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>Top A:</label>
-          <input type="number" name="topA" value={formData.topA} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">Top A:</label>
+          <input type="number" name="topA" value={formData.topA} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>XTC Threshold:</label>
-          <input type="number" name="xtcThreshold" value={formData.xtcThreshold} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">XTC Threshold:</label>
+          <input type="number" name="xtcThreshold" value={formData.xtcThreshold} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>XTC Probability:</label>
-          <input type="number" name="xtcProbability" value={formData.xtcProbability} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">XTC Probability:</label>
+          <input type="number" name="xtcProbability" value={formData.xtcProbability} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <div>
-          <label>Temperature:</label>
-          <input type="number" name="temperature" value={formData.temperature} onChange={handleChange} />
+        <div className="mb-4">
+          <label className="font-semibold">Temperature:</label>
+          <input type="number" name="temperature" value={formData.temperature} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
         </div>
-        <button type="submit">Add Profile</button>
+        <button type="submit" className="bg-mystic-highlight text-mystic-primary px-4 py-2 rounded hover:bg-mystic-accent">Add Profile</button>
       </form>
-      <ul>
+      <ul className="list-disc pl-4">
         {profiles.map((profile, index) => (
-          <li key={index} onClick={() => handleProfileClick(profile)}>
+          <li key={index} className="cursor-pointer hover:text-mystic-highlight" onClick={() => handleProfileClick(profile)}>
             {profile.name}
           </li>
         ))}

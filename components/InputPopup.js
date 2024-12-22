@@ -86,15 +86,15 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts, scores }) => {
   const modelScores = scores.filter(score => score.modelId === item.id);
 
   return (
-    <div className={styles.popupOverlay}>
-      <div className={styles.popupContent}>
-        <button className={styles.closeButton} onClick={onClose}>
+    <div className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ${styles.popupOverlay}`}>
+      <div className="bg-mystic-secondary p-6 rounded shadow-lg text-mystic-text">
+        <button className="absolute top-0 right-0 mt-2 mr-2 text-mystic-highlight hover:text-mystic-accent" onClick={onClose}>
           &times;
         </button>
-        <h2>Edit Scores</h2>
-        <div>
-          <label>Category:</label>
-          <select value={selectedCategory} onChange={handleCategoryChange}>
+        <h2 className="text-2xl font-bold mb-4">Edit Scores</h2>
+        <div className="mb-4">
+          <label className="font-semibold">Category:</label>
+          <select value={selectedCategory} onChange={handleCategoryChange} className="bg-mystic-primary text-mystic-text p-2 rounded">
             <option value="">Select a category</option>
             {categories.map((category, index) => (
               <option key={index} value={category}>
@@ -104,9 +104,9 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts, scores }) => {
           </select>
         </div>
         {selectedCategory && (
-          <div>
-            <label>Prompt:</label>
-            <select value={selectedPrompt} onChange={handlePromptChange}>
+          <div className="mb-4">
+            <label className="font-semibold">Prompt:</label>
+            <select value={selectedPrompt} onChange={handlePromptChange} className="bg-mystic-primary text-mystic-text p-2 rounded">
               <option value="">Select a prompt</option>
               {filteredPrompts.map((prompt, index) => (
                 <option key={index} value={prompt.content}>
@@ -117,18 +117,18 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts, scores }) => {
           </div>
         )}
         {selectedPrompt && (
-          <div>
-            <label>Attempts:</label>
-            <input type="number" value={attempts} onChange={handleAttemptsChange} min="1" />
+          <div className="mb-4">
+            <label className="font-semibold">Attempts:</label>
+            <input type="number" value={attempts} onChange={handleAttemptsChange} min="1" className="bg-mystic-primary text-mystic-text p-2 rounded" />
           </div>
         )}
-        <button onClick={handleSave}>Save</button>
-        <h3>Scores for {item.name}</h3>
-        <table>
+        <button className="bg-mystic-highlight text-mystic-primary px-4 py-2 rounded hover:bg-mystic-accent" onClick={handleSave}>Save</button>
+        <h3 className="text-xl font-bold mt-4 mb-2">Scores for {item.name}</h3>
+        <table className="min-w-full bg-mystic-primary text-mystic-text">
           <thead>
             <tr>
-              <th>Prompt</th>
-              <th>Score</th>
+              <th className="py-2 px-4 border-b">Prompt</th>
+              <th className="py-2 px-4 border-b">Score</th>
             </tr>
           </thead>
           <tbody>
@@ -136,8 +136,8 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts, scores }) => {
               const prompt = prompts.find(p => p.id === score.promptId);
               return (
                 <tr key={index}>
-                  <td>{prompt ? prompt.content : 'Unknown Prompt'}</td>
-                  <td>{score.score}</td>
+                  <td className="py-2 px-4 border-b">{prompt ? prompt.content : 'Unknown Prompt'}</td>
+                  <td className="py-2 px-4 border-b">{score.score}</td>
                 </tr>
               );
             })}

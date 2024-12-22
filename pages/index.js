@@ -45,10 +45,10 @@ export default function Home() {
 
   return (
     <Layout>
-      <h1>Welcome to the Spreadsheet-like Web App</h1>
-      <p>Use the navigation menu to access different sections of the app.</p>
-      <button onClick={loadMockData}>Load Mock Data into DB</button>
-      <button onClick={wipeData}>Wipe All Data from DB</button>
+      <h1 className="text-3xl font-bold mb-4">Welcome to LLM Benchmark</h1>
+      <p className="mb-4">Use the navigation menu to access different sections of the app.</p>
+      <button className="bg-mystic-highlight text-mystic-primary px-4 py-2 rounded hover:bg-mystic-accent" onClick={loadMockData}>Load Mock Data into DB</button>
+      <button className="bg-mystic-highlight text-mystic-primary px-4 py-2 rounded hover:bg-mystic-accent ml-4" onClick={wipeData}>Wipe All Data from DB</button>
     </Layout>
   );
 }
