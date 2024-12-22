@@ -2,24 +2,24 @@ import Link from 'next/link';
 
 export default function Layout({ children }) {
   return (
-    <div className="min-h-screen flex flex-col bg-mystic-primary text-mystic-text dark:bg-mystic-secondary dark:text-mystic-text">
-      <header className="bg-mystic-accent p-4 shadow-md">
-        <h1 className="text-2xl font-bold">LLM Benchmark</h1>
+    <div className="d-flex flex-column min-vh-100 bg-dark text-light">
+      <header className="bg-secondary p-3 shadow-sm">
+        <h1 className="h2">LLM Benchmark</h1>
         <nav>
-          <ul className="flex space-x-4">
-            <li><Link href="/" className="hover:text-mystic-highlight">Home</Link></li>
-            <li><Link href="/model-manager" className="hover:text-mystic-highlight">Model Manager</Link></li>
-            <li><Link href="/profile-manager" className="hover:text-mystic-highlight">Profile Manager</Link></li>
-            <li><Link href="/prompt-manager" className="hover:text-mystic-highlight">Prompt Manager</Link></li>
-            <li><Link href="/leaderboard" className="hover:text-mystic-highlight">Leaderboard</Link></li>
+          <ul className="nav">
+            <li className="nav-item"><Link href="/" className="nav-link text-light">Home</Link></li>
+            <li className="nav-item"><Link href="/model-manager" className="nav-link text-light">Model Manager</Link></li>
+            <li className="nav-item"><Link href="/profile-manager" className="nav-link text-light">Profile Manager</Link></li>
+            <li className="nav-item"><Link href="/prompt-manager" className="nav-link text-light">Prompt Manager</Link></li>
+            <li className="nav-item"><Link href="/leaderboard" className="nav-link text-light">Leaderboard</Link></li>
           </ul>
         </nav>
       </header>
-      <main className="flex-1 p-4">
+      <main className="flex-grow-1 p-3">
         {children}
       </main>
-      <footer className="bg-mystic-accent p-4 text-center shadow-md">
-        <p>© lavantien</p>
+      <footer className="bg-secondary p-3 text-center shadow-sm">
+        <p>&copy; lavantien</p>
       </footer>
     </div>
   );

@@ -1,6 +1,4 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import url('https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css');
 
 body {
   font-family: Arial, sans-serif;

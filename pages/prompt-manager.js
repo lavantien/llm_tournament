@@ -99,39 +99,39 @@ export default function PromptManager() {
 
   return (
     <Layout>
-      <h1 className="text-3xl font-bold mb-4">Prompt Manager</h1>
-      <form onSubmit={handleSubmit} className="bg-mystic-secondary p-4 rounded shadow-lg">
-        <div className="mb-4">
-          <label className="font-semibold">Content:</label>
-          <textarea name="content" value={formData.content} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
+      <h1 className="h3 mb-4">Prompt Manager</h1>
+      <form onSubmit={handleSubmit} className="bg-secondary p-3 rounded shadow">
+        <div className="mb-3">
+          <label className="form-label">Content:</label>
+          <textarea name="content" value={formData.content} onChange={handleChange} className="form-control" />
         </div>
-        <div className="mb-4">
-          <label className="font-semibold">Solution:</label>
-          <textarea name="solution" value={formData.solution} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full" />
+        <div className="mb-3">
+          <label className="form-label">Solution:</label>
+          <textarea name="solution" value={formData.solution} onChange={handleChange} className="form-control" />
         </div>
-        <div className="mb-4">
-          <label className="font-semibold">Profile:</label>
-          <select name="profile" value={formData.profile} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full">
+        <div className="mb-3">
+          <label className="form-label">Profile:</label>
+          <select name="profile" value={formData.profile} onChange={handleChange} className="form-select">
             <option value="">Select a profile</option>
             {profiles.map((profile, index) => (
               <option key={index} value={profile.name}>{profile.name}</option>
             ))}
           </select>
         </div>
-        <div className="mb-4">
-          <label className="font-semibold">Category:</label>
-          <select name="category" value={formData.category} onChange={handleChange} className="bg-mystic-primary text-mystic-text p-2 rounded w-full">
+        <div className="mb-3">
+          <label className="form-label">Category:</label>
+          <select name="category" value={formData.category} onChange={handleChange} className="form-select">
             <option value="">Select a category</option>
             {categories.map((category, index) => (
               <option key={index} value={category}>{category}</option>
             ))}
           </select>
         </div>
-        <button type="submit" className="bg-mystic-highlight text-mystic-primary px-4 py-2 rounded hover:bg-mystic-accent">Add Prompt</button>
+        <button type="submit" className="btn btn-primary">Add Prompt</button>
       </form>
-      <ul className="list-disc pl-4">
+      <ul className="list-group">
         {prompts.map((prompt, index) => (
-          <li key={index} className="cursor-pointer hover:text-mystic-highlight" onClick={() => handlePromptClick(prompt)}>
+          <li key={index} className="list-group-item list-group-item-action" onClick={() => handlePromptClick(prompt)}>
             {prompt.content}
           </li>
         ))}
