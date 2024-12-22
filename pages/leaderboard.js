@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Layout from "../components/Layout";
 import InputPopup from "../components/InputPopup";
 
@@ -67,9 +67,9 @@ export default function Leaderboard() {
   useEffect(() => {
     if (models.length && scores.length && categories.length && prompts.length) {
       const calculateScores = (modelDerivedId) => {
-        const modelScores = scores.filter((score) => {
-          (score) => Number(score.modelId) === Number(modelDerivedId);
-        });
+        const modelScores = scores.filter((score) =>
+          Number(score.modelId) === Number(modelDerivedId)
+        );
         console.log(
           "Filtered modelScores for derivedId",
           modelDerivedId,
@@ -122,6 +122,65 @@ export default function Leaderboard() {
     }
   }, [models, scores, categories, prompts]); // Dependency array ensures this runs only when all states update
 
+  const memoizedScoresCalculation = useMemo(() => {
+    if (models.length && scores.length && categories.length && prompts.length) {
+      const calculateScores = (modelDerivedId) => {
+        const modelScores = scores.filter((score) =>
+          Number(score.modelId) === Number(modelDerivedId)
+        );
+        console.log(
+          "Filtered modelScores for derivedId",
+          modelDerivedId,
+          ":",
+          modelScores,
+        );
+
+        if (!modelScores.length) return { overall: 0 };
+
+        const categoryScores = {};
+        let overallScore = 0;
+        let totalPrompts = 0;
+
+        categories.forEach((category) => {
+          const categoryPrompts = prompts.filter(
+            (prompt) => prompt.category.toLowerCase() === category,
+          );
+
+          let totalScore = 0;
+          let promptCount = 0;
+
+          categoryPrompts.forEach((prompt) => {
+            const promptScores = modelScores.filter(
+              (score) => String(score.promptId) === String(prompt.id),
+            );
+            if (promptScores.length > 0) {
+              totalScore += promptScores[0].score;
+              promptCount++;
+            }
+          });
+
+          categoryScores[category] =
+            promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
+          overallScore += totalScore;
+          totalPrompts += promptCount;
+        });
+
+        overallScore =
+          totalPrompts > 0 ? (overallScore / totalPrompts).toFixed(2) : 0;
+        return { ...categoryScores, overall: overallScore };
+      };
+
+      // Memoize scores for all models
+      const memoized = models.map((model) => ({
+        id: model.id,
+        scores: calculateScores(model.derivedId), // Use derived ID
+      }));
+
+      return memoized;
+    }
+    return [];
+  }, [models, scores, categories, prompts]);
+
   const sortTable = (key) => {
     const sortedModels = [...models].sort((a, b) =>
       (a[key] || 0) < (b[key] || 0) ? 1 : -1,
@@ -165,7 +224,7 @@ export default function Leaderboard() {
           </tr>
         </thead>
         <tbody>
-          {memoizedScores.map(({ id, scores }) => {
+          {memoizedScoresCalculation.map(({ id, scores }) => {
             const model = models.find((m) => m.id === id);
             if (!model) return null; // Skip if model not found
             return (
