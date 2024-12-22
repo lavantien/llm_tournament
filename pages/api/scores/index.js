@@ -1,7 +1,50 @@
 import { openDb } from '../../../lib/db';
+import models from '../../../mocks/models.json';
+import profiles from '../../../mocks/profiles.json';
+import prompts from '../../../mocks/prompts.json';
+import scores from '../../../mocks/scores.json';
+
+let isInitialized = false;
 
 export default async function handler(req, res) {
   const db = await openDb();
+
+  if (!isInitialized) {
+    // Initialize the database with mock data
+    await db.run('BEGIN TRANSACTION');
+
+    for (const model of models) {
+      await db.run(
+        'INSERT INTO models (name, path, gpuLayers, ctxSize, batchSize, threads, keep, predict, flashAttn, mlock, cacheTypeK, cacheTypeV) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [model.name, model.path, model.gpuLayers, model.ctxSize, model.batchSize, model.threads, model.keep, model.predict, model.flashAttn, model.mlock, model.cacheTypeK, model.cacheTypeV]
+      );
+    }
+
+    for (const profile of profiles) {
+      await db.run(
+        'INSERT INTO profiles (name, systemPrompt, dryMultiplier, dryBase, dryAllowedLength, dryPenaltyLastN, repeatPenalty, repeatLastN, topK, topP, minP, topA, xtcThreshold, xtcProbability, temperature) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [profile.name, profile.systemPrompt, profile.dryMultiplier, profile.dryBase, profile.dryAllowedLength, profile.dryPenaltyLastN, profile.repeatPenalty, profile.repeatLastN, profile.topK, profile.topP, profile.minP, profile.topA, profile.xtcThreshold, profile.xtcProbability, profile.temperature]
+      );
+    }
+
+    for (const prompt of prompts) {
+      const profile = profiles.find(p => p.name === prompt.profile);
+      await db.run(
+        'INSERT INTO prompts (content, solution, profileId, category) VALUES (?, ?, ?, ?)',
+        [prompt.content, prompt.solution, profile.id, prompt.category]
+      );
+    }
+
+    for (const score of scores) {
+      await db.run(
+        'INSERT INTO scores (modelId, promptId, attempts, score) VALUES (?, ?, ?, ?)',
+        [score.modelId, score.promptId, score.attempts, score.score]
+      );
+    }
+
+    await db.run('COMMIT');
+    isInitialized = true;
+  }
 
   if (req.method === 'POST') {
     const { modelId, promptId, attempts } = req.body;

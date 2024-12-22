@@ -10,14 +10,14 @@ export default function Leaderboard() {
   const [scores, setScores] = useState([]);
 
   useEffect(() => {
-    // Fetch models from the API route
-    fetch('/api/mocks/models')
+    // Fetch models from the database
+    fetch('/api/models')
       .then(response => response.json())
       .then(data => setModels(data))
       .catch(error => console.error('Error fetching models:', error));
 
-    // Fetch prompts from the API route
-    fetch('/api/mocks/prompts')
+    // Fetch prompts from the database
+    fetch('/api/prompts')
       .then(response => response.json())
       .then(data => {
         setPrompts(data);
@@ -26,8 +26,8 @@ export default function Leaderboard() {
       })
       .catch(error => console.error('Error fetching prompts:', error));
 
-    // Fetch scores from the API route
-    fetch('/api/mocks/scores')
+    // Fetch scores from the database
+    fetch('/api/scores')
       .then(response => response.json())
       .then(data => setScores(data))
       .catch(error => console.error('Error fetching scores:', error));
