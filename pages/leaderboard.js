@@ -171,13 +171,21 @@ export default function Leaderboard() {
       <table className="table">
         <thead>
           <tr>
-            <th className="cursor-pointer" onClick={() => sortTable("name")}>Model Name</th>
+            <th className="cursor-pointer" onClick={() => sortTable("name")}>
+              Model Name
+            </th>
             {categories.map((category, index) => (
-              <th key={index} className="cursor-pointer" onClick={() => sortTable(category.toLowerCase())}>
+              <th
+                key={index}
+                className="cursor-pointer"
+                onClick={() => sortTable(category.toLowerCase())}
+              >
                 {category}
               </th>
             ))}
-            <th className="cursor-pointer" onClick={() => sortTable("overall")}>Overall Score</th>
+            <th className="cursor-pointer" onClick={() => sortTable("overall")}>
+              Overall Score
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -185,7 +193,11 @@ export default function Leaderboard() {
             const model = models.find((m) => m.id === id);
             if (!model) return null; // Skip if model not found
             return (
-              <tr key={id} className="cursor-pointer" onClick={() => handleModelClick(model)}>
+              <tr
+                key={id}
+                className="cursor-pointer"
+                onClick={() => handleModelClick(model)}
+              >
                 <td>{model.name}</td>
                 {categories.map((category, idx) => (
                   <td key={idx}>{scores[category] || 0}</td>
