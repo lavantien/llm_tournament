@@ -13,6 +13,7 @@ export default function Leaderboard() {
   ]);
   const [selectedModel, setSelectedModel] = useState(null);
   const [categories, setCategories] = useState([]);
+  const [prompts, setPrompts] = useState([]);
 
   useEffect(() => {
     // Fetch models from the database
@@ -26,14 +27,15 @@ export default function Leaderboard() {
     ]);
 
     // Fetch categories from prompts
-    const prompts = [
+    const promptsData = [
       { content: 'Prompt 1 content', solution: 'Prompt 1 solution', profile: 'Profile 1', category: 'Category 1' },
       { content: 'Prompt 2 content', solution: 'Prompt 2 solution', profile: 'Profile 2', category: 'Category 2' },
       { content: 'Prompt 3 content', solution: 'Prompt 3 solution', profile: 'Profile 3', category: 'Category 3' }
       // Add more mock data as needed
     ];
-    const uniqueCategories = [...new Set(prompts.map(prompt => prompt.category))];
+    const uniqueCategories = [...new Set(promptsData.map(prompt => prompt.category))];
     setCategories(uniqueCategories);
+    setPrompts(promptsData);
   }, []);
 
   const sortTable = (key) => {
@@ -78,7 +80,13 @@ export default function Leaderboard() {
           ))}
         </tbody>
       </table>
-      <DetailPopup item={selectedModel} onClose={handleClosePopup} onSave={handleSaveModel} />
+      <DetailPopup
+        item={selectedModel}
+        onClose={handleClosePopup}
+        onSave={handleSaveModel}
+        categories={categories}
+        prompts={prompts}
+      />
     </Layout>
   );
 }
