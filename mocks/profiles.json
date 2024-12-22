@@ -49,5 +49,39 @@
     "xtcThreshold": 0.3,
     "xtcProbability": 0.7,
     "temperature": 1.2
+  },
+  {
+    "name": "Profile 4",
+    "systemPrompt": "System prompt 4",
+    "dryMultiplier": 1.1,
+    "dryBase": 2.0,
+    "dryAllowedLength": 5,
+    "dryPenaltyLastN": 512,
+    "repeatPenalty": 1.05,
+    "repeatLastN": 512,
+    "topK": 3,
+    "topP": 1.3,
+    "minP": 0.05,
+    "topA": 0.15,
+    "xtcThreshold": 0.4,
+    "xtcProbability": 0.8,
+    "temperature": 1.3
+  },
+  {
+    "name": "Profile 5",
+    "systemPrompt": "System prompt 5",
+    "dryMultiplier": 1.2,
+    "dryBase": 2.1,
+    "dryAllowedLength": 6,
+    "dryPenaltyLastN": 512,
+    "repeatPenalty": 1.06,
+    "repeatLastN": 512,
+    "topK": 4,
+    "topP": 1.4,
+    "minP": 0.06,
+    "topA": 0.16,
+    "xtcThreshold": 0.5,
+    "xtcProbability": 0.9,
+    "temperature": 1.4
   }
 ]

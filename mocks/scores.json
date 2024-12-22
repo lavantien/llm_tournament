@@ -34,5 +34,29 @@
     "promptId": 3,
     "attempts": 3,
     "score": 20
+  },
+  {
+    "modelId": 4,
+    "promptId": 4,
+    "attempts": 1,
+    "score": 100
+  },
+  {
+    "modelId": 4,
+    "promptId": 5,
+    "attempts": 2,
+    "score": 50
+  },
+  {
+    "modelId": 5,
+    "promptId": 4,
+    "attempts": 3,
+    "score": 20
+  },
+  {
+    "modelId": 5,
+    "promptId": 5,
+    "attempts": 1,
+    "score": 100
   }
 ]

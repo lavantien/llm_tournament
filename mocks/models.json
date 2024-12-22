@@ -40,5 +40,33 @@
     "mlock": false,
     "cacheTypeK": "q8_0",
     "cacheTypeV": "q8_0"
+  },
+  {
+    "name": "Model 4",
+    "path": "/path/to/model4",
+    "gpuLayers": 25,
+    "ctxSize": 32768,
+    "batchSize": 512,
+    "threads": 8,
+    "keep": 4096,
+    "predict": -1,
+    "flashAttn": true,
+    "mlock": true,
+    "cacheTypeK": "q8_0",
+    "cacheTypeV": "q8_0"
+  },
+  {
+    "name": "Model 5",
+    "path": "/path/to/model5",
+    "gpuLayers": 30,
+    "ctxSize": 32768,
+    "batchSize": 512,
+    "threads": 8,
+    "keep": 4096,
+    "predict": -1,
+    "flashAttn": false,
+    "mlock": true,
+    "cacheTypeK": "q8_0",
+    "cacheTypeV": "q8_0"
   }
 ]
