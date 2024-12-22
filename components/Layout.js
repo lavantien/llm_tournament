@@ -1,13 +1,12 @@
 import Link from 'next/link';
-import styles from '../styles/Layout.module.css';
 
 export default function Layout({ children }) {
   return (
-    <div>
-      <header className={styles.header}>
-        <h1 className={styles.title}>LLM Benchmark</h1>
+    <div className="min-h-screen flex flex-col">
+      <header className="bg-gray-800 text-white p-4">
+        <h1 className="text-2xl font-bold">LLM Benchmark</h1>
         <nav>
-          <ul className={styles.navList}>
+          <ul className="flex space-x-4">
             <li><Link href="/">Home</Link></li>
             <li><Link href="/model-manager">Model Manager</Link></li>
             <li><Link href="/profile-manager">Profile Manager</Link></li>
@@ -16,10 +15,10 @@ export default function Layout({ children }) {
           </ul>
         </nav>
       </header>
-      <main className={styles.main}>
+      <main className="flex-1 p-4">
         {children}
       </main>
-      <footer className={styles.footer}>
+      <footer className="bg-gray-800 text-white p-4 text-center">
         <p>© lavantien</p>
       </footer>
     </div>
