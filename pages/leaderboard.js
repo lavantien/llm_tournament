@@ -9,7 +9,10 @@ export default function Leaderboard() {
   const [prompts, setPrompts] = useState([]);
   const [scores, setScores] = useState([]);
   const [calculatedScores, setCalculatedScores] = useState([]);
-  const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
+  const [sortConfig, setSortConfig] = useState({
+    key: "",
+    direction: "ascending",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,31 +101,31 @@ export default function Leaderboard() {
   }, [models, scores, categories, prompts]); // Dependency array ensures this runs only when all states update
 
   const sortTable = (key) => {
-    let direction = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
     }
     setSortConfig({ key, direction });
 
     const sortedModels = [...calculatedScores].sort((a, b) => {
-      if (key === 'name') {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
+      if (key === "name") {
+        const nameA = a.name;
+        const nameB = b.name;
         if (nameA < nameB) {
-          return direction === 'ascending' ? -1 : 1;
+          return direction === "ascending" ? -1 : 1;
         }
         if (nameA > nameB) {
-          return direction === 'ascending' ? 1 : -1;
+          return direction === "ascending" ? 1 : -1;
         }
         return 0;
       } else {
         const valueA = a.scores[key] || 0;
         const valueB = b.scores[key] || 0;
         if (valueA < valueB) {
-          return direction === 'ascending' ? -1 : 1;
+          return direction === "ascending" ? -1 : 1;
         }
         if (valueA > valueB) {
-          return direction === 'ascending' ? 1 : -1;
+          return direction === "ascending" ? 1 : -1;
         }
         return 0;
       }
