@@ -27,7 +27,7 @@ export default function Leaderboard() {
       .catch(error => console.error('Error fetching prompts:', error));
 
     // Fetch scores from the API route
-    fetch('/api/scores')
+    fetch('/api/mocks/scores')
       .then(response => response.json())
       .then(data => setScores(data))
       .catch(error => console.error('Error fetching scores:', error));
