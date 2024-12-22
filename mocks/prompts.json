@@ -9,53 +9,113 @@
     "content": "Prompt 2 content",
     "solution": "Prompt 2 solution",
     "profile": "Profile 2",
-    "category": "Category 2"
+    "category": "Category 1"
   },
   {
     "content": "Prompt 3 content",
     "solution": "Prompt 3 solution",
     "profile": "Profile 3",
-    "category": "Category 3"
+    "category": "Category 2"
   },
   {
     "content": "Prompt 4 content",
     "solution": "Prompt 4 solution",
     "profile": "Profile 4",
-    "category": "Category 4"
+    "category": "Category 2"
   },
   {
     "content": "Prompt 5 content",
     "solution": "Prompt 5 solution",
     "profile": "Profile 5",
-    "category": "Category 5"
+    "category": "Category 3"
   },
   {
     "content": "Prompt 6 content",
     "solution": "Prompt 6 solution",
     "profile": "Profile 1",
-    "category": "Category 6"
+    "category": "Category 3"
   },
   {
     "content": "Prompt 7 content",
     "solution": "Prompt 7 solution",
     "profile": "Profile 2",
-    "category": "Category 7"
+    "category": "Category 4"
   },
   {
     "content": "Prompt 8 content",
     "solution": "Prompt 8 solution",
     "profile": "Profile 3",
-    "category": "Category 8"
+    "category": "Category 4"
   },
   {
     "content": "Prompt 9 content",
     "solution": "Prompt 9 solution",
     "profile": "Profile 4",
-    "category": "Category 9"
+    "category": "Category 5"
   },
   {
     "content": "Prompt 10 content",
     "solution": "Prompt 10 solution",
+    "profile": "Profile 5",
+    "category": "Category 5"
+  },
+  {
+    "content": "Prompt 11 content",
+    "solution": "Prompt 11 solution",
+    "profile": "Profile 1",
+    "category": "Category 6"
+  },
+  {
+    "content": "Prompt 12 content",
+    "solution": "Prompt 12 solution",
+    "profile": "Profile 2",
+    "category": "Category 6"
+  },
+  {
+    "content": "Prompt 13 content",
+    "solution": "Prompt 13 solution",
+    "profile": "Profile 3",
+    "category": "Category 7"
+  },
+  {
+    "content": "Prompt 14 content",
+    "solution": "Prompt 14 solution",
+    "profile": "Profile 4",
+    "category": "Category 7"
+  },
+  {
+    "content": "Prompt 15 content",
+    "solution": "Prompt 15 solution",
+    "profile": "Profile 5",
+    "category": "Category 8"
+  },
+  {
+    "content": "Prompt 16 content",
+    "solution": "Prompt 16 solution",
+    "profile": "Profile 1",
+    "category": "Category 8"
+  },
+  {
+    "content": "Prompt 17 content",
+    "solution": "Prompt 17 solution",
+    "profile": "Profile 2",
+    "category": "Category 9"
+  },
+  {
+    "content": "Prompt 18 content",
+    "solution": "Prompt 18 solution",
+    "profile": "Profile 3",
+    "category": "Category 9"
+  },
+  {
+    "content": "Prompt 19 content",
+    "solution": "Prompt 19 solution",
+    "profile": "Profile 4",
+    "category": "Category 10"
+  },
+  {
+    "content": "Prompt 20 content",
+    "solution": "Prompt 20 solution",
     "profile": "Profile 5",
     "category": "Category 10"
   }
