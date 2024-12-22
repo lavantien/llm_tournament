@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Table } from 'react-bootstrap';
 
-const InputPopup = ({ item, onClose, onSave, categories, prompts, scores }) => {
+const InputPopup = ({ item, onClose, onSave, categories, prompts = [], scores = [] }) => {
   const [editedItem, setEditedItem] = useState({ ...item });
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedPrompt, setSelectedPrompt] = useState('');
@@ -81,8 +81,7 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts, scores }) => {
     return newOverallScore.toFixed(2);
   };
 
-  const filteredPrompts = prompts.filter(prompt => prompt.category === selectedCategory);
-
+  const filteredPrompts = selectedCategory ? prompts.filter(prompt => prompt.category === selectedCategory) : [];
   const modelScores = scores.filter(score => score.modelId === item.id);
 
   return (

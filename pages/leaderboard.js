@@ -205,6 +205,7 @@ export default function Leaderboard() {
             onSave={handleSaveModel}
             categories={categories}
             prompts={prompts}
+            scores={scores}
           />
         )}
       </Container>
