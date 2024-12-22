@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
-import DetailPopup from '../components/DetailPopup';
+import InputPopup from '../components/InputPopup';
 
 export default function Leaderboard() {
   const [models, setModels] = useState([
@@ -80,13 +80,15 @@ export default function Leaderboard() {
           ))}
         </tbody>
       </table>
-      <DetailPopup
-        item={selectedModel}
-        onClose={handleClosePopup}
-        onSave={handleSaveModel}
-        categories={categories}
-        prompts={prompts}
-      />
+      {selectedModel && (
+        <InputPopup
+          item={selectedModel}
+          onClose={handleClosePopup}
+          onSave={handleSaveModel}
+          categories={categories}
+          prompts={prompts}
+        />
+      )}
     </Layout>
   );
 }
