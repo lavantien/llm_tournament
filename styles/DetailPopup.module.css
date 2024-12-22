@@ -17,6 +17,7 @@
   max-width: 80%;
   max-height: 80%;
   overflow: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .closeButton {
@@ -27,4 +28,22 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.popupContent h2 {
+  margin-top: 0;
+}
+
+.popupContent div {
+  margin-bottom: 1rem;
+}
+
+.popupContent label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.popupContent p {
+  margin: 0;
+  word-wrap: break-word;
 }

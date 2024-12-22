@@ -7,7 +7,9 @@ const DetailPopup = ({ item, onClose }) => {
   return (
     <div className={styles.popupOverlay}>
       <div className={styles.popupContent}>
-        <button className={styles.closeButton} onClick={onClose}>Close</button>
+        <button className={styles.closeButton} onClick={onClose}>
+          &times;
+        </button>
         <h2>Details</h2>
         {item.name && (
           <div>
