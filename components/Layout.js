@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Navbar, Nav, Container, Row, Col } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
 export default function Layout({ children }) {
   return (
@@ -11,11 +11,11 @@ export default function Layout({ children }) {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Link href="/" passHref><Nav.Link>Home</Nav.Link></Link>
-                <Link href="/model-manager" passHref><Nav.Link>Model Manager</Nav.Link></Link>
-                <Link href="/profile-manager" passHref><Nav.Link>Profile Manager</Nav.Link></Link>
-                <Link href="/prompt-manager" passHref><Nav.Link>Prompt Manager</Nav.Link></Link>
-                <Link href="/leaderboard" passHref><Nav.Link>Leaderboard</Nav.Link></Link>
+                <Link href="/" passHref legacyBehavior><Nav.Link>Home</Nav.Link></Link>
+                <Link href="/model-manager" passHref legacyBehavior><Nav.Link>Model Manager</Nav.Link></Link>
+                <Link href="/profile-manager" passHref legacyBehavior><Nav.Link>Profile Manager</Nav.Link></Link>
+                <Link href="/prompt-manager" passHref legacyBehavior><Nav.Link>Prompt Manager</Nav.Link></Link>
+                <Link href="/leaderboard" passHref legacyBehavior><Nav.Link>Leaderboard</Nav.Link></Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
