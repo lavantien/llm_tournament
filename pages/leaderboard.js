@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Layout from "../components/Layout";
 import InputPopup from "../components/InputPopup";
 
@@ -9,6 +9,7 @@ export default function Leaderboard() {
   const [prompts, setPrompts] = useState([]);
   const [scores, setScores] = useState([]);
   const [calculatedScores, setCalculatedScores] = useState([]);
+  const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,9 +98,35 @@ export default function Leaderboard() {
   }, [models, scores, categories, prompts]); // Dependency array ensures this runs only when all states update
 
   const sortTable = (key) => {
-    const sortedModels = [...models].sort((a, b) =>
-      (a[key] || 0) < (b[key] || 0) ? 1 : -1,
-    );
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+
+    const sortedModels = [...models].sort((a, b) => {
+      if (key === 'name') {
+        const nameA = a[key].toUpperCase();
+        const nameB = b[key].toUpperCase();
+        if (nameA < nameB) {
+          return direction === 'ascending' ? -1 : 1;
+        }
+        if (nameA > nameB) {
+          return direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      } else {
+        const valueA = a[key] || 0;
+        const valueB = b[key] || 0;
+        if (valueA < valueB) {
+          return direction === 'ascending' ? -1 : 1;
+        }
+        if (valueA > valueB) {
+          return direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      }
+    });
     setModels(sortedModels);
   };
 
