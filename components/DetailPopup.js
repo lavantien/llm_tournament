@@ -58,7 +58,7 @@ const DetailPopup = ({ item, onClose, onSave, categories, prompts }) => {
     onClose();
   };
 
-  if (!item) return null;
+  if (!item || !prompts) return null;
 
   const filteredPrompts = prompts.filter(prompt => prompt.category === selectedCategory);
 
