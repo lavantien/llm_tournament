@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import InputPopup from "../components/InputPopup";
 
@@ -13,145 +13,128 @@ export default function Leaderboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchModels = fetch("/api/models").then((response) => {
-          if (!response.ok) throw new Error("Failed to fetch models");
-          return response.json();
-        });
-
-        const fetchPrompts = fetch("/api/prompts").then((response) => {
-          if (!response.ok) throw new Error("Failed to fetch prompts");
-          return response.json();
-        });
-
-        const fetchScores = fetch("/api/scores").then((response) => {
-          if (!response.ok) throw new Error("Failed to fetch scores");
-          return response.json();
-        });
-
+        // Fetch all required data
         const [modelsData, promptsData, scoresData] = await Promise.all([
-          fetchModels,
-          fetchPrompts,
-          fetchScores,
+          fetch("/api/models").then((res) => res.json()),
+          fetch("/api/prompts").then((res) => res.json()),
+          fetch("/api/scores").then((res) => res.json()),
         ]);
 
-        console.log("Fetched models:", modelsData);
-        console.log("Fetched prompts:", promptsData);
-        console.log("Fetched scores:", scoresData);
+        // Preprocess models to extract numeric ID from name
+        const processedModels = modelsData.map((model) => {
+          const match = model.name.match(/Model (\d+)/);
+          const derivedId = match ? parseInt(match[1], 10) : null; // Extract number from name
+          return { ...model, derivedId };
+        });
 
-        setModels(modelsData);
-        console.log("Models set:", modelsData);
+        console.log("Processed models:", processedModels);
+        console.log("Scores data:", scoresData);
+        console.log(
+          "Derived IDs in models:",
+          processedModels.map((m) => m.derivedId),
+        );
+        console.log(
+          "Model IDs in scores:",
+          scoresData.map((s) => s.modelId),
+        );
+
+        console.log("Type of derivedId:", typeof processedModels[0]?.derivedId);
+        console.log(
+          "Type of modelId in scores:",
+          typeof scoresData[0]?.modelId,
+        );
+
+        // Update states
+        setModels(processedModels);
         setPrompts(promptsData);
-        console.log("Prompts set:", promptsData);
         setScores(scoresData);
-        console.log("Scores set:", scoresData);
 
+        // Derive unique categories
         const uniqueCategories = [
           ...new Set(
             promptsData.map((prompt) => prompt.category.toLowerCase()),
           ),
         ];
         setCategories(uniqueCategories);
-        console.log("Categories set:", uniqueCategories);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, []); // Run only once on mount
 
   useEffect(() => {
-    const calculateScores = (modelId) => {
-      console.log("---- scores: ", scores);
-      console.log("Calculating scores for modelId:", modelId);
-      console.log("score.modelId type:", typeof scores[0]?.modelId);
-      console.log("model.id type:", typeof models[0]?.id);
-      console.log("score.promptId type:", typeof scores[0]?.promptId);
-      console.log("prompt.id type:", typeof prompts[0]?.id);
-
-      const modelScores = scores.filter((score) => score.modelId == modelId);
-      console.log("Model scores for modelId", modelId, ":", modelScores);
-
-      if (modelScores.length === 0) return { overall: 0 };
-
-      const categoryScores = {};
-      let overallScore = 0;
-      let totalPrompts = 0;
-
-      categories.forEach((category) => {
-        console.log("Processing category:", category);
-        const categoryPrompts = prompts.filter(
-          (prompt) => prompt.category.toLowerCase() === category,
+    if (models.length && scores.length && categories.length && prompts.length) {
+      const calculateScores = (modelDerivedId) => {
+        const modelScores = scores.filter((score) => {
+          (score) => Number(score.modelId) === Number(modelDerivedId);
+        });
+        console.log(
+          "Filtered modelScores for derivedId",
+          modelDerivedId,
+          ":",
+          modelScores,
         );
-        console.log("Category prompts for", category, ":", categoryPrompts);
-        let totalScore = 0;
-        let promptCount = 0;
 
-        categoryPrompts.forEach((prompt) => {
-          const promptScores = modelScores.filter(
-            (score) => `${score.promptId}` === `${prompt.id}`,
+        if (!modelScores.length) return { overall: 0 };
+
+        const categoryScores = {};
+        let overallScore = 0;
+        let totalPrompts = 0;
+
+        categories.forEach((category) => {
+          const categoryPrompts = prompts.filter(
+            (prompt) => prompt.category.toLowerCase() === category,
           );
-          console.log(
-            "Prompt scores for promptId",
-            prompt.id,
-            ":",
-            promptScores,
-          );
-          if (promptScores.length > 0) {
-            totalScore += promptScores[0].score;
-            promptCount++;
-          }
+
+          let totalScore = 0;
+          let promptCount = 0;
+
+          categoryPrompts.forEach((prompt) => {
+            const promptScores = modelScores.filter(
+              (score) => String(score.promptId) === String(prompt.id),
+            );
+            if (promptScores.length > 0) {
+              totalScore += promptScores[0].score;
+              promptCount++;
+            }
+          });
+
+          categoryScores[category] =
+            promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
+          overallScore += totalScore;
+          totalPrompts += promptCount;
         });
 
-        categoryScores[category] =
-          promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
-        console.log(
-          "Category score for",
-          category,
-          ":",
-          categoryScores[category],
-        );
-        overallScore += totalScore;
-        totalPrompts += promptCount;
-      });
+        overallScore =
+          totalPrompts > 0 ? (overallScore / totalPrompts).toFixed(2) : 0;
+        return { ...categoryScores, overall: overallScore };
+      };
 
-      overallScore =
-        totalPrompts > 0 ? (overallScore / totalPrompts).toFixed(2) : 0;
-      console.log("Overall score for modelId", modelId, ":", overallScore);
-      console.log("Calculated scores for modelId", modelId, ":", {
-        ...categoryScores,
-        overall: overallScore,
-      });
-      return { ...categoryScores, overall: overallScore };
-    };
-
-    if (models.length && scores.length && categories.length && prompts.length) {
+      // Memoize scores for all models
       const memoized = models.map((model) => ({
         id: model.id,
-        scores: calculateScores(model.id),
+        scores: calculateScores(model.derivedId), // Use derived ID
       }));
 
       setMemoizedScores(memoized);
-      console.log("Memoized scores:", memoized);
     }
-  }, [models, scores, categories, prompts]);
+  }, [models, scores, categories, prompts]); // Dependency array ensures this runs only when all states update
 
   const sortTable = (key) => {
     const sortedModels = [...models].sort((a, b) =>
       (a[key] || 0) < (b[key] || 0) ? 1 : -1,
     );
     setModels(sortedModels);
-    console.log("Models sorted by", key, ":", sortedModels);
   };
 
   const handleModelClick = (model) => {
     setSelectedModel(model);
-    console.log("Selected model set:", model);
   };
 
   const handleClosePopup = () => {
     setSelectedModel(null);
-    console.log("Selected model reset");
   };
 
   const handleSaveModel = (editedModel) => {
@@ -160,20 +143,9 @@ export default function Leaderboard() {
         model.id === editedModel.id ? editedModel : model,
       ),
     );
-    console.log(
-      "Models set:",
-      models.map((model) =>
-        model.id === editedModel.id ? editedModel : model,
-      ),
-    );
   };
 
-  if (
-    !models.length ||
-    !scores.length ||
-    !categories.length ||
-    !prompts.length
-  ) {
+  if (!models.length || !categories.length || !prompts.length) {
     return <div>Loading...</div>;
   }
 
@@ -196,8 +168,6 @@ export default function Leaderboard() {
           {memoizedScores.map(({ id, scores }) => {
             const model = models.find((m) => m.id === id);
             if (!model) return null; // Skip if model not found
-            console.log("Rendering model:", model);
-            console.log("Rendering scores:", scores);
             return (
               <tr key={id} onClick={() => handleModelClick(model)}>
                 <td>{model.name}</td>
@@ -217,7 +187,6 @@ export default function Leaderboard() {
           onSave={handleSaveModel}
           categories={categories}
           prompts={prompts}
-          scores={scores}
         />
       )}
     </Layout>
