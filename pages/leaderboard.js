@@ -62,7 +62,12 @@ export default function Leaderboard() {
 
     const calculateScores = (modelId) => {
       console.log('Calculating scores for modelId:', modelId);
-      const modelScores = scores.filter(score => score.modelId === modelId);
+      console.log('score.modelId type:', typeof scores[0]?.modelId);
+      console.log('model.id type:', typeof models[0]?.id);
+      console.log('score.promptId type:', typeof scores[0]?.promptId);
+      console.log('prompt.id type:', typeof prompts[0]?.id);
+
+      const modelScores = scores.filter(score => `${score.modelId}` === `${modelId}`);
       console.log('Model scores for modelId', modelId, ':', modelScores);
 
       if (modelScores.length === 0) return { overall: 0 };
@@ -72,6 +77,7 @@ export default function Leaderboard() {
       let totalPrompts = 0;
 
       categories.forEach(category => {
+        console.log('Processing category:', category);
         const categoryPrompts = prompts.filter(prompt => prompt.category.toLowerCase() === category);
         console.log('Category prompts for', category, ':', categoryPrompts);
         let totalScore = 0;
