@@ -12,6 +12,7 @@ export default function Leaderboard() {
     // Add more mock data as needed
   ]);
   const [selectedModel, setSelectedModel] = useState(null);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     // Fetch models from the database
@@ -23,6 +24,16 @@ export default function Leaderboard() {
       { name: 'Model 4', category1: 78, category2: 89, overall: 83 },
       { name: 'Model 5', category1: 92, category2: 77, overall: 84 }
     ]);
+
+    // Fetch categories from prompts
+    const prompts = [
+      { content: 'Prompt 1 content', solution: 'Prompt 1 solution', profile: 'Profile 1', category: 'Category 1' },
+      { content: 'Prompt 2 content', solution: 'Prompt 2 solution', profile: 'Profile 2', category: 'Category 2' },
+      { content: 'Prompt 3 content', solution: 'Prompt 3 solution', profile: 'Profile 3', category: 'Category 3' }
+      // Add more mock data as needed
+    ];
+    const uniqueCategories = [...new Set(prompts.map(prompt => prompt.category))];
+    setCategories(uniqueCategories);
   }, []);
 
   const sortTable = (key) => {
@@ -45,8 +56,9 @@ export default function Leaderboard() {
         <thead>
           <tr>
             <th onClick={() => sortTable('name')}>Model Name</th>
-            <th onClick={() => sortTable('category1')}>Category 1</th>
-            <th onClick={() => sortTable('category2')}>Category 2</th>
+            {categories.map((category, index) => (
+              <th key={index} onClick={() => sortTable(category.toLowerCase())}>{category}</th>
+            ))}
             <th onClick={() => sortTable('overall')}>Overall Score</th>
           </tr>
         </thead>
@@ -54,8 +66,9 @@ export default function Leaderboard() {
           {models.map((model, index) => (
             <tr key={index} onClick={() => handleModelClick(model)}>
               <td>{model.name}</td>
-              <td>{model.category1}</td>
-              <td>{model.category2}</td>
+              {categories.map((category, idx) => (
+                <td key={idx}>{model[category.toLowerCase()]}</td>
+              ))}
               <td>{model.overall}</td>
             </tr>
           ))}
