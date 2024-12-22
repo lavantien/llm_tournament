@@ -78,6 +78,8 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts, scores }) => {
 
   const filteredPrompts = prompts.filter(prompt => prompt.category === selectedCategory);
 
+  const modelScores = scores.filter(score => score.modelId === item.id);
+
   return (
     <div className={styles.popupOverlay}>
       <div className={styles.popupContent}>
@@ -116,6 +118,26 @@ const InputPopup = ({ item, onClose, onSave, categories, prompts, scores }) => {
           </div>
         )}
         <button onClick={handleSave}>Save</button>
+        <h3>Scores for {item.name}</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Prompt</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {modelScores.map((score, index) => {
+              const prompt = prompts.find(p => p.id === score.promptId);
+              return (
+                <tr key={index}>
+                  <td>{prompt ? prompt.content : 'Unknown Prompt'}</td>
+                  <td>{score.score}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
