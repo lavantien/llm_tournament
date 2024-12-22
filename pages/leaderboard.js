@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Layout from '../components/Layout';
 import InputPopup from '../components/InputPopup';
 
@@ -27,7 +27,7 @@ export default function Leaderboard() {
         setScores(scoresData);
         console.log('Scores set:', scoresData);
 
-        const uniqueCategories = [...new Set(promptsData.map(prompt => prompt.category))];
+        const uniqueCategories = [...new Set(promptsData.map(prompt => prompt.category.toLowerCase()))];
         setCategories(uniqueCategories);
         console.log('Categories set:', uniqueCategories);
       })
@@ -51,7 +51,7 @@ export default function Leaderboard() {
     let totalPrompts = 0;
 
     categories.forEach(category => {
-      const categoryPrompts = prompts.filter(prompt => prompt.category === category);
+      const categoryPrompts = prompts.filter(prompt => prompt.category.toLowerCase() === category);
       console.log('Category prompts for', category, ':', categoryPrompts);
       let totalScore = 0;
       let promptCount = 0;
@@ -65,8 +65,8 @@ export default function Leaderboard() {
         }
       });
 
-      categoryScores[category.toLowerCase()] = promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
-      console.log('Category score for', category, ':', categoryScores[category.toLowerCase()]);
+      categoryScores[category] = promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
+      console.log('Category score for', category, ':', categoryScores[category]);
       overallScore += totalScore;
       totalPrompts += promptCount;
     });
@@ -78,7 +78,7 @@ export default function Leaderboard() {
   };
 
   const sortTable = (key) => {
-    const sortedModels = [...models].sort((a, b) => (a[key] < b[key] ? 1 : -1));
+    const sortedModels = [...models].sort((a, b) => ((a[key] || 0) < (b[key] || 0) ? 1 : -1));
     setModels(sortedModels);
     console.log('Models sorted by', key, ':', sortedModels);
   };
@@ -98,6 +98,15 @@ export default function Leaderboard() {
     console.log('Models set:', models.map(model => (model.id === editedModel.id ? editedModel : model)));
   };
 
+  if (!models.length || !scores.length || !categories.length || !prompts.length) {
+    return <div>Loading...</div>;
+  }
+
+  const memoizedScores = useMemo(() => models.map(model => ({
+    id: model.id,
+    scores: calculateScores(model.id),
+  })), [models, scores, categories, prompts]);
+
   return (
     <Layout>
       <h1>Leaderboard</h1>
@@ -112,10 +121,10 @@ export default function Leaderboard() {
           </tr>
         </thead>
         <tbody>
-          {models.map((model, index) => {
-            const scores = calculateScores(model.id);
+          {memoizedScores.map(({ id, scores }) => {
+            const model = models.find(m => m.id === id);
             return (
-              <tr key={index} onClick={() => handleModelClick(model)}>
+              <tr key={id} onClick={() => handleModelClick(model)}>
                 <td>{model.name}</td>
                 {categories.map((category, idx) => (
                   <td key={idx}>{scores[category.toLowerCase()]}</td>
