@@ -104,10 +104,10 @@ export default function Leaderboard() {
     }
     setSortConfig({ key, direction });
 
-    const sortedModels = [...models].sort((a, b) => {
+    const sortedModels = [...calculatedScores].sort((a, b) => {
       if (key === 'name') {
-        const nameA = a[key].toUpperCase();
-        const nameB = b[key].toUpperCase();
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
         if (nameA < nameB) {
           return direction === 'ascending' ? -1 : 1;
         }
@@ -116,8 +116,8 @@ export default function Leaderboard() {
         }
         return 0;
       } else {
-        const valueA = a[key] || 0;
-        const valueB = b[key] || 0;
+        const valueA = a.scores[key] || 0;
+        const valueB = b.scores[key] || 0;
         if (valueA < valueB) {
           return direction === 'ascending' ? -1 : 1;
         }
@@ -127,7 +127,7 @@ export default function Leaderboard() {
         return 0;
       }
     });
-    setModels(sortedModels);
+    setCalculatedScores(sortedModels);
   };
 
   const handleModelClick = (model) => {
