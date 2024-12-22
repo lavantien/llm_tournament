@@ -10,12 +10,28 @@ export default function Leaderboard() {
   const [scores, setScores] = useState([]);
 
   useEffect(() => {
-    const fetchModels = fetch('/api/models').then(response => response.json());
-    const fetchPrompts = fetch('/api/prompts').then(response => response.json());
-    const fetchScores = fetch('/api/scores').then(response => response.json());
+    const fetchData = async () => {
+      try {
+        const fetchModels = fetch('/api/models')
+          .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch models');
+            return response.json();
+          });
 
-    Promise.all([fetchModels, fetchPrompts, fetchScores])
-      .then(([modelsData, promptsData, scoresData]) => {
+        const fetchPrompts = fetch('/api/prompts')
+          .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch prompts');
+            return response.json();
+          });
+
+        const fetchScores = fetch('/api/scores')
+          .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch scores');
+            return response.json();
+          });
+
+        const [modelsData, promptsData, scoresData] = await Promise.all([fetchModels, fetchPrompts, fetchScores]);
+
         console.log('Fetched models:', modelsData);
         console.log('Fetched prompts:', promptsData);
         console.log('Fetched scores:', scoresData);
@@ -30,13 +46,20 @@ export default function Leaderboard() {
         const uniqueCategories = [...new Set(promptsData.map(prompt => prompt.category.toLowerCase()))];
         setCategories(uniqueCategories);
         console.log('Categories set:', uniqueCategories);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error fetching data:', error);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   const memoizedScores = useMemo(() => {
+    if (!models.length || !scores.length || !categories.length || !prompts.length) {
+      console.log('Memoized scores skipped due to missing data');
+      return [];
+    }
+
     const calculateScores = (modelId) => {
       console.log('Calculating scores for modelId:', modelId);
       const modelScores = scores.filter(score => score.modelId === modelId);
