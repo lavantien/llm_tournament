@@ -1,53 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import DetailPopup from '../components/DetailPopup';
 
 export default function ModelManager() {
-  const [models, setModels] = useState([
-    {
-      name: 'Model 1',
-      path: '/path/to/model1',
-      gpuLayers: 10,
-      ctxSize: 32768,
-      batchSize: 512,
-      threads: 8,
-      keep: 4096,
-      predict: -1,
-      flashAttn: true,
-      mlock: true,
-      cacheTypeK: 'q8_0',
-      cacheTypeV: 'q8_0'
-    },
-    {
-      name: 'Model 2',
-      path: '/path/to/model2',
-      gpuLayers: 15,
-      ctxSize: 32768,
-      batchSize: 512,
-      threads: 8,
-      keep: 4096,
-      predict: -1,
-      flashAttn: false,
-      mlock: true,
-      cacheTypeK: 'q8_0',
-      cacheTypeV: 'q8_0'
-    },
-    {
-      name: 'Model 3',
-      path: '/path/to/model3',
-      gpuLayers: 20,
-      ctxSize: 32768,
-      batchSize: 512,
-      threads: 8,
-      keep: 4096,
-      predict: -1,
-      flashAttn: true,
-      mlock: false,
-      cacheTypeK: 'q8_0',
-      cacheTypeV: 'q8_0'
-    }
-    // Add more mock data as needed
-  ]);
+  const [models, setModels] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     path: '',
@@ -63,6 +19,13 @@ export default function ModelManager() {
     cacheTypeV: ''
   });
   const [selectedModel, setSelectedModel] = useState(null);
+
+  useEffect(() => {
+    // Fetch models from the JSON file
+    fetch('/mocks/models.json')
+      .then(response => response.json())
+      .then(data => setModels(data));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

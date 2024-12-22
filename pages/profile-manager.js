@@ -3,60 +3,7 @@ import Layout from '../components/Layout';
 import DetailPopup from '../components/DetailPopup';
 
 export default function ProfileManager() {
-  const [profiles, setProfiles] = useState([
-    {
-      name: 'Profile 1',
-      systemPrompt: 'System prompt 1',
-      dryMultiplier: 0.8,
-      dryBase: 1.75,
-      dryAllowedLength: 2,
-      dryPenaltyLastN: 512,
-      repeatPenalty: 1.02,
-      repeatLastN: 512,
-      topK: 0,
-      topP: 1,
-      minP: 0.02,
-      topA: 0.12,
-      xtcThreshold: 0.1,
-      xtcProbability: 0.5,
-      temperature: 1
-    },
-    {
-      name: 'Profile 2',
-      systemPrompt: 'System prompt 2',
-      dryMultiplier: 0.9,
-      dryBase: 1.8,
-      dryAllowedLength: 3,
-      dryPenaltyLastN: 512,
-      repeatPenalty: 1.03,
-      repeatLastN: 512,
-      topK: 1,
-      topP: 1.1,
-      minP: 0.03,
-      topA: 0.13,
-      xtcThreshold: 0.2,
-      xtcProbability: 0.6,
-      temperature: 1.1
-    },
-    {
-      name: 'Profile 3',
-      systemPrompt: 'System prompt 3',
-      dryMultiplier: 1.0,
-      dryBase: 1.9,
-      dryAllowedLength: 4,
-      dryPenaltyLastN: 512,
-      repeatPenalty: 1.04,
-      repeatLastN: 512,
-      topK: 2,
-      topP: 1.2,
-      minP: 0.04,
-      topA: 0.14,
-      xtcThreshold: 0.3,
-      xtcProbability: 0.7,
-      temperature: 1.2
-    }
-    // Add more mock data as needed
-  ]);
+  const [profiles, setProfiles] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     systemPrompt: '',
@@ -77,12 +24,10 @@ export default function ProfileManager() {
   const [selectedProfile, setSelectedProfile] = useState(null);
 
   useEffect(() => {
-    // Fetch profiles from the database or any other source
-    // For now, we'll use dummy data
-    setProfiles([
-      { name: 'Profile 1', systemPrompt: 'Prompt 1' },
-      { name: 'Profile 2', systemPrompt: 'Prompt 2' }
-    ]);
+    // Fetch profiles from the JSON file
+    fetch('/mocks/profiles.json')
+      .then(response => response.json())
+      .then(data => setProfiles(data));
   }, []);
 
   const handleChange = (e) => {
@@ -200,15 +145,4 @@ export default function ProfileManager() {
       <DetailPopup item={selectedProfile} onClose={handleClosePopup} />
     </Layout>
   );
-}
-
-export function getProfiles() {
-  // This function will be used to get the list of profiles and categories
-  const profilesData = [
-    { name: 'Profile 1', systemPrompt: 'Prompt 1' },
-    { name: 'Profile 2', systemPrompt: 'Prompt 2' },
-    { name: 'Profile 3', systemPrompt: 'Prompt 3' }
-  ];
-  const categoriesData = ['Category 1', 'Category 2', 'Category 3'];
-  return { profilesData, categoriesData };
 }

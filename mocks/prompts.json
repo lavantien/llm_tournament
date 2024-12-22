@@ -1,0 +1,20 @@
+[
+  {
+    "content": "Prompt 1 content",
+    "solution": "Prompt 1 solution",
+    "profile": "Profile 1",
+    "category": "Category 1"
+  },
+  {
+    "content": "Prompt 2 content",
+    "solution": "Prompt 2 solution",
+    "profile": "Profile 2",
+    "category": "Category 2"
+  },
+  {
+    "content": "Prompt 3 content",
+    "solution": "Prompt 3 solution",
+    "profile": "Profile 3",
+    "category": "Category 3"
+  }
+]

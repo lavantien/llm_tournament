@@ -3,39 +3,25 @@ import Layout from '../components/Layout';
 import InputPopup from '../components/InputPopup';
 
 export default function Leaderboard() {
-  const [models, setModels] = useState([
-    { name: 'Model 1', category1: 90, category2: 85, overall: 87 },
-    { name: 'Model 2', category1: 88, category2: 92, overall: 90 },
-    { name: 'Model 3', category1: 95, category2: 80, overall: 87 },
-    { name: 'Model 4', category1: 78, category2: 89, overall: 83 },
-    { name: 'Model 5', category1: 92, category2: 77, overall: 84 }
-    // Add more mock data as needed
-  ]);
+  const [models, setModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState(null);
   const [categories, setCategories] = useState([]);
   const [prompts, setPrompts] = useState([]);
 
   useEffect(() => {
-    // Fetch models from the database
-    // For now, we'll use dummy data
-    setModels([
-      { name: 'Model 1', category1: 90, category2: 85, overall: 87 },
-      { name: 'Model 2', category1: 88, category2: 92, overall: 90 },
-      { name: 'Model 3', category1: 95, category2: 80, overall: 87 },
-      { name: 'Model 4', category1: 78, category2: 89, overall: 83 },
-      { name: 'Model 5', category1: 92, category2: 77, overall: 84 }
-    ]);
+    // Fetch models from the JSON file
+    fetch('/mocks/models.json')
+      .then(response => response.json())
+      .then(data => setModels(data));
 
-    // Fetch categories from prompts
-    const promptsData = [
-      { content: 'Prompt 1 content', solution: 'Prompt 1 solution', profile: 'Profile 1', category: 'Category 1' },
-      { content: 'Prompt 2 content', solution: 'Prompt 2 solution', profile: 'Profile 2', category: 'Category 2' },
-      { content: 'Prompt 3 content', solution: 'Prompt 3 solution', profile: 'Profile 3', category: 'Category 3' }
-      // Add more mock data as needed
-    ];
-    const uniqueCategories = [...new Set(promptsData.map(prompt => prompt.category))];
-    setCategories(uniqueCategories);
-    setPrompts(promptsData);
+    // Fetch prompts from the JSON file
+    fetch('/mocks/prompts.json')
+      .then(response => response.json())
+      .then(data => {
+        setPrompts(data);
+        const uniqueCategories = [...new Set(data.map(prompt => prompt.category))];
+        setCategories(uniqueCategories);
+      });
   }, []);
 
   const sortTable = (key) => {
