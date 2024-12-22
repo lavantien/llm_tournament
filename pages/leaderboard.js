@@ -85,6 +85,7 @@ export default function Leaderboard() {
             const promptScores = modelScores.filter((score) => {
               return String(score.promptId) === String(prompt.id);
             });
+            console.log("promptScores for prompt", prompt.content, ":", promptScores);
             if (promptScores.length > 0) {
               totalScore += promptScores[0].score;
               promptCount++;
