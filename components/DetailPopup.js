@@ -12,181 +12,181 @@ const DetailPopup = ({ item, onClose }) => {
         {item.name && (
           <div>
             <label>Name:</label>
-            <input type="text" value={item.name} readOnly />
+            <p>{item.name}</p>
           </div>
         )}
         {item.path && (
           <div>
             <label>Path:</label>
-            <input type="text" value={item.path} readOnly />
+            <p>{item.path}</p>
           </div>
         )}
         {item.gpuLayers !== undefined && (
           <div>
             <label>GPU Layers:</label>
-            <input type="number" value={item.gpuLayers} readOnly />
+            <p>{item.gpuLayers}</p>
           </div>
         )}
         {item.ctxSize !== undefined && (
           <div>
             <label>Context Size:</label>
-            <input type="number" value={item.ctxSize} readOnly />
+            <p>{item.ctxSize}</p>
           </div>
         )}
         {item.batchSize !== undefined && (
           <div>
             <label>Batch Size:</label>
-            <input type="number" value={item.batchSize} readOnly />
+            <p>{item.batchSize}</p>
           </div>
         )}
         {item.threads !== undefined && (
           <div>
             <label>Threads:</label>
-            <input type="number" value={item.threads} readOnly />
+            <p>{item.threads}</p>
           </div>
         )}
         {item.keep !== undefined && (
           <div>
             <label>Keep:</label>
-            <input type="number" value={item.keep} readOnly />
+            <p>{item.keep}</p>
           </div>
         )}
         {item.predict !== undefined && (
           <div>
             <label>Predict:</label>
-            <input type="number" value={item.predict} readOnly />
+            <p>{item.predict}</p>
           </div>
         )}
         {item.flashAttn !== undefined && (
           <div>
             <label>Flash Attn:</label>
-            <input type="checkbox" checked={item.flashAttn} readOnly />
+            <p>{item.flashAttn ? 'True' : 'False'}</p>
           </div>
         )}
         {item.mlock !== undefined && (
           <div>
             <label>Mlock:</label>
-            <input type="checkbox" checked={item.mlock} readOnly />
+            <p>{item.mlock ? 'True' : 'False'}</p>
           </div>
         )}
         {item.cacheTypeK && (
           <div>
             <label>Cache Type K:</label>
-            <input type="text" value={item.cacheTypeK} readOnly />
+            <p>{item.cacheTypeK}</p>
           </div>
         )}
         {item.cacheTypeV && (
           <div>
             <label>Cache Type V:</label>
-            <input type="text" value={item.cacheTypeV} readOnly />
+            <p>{item.cacheTypeV}</p>
           </div>
         )}
         {item.content && (
           <div>
             <label>Content:</label>
-            <textarea value={item.content} readOnly />
+            <p>{item.content}</p>
           </div>
         )}
         {item.solution && (
           <div>
             <label>Solution:</label>
-            <textarea value={item.solution} readOnly />
+            <p>{item.solution}</p>
           </div>
         )}
         {item.profile && (
           <div>
             <label>Profile:</label>
-            <input type="text" value={item.profile} readOnly />
+            <p>{item.profile}</p>
           </div>
         )}
         {item.category && (
           <div>
             <label>Category:</label>
-            <input type="text" value={item.category} readOnly />
+            <p>{item.category}</p>
           </div>
         )}
         {item.systemPrompt && (
           <div>
             <label>System Prompt:</label>
-            <textarea value={item.systemPrompt} readOnly />
+            <p>{item.systemPrompt}</p>
           </div>
         )}
         {item.dryMultiplier !== undefined && (
           <div>
             <label>Dry Multiplier:</label>
-            <input type="number" value={item.dryMultiplier} readOnly />
+            <p>{item.dryMultiplier}</p>
           </div>
         )}
         {item.dryBase !== undefined && (
           <div>
             <label>Dry Base:</label>
-            <input type="number" value={item.dryBase} readOnly />
+            <p>{item.dryBase}</p>
           </div>
         )}
         {item.dryAllowedLength !== undefined && (
           <div>
             <label>Dry Allowed Length:</label>
-            <input type="number" value={item.dryAllowedLength} readOnly />
+            <p>{item.dryAllowedLength}</p>
           </div>
         )}
         {item.dryPenaltyLastN !== undefined && (
           <div>
             <label>Dry Penalty Last N:</label>
-            <input type="number" value={item.dryPenaltyLastN} readOnly />
+            <p>{item.dryPenaltyLastN}</p>
           </div>
         )}
         {item.repeatPenalty !== undefined && (
           <div>
             <label>Repeat Penalty:</label>
-            <input type="number" value={item.repeatPenalty} readOnly />
+            <p>{item.repeatPenalty}</p>
           </div>
         )}
         {item.repeatLastN !== undefined && (
           <div>
             <label>Repeat Last N:</label>
-            <input type="number" value={item.repeatLastN} readOnly />
+            <p>{item.repeatLastN}</p>
           </div>
         )}
         {item.topK !== undefined && (
           <div>
             <label>Top K:</label>
-            <input type="number" value={item.topK} readOnly />
+            <p>{item.topK}</p>
           </div>
         )}
         {item.topP !== undefined && (
           <div>
             <label>Top P:</label>
-            <input type="number" value={item.topP} readOnly />
+            <p>{item.topP}</p>
           </div>
         )}
         {item.minP !== undefined && (
           <div>
             <label>Min P:</label>
-            <input type="number" value={item.minP} readOnly />
+            <p>{item.minP}</p>
           </div>
         )}
         {item.topA !== undefined && (
           <div>
             <label>Top A:</label>
-            <input type="number" value={item.topA} readOnly />
+            <p>{item.topA}</p>
           </div>
         )}
         {item.xtcThreshold !== undefined && (
           <div>
             <label>XTC Threshold:</label>
-            <input type="number" value={item.xtcThreshold} readOnly />
+            <p>{item.xtcThreshold}</p>
           </div>
         )}
         {item.xtcProbability !== undefined && (
           <div>
             <label>XTC Probability:</label>
-            <input type="number" value={item.xtcProbability} readOnly />
+            <p>{item.xtcProbability}</p>
           </div>
         )}
         {item.temperature !== undefined && (
           <div>
             <label>Temperature:</label>
-            <input type="number" value={item.temperature} readOnly />
+            <p>{item.temperature}</p>
           </div>
         )}
       </div>
