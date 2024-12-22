@@ -10,7 +10,18 @@ class Database:
             self.conn.execute('''
                 CREATE TABLE IF NOT EXISTS models (
                     id INTEGER PRIMARY KEY,
-                    name TEXT NOT NULL
+                    name TEXT NOT NULL,
+                    path TEXT,
+                    gpu_layers INTEGER,
+                    ctx_size INTEGER,
+                    batch_size INTEGER,
+                    threads INTEGER,
+                    keep INTEGER,
+                    predict INTEGER,
+                    flash_attn BOOLEAN,
+                    mlock BOOLEAN,
+                    cache_type_k TEXT,
+                    cache_type_v TEXT
                 )
             ''')
             self.conn.execute('''
