@@ -77,6 +77,13 @@ export default function Leaderboard() {
     return { ...categoryScores, overall: overallScore };
   };
 
+  const memoizedScores = useMemo(() => {
+    return models.map(model => ({
+      id: model.id,
+      scores: calculateScores(model.id),
+    }));
+  }, [models, scores, categories, prompts]);
+
   const sortTable = (key) => {
     const sortedModels = [...models].sort((a, b) => ((a[key] || 0) < (b[key] || 0) ? 1 : -1));
     setModels(sortedModels);
@@ -101,13 +108,6 @@ export default function Leaderboard() {
   if (!models.length || !scores.length || !categories.length || !prompts.length) {
     return <div>Loading...</div>;
   }
-
-  const memoizedScores = useMemo(() => {
-    return models.map(model => ({
-      id: model.id,
-      scores: calculateScores(model.id),
-    }));
-  }, [models, scores, categories, prompts]);
 
   return (
     <Layout>
