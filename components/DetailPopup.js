@@ -1,66 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from '../styles/DetailPopup.module.css';
 
-const DetailPopup = ({ item, onClose, onSave, categories, prompts }) => {
-  const [editedItem, setEditedItem] = useState({ ...item });
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedPrompt, setSelectedPrompt] = useState('');
-  const [score, setScore] = useState('');
-
-  useEffect(() => {
-    if (selectedCategory) {
-      setSelectedPrompt('');
-      setScore('');
-    }
-  }, [selectedCategory]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedItem({
-      ...editedItem,
-      [name]: value
-    });
-  };
-
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
-  };
-
-  const handlePromptChange = (e) => {
-    setSelectedPrompt(e.target.value);
-  };
-
-  const handleScoreChange = (e) => {
-    setScore(e.target.value);
-  };
-
-  const handleSave = () => {
-    if (selectedCategory && selectedPrompt && score) {
-      const categoryKey = selectedCategory.toLowerCase();
-      const currentScore = editedItem[categoryKey] || 0;
-      const newScore = currentScore + parseInt(score, 10);
-      const overallScore = Object.keys(editedItem)
-        .filter(key => key.startsWith('category'))
-        .reduce((sum, key) => sum + (editedItem[key] || 0), 0) + parseInt(score, 10);
-
-      setEditedItem({
-        ...editedItem,
-        [categoryKey]: newScore,
-        overall: overallScore
-      });
-
-      onSave({
-        ...editedItem,
-        [categoryKey]: newScore,
-        overall: overallScore
-      });
-    }
-    onClose();
-  };
-
+const DetailPopup = ({ item, onClose }) => {
   if (!item) return null;
-
-  const filteredPrompts = prompts ? prompts.filter(prompt => prompt.category === selectedCategory) : [];
 
   return (
     <div className={styles.popupOverlay}>
@@ -70,152 +12,183 @@ const DetailPopup = ({ item, onClose, onSave, categories, prompts }) => {
         {item.name && (
           <div>
             <label>Name:</label>
-            <input type="text" name="name" value={editedItem.name} onChange={handleChange} readOnly />
+            <input type="text" value={item.name} readOnly />
+          </div>
+        )}
+        {item.path && (
+          <div>
+            <label>Path:</label>
+            <input type="text" value={item.path} readOnly />
+          </div>
+        )}
+        {item.gpuLayers !== undefined && (
+          <div>
+            <label>GPU Layers:</label>
+            <input type="number" value={item.gpuLayers} readOnly />
+          </div>
+        )}
+        {item.ctxSize !== undefined && (
+          <div>
+            <label>Context Size:</label>
+            <input type="number" value={item.ctxSize} readOnly />
+          </div>
+        )}
+        {item.batchSize !== undefined && (
+          <div>
+            <label>Batch Size:</label>
+            <input type="number" value={item.batchSize} readOnly />
+          </div>
+        )}
+        {item.threads !== undefined && (
+          <div>
+            <label>Threads:</label>
+            <input type="number" value={item.threads} readOnly />
+          </div>
+        )}
+        {item.keep !== undefined && (
+          <div>
+            <label>Keep:</label>
+            <input type="number" value={item.keep} readOnly />
+          </div>
+        )}
+        {item.predict !== undefined && (
+          <div>
+            <label>Predict:</label>
+            <input type="number" value={item.predict} readOnly />
+          </div>
+        )}
+        {item.flashAttn !== undefined && (
+          <div>
+            <label>Flash Attn:</label>
+            <input type="checkbox" checked={item.flashAttn} readOnly />
+          </div>
+        )}
+        {item.mlock !== undefined && (
+          <div>
+            <label>Mlock:</label>
+            <input type="checkbox" checked={item.mlock} readOnly />
+          </div>
+        )}
+        {item.cacheTypeK && (
+          <div>
+            <label>Cache Type K:</label>
+            <input type="text" value={item.cacheTypeK} readOnly />
+          </div>
+        )}
+        {item.cacheTypeV && (
+          <div>
+            <label>Cache Type V:</label>
+            <input type="text" value={item.cacheTypeV} readOnly />
           </div>
         )}
         {item.content && (
           <div>
             <label>Content:</label>
-            <textarea name="content" value={editedItem.content} onChange={handleChange} readOnly />
+            <textarea value={item.content} readOnly />
           </div>
         )}
         {item.solution && (
           <div>
             <label>Solution:</label>
-            <textarea name="solution" value={editedItem.solution} onChange={handleChange} readOnly />
+            <textarea value={item.solution} readOnly />
           </div>
         )}
         {item.profile && (
           <div>
             <label>Profile:</label>
-            <input type="text" name="profile" value={editedItem.profile} onChange={handleChange} readOnly />
+            <input type="text" value={item.profile} readOnly />
           </div>
         )}
         {item.category && (
           <div>
             <label>Category:</label>
-            <input type="text" name="category" value={editedItem.category} onChange={handleChange} readOnly />
+            <input type="text" value={item.category} readOnly />
           </div>
         )}
         {item.systemPrompt && (
           <div>
             <label>System Prompt:</label>
-            <textarea name="systemPrompt" value={editedItem.systemPrompt} onChange={handleChange} readOnly />
+            <textarea value={item.systemPrompt} readOnly />
           </div>
         )}
-        {item.dryMultiplier && (
+        {item.dryMultiplier !== undefined && (
           <div>
             <label>Dry Multiplier:</label>
-            <input type="number" name="dryMultiplier" value={editedItem.dryMultiplier} onChange={handleChange} readOnly />
+            <input type="number" value={item.dryMultiplier} readOnly />
           </div>
         )}
-        {item.dryBase && (
+        {item.dryBase !== undefined && (
           <div>
             <label>Dry Base:</label>
-            <input type="number" name="dryBase" value={editedItem.dryBase} onChange={handleChange} readOnly />
+            <input type="number" value={item.dryBase} readOnly />
           </div>
         )}
-        {item.dryAllowedLength && (
+        {item.dryAllowedLength !== undefined && (
           <div>
             <label>Dry Allowed Length:</label>
-            <input type="number" name="dryAllowedLength" value={editedItem.dryAllowedLength} onChange={handleChange} readOnly />
+            <input type="number" value={item.dryAllowedLength} readOnly />
           </div>
         )}
-        {item.dryPenaltyLastN && (
+        {item.dryPenaltyLastN !== undefined && (
           <div>
             <label>Dry Penalty Last N:</label>
-            <input type="number" name="dryPenaltyLastN" value={editedItem.dryPenaltyLastN} onChange={handleChange} readOnly />
+            <input type="number" value={item.dryPenaltyLastN} readOnly />
           </div>
         )}
-        {item.repeatPenalty && (
+        {item.repeatPenalty !== undefined && (
           <div>
             <label>Repeat Penalty:</label>
-            <input type="number" name="repeatPenalty" value={editedItem.repeatPenalty} onChange={handleChange} readOnly />
+            <input type="number" value={item.repeatPenalty} readOnly />
           </div>
         )}
-        {item.repeatLastN && (
+        {item.repeatLastN !== undefined && (
           <div>
             <label>Repeat Last N:</label>
-            <input type="number" name="repeatLastN" value={editedItem.repeatLastN} onChange={handleChange} readOnly />
+            <input type="number" value={item.repeatLastN} readOnly />
           </div>
         )}
-        {item.topK && (
+        {item.topK !== undefined && (
           <div>
             <label>Top K:</label>
-            <input type="number" name="topK" value={editedItem.topK} onChange={handleChange} readOnly />
+            <input type="number" value={item.topK} readOnly />
           </div>
         )}
-        {item.topP && (
+        {item.topP !== undefined && (
           <div>
             <label>Top P:</label>
-            <input type="number" name="topP" value={editedItem.topP} onChange={handleChange} readOnly />
+            <input type="number" value={item.topP} readOnly />
           </div>
         )}
-        {item.minP && (
+        {item.minP !== undefined && (
           <div>
             <label>Min P:</label>
-            <input type="number" name="minP" value={editedItem.minP} onChange={handleChange} readOnly />
+            <input type="number" value={item.minP} readOnly />
           </div>
         )}
-        {item.topA && (
+        {item.topA !== undefined && (
           <div>
             <label>Top A:</label>
-            <input type="number" name="topA" value={editedItem.topA} onChange={handleChange} readOnly />
+            <input type="number" value={item.topA} readOnly />
           </div>
         )}
-        {item.xtcThreshold && (
+        {item.xtcThreshold !== undefined && (
           <div>
             <label>XTC Threshold:</label>
-            <input type="number" name="xtcThreshold" value={editedItem.xtcThreshold} onChange={handleChange} readOnly />
+            <input type="number" value={item.xtcThreshold} readOnly />
           </div>
         )}
-        {item.xtcProbability && (
+        {item.xtcProbability !== undefined && (
           <div>
             <label>XTC Probability:</label>
-            <input type="number" name="xtcProbability" value={editedItem.xtcProbability} onChange={handleChange} readOnly />
+            <input type="number" value={item.xtcProbability} readOnly />
           </div>
         )}
-        {item.temperature && (
+        {item.temperature !== undefined && (
           <div>
             <label>Temperature:</label>
-            <input type="number" name="temperature" value={editedItem.temperature} onChange={handleChange} readOnly />
+            <input type="number" value={item.temperature} readOnly />
           </div>
         )}
-        {categories && (
-          <div>
-            <label>Category:</label>
-            <select name="category" value={selectedCategory} onChange={handleCategoryChange}>
-              <option value="">Select a category</option>
-              {categories.map((category, index) => (
-                <option key={index} value={category}>{category}</option>
-              ))}
-            </select>
-          </div>
-        )}
-        {selectedCategory && (
-          <div>
-            <label>Prompt:</label>
-            <select name="prompt" value={selectedPrompt} onChange={handlePromptChange}>
-              <option value="">Select a prompt</option>
-              {filteredPrompts.map((prompt, index) => (
-                <option key={index} value={prompt.content}>{prompt.content}</option>
-              ))}
-            </select>
-          </div>
-        )}
-        {selectedPrompt && (
-          <div>
-            <label>Score:</label>
-            <input type="number" name="score" value={score} onChange={handleScoreChange} />
-          </div>
-        )}
-        {Object.keys(editedItem).filter(key => key.startsWith('category')).map((key, index) => (
-          <div key={index}>
-            <label>{key}:</label>
-            <input type="number" name={key} value={editedItem[key]} onChange={handleChange} readOnly />
-          </div>
-        ))}
-        <button onClick={handleSave}>Save</button>
       </div>
     </div>
   );
