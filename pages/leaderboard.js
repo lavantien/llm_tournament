@@ -71,7 +71,7 @@ export default function Leaderboard() {
   };
 
   const handleSaveModel = (editedModel) => {
-    setModels(models.map(model => (model.name === editedModel.name ? editedModel : model)));
+    setModels(models.map(model => (model.id === editedModel.id ? editedModel : model)));
   };
 
   return (
