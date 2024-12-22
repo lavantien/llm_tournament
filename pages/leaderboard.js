@@ -33,6 +33,34 @@ export default function Leaderboard() {
       .catch(error => console.error('Error fetching scores:', error));
   }, []);
 
+  const calculateScores = (modelId) => {
+    const modelScores = scores.filter(score => score.modelId === modelId);
+    const categoryScores = {};
+    let overallScore = 0;
+
+    categories.forEach(category => {
+      const categoryPrompts = prompts.filter(prompt => prompt.category === category);
+      let totalScore = 0;
+      let promptCount = 0;
+
+      categoryPrompts.forEach(prompt => {
+        const promptScores = modelScores.filter(score => score.promptId === prompt.id);
+        if (promptScores.length > 0) {
+          totalScore += promptScores[0].score;
+          promptCount++;
+        }
+      });
+
+      if (promptCount > 0) {
+        categoryScores[category.toLowerCase()] = (totalScore / promptCount).toFixed(2);
+        overallScore += totalScore / promptCount;
+      }
+    });
+
+    overallScore = (overallScore / categories.length).toFixed(2);
+    return { ...categoryScores, overall: overallScore };
+  };
+
   const sortTable = (key) => {
     const sortedModels = [...models].sort((a, b) => (a[key] < b[key] ? 1 : -1));
     setModels(sortedModels);
@@ -68,9 +96,9 @@ export default function Leaderboard() {
             <tr key={index} onClick={() => handleModelClick(model)}>
               <td>{model.name}</td>
               {categories.map((category, idx) => (
-                <td key={idx}>{model[category.toLowerCase()]}</td>
+                <td key={idx}>{calculateScores(model.id)[category.toLowerCase()]}</td>
               ))}
-              <td>{model.overall}</td>
+              <td>{calculateScores(model.id).overall}</td>
             </tr>
           ))}
         </tbody>
