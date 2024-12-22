@@ -49,6 +49,10 @@ export default function Leaderboard() {
     setSelectedModel(null);
   };
 
+  const handleSaveModel = (editedModel) => {
+    setModels(models.map(model => (model.name === editedModel.name ? editedModel : model)));
+  };
+
   return (
     <Layout>
       <h1>Leaderboard</h1>
@@ -74,7 +78,7 @@ export default function Leaderboard() {
           ))}
         </tbody>
       </table>
-      <DetailPopup item={selectedModel} onClose={handleClosePopup} />
+      <DetailPopup item={selectedModel} onClose={handleClosePopup} onSave={handleSaveModel} />
     </Layout>
   );
 }
