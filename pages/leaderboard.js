@@ -101,6 +101,7 @@ export default function Leaderboard() {
   }, [models, scores, categories, prompts]); // Dependency array ensures this runs only when all states update
 
   const sortTable = (key) => {
+    console.log(`Sorting by key: ${key}`);
     let direction = "ascending";
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";
@@ -109,8 +110,8 @@ export default function Leaderboard() {
 
     const sortedModels = [...calculatedScores].sort((a, b) => {
       if (key === "name") {
-        const nameA = a.name;
-        const nameB = b.name;
+        const nameA = models.find(model => model.id === a.id)?.name || '';
+        const nameB = models.find(model => model.id === b.id)?.name || '';
         if (nameA < nameB) {
           return direction === "ascending" ? -1 : 1;
         }
