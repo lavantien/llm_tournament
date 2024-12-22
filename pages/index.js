@@ -31,6 +31,9 @@ export default function Home() {
       });
       if (response.ok) {
         alert('Data wiped successfully');
+        // Send signal to components to empty their state
+        const event = new Event('dataWiped');
+        window.dispatchEvent(event);
       } else {
         alert('Failed to wipe data');
       }

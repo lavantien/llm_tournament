@@ -25,10 +25,21 @@ export default function ProfileManager() {
 
   useEffect(() => {
     // Fetch profiles from the API route
-    fetch('/api/mocks/profiles')
+    fetch('/api/profiles')
       .then(response => response.json())
       .then(data => setProfiles(data))
       .catch(error => console.error('Error fetching profiles:', error));
+
+    // Listen for dataWiped event
+    const handleDataWiped = () => {
+      setProfiles([]);
+    };
+
+    window.addEventListener('dataWiped', handleDataWiped);
+
+    return () => {
+      window.removeEventListener('dataWiped', handleDataWiped);
+    };
   }, []);
 
   const handleChange = (e) => {

@@ -16,13 +16,13 @@ export default function PromptManager() {
 
   useEffect(() => {
     // Fetch prompts from the API route
-    fetch('/api/mocks/prompts')
+    fetch('/api/prompts')
       .then(response => response.json())
       .then(data => setPrompts(data))
       .catch(error => console.error('Error fetching prompts:', error));
 
     // Fetch profiles from the API route
-    fetch('/api/mocks/profiles')
+    fetch('/api/profiles')
       .then(response => response.json())
       .then(data => setProfiles(data))
       .catch(error => console.error('Error fetching profiles:', error));
@@ -30,6 +30,19 @@ export default function PromptManager() {
     // Fetch categories from the prompts
     const uniqueCategories = [...new Set(prompts.map(prompt => prompt.category))];
     setCategories(uniqueCategories);
+
+    // Listen for dataWiped event
+    const handleDataWiped = () => {
+      setPrompts([]);
+      setProfiles([]);
+      setCategories([]);
+    };
+
+    window.addEventListener('dataWiped', handleDataWiped);
+
+    return () => {
+      window.removeEventListener('dataWiped', handleDataWiped);
+    };
   }, [prompts]);
 
   const handleChange = (e) => {

@@ -22,10 +22,21 @@ export default function ModelManager() {
 
   useEffect(() => {
     // Fetch models from the API route
-    fetch('/api/mocks/models')
+    fetch('/api/models')
       .then(response => response.json())
       .then(data => setModels(data))
       .catch(error => console.error('Error fetching models:', error));
+
+    // Listen for dataWiped event
+    const handleDataWiped = () => {
+      setModels([]);
+    };
+
+    window.addEventListener('dataWiped', handleDataWiped);
+
+    return () => {
+      window.removeEventListener('dataWiped', handleDataWiped);
+    };
   }, []);
 
   const handleChange = (e) => {
