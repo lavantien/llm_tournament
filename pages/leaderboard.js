@@ -41,19 +41,21 @@ export default function Leaderboard() {
     categories.forEach(category => {
       const categoryPrompts = prompts.filter(prompt => prompt.category === category);
       let totalScore = 0;
+      let promptCount = 0;
 
       categoryPrompts.forEach(prompt => {
         const promptScores = modelScores.filter(score => score.promptId === prompt.id);
         if (promptScores.length > 0) {
           totalScore += promptScores[0].score;
+          promptCount++;
         }
       });
 
-      categoryScores[category.toLowerCase()] = totalScore;
+      categoryScores[category.toLowerCase()] = promptCount > 0 ? (totalScore / promptCount).toFixed(2) : 0;
       overallScore += totalScore;
     });
 
-    overallScore = (overallScore / categories.length).toFixed(2);
+    overallScore = (overallScore / (categories.length * prompts.length)).toFixed(2);
     return { ...categoryScores, overall: overallScore };
   };
 
