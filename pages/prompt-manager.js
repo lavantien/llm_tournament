@@ -15,14 +15,14 @@ export default function PromptManager() {
   const [selectedPrompt, setSelectedPrompt] = useState(null);
 
   useEffect(() => {
-    // Fetch prompts from the JSON file
-    fetch('/mocks/prompts.json')
+    // Fetch prompts from the API route
+    fetch('/api/mocks/prompts')
       .then(response => response.json())
       .then(data => setPrompts(data))
       .catch(error => console.error('Error fetching prompts:', error));
 
-    // Fetch profiles from the JSON file
-    fetch('/mocks/profiles.json')
+    // Fetch profiles from the API route
+    fetch('/api/mocks/profiles')
       .then(response => response.json())
       .then(data => setProfiles(data))
       .catch(error => console.error('Error fetching profiles:', error));

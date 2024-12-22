@@ -9,14 +9,14 @@ export default function Leaderboard() {
   const [prompts, setPrompts] = useState([]);
 
   useEffect(() => {
-    // Fetch models from the JSON file
-    fetch('/mocks/models.json')
+    // Fetch models from the API route
+    fetch('/api/mocks/models')
       .then(response => response.json())
       .then(data => setModels(data))
       .catch(error => console.error('Error fetching models:', error));
 
-    // Fetch prompts from the JSON file
-    fetch('/mocks/prompts.json')
+    // Fetch prompts from the API route
+    fetch('/api/mocks/prompts')
       .then(response => response.json())
       .then(data => {
         setPrompts(data);

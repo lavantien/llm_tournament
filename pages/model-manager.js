@@ -21,8 +21,8 @@ export default function ModelManager() {
   const [selectedModel, setSelectedModel] = useState(null);
 
   useEffect(() => {
-    // Fetch models from the JSON file
-    fetch('/mocks/models.json')
+    // Fetch models from the API route
+    fetch('/api/mocks/models')
       .then(response => response.json())
       .then(data => setModels(data))
       .catch(error => console.error('Error fetching models:', error));

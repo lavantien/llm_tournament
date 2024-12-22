@@ -24,8 +24,8 @@ export default function ProfileManager() {
   const [selectedProfile, setSelectedProfile] = useState(null);
 
   useEffect(() => {
-    // Fetch profiles from the JSON file
-    fetch('/mocks/profiles.json')
+    // Fetch profiles from the API route
+    fetch('/api/mocks/profiles')
       .then(response => response.json())
       .then(data => setProfiles(data))
       .catch(error => console.error('Error fetching profiles:', error));
