@@ -51,12 +51,14 @@ export default function Leaderboard() {
     fetchData();
   }, []); // Run only once on mount
 
-  useEffect(() => {
+  const memoizedScores = useMemo(() => {
     if (models.length && scores.length && categories.length && prompts.length) {
       const calculateScores = (modelDerivedId) => {
         const modelScores = scores.filter(
           (score) => Number(score.modelId) === Number(modelDerivedId),
         );
+
+        console.log(`ModelScores for modelDerivedId ${modelDerivedId}:`, modelScores);
 
         if (!modelScores.length) return { overall: 0 };
 
@@ -96,9 +98,15 @@ export default function Leaderboard() {
         scores: calculateScores(model.derivedId), // Use derived ID
       }));
 
-      setCalculatedScores(calculated);
+      console.log('Calculated scores:', calculated);
+      return calculated;
     }
+    return [];
   }, [models, scores, categories, prompts]); // Dependency array ensures this runs only when all states update
+
+  useEffect(() => {
+    setCalculatedScores(memoizedScores);
+  }, [memoizedScores]);
 
   const sortTable = (key) => {
     console.log(`Sorting by key: ${key}`);
