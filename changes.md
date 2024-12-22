@@ -36,3 +36,14 @@
   - `pages/profile-manager.js`
   - `pages/prompt-manager.js`
   - `changes.md`
+
+## Implement Detail Popup
+- **Summary**: Implemented the detail popup for all pages to display details when clicking on an item.
+- **Files Changed**:
+  - `components/DetailPopup.js`
+  - `styles/DetailPopup.module.css`
+  - `pages/model-manager.js`
+  - `pages/profile-manager.js`
+  - `pages/prompt-manager.js`
+  - `pages/leaderboard.js`
+  - `changes.md`

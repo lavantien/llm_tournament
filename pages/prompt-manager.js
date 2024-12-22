@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { getProfiles } from './profile-manager';
+import DetailPopup from '../components/DetailPopup';
 
 export default function PromptManager() {
   const [prompts, setPrompts] = useState([
@@ -31,6 +32,7 @@ export default function PromptManager() {
     category: ''
   });
   const [profiles, setProfiles] = useState([]);
+  const [selectedPrompt, setSelectedPrompt] = useState(null);
 
   useEffect(() => {
     // Fetch profiles from the ProfileManager
@@ -56,6 +58,14 @@ export default function PromptManager() {
       profile: '',
       category: ''
     });
+  };
+
+  const handlePromptClick = (prompt) => {
+    setSelectedPrompt(prompt);
+  };
+
+  const handleClosePopup = () => {
+    setSelectedPrompt(null);
   };
 
   return (
@@ -87,9 +97,12 @@ export default function PromptManager() {
       </form>
       <ul>
         {prompts.map((prompt, index) => (
-          <li key={index}>{prompt.content}</li>
+          <li key={index} onClick={() => handlePromptClick(prompt)}>
+            {prompt.content}
+          </li>
         ))}
       </ul>
+      <DetailPopup item={selectedPrompt} onClose={handleClosePopup} />
     </Layout>
   );
 }

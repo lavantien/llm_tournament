@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
+import DetailPopup from '../components/DetailPopup';
 
 export default function ProfileManager() {
   const [profiles, setProfiles] = useState([
@@ -73,6 +74,7 @@ export default function ProfileManager() {
     xtcProbability: '',
     temperature: ''
   });
+  const [selectedProfile, setSelectedProfile] = useState(null);
 
   useEffect(() => {
     // Fetch profiles from the database or any other source
@@ -112,6 +114,14 @@ export default function ProfileManager() {
       xtcProbability: '',
       temperature: ''
     });
+  };
+
+  const handleProfileClick = (profile) => {
+    setSelectedProfile(profile);
+  };
+
+  const handleClosePopup = () => {
+    setSelectedProfile(null);
   };
 
   return (
@@ -182,9 +192,12 @@ export default function ProfileManager() {
       </form>
       <ul>
         {profiles.map((profile, index) => (
-          <li key={index}>{profile.name}</li>
+          <li key={index} onClick={() => handleProfileClick(profile)}>
+            {profile.name}
+          </li>
         ))}
       </ul>
+      <DetailPopup item={selectedProfile} onClose={handleClosePopup} />
     </Layout>
   );
 }

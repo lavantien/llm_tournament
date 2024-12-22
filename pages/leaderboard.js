@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
+import DetailPopup from '../components/DetailPopup';
 
 export default function Leaderboard() {
   const [models, setModels] = useState([
@@ -10,6 +11,7 @@ export default function Leaderboard() {
     { name: 'Model 5', category1: 92, category2: 77, overall: 84 }
     // Add more mock data as needed
   ]);
+  const [selectedModel, setSelectedModel] = useState(null);
 
   useEffect(() => {
     // Fetch models from the database
@@ -28,6 +30,14 @@ export default function Leaderboard() {
     setModels(sortedModels);
   };
 
+  const handleModelClick = (model) => {
+    setSelectedModel(model);
+  };
+
+  const handleClosePopup = () => {
+    setSelectedModel(null);
+  };
+
   return (
     <Layout>
       <h1>Leaderboard</h1>
@@ -42,7 +52,7 @@ export default function Leaderboard() {
         </thead>
         <tbody>
           {models.map((model, index) => (
-            <tr key={index} onClick={() => alert(`Details for ${model.name}`)}>
+            <tr key={index} onClick={() => handleModelClick(model)}>
               <td>{model.name}</td>
               <td>{model.category1}</td>
               <td>{model.category2}</td>
@@ -51,6 +61,7 @@ export default function Leaderboard() {
           ))}
         </tbody>
       </table>
+      <DetailPopup item={selectedModel} onClose={handleClosePopup} />
     </Layout>
   );
 }

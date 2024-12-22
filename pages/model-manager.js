@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Layout from '../components/Layout';
+import DetailPopup from '../components/DetailPopup';
 
 export default function ModelManager() {
   const [models, setModels] = useState([
@@ -61,6 +62,7 @@ export default function ModelManager() {
     cacheTypeK: '',
     cacheTypeV: ''
   });
+  const [selectedModel, setSelectedModel] = useState(null);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -88,6 +90,14 @@ export default function ModelManager() {
       cacheTypeK: '',
       cacheTypeV: ''
     });
+  };
+
+  const handleModelClick = (model) => {
+    setSelectedModel(model);
+  };
+
+  const handleClosePopup = () => {
+    setSelectedModel(null);
   };
 
   return (
@@ -146,9 +156,12 @@ export default function ModelManager() {
       </form>
       <ul>
         {models.map((model, index) => (
-          <li key={index}>{model.name}</li>
+          <li key={index} onClick={() => handleModelClick(model)}>
+            {model.name}
+          </li>
         ))}
       </ul>
+      <DetailPopup item={selectedModel} onClose={handleClosePopup} />
     </Layout>
   );
 }
