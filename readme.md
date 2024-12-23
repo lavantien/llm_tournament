@@ -10,12 +10,21 @@
   - Manually switch the profile and model path.
 - Server-only run with a specific preconfigured model recipe with `llama-server` API in [`llm_recipes/`](./llm_recipes) directory.
 
-- `npm install && npm run dev` to start `LLM Benchmarking` app on localhost (Next.js, Native CSS, Recharts, SQLite).
 - Powered by:
+
   - **Local Dev**: Neovim, Aider, MistralAPI Free _(500,000 tpm - 1,000,000,000 tpM)_, GeminiAPI Free _(10 rpm, 1500 rpd)_, Crawl4AI
   - **Local Gen**: LlamaCpp + {a set of best local models}, SillyTavern/Agnai, StableDiffusionWebUIForge, FluxDev + ControlNets/LoRAs
   - **External Chat**: AIStudio, ChatGPT, ClaudeAI, CopilotChat, Cohere, Mistral, DeepSeek, SambaNova, Groq, GLHF.
   - **Extras**: ProjectIDX, Cline, OpenCanvas
+
+- `npm install && npm run dev` to start `LLM Benchmarking` app on localhost:
+  - TypeScript, Next.js
+  - Sahdcn/ui, Recharts
+  - Zustand, React-Query
+  - DrizzleORM, SQLite
+  - Vitest, Playright
+
+![ER Diagram](./assets/design/erdiagram.png)
 
 ## Tooling
 
@@ -81,9 +90,8 @@
 #### Mistral
 
 1. Mistral Large 2411
-1. Mistral Embed
+1. Mistral 8x22B
 1. Codestral
-1. Codestral Mamba 2407
 
 #### Groq
 
