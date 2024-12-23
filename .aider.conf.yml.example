@@ -7,11 +7,11 @@ api-key:
   - codestRAL=
   - cohere=
 architect: true
-model: gemini/gemini-2.0-flash-exp
+model: gemini/gemini-2.0-flash-thinking-exp-1219
 edit-format: diff
-editor-model: mistral/mistral-large-latest
+editor-model: gemini/gemini-2.0-flash-exp
 editor-edit-format: editor-diff
-weak-model: mistral/open-mistral-nemo
+weak-model: mistral/mistral-large-latest
 read:
   - RULES.md
   - PROMPT.md
