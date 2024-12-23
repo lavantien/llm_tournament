@@ -17,6 +17,7 @@
   - **External Chat**: AIStudio, ChatGPT, ClaudeAI, CopilotChat, Cohere, Mistral, DeepSeek, SambaNova, Groq, GLHF.
   - **Extras**: ProjectIDX, Cline, OpenCanvas
 
+- **LLM Benchmarking** [`preliminary_design.md`](./preliminary_design.md)
 - `npm install && npm run dev` to start `LLM Benchmarking` app on localhost:
   - TypeScript, Next.js
   - Sahdcn/ui, Recharts
