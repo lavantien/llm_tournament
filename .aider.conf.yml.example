@@ -1,0 +1,29 @@
+openai-api-base: http://localhost:8080
+api-key:
+  - openai=
+  - anthropic=
+  - gemini=
+  - mistraL=
+  - codestRAL=
+  - cohere=
+architect: true
+model: gemini/gemini-2.0-flash-exp
+edit-format: diff
+editor-model: mistral/mistral-large-latest
+editor-edit-format: editor-diff
+weak-model: mistral/open-mistral-nemo
+read:
+  - RULES.md
+  - PROMPT.md
+yes-always: true
+map-tokens: 2048
+timeout: 300
+cache-prompts: true
+cache-keepalive-pings: 300
+verbose: true
+pretty: true
+vim: true
+editor: nvim
+multiline: true
+code-theme: coffee
+show-diffs: true
