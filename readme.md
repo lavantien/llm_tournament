@@ -2,14 +2,18 @@
 
 ## Benchmarking, Profiles, and Prompt Suites
 
-- 6 comprehensive specialized system prompt and sampler profiles. [jump](#programming-profile-pp)
-- 3 levels of difficulty and complexity, 30 quality prompts. [jump](#prompt-suites)
-- `npm install && npm run dev` to start `LLM Benchmarking` app on localhost (Next, React Bootstrap, Mermaid, SQLite).
-- Full solution dataset: [`profiles_and_prompt_suites.md`](./profiles_and_prompt_suites.md).
+- Full solution dataset and evaluation methodology: [`profiles_and_prompt_suites.md`](./profiles_and_prompt_suites.md).
+  - 6 comprehensive specialized system prompt and sampler profiles.
+  - 3 levels of difficulty and complexity, 30 quality prompts.
 - Quickly chat with a local LLM with correct sampler profile by running [`conversation.ps1`](./conversation.ps1)
   - Required `llama.cpp` setup for `llama-cli`.
   - Manually switch the profile and model path.
 - Server-only run with a specific preconfigured model recipe with `llama-server` API in [`llm_recipes/`](./llm_recipes) directory.
+
+- `npm install && npm run dev` to start `LLM Benchmarking` app on localhost (Next.js, Native CSS, Recharts, SQLite).
+- Powered by:
+  - Local: Neovim/Aider/MistralAPI/Crawl4AI
+  - External: AIStudio/ChatGPT/ClaudeAI/CopilotChat/DeepSeek.
 
 ## Tooling
 
@@ -18,13 +22,10 @@
   - `assets/`: all assets.
   - `llm_outputs/`: all LLM outputs.
   - `llm_reciples/`: all preconfigured LLM's llama-server running scripts. (based on my specs)
+  - `conversation.ps1`
+  - `profiles_and_prompt_suites`
   - `t5_runner.py`: GUI to run T5 models for direct translating from English to Vietnamese
   - `temp.py`: temporary stores AI's output for evaluation.
-
-<details>
-    <summary>llama.cpp REST API integration (... more)</summary>
-
-</details>
 
 - A playground for conducting (manual as of now) tournaments of the local LLMs.
 - Extensive prepared prompt suites for streamlining LLM testing.
@@ -33,22 +34,24 @@
 
 - Do translation/composing works.
 - Use AIs as a copilot to write code and documentation.
-- Generate a couple of 600-800 page handbooks for personal use.
-- So need to select the best candidate for the task, given the specs of the local machine. So, prompt suites and tournament pipeline is necessary
+- Generate a couple of 600-1000 page books for personal use.
+- So need to select the best candidate for the task, given the specs of the local machine.
+- So, prompt suites and tournament pipeline is necessary
 - Build a general pipeline for future works with local AIs.
 
 ### Dependencies
 
-- Python3.12 via pyenv, ursina engine.
+- Python3.12 via pyenv
 - `pip install llama-cpp-python --prefer-binary --extra-index-url=https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu122`
 - `pip install transformers ctransformers accelerate sentencepiece bitsandbytes tk requests Pillow`
 - `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124`
 - `pip install flash-attn --no-build-isolation`
 - `pip install grouped_gem`
+- Node.js
 - C++ runtime (msvc runtime or llvm).
 - C# and .NET MAUI.
 - (Docker/Compose) if use Ollama.
-- **Neovim/Aider/Mistral**, **LlamaCpp/SillyTavern**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, ChatWithRTX, Cline/AIStudioGoogle/ProjectIDX/Mistral/Groq/SambaNova/GLHF (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree/DeepSeek.
+- **Neovim/Aider/Mistral/Crawl4AI**, **LlamaCpp/SillyTavern**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, Cline/AIStudioGoogle/ProjectIDX/Mistral/Groq/SambaNova/GLHF (best free plans), ChatGPTFree/ClaudeFree/CopilotFree/GeminiFree/DeepSeek.
 - HuggingFace, CivitAI, ComfyUI, SwarmUI, stable-diffusion-webui-forge, Speed isn't important, as long as it can run then it's fair game.
 - Local LLMs that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, mamba, internlm2, stablelm, t5, bart
 
@@ -59,6 +62,9 @@
 - Desktop app or spreadsheet for managing and visualizing the tournament
 
 ### Free LLM API list:
+
+<details>
+    <summary>...more</summary>
 
 #### GLHF
 
@@ -75,7 +81,6 @@
 1. Mistral Large 2411
 1. Mistral Embed
 1. Codestral
-1. Codestral 2405
 1. Codestral Mamba 2407
 
 #### Groq
@@ -104,7 +109,12 @@
 1. Claude 3.5 Sonnet
 1. Copilot Chat
 
+</details>
+
 ### Local LLMs list (and their unique attributes):
+
+<details>
+    <summary>...more</summary>
 
 #### 13B - 70B
 
@@ -177,3 +187,5 @@
 - granite-3.1-1b-a400m-instruct (1.48 GB)
 - llama-3.2-1b-instruct-q8_0 (1.32 GB)
 - Qwen2.5-0.5B-Instruct.Q8_0 (531.07 MB)
+
+</details>
