@@ -112,6 +112,7 @@
 
 1. Gemini 2.0 Flash Experimental
 1. Gemini Experimental 1206
+1. Gemini 2.0 Flash Thinking Experimental
 
 #### DeepSeek
 
@@ -130,76 +131,76 @@
 <details>
     <summary>...more</summary>
 
+**Disk Usage**: 678 GB
+
 #### 13B - 70B
 
-- Llama-3.3-70B-Instruct-abliterated-finetuned.i1-IQ2_M (24.12 GB)
+- Llama-3.3-70B-Instruct.i1-IQ2_M (24.12 GB)
+- Qwen2.5-Coder-32B-Instruct-Q5_K_L (23.74 GB)
+- Qwen2.5-32B-Instruct-Q5_K_L (23.74 GB)
+- Codestral-22B-v0.1-Q8_0 (23.64 GB)
+- aya-expanse-32b-Q5_K_L (23.56 GB)
+- c4ai-command-r-08-2024-Q5_K_L (23.56 GB)
 - WizardCoder-33B-V1.1.Q5_K_M (23.54 GB)
-- granite-34b-code-instruct.i1-Q5_K_S (23.41 GB)
-- Qwen2.5-Coder-32B-Instruct-Uncensored.Q5_K_M (23.26 GB)
-- Qwen2.5-32B-Instruct.Q5_K_M (23.26 GB)
-- c4ai-command-r-08-2024-Q5_K_M (23.05 GB)
-- aya-expanse-32b-abliterated.Q5_K_M (23.05 GB)
 - gemma-2-27B-it-Q6_K (22.34 GB)
-- mpt-30b-instruct.i1-Q5_K_M (22.29 GB)
 - Mixtral-8x7B-Instruct-v0.1-exhaustive-LoRA.i1-IQ3_M (21.43 GB)
+- internlm2_5-20b-chat-Q8_0 (21.11 GB)
 - Yi-1.5-34B-Chat-16K.IQ4_XS (18.64 GB)
 - Mistral-Small-Instruct-2409-Q6_K (18.25 GB)
-- Codestral-22B-v0.1-Q6_K (18.25 GB)
+- starcoder2-15b-instruct-v0.1-Q8_0 (16.97 GB)
 - DeepSeek-Coder-V2-Lite-Instruct-Q8_0 (16.70 GB)
-- granite-20b-code-instruct.r1.1.i1-Q6_K (16.63 GB)
-- internlm2.5-20B-Chat.Q6_K (16.30 GB)
+- SuperNova-Medius-Q8_0 (15.70 GB)
 - qwen2.5-coder-14b-instruct-q8_0 (15.70 GB)
 - Virtuoso-Small-Q8_0 (15.70 GB)
 - phi-4-Q8_0 (15.58 GB)
-- Mistral-Nemo-Instruct-2407-Q8_0 (13.02 GB)
-- CodeLlama-13b-Instruct-hf-abliterated.Q6_K (10.68 GB)
-- vicuna-13b-v1.5-Q6_K (10.68 GB)
+- CodeLlama-13B-Instruct-fp16-Q8_0 (13.83 GB)
+- vicuna-13b-v1.5.Q8_0 (13.83 GB)
 
 #### 6.7B - 12B
 
-- magnum-12b-v2.5-kto.Q6_K (10.06 GB)
-- stablelm-2-12b-chat.Q6_K (9.97 GB)
-- gemma-2-9B-it-abliterated-Q8_0 (9.83 GB)
+- Mistral-Nemo-Instruct-2407-Q8_0 (13.02 GB)
+- magnum-12b-v2.5-kto-Q8_0 (13.02 GB)
+- stablelm-2-12b-chat-Q8_0 (12.91 GB)
+- Fimbulvetr-11B-v2-Q8_0 (11.40 GB)
+- Nous-Hermes-2-SOLAR-10.7B.Q8_0 (11.40 GB)
+- gemma-2-9b-it-Q8_0_L (10.69 GB)
+- codegeex4-all-9b-Q8_0 (9.99 GB)
 - codegemma-7B-it-Q8_0 (9.08 GB)
-- Nous-Hermes-2-SOLAR-10.7B-Q6_K (8.81 GB)
-- Fimbulvetr-11B-v2-Q6_K (8.81 GB)
 - c4ai-command-r7b-12-2024-q8_0 (8.54 GB)
-- aya-expanse-8b-abliterated-q8_0 (8.54 GB)
+- aya-expanse-8b-Q8_0 (8.54 GB)
+- Poppy_Porpoise-1.4-L3-8B.Q8_0 (8.54 GB)
+- Hermes-3-Llama-3.1-8B-Q8_0 (8.54 GB)
 - Ministral-8B-Instruct-2410-Q8_0 (8.53 GB)
+- OpenCoder-8B-Instruct-Q8_0 (8.26 GB)
 - Qwen2.5-Coder-7B-Instruct-Q8_0 (8.10 GB)
+- SeaLLMs-v3-7B-Chat-Q8_0 (8.10 GB)
 - Llava-v1.5-7B-Q8_0 (7.79 GB)
+- falcon-mamba-7b-instruct-Q8_0 (7.77 GB)
 - rho-math-7b-v0.1-Q8_0 (7.70 GB)
 - mathstral-7B-v0.1.Q8_0 (7.70 GB)
 - Mistral-7B-Instruct-v0.3-Q8_0 (7.70 GB)
-- Yi-1.5-9B-Chat-16K-abliterated-Q6_K (7.25 GB)
-- granite-3.1-8b-instruct-Q6_K (6.71 GB)
-- Poppy_Porpoise-1.4-L3-8B-Q6_K (6.60 GB)
-- Hermes-3-Llama-3.1-8B-Q6_K (6.60 GB)
-- OpenCoder-8B-Instruct-Q6_K (6.38 GB)
-- CodeQwen1.5-7B-Chat-Q6_K (6.38 GB)
-- SeaLLMs-v3-7B-Chat-Uncensored.Q6_K (6.25 GB)
-- falcon-mamba-7B-instruct-Q6_K (6.01 GB)
-- Vistral-7B-Chat-function-calling-Q6_K (5.99 GB)
-- StarCoder2-7B-Q6_K (5.89 GB)
+- starcoder2-7b-instruct.Q8_0 (7.63 GB)
+- OpenCoder-8B-Instruct-Q8_0 (8.26 GB)
+- falcon-mamba-7b-instruct-Q8_0 (7.77 GB)
+- codeqwen-1_5-7b-chat-q8_0 (7.71 GB)
 - deepseek-coder-6.7B-instruct-Q6_K (5.53 GB)
 - CodeLlama-7b-Instruct-hf-Q6_K (5.53 GB)
 
 #### 0.1B - 4B
 
+- gemma-2-2b-it-f16 (5.24 GB)
 - Nemotron-Mini-4B-Instruct-Q8_0 (4.46 GB)
 - Phi-3.5-mini-instruct-Q8_0 (4.06 GB)
-- granite-3B-code-instruct-Q8_0 (3.71 GB)
 - Qwen2.5-Coder-3B-Instruct-Q8_0 (3.62 GB)
-- granite-3.1-3b-a800m-instruct-Q8_0 (3.59 GB)
 - Ministral-3B-instruct-Q8_0 (3.52 GB)
 - Llama-Doctor-3.2-3B-Instruct-Q8_0 (3.42 GB)
+- SmolLM2-1.7B-Instruct-f16 (3.42 GB)
 - Hermes-3-Llama-3.2-3B-Q8_0 (3.42 GB)
 - stable-code-instruct-3B-Q8_0 (2.97 GB)
-- granite-3.1-2b-instruct-Q8_0 (2.80 GB)
-- gemma-2-2B-it-Q8_0 (2.78 GB)
-- SmolLM2-1.7B-Instruct-Uncensored-Q8_0 (1.93 GB)
-- granite-3.1-1b-a400m-instruct (1.48 GB)
-- llama-3.2-1b-instruct-q8_0 (1.32 GB)
-- Qwen2.5-0.5B-Instruct.Q8_0 (531.07 MB)
+- Llama-3.2-1B-Instruct-f16 (2.48 GB)
+- Qwen2.5-Coder-0.5B-Instruct-f16 (994.16 MB)
+- Qwen2.5-0.5B-Instruct-f16 (994.16 MB)
+- SmolLM2-360M-Instruct-f16 (725.55 MB)
+- SmolLM2-135M-Instruct-f16 (270.89 MB)
 
 </details>
