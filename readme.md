@@ -4,9 +4,12 @@
 
 - Full solution dataset and evaluation methodology: [`profiles_and_prompt_suites.md`](./profiles_and_prompt_suites.md).
   - 6 comprehensive specialized system prompt and sampler profiles.
-  - 3 levels of difficulty and complexity, 30 quality prompts.
-- Quickly chat with a local LLM with correct sampler profile by running [`conversation.ps1`](./conversation.ps1)
-  - Required `llama.cpp` setup for `llama-cli`.
+  - 3 levels of difficulty and complexity, 32 quality prompts.
+- Quickly chat with a local LLM with correct sampler profile by running:
+  - [`converse.ps1`](./converse.ps1)
+  - or translate a text to Vietnamese with [`translate.ps1`](./translate.ps1)
+  - or do quick programming task with [`code.ps1`](./code.ps1)
+  - Required `llama.cpp` setup for `llama-cli`, and `Qwen2.5 32B Instruct`, `Aya Expanse 32B Abliterated`, `Qwen2.5 Coder 32B Instruct`
   - Manually switch the profile and model path.
 - Server-only run with a specific preconfigured model recipe with `llama-server` API in [`llm_recipes/`](./llm_recipes) directory.
 
@@ -15,7 +18,7 @@
   - **Local Dev**: Neovim, Aider, MistralAPI Free _(500,000 tpm - 1,000,000,000 tpM)_, GeminiAPI Free _(10 rpm, 1500 rpd)_, Crawl4AI
   - **Local Gen**: LlamaCpp + {a set of best local models}, SillyTavern/Agnai, StableDiffusionWebUIForge, FluxDev + ControlNets/LoRAs
   - **External Chat**: AIStudio, ChatGPT, ClaudeAI, CopilotChat, Cohere, Mistral, DeepSeek, SambaNova, Groq, GLHF.
-  - **Extras**: ProjectIDX, Cline, OpenCanvas
+  - **Extras**: ProjectIDX, Cline, OpenCanvas, MetaGPT, DeepInfra (non-free)
 
 - **LLM Benchmarking** [`preliminary_design.md`](./preliminary_design.md)
 - `npm install && npm run dev` to start `LLM Benchmarking` app on localhost:

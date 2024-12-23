@@ -92,7 +92,7 @@ curl http://localhost:8080/v1/chat/completion `
 
 You need to follow these steps before generating any code, make sure that you follow them:
 
-- Think Step By Step and do Proper Reasoning and Planning before implementation
+- Think Step By Step and do Proper Reasoning and Planning before implementation.
 - You can ask the user for something if you don't have anything. Don't make vague assumptions.
 ```
 
@@ -100,8 +100,25 @@ You need to follow these steps before generating any code, make sure that you fo
 
 ```text
 - Always write unit-test that cover all possible test-cases for the code you write if it's possible to do.
-- Record every technical choice and justification you make with a summary and files affected in a document named decision.md, if it doesn't exist then creat it as well.
-- Log every change you make with a summary and files you have changed in a log file named changes.md, if it doesn't exist then creat it as well.
+- Record every technical choice and justification you make with a summary and files affected.
+- Log every change you make with a summary and files you have changed.
+```
+
+- **Project Specific Instructions**:
+
+```text
+For effectively handle this project, you should:
+
+1. Break down the development into smaller chunks like:
+   - Database schema implementation
+   - Basic CRUD operations
+   - UI components
+   - State management
+   - Business logic
+2. Start with the database and backend first since they're more structured
+3. Use the preliminary design doc as the initial context
+4. Have clear test cases ready for each component
+5. Review and test each generated component before moving to the next
 ```
 
 - dry_multiplier: 0.8
