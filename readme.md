@@ -20,7 +20,7 @@
 - **LLM Benchmarking** [`preliminary_design.md`](./preliminary_design.md)
 - `npm install && npm run dev` to start `LLM Benchmarking` app on localhost:
   - TypeScript, Next.js
-  - Sahdcn/ui, Recharts
+  - Sahdcn/ui, D3.js
   - Zustand, React-Query
   - DrizzleORM, SQLite
   - Vitest, Playright

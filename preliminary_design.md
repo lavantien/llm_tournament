@@ -92,7 +92,7 @@ erDiagram
 - TypeScript latest
 - Next.js latest
 - Sahdcn/ui latest
-- Recharts latest
+- D3.js latest
 - Zustand latest
 - React-Query latest
 - DrizzleORM latest
