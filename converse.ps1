@@ -18,5 +18,5 @@ $baseProfile = @{
 . ./shared.ps1
 
 $modelPath = $rootPath + "arcee-ai/Virtuoso-Small-GGUF/Virtuoso-Small-Q8_0.gguf"
-$profileName = "DynamicFusion"
+$profileName = "Generalist"
 Run-LlamaCli -modelPath $modelPath -profileName $profileName -baseProfile $baseProfile

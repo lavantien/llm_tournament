@@ -49,7 +49,7 @@ There are five people in a house (A, B, C, D and E). A is watching TV with B, D 
 
 #### Solution
 
-Not enough information to know what C is doing.
+Not enough information to know what C is doing. Or C can be playing table tennis with E.
 
 ---
 
@@ -73,81 +73,161 @@ Courtney said that there were 48 people, but Keylly said that Courtney had overs
 
 #### Solution
 
+The answer is 40.
+
 ---
 
 ### 6
 
+#### Content
+
 I have 2 apples, then I buy 2 more. I bake a pie wtih 2 of the apples. After eating half of the pie how many apples do I have left?
+
+#### Solution
+
+The answer is 2.
 
 ---
 
 ### 7
 
+#### Content
+
 Sally is a girl. She has three brothers. Each of her brothers has the same two sisters. How many sisters does Sally have?
+
+#### Solution
+
+The answer is 1.
 
 ---
 
 ### 8
 
+#### Content
+
 If a regular hexagon has a short diagonal of 64, what is its long diagonal?
+
+#### Solution
+
+The answer is 73.9.
 
 ---
 
 ### 9
 
+#### Content
+
 Write me a passage about an alien crew visiting the earth. Then tell me the number of words you wrote in that sentence. Then tell me the third letter in the second word in that sentence. Is that letter a vowel or a consonant?
+
+#### Solution
+
+Freestyle.
 
 ---
 
 ### 10
 
-How many days are between September 12th and November 27th. And which is the best coding agent for using with a local LLM like you: Cline or Aider. And why?
+#### Content
+
+How many days are between September 12th and November 27th.
+
+#### Solution
+
+76 days.
+
+---
+
+## Programming Profile
 
 ---
 
 ### 11
 
+#### Content
+
 Create an HTML page with a button that explodes confetti when you click it. You can use CSS & JS as well.
+
+#### Solution
+
+Freestyle.
 
 ---
 
 ### 12
 
-Create a python program that prints the next X leap years based on user input.
+#### Content
+
+Create a Python program that prints the next X leap years based on user input. And then prints all of its prime factors using the Sieve of Eratosthenes.
+
+#### Solution
+
+Freestyle.
 
 ---
 
-#### 13
+### 13
+
+#### Content
 
 Generate the SVG code for a butterfly.
 
+#### Solution
+
+Freestyle.
+
 ---
 
-#### 14
+### 14
+
+#### Content
 
 Create a landing page for an AI company. The landing page should have 4 sections. Header, Banner, Features and Contact Us. Make sure that the landing page looks sleek aand modern. You can use HTML, CSS, JS.
 
----
+#### Solution
 
-#### 15
-
-Write game of life in python that works on the terminal.
+Freestyle.
 
 ---
 
-#### 16
+### 15
 
-Write a program to simulate the 3 body problem, in Python and Pygame.
+#### Content
+
+Write Conway's Game of Life in Python and Pygame but using hexagon instead of square cells, which plays out on a 1920x1000 window.
+
+#### Solution
+
+Freestyle.
 
 ---
 
-#### 17
+### 16
 
-Write minesweeper in Pygame.
+#### Content
+
+Write a program to simulate the 3 body problem, in Python and Pygame, which all the entities coming together and orbiting each other at the beginning, and each draw their own path in different colors.
+
+#### Solution
+
+Freestyle.
 
 ---
 
-#### 2. use PP
+### 17
+
+#### Content
+
+Write minesweeper in Python and Pygame.
+
+#### Solution
+
+Freestyle.
+
+---
+
+### 18
+
+#### Content
 
 Write a Golang program (along with an extensive unit-test suite) to solve standard sudoku but using all four of these algorithms one after another and record time and steps taken to the output:
 
@@ -243,12 +323,15 @@ Minimax with alpha-beta pruning:
     Execution time: 0.5
 ```
 
+#### Solution
+
+Freestyle.
+
 ---
 
-#### 3. use PP
+### 19
 
-<details>
-    <summary>Prompt ...</summary>
+#### Content
 
 **Dynamic Archipelago Resource Management**
 
@@ -381,14 +464,15 @@ Consider implementing a hybrid approach that:
 4. Uses greedy choices for emergency responses
 5. Employs predictive modeling for long-term strategy
 
-</details>
+#### Solution
+
+Freestyle.
 
 ---
 
-#### 4. use PP
+### 20
 
-<details>
-    <summary>Prompt ...</summary>
+#### Content
 
 **Enterprise Employee Management System Challenge**
 
@@ -571,21 +655,19 @@ This challenge helps developers master:
 - Advanced user interface design
 - Performance optimization techniques
 
-</details>
+#### Solution
 
-</details>
-
----
-
-<details>
-    <summary>____ Translating ...</summary>
+Freestyle.
 
 ---
 
-#### 5. use TP
+## Translating Profile
 
-<details>
-    <summary>Prompt ...</summary>
+---
+
+### 21
+
+#### Content
 
 **Logical Fallacies**
 
@@ -665,14 +747,15 @@ That parking attendant who gave me a ticket is as bad as Hitler.
 
 In this example, the author is comparing the relatively harmless actions of a person doing their job with the horrific actions of Hitler. This comparison is unfair and inaccurate.
 
-</details>
+#### Solution
+
+Successfully translated to idiomatic Vietnamese.
 
 ---
 
-#### 6. use TP
+### 22
 
-<details>
-    <summary>Prompt ...</summary>
+#### Content
 
 Linked Discourses 45.8 - 1. Ignorance - Analysis
 
@@ -700,23 +783,19 @@ Linked Discourses 45.8 - 1. Ignorance - Analysis
 
 10.1And what is right immersion? 10.2It’s when a mendicant, quite secluded from sensual pleasures, secluded from unskillful qualities, enters and remains in the first absorption, which has the rapture and bliss born of seclusion, while placing the mind and keeping it connected. 10.3As the placing of the mind and keeping it connected are stilled, they enter and remain in the second absorption, which has the rapture and bliss born of immersion, with internal clarity and mind at one, without placing the mind and keeping it connected. 10.4And with the fading away of rapture, they enter and remain in the third absorption, where they meditate with equanimity, mindful and aware, personally experiencing the bliss of which the noble ones declare, ‘Equanimous and mindful, one meditates in bliss.’ 10.5Giving up pleasure and pain, and ending former happiness and sadness, they enter and remain in the fourth absorption, without pleasure or pain, with pure equanimity and mindfulness. 10.6This is called right immersion.”
 
-10.7
+#### Solution
 
-</details>
-
-</details>
+Translated to idiomatic Vietnamese.
 
 ---
 
-<details>
-    <summary>____ Reasoning ...</summary>
+## Reasoning Profile
 
 ---
 
-#### 7. use RP
+### 23
 
-<details>
-    <summary>Prompt ...</summary>
+#### Content
 
 Given the output of an sudoku solver program, can you predict what the value of (x1, y1, z1), (x2, y2, z2), and (x3, y3, z3) are?
 
@@ -770,14 +849,15 @@ Minimax with alpha-beta pruning:
     Execution time: z3
 ```
 
-</details>
+#### Solution
+
+Freestyle.
 
 ---
 
-#### 8. use RP
+### 24
 
-<details>
-    <summary>Prompt ...</summary>
+#### Content
 
 **The Bridge and the Torch**
 
@@ -802,12 +882,7 @@ Your goal is to get all four people across the bridge in **17 minutes or less**.
 
 **Note**: Any solution taking longer than 17 minutes is incorrect. Be precise in your explanation.
 
-</details>
-
-<details>
-    <summary>Solution (by GPT-4o)...</summary>
-
-Here’s the solution to the **Bridge and the Torch** puzzle:
+#### Solution
 
 ##### **Step-by-Step Plan**
 
@@ -872,66 +947,15 @@ Here’s the solution to the **Bridge and the Torch** puzzle:
 - The fastest person (A) is used to shuttle the torch efficiently.
 - Any other sequence would exceed 17 minutes.
 
-</details>
+---
 
-</details>
+## Writing Profile
 
 ---
 
-<details>
-    <summary>____ Generalist...</summary>
+### 26
 
----
-
-#### 9. use GP
-
-Design a constructed language with the following specifications:
-
-1. Grammar System:
-
-- Create a simplified inflectional grammar system inspired by Pali
-- Remove complex phonological features like:
-  - Long vs. short vowel distinctions
-  - Retroflex consonants
-- Include clear rules for verb conjugations, noun declensions, and other grammatical structures
-
-2. Vocabulary (2500 unique root words total):
-
-- Core vocabulary: 850 basic words for everyday concepts
-- International terms: 200 widely recognized words
-- Technical vocabulary: 1000 words covering:
-  - Trade and commerce
-  - Economic concepts
-  - Scientific terminology
-- Religious terminology: 450 words focused on:
-  - Buddhist concepts
-  - General religious vocabulary
-
-3. Deliverables:
-
-- Complete grammar tables showing:
-  - Noun cases
-  - Verb tenses
-  - Adjective forms
-  - Examples for each grammatical rule
-- 20 example sentences demonstrating:
-  - Basic conversation
-  - Technical usage
-  - Religious terminology
-  - Various grammatical structures
-
-Please provide the complete language system with all components organized under these sections.
-
-</details>
-
----
-
-<details>
-    <summary>____ Writing ...</summary>
-
----
-
-#### 10. use WP
+#### Content
 
 You are an award-winning sci-fi writer tasked with creating a compelling short story of **at least 4,200 words**. The story should explore themes of **moral consequence, self-reflection, and redemption** through the lens of **Buddhist values** such as mindfulness, impermanence, and karma. The narrative is inspired by the ancient Buddhist text **MN 130: Devadūtasutta** (The Divine Messengers) but reimagined as a futuristic journey through a technologically advanced version of hell and beyond.
 
@@ -986,21 +1010,66 @@ Write a vivid, imaginative, and reflective story with the following elements:
 - Balance vivid sci-fi imagery with Buddhist philosophical depth.
 - Ensure the tone evolves from dark and foreboding to contemplative and redemptive.
 
-</details>
+#### Solution
 
-</details>
-
----
-
-<details>
-    <summary>lavantien's fusion prompt suite (grandmaster level, 2500-3100 elo) ...</summary>
+Freestyle.
 
 ---
 
-#### 1. use DP
+## Generalist Profile
 
-<details>
-    <summary>Prompt ...</summary>
+---
+
+### 25
+
+#### Content
+
+Design a constructed language with the following specifications:
+
+1. Grammar System:
+
+- Create a simplified inflectional grammar system inspired by Pali
+- Remove complex phonological features like:
+  - Long vs. short vowel distinctions
+  - Retroflex consonants
+- Include clear rules for verb conjugations, noun declensions, and other grammatical structures
+
+2. Vocabulary (2500 unique root words total):
+
+- Core vocabulary: 850 basic words for everyday concepts
+- International terms: 200 widely recognized words
+- Technical vocabulary: 1000 words covering:
+  - Trade and commerce
+  - Economic concepts
+  - Scientific terminology
+- Religious terminology: 450 words focused on:
+  - Buddhist concepts
+  - General religious vocabulary
+
+3. Deliverables:
+
+- Complete grammar tables showing:
+  - Noun cases
+  - Verb tenses
+  - Adjective forms
+  - Examples for each grammatical rule
+- 20 example sentences demonstrating:
+  - Basic conversation
+  - Technical usage
+  - Religious terminology
+  - Various grammatical structures
+
+Please provide the complete language system with all components organized under these sections.
+
+#### Solution
+
+Produce the output as specified.
+
+---
+
+### 27
+
+#### Content
 
 Please provide a comprehensive analysis of the 20 most common logical fallacies encountered in everyday situations:
 
@@ -1044,14 +1113,15 @@ Please organize the fallacies from most to least commonly encountered in daily l
 
 For each fallacy, break down a complex real-world example step by step to show how the faulty reasoning develops and how it could be corrected.
 
-</details>
+#### Solution
+
+Freestyle.
 
 ---
 
-#### 2. use DP
+### 28
 
-<details>
-    <summary>Prompt ...</summary>
+#### Content
 
 Create a detailed two-phase project:
 
@@ -1119,14 +1189,15 @@ Please provide:
 2. Fully commented Python code using Ursina engine
 3. Instructions for running and interacting with the simulation
 
-</details>
+#### Solution
+
+Freesylte.
 
 ---
 
-#### 3. use DP
+### 29
 
-<details>
-    <summary>Prompt ...</summary>
+#### Content
 
 You are a polymath working at the crossroads of philosophy, literature, and technology. Your task is to resolve the following challenge, demonstrating reasoning, creative writing, and programming skills in a single cohesive response:
 
@@ -1155,14 +1226,15 @@ You are a polymath working at the crossroads of philosophy, literature, and tech
 
 Good luck!
 
-</details>
+#### Solution
+
+Freestyle.
 
 ---
 
-#### 4. use DP
+### 30
 
-<details>
-    <summary>Prompt ...</summary>
+#### Content
 
 You are the architect of a revolutionary psychohistorical AI, inspired by Hari Seldon’s work in Isaac Asimov's _Foundation_. Your task is to create a multi-disciplinary response that showcases your capabilities in reasoning, storytelling, and programming. Complete the following challenges cohesively:
 
@@ -1201,14 +1273,13 @@ Implement a Python program that simulates a simplified psychohistorical model. T
 
 Good luck creating your masterpiece!
 
-</details>
+#### Solution
 
 ---
 
-#### 5. use DP
+### 31
 
-<details>
-    <summary>Prompt ...</summary>
+#### Content
 
 You are tasked with exploring whether a society based on **Buddhist principles** (e.g., non-attachment, ethical living, and pursuit of liberation) and **anarchist ideals** (e.g., absence of hierarchical authority, voluntary cooperation, and mutual aid) could thrive, given the realities of human nature. This challenge requires **world-building**, **reasoning**, **creative writing**, and **programming** to develop a cohesive exploration.
 
@@ -1256,14 +1327,13 @@ Develop a Python program to simulate this society:
 
 Good luck exploring the delicate balance between freedom, ethics, and human imperfection!
 
-</details>
+#### Solution
 
 ---
 
-#### 6. use DP
+### 32
 
-<details>
-    <summary>Prompt ...</summary>
+#### Content
 
 You are tasked with designing a multi-faceted response that integrates **reasoning**, **creative writing**, **world-building**, and **programming**. This challenge draws inspiration from Buddhist cosmology, psychohistory, and the themes of societal balance and individual freedom.
 
@@ -1309,14 +1379,15 @@ Create a Python program that simulates a simplified version of psychohistorical 
 
 Good luck balancing the scales of karma and cosmic prediction!
 
-</details>
+#### Solution
+
+Freestyle.
 
 ---
 
-#### 7. use DP
+### 33
 
-<details>
-    <summary>Prompt ...</summary>
+#### Content
 
 **The Ultimate General Intelligence Challenge: Uncharted Problem-Space Exploration**
 
@@ -1381,15 +1452,10 @@ After completing the reasoning, world-building, story, and simulation:
 - Ensure that all components (reasoning, world-building, story, simulation, and meta-analysis) are interconnected. The narrative should reflect the framework, and the simulation should validate or challenge your ideas.
 - Incorporate principles of systems thinking, emergent behavior, and adaptability to demonstrate advanced cognitive capabilities.
 
-</details>
-
-<details>
-    <summary>Solution ...</summary>
+#### Solution
 
 This prompt is designed to test an AI's ability to think beyond its pre-trained data, requiring it to tackle entirely novel, interconnected challenges that span reasoning, creativity, adaptability, and problem-solving. The challenge introduces new contexts, concepts, and scenarios that cannot be solved through rote memorization or pre-existing patterns.
 
 **Goal**: This challenge tests whether an AI can demonstrate true general intelligence or artificial superintelligence by creating novel solutions in a completely unprecedented context. Success requires integration, creativity, and adaptability beyond pre-trained data.
-
-</details>
 
 ---
