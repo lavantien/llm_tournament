@@ -9,7 +9,7 @@
   - pass on second shot, equal 50 elo,
   - pass on third shot, equal 20 elo,
   - unable to pass after 3 attemps, equal 0 elo.
-- 32 prompts total so maximum 3200 elo.
+- 33 prompts total so maximum 3300 elo.
 
 ---
 
@@ -181,7 +181,7 @@ Freestyle.
 
 #### Content
 
-Create a landing page for an AI company. The landing page should have 4 sections. Header, Banner, Features and Contact Us. Make sure that the landing page looks sleek aand modern. You can use HTML, CSS, JS.
+Create a landing page for an AI company. The landing page should have 4 sections. Header, Banner, Features and Contact Us. Make sure that the landing page looks sleek aand modern. You should use HTMX.
 
 #### Solution
 
@@ -205,7 +205,7 @@ Freestyle.
 
 #### Content
 
-Write a program to simulate the 3 body problem, in Python and Pygame, which all the entities coming together and orbiting each other at the beginning, and each draw their own path in different colors.
+Write a program to simulate the 3 body problem with walls and collision, in Python and Pygame, which all the entities coming together and meet in the middle at the beginning, and each draw their own path in different colors. Output the final code in one single file.
 
 #### Solution
 
@@ -217,7 +217,7 @@ Freestyle.
 
 #### Content
 
-Write minesweeper in Python and Pygame.
+Write Minesweeper in Python and Pygame. User can put flag on right-click.
 
 #### Solution
 
