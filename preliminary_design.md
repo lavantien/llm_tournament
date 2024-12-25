@@ -4,7 +4,7 @@
 
 - bots schema: name, param, quant, gpuLayers, gpuLayersUsed, ctx, ctxUsed, kingOf (ref profiles.name)
 - profiles schema: name, systemPrompt, repeatPenalty, topK, topP, minP, topA, bestBots (ref bots.name)
-- prompts schema: content, solution, profile (ref profiles.name)
+- prompts schema: number, content, solution, profile (ref profiles.name)
 - scores schema: attempt, elo, botId (ref bots.id), promptId (ref prompts.id)
 
 ### ER Diagram
@@ -35,7 +35,7 @@ erDiagram
     }
 
     Prompts {
-        int id PK
+        int number PK
         string content
         string solution
         string profile FK "References profiles.name"

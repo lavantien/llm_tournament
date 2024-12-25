@@ -1,291 +1,8 @@
-## LLM Benchmarking
+# Prompts
 
-- **My System**: 3080 10gb - 2x16gb ddr4 - 1tb m2 ssd - 12700f - windows 11
+## Eval scheme
 
-- Example profile for `./llm_recipes/c4ai-command-r-08-2024-Q5_K_M.ps1` using `llama.cpp` to start OpenAI server:
-
-```powershell
-$modelPath = "C:\Users\lavantien\.cache\lm-studio\models\tensorblock\c4ai-command-r-08-2024-GGUF\c4ai-command-r-08-2024-Q5_K_M.gguf"
-
-$params = @{
-    "gpu-layers" = 10
-    "ctx-size" = 32768
-    "batch-size" = 512
-    "threads" = 8
-    "keep" = 4096
-    "predict" = -1
-    "flash-attn" = $true
-    "mlock" = $true
-    "cache-type-k" = "q8_0"
-    "cache-type-v" = "q8_0"
-    "verbose-prompt" = $true
-    #"verbose" = $true
-    "log-prefix" = $true
-    "log-colors" = $true
-}
-
-$cmd = "llama-server --model $modelPath"
-
-foreach ($key in $params.Keys)
-{
-    $value = $params[$key]
-    if ($value -is [bool])
-    {
-        $cmd += if ($value)
-        { " --$key"
-        } else
-        { " --no-$key"
-        }
-    } else
-    {
-        $cmd += " --$key $value"
-    }
-}
-
-Start-Process -FilePath "pwsh" -ArgumentList "-Command $cmd" -NoNewWindow -Wait
-```
-
-- Send inference request to the server:
-
-```bash
-curl http://localhost:8080/v1/chat/completion `
--H "Content-Type: application/json" `
--H "Authorization: Bearer no-key" `
--d @'
-{
-    "model": "c4ai-command-r-08-2024-GGUF",
-    "messages": [
-    {
-        "role": "system",
-        "content": "Translate the given text into idiomatic, simple, and accessible Vietnamese with natural southern Vietnamese semantics and idioms. The translation should be straightforward enough for uneducated laypersons to understand, avoiding technical terms or specific Buddhist connotations. Stay faithful to the original text by providing a verbatim 1:1 translation without paraphrasing, summarizing, or omitting any content. Keep all the numbering so that we won't miss any sentence. Ensure that the translation flows cohesively while preserving cultural and spiritual connotations in a way that resonates with the target audience. Again, translate verbatim word-by-word 100% of the text, without paraphrasing, summarizing, or omitting any content."
-    },
-    {
-        "role": "user",
-        "content": "Middle Discourses 141 The Analysis of the Truths 1.1So I have heard. 1.2At one time the Buddha was staying near Varanasi, in the deer park at Isipatana. 1.3There the Buddha addressed the mendicants, 1.4“Mendicants!” 1.5“Venerable sir,” they replied. 1.6The Buddha said this: 2.1“Near Varanasi, in the deer park at Isipatana, the Realized One, the perfected one, the fully awakened Buddha rolled forth the supreme Wheel of Dhamma. And that wheel cannot be rolled back by any ascetic or brahmin or god or Māra or divinity or by anyone in the world."
-    }],
-    "dry_multiplier": 0.8,
-    "dry_base": 1.75,
-    "dry_allowed_length": 2,
-    "dry_penalty_last_n": 512,
-    "repeat_penalty": 1.02,
-    "repeat_last_n": 512,
-    "top_k": 0,
-    "top_p": 1,
-    "min_p": 0.02,
-    "top_a": 0.12,
-    "xtc_threshold": 0.1,
-    "xtc_probability": 0.5,
-    "temperatue": 1,
-    "stream": true
-}
-'@
-```
-
----
-
-### Programming Profile (PP)
-
-- **System prompt**:
-
-```text
-"You are a senior software engineer skilled in designing and implementing complex concurrent backends, robust distributed systems, and sleek and modern frontends with the best UI design and oustanding UX. You excel in breaking down problems step-by-step, identify a required series of steps in order to solve, maintaining cohesion throughout your reasoning. Your code is high-quality, modular, and adheres to best practices for the language, emphasizing maintainability and performance. You write extensive unit tests and generate comprehensive test cases, including edge cases. You explain the theory behind your solutions, provide detailed analyses of how the code works, and describe the data flow from input to output. Additionally, you suggest improvements and enhancements for optimal performance and readability, ensuring your response is cohesive and thorough."
-
-You need to follow these steps before generating any code, make sure that you follow them:
-
-- Think Step By Step and do Proper Reasoning and Planning before implementation.
-- You can ask the user for something if you don't have anything. Don't make vague assumptions.
-```
-
-- **Rules**:
-
-```text
-- Always write unit-test that cover all possible test-cases for the code you write if it's possible to do.
-- Record every technical choice and justification you make with a summary and files affected.
-- Log every change you make with a summary and files you have changed.
-```
-
-- **Project Specific Instructions**:
-
-```text
-For effectively handle this project, you should:
-
-1. Break down the development into smaller chunks like:
-   - Database schema implementation
-   - Basic CRUD operations
-   - UI components
-   - State management
-   - Business logic
-2. Start with the database and backend first since they're more structured
-3. Use the preliminary design doc as the initial context
-4. Have clear test cases ready for each component
-5. Review and test each generated component before moving to the next
-```
-
-- dry_multiplier: 0.8
-- dry_base: 1.75
-- dry_allowed_length: 2
-- dry_penalty_last_n: 512
-- repeat_penalty: 1.01
-- repeat_last_n: 512
-- top_k: 16
-- top_p: 0.95
-- min_p: 0.05
-- top_a: 0.1
-- xtc_threshold: 0.1
-- xtc_probability: 0.5
-- temperature: 0.1
-
-<details>
-    <summary>Best models ...</summary>
-</details>
-
----
-
-### Translating Profile (TP)
-
-- **System prompt**:
-
-```text
-- Translate the given text into idiomatic, simple, and accessible Vietnamese with natural southern Vietnamese semantics and idioms.
-- The translation should be straightforward enough for uneducated laypersons to understand, avoiding technical terms or specific Buddhist connotations.
-- Stay faithful to the original text by providing a verbatim 1:1 translation without paraphrasing, summarizing, or omitting any content.
-- Pay close attention to the open and close double-quotes or single-quotes and include all of them in the translation.
-- Ensure that the translation flows cohesively while preserving cultural and spiritual connotations in a way that resonates with the target audience.
-- Keep all the numbering so that you won't miss any sentence.
-- Again, translate verbatim word-by-word 100% of the text, without paraphrasing, summarizing, or omitting any content.
-```
-
-- dry_multiplier: 0.8
-- dry_base: 1.75
-- dry_allowed_length: 2
-- dry_penalty_last_n: 512
-- repeat_penalty: 1.02
-- repeat_last_n: 512
-- top_k: 32
-- top_p: 0.90
-- min_p: 0.05
-- top_a: 0.12
-- xtc_threshold: 0.1
-- xtc_probability: 0.5
-- temperature: 0.15
-
-<details>
-    <summary>Best models ...</summary>
-
-- aya-expanse-32b-abliterated.Q5_K_M
-- c4ai-command-r-08-2024-Q5_K_M
-- aya-expanse-8b-abliterated-q8_0
-- aya-23-35B.i1-IQ4_XS
-- Virtuoso-Small-Q8_0
-
-</details>
-
----
-
-### Reasoning Profile (RP)
-
-- **System prompt**: "You are an exceptionally versatile and intelligent problem solver with advanced analytical and reasoning abilities. You excel in breaking down complex problems step-by-step, ensuring clarity and cohesion throughout your response. Begin by restating or clarifying the problem to confirm understanding, identify assumptions, and define constraints. Formulate a cohesive solution by logically addressing each step and justifying your reasoning. Present your final solution clearly, suggest alternative approaches when applicable, and review for accuracy, consistency, and completeness. Maintain cohesion across all parts of your response to deliver a clear and thorough explanation."
-- dry_multiplier: 0.8
-- dry_base: 1.75
-- dry_allowed_length: 2
-- dry_penalty_last_n: 512
-- repeat_penalty: 1.03
-- repeat_last_n: 512
-- top_k: 64
-- top_p: 0.5
-- min_p: 0.04
-- top_a: 0.14
-- xtc_threshold: 0.1
-- xtc_probability: 0.5
-- temperature: 0.5
-
-<details>
-    <summary>Best models ...</summary>
-
-</details>
-
----
-
-### Generalist Profile (GP)
-
-- **System prompt**: "You are an expert linguistic and problem-solving assistant adept at addressing diverse tasks through clear, structured reasoning. Begin by understanding the problem: restate or clarify it to confirm understanding, identify its type, and outline any assumptions or constraints. Break the solution into manageable steps, presenting each logically and cohesively while showcasing your thought process. Combine these steps into a clear and complete response that directly addresses the problem. Suggest alternative solutions or areas for further exploration when relevant. Adapt your tone, level of detail, and complexity to the user’s needs, using examples or analogies to clarify complex ideas. Ensure that your response is cohesive, accurate, and comprehensive across all steps."
-- dry_multiplier: 0.8
-- dry_base: 1.75
-- dry_allowed_length: 2
-- dry_penalty_last_n: 512
-- repeat_penalty: 1.04
-- repeat_last_n: 512
-- top_k: 128
-- top_p: 0.4
-- min_p: 0.03
-- top_a: 0.16
-- xtc_threshold: 0.1
-- xtc_probability: 0.5
-- temperature: 0.8
-
-<details>
-    <summary>Best models ...</summary>
-</details>
-
----
-
-### Writing Profile (WP)
-
-- **System prompt**: "You are a mystical writer adept at blending reality with mythological exposition to captivate readers. Your writing style transports readers to an alternate dimension, allowing them to experience a realistic yet dreamlike narrative that fosters their morality. Craft stories with a seamless and cohesive flow, weaving together vivid imagery, profound symbolism, and mythological depth. Incorporate stylistic influences from various traditions and ensure your narrative remains cohesive and engaging throughout, leaving readers both inspired and transformed."
-- dry_multiplier: 0.8
-- dry_base: 1.75
-- dry_allowed_length: 2
-- dry_penalty_last_n: 512
-- repeat_penalty: 1.05
-- repeat_last_n: 512
-- top_k: 256
-- top_p: 0.30
-- min_p: 0.02
-- top_a: 0.18
-- xtc_threshold: 0.1
-- xtc_probability: 0.5
-- temperature: 1.0
-
-<details>
-    <summary>Best models ...</summary>
-</details>
-
----
-
-### Dynamic Fusion Profile (DP)
-
-- **System prompt**:
-
-```
-"You are a comprehensive problem-solving AI with expertise in creative and analytical thinking. Approach each challenge by:
-
-1. Breaking down complex problems into clear components
-2. Explaining your reasoning process step-by-step
-3. Combining knowledge across multiple domains
-4. Generating novel solutions rather than relying on standard patterns
-5. Validating your conclusions with specific examples and counter-examples
-6. Acknowledging limitations and areas of uncertainty
-
-When uncertain, work through the problem systematically rather than making assumptions. Generate creative solutions while maintaining logical consistency and practical feasibility. If asked to write code or technical content, provide complete, working implementations with clear documentation. Always consider edge cases and potential failure modes."
-```
-
-- dry_multiplier: 0.8
-- dry_base: 1.75
-- dry_allowed_length: 2
-- dry_penalty_last_n: 512
-- repeat_penalty: 1.02
-- repeat_last_n: 512
-- top_k: 0
-- top_p: 1
-- min_p: 0.02
-- top_a: 0.12
-- xtc_threshold: 0.1
-- xtc_probability: 0.5
-- temperature: 1.0
-
----
-
-### Prompt Suites
+(No need to include in the dataset)
 
 - Each prompt when passed is:
   - pass on first shot, equal 100 elo,
@@ -294,112 +11,143 @@ When uncertain, work through the problem systematically rather than making assum
   - unable to pass after 3 attemps, equal 0 elo.
 - 32 prompts total so maximum 3200 elo.
 
-<details>
-    <summary>AICodeKing's prompt suite (beginner to semi-intermediate level, 0-1500 elo) ...</summary>
+---
 
-#### 1. use DP
+## Default Profile
+
+---
+
+### 1
+
+#### Content
 
 Tell me the name of a country whose name ends with 'lia'. Give me the capital city of that country as well.
 
-#### 2. use DP
+#### Solution
+
+Australia, Canberra.
+
+---
+
+### 2
+
+#### Content
 
 What is the number that rhymes with the word we use to describe a tall plant?
 
-    three, as it rhymes with three
+#### Solution
 
-#### 3. use DP
+Three, tree.
+
+---
+
+### 3
+
+#### Content
 
 There are five people in a house (A, B, C, D and E). A is watching TV with B, D is sleeping, B is eating sandwich, E is playing table tennis. Suddenly, a call came on the telephone, B went out of the room to pick the call. What is C donig?
 
-    can't tell, because it isn't mentioned
+#### Solution
 
-#### 4. use DP
+Not enough information to know what C is doing.
 
-Name an English adjective of latin origgin that begins and ends with same letter, has 11 letters in total, and for which all vowels in the word are ordered alphabetically.
+---
 
-    transparent
+### 4
 
-#### 5. use DP
+#### Content
+
+Name an English adjective of Latin origin that begins and ends with same letter, has 11 letters in total, and for which all vowels in the word are ordered alphabetically.
+
+#### Solution
+
+Transparent.
+
+---
+
+### 5
+
+#### Content
 
 Courtney said that there were 48 people, but Keylly said that Courtney had overstated the number by 20%. If Kelly was right, now many people were there?
 
-    40
+#### Solution
 
-#### 6. use DP
+---
+
+### 6
 
 I have 2 apples, then I buy 2 more. I bake a pie wtih 2 of the apples. After eating half of the pie how many apples do I have left?
 
-    2
+---
 
-#### 7. use DP
+### 7
 
 Sally is a girl. She has three brothers. Each of her brothers has the same two sisters. How many sisters does Sally have?
 
-    1
+---
 
-#### 8. use DP
+### 8
 
 If a regular hexagon has a short diagonal of 64, what is its long diagonal?
 
-    73.9
+---
 
-#### 9. use DP
-
-Create an HTML page with a button that explodes confetti when you click it. You can use CSS & JS as well.
-
-#### 10. use DP
-
-Create a python program that prints the next X leap years based on user input.
-
-#### 11. use DP
-
-Generate the SVG code for a butterfly.
-
-#### 12. use DP
-
-Create a landing page for an AI company. The landing page should have 4 sections. Header, Banner, Features and Contact Us. Make sure that the landing page looks sleek aand modern. You can use HTML, CSS, JS.
-
-#### 13. use DP
-
-Write a game of life in python that works on the terminal.
-
-#### 14. use DP (Digital Spaceport)
+### 9
 
 Write me a passage about an alien crew visiting the earth. Then tell me the number of words you wrote in that sentence. Then tell me the third letter in the second word in that sentence. Is that letter a vowel or a consonant?
 
-#### 15. use DP (bycloud + lavantien)
+---
+
+### 10
 
 How many days are between September 12th and November 27th. And which is the best coding agent for using with a local LLM like you: Cline or Aider. And why?
 
-</details>
+---
+
+### 11
+
+Create an HTML page with a button that explodes confetti when you click it. You can use CSS & JS as well.
 
 ---
 
-<details>
-    <summary>lavantien's specialized prompt suite (intermediate to master level, 1500-2500 elo) ...</summary>
+### 12
+
+Create a python program that prints the next X leap years based on user input.
 
 ---
 
-<details>
-    <summary>____ Programming ...</summary>
+#### 13
+
+Generate the SVG code for a butterfly.
 
 ---
 
-#### 1. use PP
+#### 14
 
-<details>
-    <summary>Prompt ...</summary>
+Create a landing page for an AI company. The landing page should have 4 sections. Header, Banner, Features and Contact Us. Make sure that the landing page looks sleek aand modern. You can use HTML, CSS, JS.
+
+---
+
+#### 15
+
+Write game of life in python that works on the terminal.
+
+---
+
+#### 16
 
 Write a program to simulate the 3 body problem, in Python and Pygame.
 
-</details>
+---
+
+#### 17
+
+Write minesweeper in Pygame.
 
 ---
 
 #### 2. use PP
-
-<details>
-    <summary>Prompt ...</summary>
 
 Write a Golang program (along with an extensive unit-test suite) to solve standard sudoku but using all four of these algorithms one after another and record time and steps taken to the output:
 
@@ -494,8 +242,6 @@ Minimax with alpha-beta pruning:
     Step count: 30000000
     Execution time: 0.5
 ```
-
-</details>
 
 ---
 

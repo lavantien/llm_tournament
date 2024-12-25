@@ -2,26 +2,32 @@
 
 ## Benchmarking, Profiles, and Prompt Suites
 
-- Full solution dataset and evaluation methodology: [`profiles_and_prompt_suites.md`](./profiles_and_prompt_suites.md).
-  - 6 comprehensive specialized system prompt and sampler profiles.
-  - 3 levels of difficulty and complexity, 32 quality prompts.
+- Full solution dataset and evaluation methodology: [`profiles.md`](./profiles.md) & [`prompts.md`](./prompts.md).
+
+  - 7 comprehensive specialized system prompt and sampler profiles.
+  - 33 quality prompts divided into 7 groups.
+
 - Quickly chat with a local LLM with correct sampler profile by running:
+
   - [`converse.ps1`](./converse.ps1)
   - or translate a text to Vietnamese with [`translate.ps1`](./translate.ps1)
   - or do quick programming task with [`code.ps1`](./code.ps1)
   - Required `llama.cpp`, `Virtuoso Small`, `Aya Expanse 32B`, `Qwen2.5 Coder 14B Instruct`
   - Manually switch the profile and model path.
+
 - Server-only run with a specific preconfigured model recipe with `llama-server` API in [`llm_recipes/`](./llm_recipes) directory.
 
 - Powered by:
 
   - **Local Dev**: Neovim, Aider, MistralAPI Free _(500,000 tpm - 1,000,000,000 tpM)_, GeminiAPI Free _(10 rpm, 1500 rpd)_, Crawl4AI
-  - **Local Gen**: LlamaCpp + _{a set of best local models}_, LM Studio _(to manage GGUFs)_, SillyTavern/Agnai, StableDiffusionWebUIForge, FluxDev + ControlNets/LoRAs
+  - **Local Gen**: LlamaCpp + _{a set of best local models}_, LM Studio _(to manage GGUFs)_, AnythingLLM, SillyTavern/Agnai, StableDiffusionWebUIForge, FluxDev + ControlNets/LoRAs
   - **External Chat**: AIStudio, ChatGPT, ClaudeAI, CopilotChat, Cohere, Mistral, DeepSeek, SambaNova, Groq, GLHF.
-  - **Extras**: ProjectIDX, Cline, OpenCanvas, MetaGPT, DeepInfra (non-free)
+  - **Extras**: ProjectIDX, Cline, OpenCanvas, MetaGPT, DeepInfra (non-free), Twitter's Grok, Facebook's Llama
 
 - **LLM Benchmarking** [`preliminary_design.md`](./preliminary_design.md)
+
 - `npm install && npm run dev` to start `LLM Benchmarking` app on localhost:
+
   - TypeScript, Next.js
   - Sahdcn/ui, D3.js
   - Zustand, React-Query
@@ -35,10 +41,14 @@
 - Directory structure:
 
   - `assets/`: all assets.
-  - `llm_outputs/`: all LLM outputs.
   - `llm_reciples/`: all preconfigured LLM's llama-server running scripts. (based on my specs)
-  - `conversation.ps1`
-  - `profiles_and_prompt_suites`
+  - `llm_outputs/`: all LLM outputs.
+  - `models.md` & `data/bots.csv`
+  - `prompts.md` & `data/prompts.csv`
+  - `profiles.md` & `data/profiles.csv`
+  - `converse.ps1`
+  - `translate.ps1`
+  - `code.ps`
   - `t5_runner.py`: GUI to run T5 models for direct translating from English to Vietnamese
   - `temp.py`: temporary stores AI's output for evaluation.
 
@@ -48,11 +58,12 @@
 ### Why?
 
 - Do translation/composing works.
-- Use AIs as a copilot to write code and documentation.
+- Learn new languages and skills.
+- Use AIs as a copilot to engineer software and compose documentation.
 - Generate a couple of 600-1000 page books for personal use.
 - So need to select the best candidate for the task, given the specs of the local machine.
-- So, prompt suites and tournament pipeline is necessary
-- Build a general pipeline for future works with local AIs.
+- There for, prompt suites and tournament pipeline is necessary
+- In conclusion, build a general pipeline for future works with local AIs.
 
 ### Dependencies
 
@@ -69,6 +80,8 @@
 - **Neovim/Aider/Mistral/Crawl4AI**, **LlamaCpp/SillyTavern**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, etc.
 - HuggingFace, CivitAI, stable-diffusion-webui-forge, ComfyUI, SwarmUI, Speed isn't important, as long as it can run then it's fair game.
 - Local LLMs with highest quant that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, mamba, internlm2, stablelm, t5, bart
+
+## LLM Benchmarking
 
 ## Tournament Leaderboard
 
