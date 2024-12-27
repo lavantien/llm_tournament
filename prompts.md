@@ -145,7 +145,7 @@ How many days are between September 12th and November 27th.
 
 #### Content
 
-Create an HTML page with a button that explodes confetti when you click it. You can use CSS & JS as well.
+Make a snake game using pygame.
 
 #### Solution
 

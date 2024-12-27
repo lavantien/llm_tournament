@@ -1,5 +1,5 @@
 $baseProfile = @{
-    "gpu-layers" = 9
+    "gpu-layers" = 23
     "ctx-size" = 32768
     "batch-size" = 512
     "threads" = 8
@@ -17,6 +17,6 @@ $baseProfile = @{
 
 . ./shared.ps1
 
-$modelPath = $rootPath + "bartowski/aya-expanse-32b-GGUF/aya-expanse-32b-Q5_K_L.gguf"
+$modelPath = $rootPath + "bartowski/aya-expanse-8b-GGUF/aya-expanse-8b-Q8_0.gguf"
 $profileName = "Translating"
 Run-LlamaCli -modelPath $modelPath -profileName $profileName -baseProfile $baseProfile

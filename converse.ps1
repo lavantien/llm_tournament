@@ -1,6 +1,6 @@
 $baseProfile = @{
-    "gpu-layers" = 20
-    "ctx-size" = 32768
+    "gpu-layers" = 29
+    "ctx-size" = 8192
     "batch-size" = 512
     "threads" = 8
     "keep" = 4096
@@ -17,6 +17,6 @@ $baseProfile = @{
 
 . ./shared.ps1
 
-$modelPath = $rootPath + "arcee-ai/Virtuoso-Small-GGUF/Virtuoso-Small-Q8_0.gguf"
-$profileName = "Generalist"
+$modelPath = $rootPath + "TheDrummer/Tiger-Gemma-9B-v3-GGUF/Tiger-Gemma-9B-v3-Q8_0.gguf"
+$profileName = "Default"
 Run-LlamaCli -modelPath $modelPath -profileName $profileName -baseProfile $baseProfile

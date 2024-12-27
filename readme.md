@@ -7,13 +7,13 @@
   - 7 comprehensive specialized system prompt and sampler profiles.
   - 33 quality prompts divided into 7 groups.
 
-- Quickly chat with a local LLM with correct sampler profile by running:
+- Quickly chat with a local LLM with correct sampler profile (7-10 tps on 8gb vram system):
 
-  - [`converse.ps1`](./converse.ps1)
+  - any kind of conversation with [`converse.ps1`](./converse.ps1)
   - or translate a text to Vietnamese with [`translate.ps1`](./translate.ps1)
   - or do quick programming task with [`code.ps1`](./code.ps1)
-  - Required `llama.cpp`, `Virtuoso Small`, `Aya Expanse 32B`, `Qwen2.5 Coder 14B Instruct`
-  - Manually switch the profile and model path.
+  - Required `llama.cpp`, `Tiger Gemma 9B v3`, `Aya Expanse 8B`, `Codegeex4 All 9B`.
+  - Edit the rootPath in `shared.ps1`. Manually switch the profile and model path.
 
 - Server-only run with a specific preconfigured model recipe with `llama-server` API in [`llm_recipes/`](./llm_recipes) directory.
 
@@ -151,6 +151,7 @@
 - Qwen2.5-32B-Instruct-Q5_K_L (23.74 GB)
 - Mistral-Small-Instruct-2409-Q8_0 (23.64 GB)
 - Codestral-22B-v0.1-Q8_0 (23.64 GB)
+- Mistral-Small-22B-ArliAI-RPMax-v1.1-q8_0 (23.64 GB)
 - aya-expanse-32b-Q5_K_L (23.56 GB)
 - c4ai-command-r-08-2024-Q5_K_L (23.56 GB)
 - magnum-v4-27b-Q6_K_L (22.63 GB)
@@ -159,12 +160,18 @@
 - Virtuoso-Small-Q8_0 (15.70 GB)
 - phi-4-Q8_0 (15.58 GB)
 - Mistral-Nemo-Instruct-2407-Q8_0 (13.02 GB)
+- Rocinante-12B-v1.1-Q8_0 (13.02 GB)
+- NemoMix-Unleashed-12B-Q8_0 (13.02 GB)
 
 #### 4B - 11B
 
+- Moistral-11B-v3-Q8_0 (11.40 GB)
 - codegeex4-all-9b-Q8_0 (9.99 GB)
+- Tiger-Gemma-9B-v3-Q8_0 (9.83 GB)
+- Darkest-muse-v1-Q8_0 (9.83 GB)
 - aya-expanse-8b-Q8_0 (8.54 GB)
 - c4ai-command-r7b-12-2024-q8_0 (8.54 GB)
+- L3-8B-Stheno-v3.2-Q8_0-imat (8.54 GB)
 - Hermes-3-Llama-3.1-8B-Q8_0 (8.54 GB)
 - Ministral-8B-Instruct-2410-Q8_0 (8.53 GB)
 - Nemotron-Mini-4B-Instruct-f16 (8.39 GB)

@@ -2,20 +2,21 @@
 
 ## System Design
 
-- bots schema: name, param, quant, gpuLayers, gpuLayersUsed, ctx, ctxUsed, kingOf (ref profiles.name)
+- bots schema: name, path, size, param, quant, gpuLayers, gpuLayersUsed, ctx, ctxUsed, kingOf (ref profiles.name)
 - profiles schema: name, systemPrompt, repeatPenalty, topK, topP, minP, topA, bestBots (ref bots.name)
 - prompts schema: number, content, solution, profile (ref profiles.name)
-- scores schema: attempt, elo, botId (ref bots.id), promptId (ref prompts.id)
+- scores schema: attempt, elo, botId (ref bots.name), promptId (ref prompts.number)
 
 ### ER Diagram
 
 ```mermaid
 erDiagram
     Bots {
-        int id PK
-        string name
-        string param
-        int quant
+        string name PK
+        string path
+        float size
+        float param
+        string quant
         int gpuLayers
         int gpuLayersUsed
         int ctx
@@ -45,8 +46,8 @@ erDiagram
         int id PK
         int attempt
         float elo
-        int botId FK "References bots.id"
-        int promptId FK "References prompts.id"
+        int botId FK "References bots.name"
+        int promptId FK "References prompts.number"
     }
 
     Bots ||--o{ Scores : "has"

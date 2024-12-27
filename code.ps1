@@ -1,6 +1,6 @@
 $baseProfile = @{
-    "gpu-layers" = 20
-    "ctx-size" = 16384
+    "gpu-layers" = 30
+    "ctx-size" = 32768
     "batch-size" = 512
     "threads" = 8
     "keep" = 4096
@@ -17,6 +17,6 @@ $baseProfile = @{
 
 . ./shared.ps1
 
-$modelPath = $rootPath + "Qwen/Qwen2.5-Coder-14B-Instruct-GGUF/qwen2.5-coder-14b-instruct-q8_0-00001-of-00002.gguf"
+$modelPath = $rootPath + "THUDM/codegeex4-all-9b-GGUF/codegeex4-all-9b-Q8_0.gguf"
 $profileName = "Programming"
 Run-LlamaCli -modelPath $modelPath -profileName $profileName -baseProfile $baseProfile
