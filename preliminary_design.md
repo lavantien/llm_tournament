@@ -60,9 +60,9 @@ erDiagram
 ## Technical Requirements
 
 - Internal: if not exist, load all required data into the database
-  - Bots: in `data/bots.csv`
-  - Profiles: in `data/profiles.csv`
-  - Prompts: in `data/prompts.csv`
+  - Bots: in `models.md`
+  - Profiles: in `profiles.md`
+  - Prompts: in `prompts.md`
   - Scores: empty
 - Home Page:
   - Load Test Scores Button:
