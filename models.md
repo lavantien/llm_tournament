@@ -210,7 +210,7 @@
 
 ---
 
-## Moistral-11B-v3-Q8_0 (11.40 GB)
+## Moistral-11B-v3-Q8_0
 
 - Path: "TheDrummer/Moistral-11B-v3-GGUF/Moistral-11B-v3-Q8_0.gguf"
 - Size: 11.4
@@ -223,488 +223,353 @@
 
 ---
 
-## codegeex4-all-9b-Q8_0 (9.99 GB)
+## codegeex4-all-9b-Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "THUDM/codegeex4-all-9b-GGUF/codegeex4-all-9b-Q8_0.gguf"
+- Size: 9.99
+- Param: 9
+- Quant: "q80"
+- GPU Layers: 40
+- GPU Layers Used: 26
+- Ctx: 131072
+- Ctx Used: 32768
 
 ---
 
-## Tiger-Gemma-9B-v3-Q8_0 (9.83 GB)
+## Darkest-muse-v1-Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/Darkest-muse-v1-GGUF/Darkest-muse-v1-Q8_0.gguf"
+- Size: 9.83
+- Param: 9
+- Quant: "q80"
+- GPU Layers: 42
+- GPU Layers Used: 27
+- Ctx: 8192
+- Ctx Used: 8192
 
 ---
 
-## Darkest-muse-v1-Q8_0 (9.83 GB)
+## Tiger-Gemma-9B-v3-Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "TheDrummer/Tiger-Gemma-9B-v3-GGUF/Tiger-Gemma-9B-v3-Q8_0.gguf"
+- Size: 9.83
+- Param: 9
+- Quant: "q80"
+- GPU Layers: 42
+- GPU Layers Used: 27
+- Ctx: 8192
+- Ctx Used: 8192
 
 ---
 
-## aya-expanse-8b-Q8_0 (8.54 GB)
+## aya-expanse-8b-Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/aya-expanse-8b-GGUF/aya-expanse-8b-Q8_0.gguf"
+- Size: 8.54
+- Param: 8
+- Quant: "q80"
+- GPU Layers: 32
+- GPU Layers Used: 24
+- Ctx: 131072
+- Ctx Used: 32768
 
 ---
 
-## c4ai-command-r7b-12-2024-q8_0 (8.54 GB)
+## c4ai-command-r7b-12-2024-q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "dranger003/c4ai-command-r7b-12-2024-GGUF/ggml-c4ai-command-r7b-12-2024-q8_0.gguf"
+- Size: 8.54
+- Param: 8
+- Quant: "q80"
+- GPU Layers: 32
+- GPU Layers Used: 24
+- Ctx: 131072
+- Ctx Used: 32768
 
 ---
 
-## L3-8B-Stheno-v3.2-Q8_0-imat (8.54 GB)
+## Hermes-3-Llama-3.1-8B-Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/Hermes-3-Llama-3.1-8B-GGUF/Hermes-3-Llama-3.1-8B-Q8_0.gguf"
+- Size: 8.54
+- Param: 8
+- Quant: "q80"
+- GPU Layers: 32
+- GPU Layers Used: 24
+- Ctx: 131072
+- Ctx Used: 32768
 
 ---
 
-## Hermes-3-Llama-3.1-8B-Q8_0 (8.54 GB)
+## L3-8B-Stheno-v3.2-Q8_0-imat
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "Lewdiculous/L3-8B-Stheno-v3.2-GGUF-IQ-Imatrix/L3-8B-Stheno-v3.2-Q8_0-imat.gguf"
+- Size: 8.54
+- Param: 8
+- Quant: "q80"
+- GPU Layers: 32
+- GPU Layers Used: 24
+- Ctx: 8192
+- Ctx Used: 8192
 
 ---
 
-## Ministral-8B-Instruct-2410-Q8_0 (8.53 GB)
+## Ministral-8B-Instruct-2410-Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "mradermacher/Ministral-8B-Instruct-2410-GGUF/Ministral-8B-Instruct-2410.Q8_0.gguf"
+- Size: 8.53
+- Param: 8
+- Quant: "q80"
+- GPU Layers: 36
+- GPU Layers Used: 27
+- Ctx: 32768
+- Ctx Used: 32768
 
 ---
 
-## Nemotron-Mini-4B-Instruct-f16 (8.39 GB)
+## Nemotron-Mini-4B-Instruct-f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/Nemotron-Mini-4B-Instruct-GGUF/Nemotron-Mini-4B-Instruct-f16.gguf"
+- Size: 8.39
+- Param: 4
+- Quant: "f16"
+- GPU Layers: 32
+- GPU Layers Used: 24
+- Ctx: 4096
+- Ctx Used: 4096
 
 ---
 
-## Qwen2.5-Coder-7B-Instruct-Q8_0 (8.10 GB)
+## Qwen2.5-Coder-7B-Instruct-Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF/Qwen2.5-Coder-7B-Instruct-Q8_0.gguf"
+- Size: 8.1
+- Param: 7
+- Quant: "q80"
+- GPU Layers: 28
+- GPU Layers Used: 22
+- Ctx: 32768
+- Ctx Used: 32768
 
 ---
 
-## SeaLLMs-v3-7B-Chat-Q8_0 (8.10 GB)
+## SeaLLMs-v3-7B-Chat-Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "tensorblock/SeaLLMs-v3-7B-Chat-GGUF/SeaLLMs-v3-7B-Chat-Q8_0.gguf"
+- Size: 8.1
+- Param: 7
+- Quant: "q80"
+- GPU Layers: 28
+- GPU Layers Used: 22
+- Ctx: 131072
+- Ctx Used: 32768
 
 ---
 
-## Llava-v1.5-7B-Q8_0 (7.79 GB)
+## Llava-v1.5-7B-Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "second-state/Llava-v1.5-7B-GGUF/llava-v1.5-7b-Q8_0.gguf"
+- Size: 7.79
+- Param: 7
+- Quant: "q80"
+- GPU Layers: 32
+- GPU Layers Used: 26
+- Ctx: 4096
+- Ctx Used: 4096
 
 ---
 
-## falcon-mamba-7b-instruct-Q8_0 (7.77 GB)
+## falcon-mamba-7b-instruct-Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "tensorblock/falcon-mamba-7b-instruct-GGUF/falcon-mamba-7b-instruct-Q8_0.gguf"
+- Size: 7.77
+- Param: 7
+- Quant: "q80"
+- GPU Layers: 64
+- GPU Layers Used: 53
+- Ctx: 1048576
+- Ctx Used: 32768
 
 ---
 
-## codeqwen-1_5-7b-chat-q8_0 (7.71 GB)
+## codeqwen-1_5-7b-chat-q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "Qwen/CodeQwen1.5-7B-Chat-GGUF/codeqwen-1_5-7b-chat-q8_0.gguf"
+- Size: 7.71
+- Param: 7
+- Quant: "q80"
+- GPU Layers: 32
+- GPU Layers Used: 27
+- Ctx: 65536
+- Ctx Used: 32768
 
 ---
 
-## mathstral-7B-v0.1.Q8_0 (7.70 GB)
+## mathstral-7B-v0.1.Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "DevQuasar/mathstral-7B-v0.1-GGUF/mathstral-7B-v0.1.Q8_0.gguf"
+- Size: 7.7
+- Param: 7
+- Quant: "q80"
+- GPU Layers: 32
+- GPU Layers Used: 27
+- Ctx: 32768
+- Ctx Used: 32768
 
 ---
 
-## rho-math-7b-v0.1-Q8_0 (7.70 GB)
+## rho-math-7b-v0.1-Q8_0
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "tensorblock/rho-math-7b-v0.1-GGUF/rho-math-7b-v0.1-Q8_0.gguf"
+- Size: 7.7
+- Param: 7
+- Quant: "q80"
+- GPU Layers: 32
+- GPU Layers Used: 27
+- Ctx: 32768
+- Ctx Used: 32768
 
 ---
 
-## Phi-3.5-mini-instruct.f16 (7.64 GB)
+## Phi-3.5-mini-instruct.f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "mradermacher/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct.f16.gguf"
+- Size: 7.64
+- Param: 3.8
+- Quant: "f16"
+- GPU Layers: 32
+- GPU Layers Used: 27
+- Ctx: 131072
+- Ctx Used: 32768
 
 ---
 
-## Ministral-3b-instruct.f16 (6.63 GB)
+## Ministral-3b-instruct.f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "mradermacher/Ministral-3b-instruct-GGUF/Ministral-3b-instruct.f16.gguf"
+- Size: 6.63
+- Param: 3
+- Quant: "f16"
+- GPU Layers: 14
+- GPU Layers Used: 13
+- Ctx: 131072
+- Ctx Used: 32768
 
 ---
 
-## Hermes-3-Llama-3.2-3B-f16 (6.43 GB)
+## Llama-Doctor-3.2-3B-Instruct-f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/Llama-Doctor-3.2-3B-Instruct-GGUF/Llama-Doctor-3.2-3B-Instruct-f16.gguf"
+- Size: 6.43
+- Param: 3
+- Quant: "f16"
+- GPU Layers: 28
+- GPU Layers Used: 28
+- Ctx: 131072
+- Ctx Used: 32768
 
 ---
 
-## Llama-Doctor-3.2-3B-Instruct-f16 (6.43 GB)
+## Hermes-3-Llama-3.2-3B-f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/Hermes-3-Llama-3.2-3B-GGUF/Hermes-3-Llama-3.2-3B-f16.gguf"
+- Size: 6.43
+- Param: 3
+- Quant: "f16"
+- GPU Layers: 28
+- GPU Layers Used: 28
+- Ctx: 131072
+- Ctx Used: 32768
 
 ---
 
-## Qwen2.5-Coder-3B-Instruct-f16 (6.18 GB)
+## Qwen2.5-Coder-3B-Instruct-f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/Qwen2.5-Coder-3B-Instruct-GGUF/Qwen2.5-Coder-3B-Instruct-f16.gguf"
+- Size: 6.18
+- Param: 3
+- Quant: "f16"
+- GPU Layers: 36
+- GPU Layers Used: 36
+- Ctx: 32768
+- Ctx Used: 32768
 
 ---
 
-## SmolLM2-1.7B-Instruct-f16 (3.42 GB)
+## SmolLM2-1.7B-Instruct-f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/SmolLM2-1.7B-Instruct-GGUF/SmolLM2-1.7B-Instruct-f16.gguf"
+- Size: 3.42
+- Param: 1.7
+- Quant: "f16"
+- GPU Layers: 24
+- GPU Layers Used: 24
+- Ctx: 8192
+- Ctx Used: 8192
 
 ---
 
-## Llama-3.2-1B-Instruct-f16 (2.48 GB)
+## Llama-3.2-1B-Instruct-f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: bartowski/Llama-3.2-1B-Instruct-GGUF/Llama-3.2-1B-Instruct-f16.gguf
+- Size: 2.48
+- Param: 1
+- Quant: "f16"
+- GPU Layers: 16
+- GPU Layers Used: 16
+- Ctx: 131072
+- Ctx Used: 32768
 
 ---
 
-## Qwen2.5-Coder-0.5B-Instruct-f16 (994.16 MB)
+## Qwen2.5-Coder-0.5B-Instruct-f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/Qwen2.5-Coder-0.5B-Instruct-GGUF/Qwen2.5-Coder-0.5B-Instruct-f16.gguf"
+- Size: 0.99
+- Param: 0.5
+- Quant: "f16"
+- GPU Layers: 24
+- GPU Layers Used: 24
+- Ctx: 32768
+- Ctx Used: 32768
 
 ---
 
-## Qwen2.5-0.5B-Instruct-f16 (994.16 MB)
+## Qwen2.5-0.5B-Instruct-f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/Qwen2.5-0.5B-Instruct-GGUF/Qwen2.5-0.5B-Instruct-f16.gguf"
+- Size: 0.99
+- Param: 0.5
+- Quant: "f16"
+- GPU Layers: 24
+- GPU Layers Used: 24
+- Ctx: 32768
+- Ctx Used: 32768
 
 ---
 
-## SmolLM2-360M-Instruct-f16 (725.55 MB)
+## SmolLM2-360M-Instruct-f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/SmolLM2-360M-Instruct-GGUF/SmolLM2-360M-Instruct-f16.gguf"
+- Size: 0.73
+- Param: 0.36
+- Quant: "f16"
+- GPU Layers: 32
+- GPU Layers Used: 32
+- Ctx: 8192
+- Ctx Used: 8192
 
 ---
 
-## SmolLM2-135M-Instruct-f16 (270.89 MB)
+## SmolLM2-135M-Instruct-f16
 
-- Path
-
-- Size
-
-- Param
-
-- Quant
-
-- GPU Layers Used
-
-- Ctx
-
-- Ctx Used
+- Path: "bartowski/SmolLM2-135M-Instruct-GGUF/SmolLM2-135M-Instruct-f16.gguf"
+- Size: 0.27
+- Param: 0.135
+- Quant: "f16"
+- GPU Layers: 30
+- GPU Layers Used: 30
+- Ctx: 8192
+- Ctx Used: 8192
 
 ---
