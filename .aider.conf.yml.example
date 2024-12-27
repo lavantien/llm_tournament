@@ -25,7 +25,7 @@ cache-keepalive-pings: 300
 verbose: true
 pretty: true
 vim: true
-editor: nvim
-multiline: true
+editor: vim
+multiline: false
 code-theme: coffee
 show-diffs: true
