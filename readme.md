@@ -24,11 +24,7 @@
 
 - **LLM Benchmarking** [`preliminary_design.md`](./preliminary_design.md)
 
-- `npm install && npm run dev` to start `LLM Benchmarking` app on localhost:
-  - Tauri, React
-  - Shadcn/ui, Recharts
-  - Zustand, Better-sqlite3
-  - Vitest
+- `LLM Benchmarking` app on localhost with golang, sqlite3, and fyne v2.
 
 ![ER Diagram](./assets/design/erdiagram.png)
 

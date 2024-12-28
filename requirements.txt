@@ -1,0 +1,16 @@
+crawl4ai[all]
+llama-cpp-python --prefer-binary --extra-index-url=https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu122
+transformers
+ctransformers
+accelerate
+sentencepiece
+bitsandbytes
+tk
+requests
+Pillow
+torch --index-url https://download.pytorch.org/whl/cu124
+torchvision --index-url https://download.pytorch.org/whl/cu124
+torchaudio --index-url https://download.pytorch.org/whl/cu124
+flash-attn --no-build-isolation
+grouped_gem
+

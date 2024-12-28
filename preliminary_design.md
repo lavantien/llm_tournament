@@ -102,10 +102,6 @@ erDiagram
 
 ## Tech Stack
 
-- Tauri
-- React
-- Shadcn/ui
-- Recharts
-- Zustand
-- Better-sqlite3
-- Vitest
+- go
+- sqlite3
+- fyne v2
