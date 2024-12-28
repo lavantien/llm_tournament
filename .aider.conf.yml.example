@@ -19,7 +19,7 @@ read:
   - ../INSTRUCTION.md
   - ../preliminary_design.md
   - ../tech_stack.md
-yes-always: true
+yes-always: false
 map-tokens: 2048
 timeout: 300
 cache-prompts: true
