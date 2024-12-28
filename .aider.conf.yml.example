@@ -14,9 +14,11 @@ editor-model: mistral/mistral-large-latest
 editor-edit-format: editor-diff
 weak-model: codestral/codestral-latest
 read:
-  - RULES.md
-  - PROMPT.md
-  - INSTRUCTION.md
+  - ../RULES.md
+  - ../PROMPT.md
+  - ../INSTRUCTION.md
+  - ../preliminary_design.md
+  - ../tech_stack.md
 yes-always: false
 map-tokens: 2048
 timeout: 300
