@@ -10,7 +10,7 @@ api-key:
 architect: true
 model: mistral/mistral-large-latest
 edit-format: diff
-editor-model: mistral/mistral-medium-latest
+editor-model: mistral/mistral-large-latest
 editor-edit-format: editor-diff
 weak-model: codestral/codestral-latest
 read:
