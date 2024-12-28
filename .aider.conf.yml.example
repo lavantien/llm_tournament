@@ -18,6 +18,8 @@ read:
   - PROMPT.md
   - INSTRUCTION.md
   - preliminary_design.md
+  - fyne_doc.md
+  - fyne_api.md
 yes-always: false
 map-tokens: 2048
 timeout: 300
