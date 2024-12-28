@@ -12,14 +12,14 @@ model: mistral/mistral-large-latest
 edit-format: diff
 editor-model: mistral/mistral-large-latest
 editor-edit-format: editor-diff
-weak-model: codestral/codestral-latest
+weak-model: mistral/mistral-small-latest
 read:
   - ../RULES.md
   - ../PROMPT.md
   - ../INSTRUCTION.md
   - ../preliminary_design.md
   - ../tech_stack.md
-yes-always: false
+yes-always: true
 map-tokens: 2048
 timeout: 300
 cache-prompts: true
