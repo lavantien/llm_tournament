@@ -13,10 +13,13 @@
     "@shadcn/ui": "^0.0.4",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
+    "autoprefixer": "^10.4.20",
     "better-sqlite3": "^11.7.0",
+    "postcss": "^8.4.49",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "recharts": "^2.15.0",
+    "tailwindcss": "^3.4.17",
     "zustand": "^5.0.2"
   },
   "devDependencies": {
