@@ -8,11 +8,11 @@ api-key:
   - codestRAL=
   - cohere=
 architect: true
-model: gemini-exp-1206
+model: gemini/gemini-exp-1206
 edit-format: diff
-editor-model: mistral/mistral-large-latest
+editor-model: gemini/gemini-2.0-flash-exp
 editor-edit-format: editor-diff
-weak-model: mistral/mistral-small-latest
+weak-model: mistral/mistral-large-latest
 read:
   - RULES.md
   - PROMPT.md
