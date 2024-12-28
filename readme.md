@@ -15,8 +15,6 @@
   - Required `llama.cpp`, `Tiger Gemma 9B v3`, `Aya Expanse 8B`, `Codegeex4 All 9B`.
   - Edit the rootPath in `shared.ps1`. Manually switch the profile and model path.
 
-- Server-only run with a specific preconfigured model recipe with `llama-server` API in [`llm_recipes/`](./llm_recipes) directory.
-
 - Powered by:
 
   - **Local Dev**: Neovim, Aider, MistralAPI Free _(500,000 tpm - 1,000,000,000 tpM)_, GeminiAPI Free _(10 rpm, 1500 rpd)_, Crawl4AI

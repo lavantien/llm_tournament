@@ -88,19 +88,6 @@ erDiagram
   - Display a line graph for each profile that include all the bots
   - Display a line graph with include all the bots and their total elo
 
-## Tech Stack
-
-- TypeScript latest
-- Next.js latest
-- Sahdcn/ui latest
-- D3.js latest
-- Zustand latest
-- React-Query latest
-- DrizzleORM latest
-- SQLite latest
-- Vitest latest
-- Playright latest
-
 ## Non-Technical Requirements
 
 - The app must looks clean and modern and sleek
@@ -112,3 +99,13 @@ erDiagram
 - The app must be modular and maintainable
 - Have logging statements at crucial points of interests
 - No need for users or roles logic or fancy security features because this app will only be run locally
+
+## Tech Stack
+
+- Tauri
+- React
+- Shadcn/ui
+- Recharts
+- Zustand
+- Better-sqlite3
+- Vitest
