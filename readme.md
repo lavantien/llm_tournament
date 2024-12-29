@@ -4,14 +4,14 @@
 
 - Full solution dataset and evaluation methodology: [`profiles.md`](./profiles.md) & [`prompts.md`](./prompts.md).
 
-  - 7 comprehensive specialized system prompt and sampler profiles.
+  - 6 comprehensive specialized system prompt and sampler profiles.
   - 33 quality prompts divided into 7 groups.
 
 - Quickly chat with a local LLM with correct sampler profile (7-10 tps on 8gb vram system):
 
-  - any kind of conversation with [`converse.ps1`](./converse.ps1)
-  - or translate a text to Vietnamese with [`translate.ps1`](./translate.ps1)
-  - or do quick programming task with [`code.ps1`](./code.ps1)
+  - any kind of conversation with [`tools/converse.ps1`](./tools/converse.ps1)
+  - or translate a text to Vietnamese with [`tools/translate.ps1`](./tools/translate.ps1)
+  - or do quick programming task with [`tools/code.ps1`](./tools/code.ps1)
   - Required `llama.cpp`, `Tiger Gemma 9B v3`, `Aya Expanse 8B`, `Codegeex4 All 9B`.
   - Edit the rootPath in `shared.ps1`. Manually switch the profile and model path.
 
@@ -24,25 +24,11 @@
 
 - **LLM Benchmarking** [`preliminary_design.md`](./preliminary_design.md)
 
-- `LLM Benchmarking` app on localhost with golang, sqlite3, and fyne v2.
+- `LLM Benchmarking` app on localhost with golang, html/template, and sqlite3.
 
 ![ER Diagram](./assets/design/erdiagram.png)
 
 ## Tooling
-
-- Directory structure:
-
-  - `assets/`: all assets.
-  - `llm_reciples/`: all preconfigured LLM's llama-server running scripts. (based on my specs)
-  - `llm_outputs/`: all LLM outputs.
-  - `models.md` & `data/bots.csv`
-  - `prompts.md` & `data/prompts.csv`
-  - `profiles.md` & `data/profiles.csv`
-  - `converse.ps1`
-  - `translate.ps1`
-  - `code.ps`
-  - `t5_runner.py`: GUI to run T5 models for direct translating from English to Vietnamese
-  - `temp.py`: temporary stores AI's output for evaluation.
 
 - A playground for conducting (manual as of now) tournaments of the local LLMs.
 - Extensive prepared prompt suites for streamlining LLM testing.
@@ -60,11 +46,6 @@
 ### Dependencies
 
 - Python3.12 via pyenv
-- `pip install llama-cpp-python --prefer-binary --extra-index-url=https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu122`
-- `pip install transformers ctransformers accelerate sentencepiece bitsandbytes tk requests Pillow`
-- `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124`
-- `pip install flash-attn --no-build-isolation`
-- `pip install grouped_gem`
 - Node.js
 - C++ runtime (msvc runtime or llvm).
 - C# and .NET MAUI.

@@ -1,6 +1,6 @@
 # LLM Becnhmarking App Preliminary Design
 
-A terminal program, named `llm-tournament`, to manage the metadata of models, profiles, prompts, and tournament leaderboard.
+`llm-tournament`,a program to manage the metadata of models, profiles, prompts, and tournament leaderboard.
 
 ## System Design
 
@@ -105,4 +105,6 @@ erDiagram
 ## Tech Stack
 
 - go
+- go html/template
 - sqlite3
+- go log/slog
