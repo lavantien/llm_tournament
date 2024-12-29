@@ -1,3 +1,3 @@
-module llm_tournament
+module llm-tournament
 
 go 1.23.4
