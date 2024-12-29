@@ -1,5 +1,7 @@
 # LLM Becnhmarking App Preliminary Design
 
+A terminal program, named `llm-tournament`, to manage the metadata of models, profiles, prompts, and tournament leaderboard.
+
 ## System Design
 
 - bots schema: name, path, size, param, quant, gpuLayers, gpuLayersUsed, ctx, ctxUsed, kingOf (ref profiles.name)
@@ -104,4 +106,3 @@ erDiagram
 
 - go
 - sqlite3
-- fyne v2
