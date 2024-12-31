@@ -16,7 +16,8 @@ architect: true
 model: gemini/gemini-exp-1206
 edit-format: whole
 # editor-model: mistral/mistral-large-latest
-editor-model: gemini/gemini-2.0-flash-exp
+# editor-model: gemini/gemini-2.0-flash-exp
+editor-model: gemini/gemini-exp-1206
 editor-edit-format: editor-whole
 # weak-model: codestral/codestral-latest
 weak-model: mistral/mistral-large-latest
