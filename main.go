@@ -73,7 +73,7 @@ func main() {
 	}
 }
 
-initDB() {
+func initDB() {
 	createTables := `
     CREATE TABLE IF NOT EXISTS bots (
         name TEXT PRIMARY KEY,
