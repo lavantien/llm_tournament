@@ -143,6 +143,8 @@ func TestConcludeStatsHandler(t *testing.T) {
 	rr := httptest.NewRecorder()
     // Create a handler that uses the test database
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Set the global db variable to the test database
+		db = testDB
 		concludeStatsHandler(w, r)
 	})
 
@@ -168,7 +170,11 @@ func TestRefreshLeaderboardDataHandler(t *testing.T) {
     }
 
     rr := httptest.NewRecorder()
-    handler := http.HandlerFunc(refreshLeaderboardDataHandler)
+    handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Set the global db variable to the test database
+		db = testDB
+		refreshLeaderboardDataHandler(w, r)
+	})
 
     handler.ServeHTTP(rr, req)
 
