@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/mattn/go-sqlite3"
@@ -246,7 +247,7 @@ func getModelHandler(w http.ResponseWriter, r *http.Request) {
 
 func updateModelHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	name := vars["name"]
+	originalName := vars["name"]
 
 	var bot Bot
 	if err := json.NewDecoder(r.Body).Decode(&bot); err != nil {
@@ -254,10 +255,30 @@ func updateModelHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err := db.Exec("UPDATE bots SET path = ?, size = ?, param = ?, quant = ?, gpuLayers = ?, gpuLayersUsed = ?, ctx = ?, ctxUsed = ?, kingOf = ? WHERE name = ?",
-		bot.Path, bot.Size, bot.Param, bot.Quant, bot.GPULayers, bot.GPULayersUsed, bot.Ctx, bot.CtxUsed, bot.KingOf, name)
+	tx, err := db.Begin()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Failed to begin transaction: %v", err), http.StatusInternalServerError)
+		return
+	}
+	defer tx.Rollback()
+
+	if originalName != bot.Name {
+		_, err := tx.Exec("UPDATE bots SET name = ? WHERE name = ?", bot.Name, originalName)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Failed to update bot name: %v", err), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	_, err = tx.Exec("UPDATE bots SET path = ?, size = ?, param = ?, quant = ?, gpuLayers = ?, gpuLayersUsed = ?, ctx = ?, ctxUsed = ?, kingOf = ? WHERE name = ?",
+		bot.Path, bot.Size, bot.Param, bot.Quant, bot.GPULayers, bot.GPULayersUsed, bot.Ctx, bot.CtxUsed, bot.KingOf, bot.Name)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to update bot: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	if err := tx.Commit(); err != nil {
+		http.Error(w, fmt.Sprintf("Failed to commit transaction: %v", err), http.StatusInternalServerError)
 		return
 	}
 

@@ -87,6 +87,7 @@
 
     <div class="form-container">
         <h2>Create New Model</h2>
+        <input type="hidden" id="originalName" name="originalName">
         <div class="form-field">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name">
@@ -211,6 +212,7 @@
                 if (response.ok) {
                     document.getElementById('messages').textContent = 'Model created successfully.';
                     loadModels();
+                    document.querySelector('.form-container form').reset();
                 } else {
                     throw new Error('Failed to create model.');
                 }
@@ -225,6 +227,7 @@
             fetch(`/models/${name}`)
                 .then(response => response.json())
                 .then(model => {
+                    document.getElementById('originalName').value = name;
                     document.getElementById('name').value = model.name;
                     document.getElementById('path').value = model.path;
                     document.getElementById('size').value = model.size;
@@ -238,7 +241,7 @@
                     // Change the "Create Model" button to "Update Model"
                     const createButton = document.querySelector('.form-container button');
                     createButton.textContent = 'Update Model';
-                    createButton.onclick = () => updateModel(name);
+                    createButton.onclick = () => updateModel();
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -246,7 +249,8 @@
                 });
         }
 
-        function updateModel(name) {
+        function updateModel() {
+            const originalName = document.getElementById('originalName').value;
             const model = {
                 name: document.getElementById('name').value,
                 path: document.getElementById('path').value,
@@ -259,7 +263,7 @@
                 ctxUsed: parseInt(document.getElementById('ctxUsed').value)
             };
 
-            fetch(`/models/${name}`, {
+            fetch(`/models/${originalName}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
