@@ -37,5 +37,10 @@ func updateScore(db *sql.DB, botId string, profile string, promptId int, attempt
 		return fmt.Errorf("failed to commit transaction: %v", err)
 	}
 
+	// Recalculate the leaderboard
+	if err := recalculateLeaderboard(db); err != nil {
+		return fmt.Errorf("failed to recalculate leaderboard: %v", err)
+	}
+
 	return nil
 }
