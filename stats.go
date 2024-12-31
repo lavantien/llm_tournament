@@ -223,18 +223,14 @@ func concludeStats(db *sql.DB) error {
 	}
 
 	// Update kingOf for each bot based on their best-performing profile
-	botProfiles := make(map[string]string)
+    botKingOf := make(map[string]string)
 	for profileName, profileStats := range statsData.Profiles {
         log.Printf("Checking kingOf for profile: %s", profileName)
-		for _, botStat := range profileStats.TopBots {
-            if _, exists := botProfiles[botStat.Name]; !exists {
-                botProfiles[botStat.Name] = profileName
-                log.Printf("  - Bot %s is now king of %s", botStat.Name, profileName)
-            } else if profileStats.BotScores[botStat.Name] > statsData.Profiles[botProfiles[botStat.Name]].BotScores[botStat.Name] {
-                botProfiles[botStat.Name] = profileName
-                log.Printf("  - Bot %s is now king of %s (updated)", botStat.Name, profileName)
-            }
-		}
+        if len(profileStats.TopBots) > 0 {
+            kingBot := profileStats.TopBots[0]
+            log.Printf("  - Bot %s is now king of %s", kingBot.Name, profileName)
+            botKingOf[kingBot.Name] = profileName
+        }
 	}
 
     // Find the bot with the highest total Elo
@@ -247,7 +243,7 @@ func concludeStats(db *sql.DB) error {
         }
     }
 
-	for botName, profileName := range botProfiles {
+	for botName, profileName := range botKingOf {
         log.Printf("Updating kingOf for bot %s to %s", botName, profileName)
 		_, err = tx.Exec(`
             UPDATE bots SET kingOf = ? WHERE name = ?
