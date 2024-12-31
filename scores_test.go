@@ -58,4 +58,14 @@ func TestUpdateScore(t *testing.T) {
 	if elo != 50 {
 		t.Errorf("Expected updated score to be 50, got %f", elo)
 	}
+
+	// Test recalculating leaderboard after updating score
+	var totalElo float64
+	err = tempDB.QueryRow("SELECT totalElo FROM bots WHERE name = 'bot1'").Scan(&totalElo)
+	if err != nil {
+		t.Fatalf("Failed to query bot total Elo after update: %v", err)
+	}
+	if totalElo != 50 {
+		t.Errorf("Expected bot total Elo to be updated to 50, got %f", totalElo)
+	}
 }

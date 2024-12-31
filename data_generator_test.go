@@ -23,6 +23,10 @@ func TestGenerateMockScores(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to insert mock bots: %v", err)
 	}
+	_, err = tempDB.Exec("INSERT INTO profiles(name, systemPrompt) VALUES('profile1', 'prompt1'), ('profile2', 'prompt2')")
+	if err != nil {
+		t.Fatalf("Failed to insert mock profiles: %v", err)
+	}
 	_, err = tempDB.Exec("INSERT INTO prompts(number, content, solution, profile) VALUES(1, 'content1', 'solution1', 'profile1'), (2, 'content2', 'solution2', 'profile2')")
 	if err != nil {
 		t.Fatalf("Failed to insert mock prompts: %v", err)

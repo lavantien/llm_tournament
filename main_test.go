@@ -113,3 +113,37 @@ func TestStatsHandler(t *testing.T) {
 			status, http.StatusOK)
 	}
 }
+
+func TestConcludeStatsHandler(t *testing.T) {
+	req, err := http.NewRequest("POST", "/conclude_stats", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(concludeStatsHandler)
+
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+func TestRefreshLeaderboardDataHandler(t *testing.T) {
+	req, err := http.NewRequest("GET", "/refresh_leaderboard", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(refreshLeaderboardDataHandler)
+
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
