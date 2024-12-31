@@ -141,9 +141,15 @@ func TestConcludeStatsHandler(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(concludeStatsHandler)
+    // Create a handler that uses the test database
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		concludeStatsHandler(w, r)
+	})
 
+
+	// Call the handler with the test database
 	handler.ServeHTTP(rr, req)
+
 
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
