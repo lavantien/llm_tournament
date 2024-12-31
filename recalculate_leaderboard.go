@@ -118,6 +118,7 @@ func calculateBotEloForProfileReCalc(tx *sql.Tx, botName, profileName string) (f
 	if err = rows.Err(); err != nil {
 		return 0, fmt.Errorf("error iterating over scores for bot %s and profile %s: %v", botName, profileName, err)
 	}
+    log.Printf("  - calculateBotEloForProfileReCalc: Bot: %s, Profile: %s, Elo: %f", botName, profileName, totalElo)
 
 	return totalElo, nil
 }
