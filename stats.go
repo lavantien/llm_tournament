@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-    "log"
+	"log"
 )
 
 // BotStats represents the statistics for a bot
@@ -198,7 +198,7 @@ func concludeStats(db *sql.DB) error {
 		return fmt.Errorf("failed to get stats: %v", err)
 	}
 
-    log.Printf("Stats  %+v", statsData)
+	log.Printf("Stats  %+v", statsData)
 
 	tx, err := db.Begin()
 	if err != nil {
@@ -206,11 +206,18 @@ func concludeStats(db *sql.DB) error {
 	}
 	defer tx.Rollback()
 
+	// Reset kingOf for all bots
+	log.Println("Resetting kingOf for all bots")
+	_, err = tx.Exec(`UPDATE bots SET kingOf = ''`)
+	if err != nil {
+		return fmt.Errorf("failed to reset kingOf for all bots: %v", err)
+	}
+
 	// Update bestBots for each profile
 	for profileName, profileStats := range statsData.Profiles {
-        log.Printf("Updating bestBots for profile: %s", profileName)
+		log.Printf("Updating bestBots for profile: %s", profileName)
 		for _, botStats := range profileStats.TopBots {
-            log.Printf("  - Adding bot %s to bestBots for profile %s", botStats.Name, profileName)
+			log.Printf("  - Adding bot %s to bestBots for profile %s", botStats.Name, profileName)
 			_, err = tx.Exec(`
                 INSERT INTO profile_bot (profile_name, bot_name) 
                 VALUES (?, ?) 
@@ -223,28 +230,28 @@ func concludeStats(db *sql.DB) error {
 	}
 
 	// Update kingOf for each bot based on their best-performing profile
-    botKingOf := make(map[string]string)
+	botKingOf := make(map[string]string)
 	for profileName, profileStats := range statsData.Profiles {
-        log.Printf("Checking kingOf for profile: %s", profileName)
-        if len(profileStats.TopBots) > 0 {
-            kingBot := profileStats.TopBots[0]
-            log.Printf("  - Bot %s is now king of %s", kingBot.Name, profileName)
-            botKingOf[kingBot.Name] = profileName
-        }
+		log.Printf("Checking kingOf for profile: %s", profileName)
+		if len(profileStats.TopBots) > 0 {
+			kingBot := profileStats.TopBots[0]
+			log.Printf("  - Bot %s is king of %s", kingBot.Name, profileName)
+			botKingOf[kingBot.Name] = profileName
+		}
 	}
 
-    // Find the bot with the highest total Elo
-    var lordOfLLM string
-    var maxTotalElo float64
-    for botName, totalElo := range statsData.TotalElos {
-        if totalElo > maxTotalElo {
-            maxTotalElo = totalElo
-            lordOfLLM = botName
-        }
-    }
+	// Find the bot with the highest total Elo
+	var lordOfLLM string
+	var maxTotalElo float64
+	for botName, totalElo := range statsData.TotalElos {
+		if totalElo > maxTotalElo {
+			maxTotalElo = totalElo
+			lordOfLLM = botName
+		}
+	}
 
 	for botName, profileName := range botKingOf {
-        log.Printf("Updating kingOf for bot %s to %s", botName, profileName)
+		log.Printf("Updating kingOf for bot %s to %s", botName, profileName)
 		_, err = tx.Exec(`
             UPDATE bots SET kingOf = ? WHERE name = ?
         `, profileName, botName)
@@ -255,7 +262,7 @@ func concludeStats(db *sql.DB) error {
 
 	// Update the bot with the highest total Elo to have "Lord of LLM"
 	if lordOfLLM != "" {
-        log.Printf("Setting Lord of LLM to bot: %s", lordOfLLM)
+		log.Printf("Setting Lord of LLM to bot: %s", lordOfLLM)
 		_, err = tx.Exec(`
             UPDATE bots SET kingOf = 'Lord of LLM' WHERE name = ?
         `, lordOfLLM)

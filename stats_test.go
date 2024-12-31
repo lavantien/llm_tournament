@@ -118,13 +118,13 @@ func TestConcludeStats(t *testing.T) {
 	}
 
 	// Verify kingOf for each bot
-	var kingOf string
+	var kingOf sql.NullString
 	err = tempDB.QueryRow("SELECT kingOf FROM bots WHERE name = 'bot3'").Scan(&kingOf)
 	if err != nil {
 		t.Fatalf("Failed to query kingOf for bot3: %v", err)
 	}
-	if kingOf != "profile1" {
-		t.Errorf("Expected kingOf for bot3 to be profile1, got %s", kingOf)
+	if !kingOf.Valid || kingOf.String != "profile1" {
+		t.Errorf("Expected kingOf for bot3 to be profile1, got %s", kingOf.String)
 	}
 
 	// Verify Lord of LLM
@@ -132,7 +132,7 @@ func TestConcludeStats(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to query kingOf for bot3: %v", err)
 	}
-	if kingOf != "profile1" {
-		t.Errorf("Expected Lord of LLM to be bot3, got %s", kingOf)
+	if !kingOf.Valid || kingOf.String != "Lord of LLM" {
+		t.Errorf("Expected Lord of LLM to be bot3, got %s", kingOf.String)
 	}
 }
