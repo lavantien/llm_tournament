@@ -121,5 +121,7 @@ Test solution 2.
 }
 
 func cleanupDummyDataFiles() {
-	os.RemoveAll("data")
+	os.Remove("data/test_models.md")
+	os.Remove("data/test_profiles.md")
+	os.Remove("data/test_prompts.md")
 }
