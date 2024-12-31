@@ -16,9 +16,7 @@ func TestGenerateMockScores(t *testing.T) {
 	defer tempDB.Close()
 
 	// Initialize the database schema
-	// Assign the temporary database to the global db variable
-	db = tempDB
-	initDB()
+	initDB(tempDB)
 
 	// Insert some mock bots and prompts for testing
 	_, err = tempDB.Exec("INSERT INTO bots(name, path) VALUES('bot1', 'path1'), ('bot2', 'path2')")

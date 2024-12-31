@@ -17,7 +17,7 @@ func TestLoadData(t *testing.T) {
 	defer tempDB.Close()
 
 	// Initialize the database schema
-	initDB()
+	initDB(tempDB)
 
 	// Create dummy data files for testing
 	createDummyDataFiles()

@@ -16,7 +16,7 @@ func TestGetLeaderboardData(t *testing.T) {
 	defer tempDB.Close()
 
 	// Initialize the database schema
-	initDB()
+	initDB(tempDB)
 
 	// Insert some mock data for testing
 	_, err = tempDB.Exec("INSERT INTO bots(name, path) VALUES('bot1', 'path1'), ('bot2', 'path2')")
