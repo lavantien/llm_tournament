@@ -12,16 +12,16 @@ func updateScore(db *sql.DB, botId string, profile string, promptId int, attempt
 	}
 	defer tx.Rollback()
 
-	// Check if a score already exists for the given bot and prompt
+	// Check if a score already exists for the given bot, profile and prompt
 	var existingScoreId int
-	err = tx.QueryRow("SELECT id FROM scores WHERE botId = ? AND promptId = ?", botId, promptId).Scan(&existingScoreId)
+	err = tx.QueryRow("SELECT id FROM scores WHERE botId = ? AND promptId = ? AND profile = ?", botId, promptId, profile).Scan(&existingScoreId)
 	if err != nil && err != sql.ErrNoRows {
 		return fmt.Errorf("failed to check for existing score: %v", err)
 	}
 
 	if err == sql.ErrNoRows {
 		// No existing score, so insert a new one
-		_, err = tx.Exec("INSERT INTO scores(attempt, elo, botId, promptId) VALUES(?, ?, ?, ?)", attempt, elo, botId, promptId)
+		_, err = tx.Exec("INSERT INTO scores(attempt, elo, botId, promptId, profile) VALUES(?, ?, ?, ?, ?)", attempt, elo, botId, promptId, profile)
 		if err != nil {
 			return fmt.Errorf("failed to insert new score: %v", err)
 		}
