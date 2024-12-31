@@ -26,17 +26,19 @@ func recalculateLeaderboard(db *sql.DB) error {
 
 	// Recalculate scores for each bot and profile
 	for _, bot := range bots {
+		var totalElo float64
 		for _, profile := range profiles {
-			totalElo, err := calculateBotEloForProfileReCalc(tx, bot, profile)
+			elo, err := calculateBotEloForProfileReCalc(tx, bot, profile)
 			if err != nil {
 				return fmt.Errorf("failed to calculate elo for bot %s and profile %s: %v", bot, profile, err)
 			}
+			totalElo += elo
+		}
 
-			// Update the bot's total Elo score
-			_, err = tx.Exec("UPDATE bots SET totalElo = ? WHERE name = ?", totalElo, bot)
-			if err != nil {
-				return fmt.Errorf("failed to update total Elo for bot %s: %v", bot, err)
-			}
+		// Update the bot's total Elo score
+		_, err = tx.Exec("UPDATE bots SET totalElo = ? WHERE name = ?", totalElo, bot)
+		if err != nil {
+			return fmt.Errorf("failed to update total Elo for bot %s: %v", bot, err)
 		}
 	}
 
