@@ -36,6 +36,7 @@ func main() {
 	r.HandleFunc("/models", createModelHandler(db)).Methods("POST")
 	r.HandleFunc("/models/{name}", updateModelHandler(db)).Methods("PUT")
 	r.HandleFunc("/models/{name}", deleteModelHandler(db)).Methods("DELETE")
+	r.HandleFunc("/model_manager", modelManagerHandler)
 
 	// Profile Manager routes
 	r.HandleFunc("/profiles", getProfilesHandler(db)).Methods("GET")
@@ -523,4 +524,9 @@ func deletePromptHandler(db *sql.DB) http.HandlerFunc {
 
 		w.WriteHeader(http.StatusOK)
 	}
+}
+
+// modelManagerHandler serves the model manager HTML page
+func modelManagerHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "templates/model_manager.html")
 }

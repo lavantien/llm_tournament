@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Manager</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #282c34;
+            color: #abb2bf;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: #61afef;
+            color: #282c34;
+            padding: 10px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #abb2bf;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #61afef;
+            color: #282c34;
+        }
+        tr:nth-child(even) {
+            background-color: #3e4451;
+        }
+        tr:hover {
+            background-color: #5c6370;
+        }
+        .button {
+            background-color: #61afef;
+            color: #282c34;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .button:hover {
+            background-color: #98c379;
+        }
+    </style>
+</head>
+<body>
+    <h1>Model Manager</h1>
+    <button class="button" onclick="loadModels()">Load Models</button>
+    <table id="modelsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Path</th>
+                <th>Size</th>
+                <th>Param</th>
+                <th>Quant</th>
+                <th>GPU Layers</th>
+                <th>GPU Layers Used</th>
+                <th>Ctx</th>
+                <th>Ctx Used</th>
+                <th>King Of</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Models will be loaded here -->
+        </tbody>
+    </table>
+
+    <script>
+        function loadModels() {
+            fetch('/models')
+                .then(response => response.json())
+                .then(models => {
+                    const tableBody = document.getElementById('modelsTable').getElementsByTagName('tbody')[0];
+                    tableBody.innerHTML = '';
+                    models.forEach(model => {
+                        const row = tableBody.insertRow();
+                        row.insertCell().textContent = model.name;
+                        row.insertCell().textContent = model.path;
+                        row.insertCell().textContent = model.size;
+                        row.insertCell().textContent = model.param;
+                        row.insertCell().textContent = model.quant;
+                        row.insertCell().textContent = model.gpuLayers;
+                        row.insertCell().textContent = model.gpuLayersUsed;
+                        row.insertCell().textContent = model.ctx;
+                        row.insertCell().textContent = model.ctxUsed;
+                        row.insertCell().textContent = model.kingOf;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
