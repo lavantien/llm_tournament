@@ -99,7 +99,7 @@ func getProfilesReCalc(tx *sql.Tx) ([]string, error) {
 
 func calculateBotEloForProfileReCalc(tx *sql.Tx, botName, profileName string) (float64, error) {
 	rows, err := tx.Query(`
-        SELECT s.elo
+        SELECT COALESCE(SUM(s.elo), 0)
         FROM scores s
         JOIN prompts p ON s.promptId = p.number
         WHERE s.botId = ? AND p.profile = ?
@@ -110,13 +110,11 @@ func calculateBotEloForProfileReCalc(tx *sql.Tx, botName, profileName string) (f
 	defer rows.Close()
 
 	var totalElo float64
-	for rows.Next() {
-		var elo float64
-		if err := rows.Scan(&elo); err != nil {
-			return 0, fmt.Errorf("failed to scan elo for bot %s and profile %s: %v", botName, profileName, err)
-		}
-		totalElo += elo
-	}
+    if rows.Next() {
+        if err := rows.Scan(&totalElo); err != nil {
+            return 0, fmt.Errorf("failed to scan elo for bot %s and profile %s: %v", botName, profileName, err)
+        }
+    }
 	if err = rows.Err(); err != nil {
 		return 0, fmt.Errorf("error iterating over scores for bot %s and profile %s: %v", botName, profileName, err)
 	}
