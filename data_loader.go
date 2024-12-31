@@ -69,7 +69,7 @@ func loadProfiles(db *sql.DB, filePath string) error {
 		return err
 	}
 
-	profileRegex := regexp.MustCompile(`(?m)^##\s*(.*)\s*\n\n###\s*System\s*prompt\n\n([\s\S]*?)(?=(?:###|$))`)
+	profileRegex := regexp.MustCompile(`(?m)^##\s*(.*?)[\s\n]*###\s*System\s*prompt\n([\s\S]*?)(?:^##|$)`)
 	paramRegex := regexp.MustCompile(`(?m)^\s*-\s*([a-z_]+):\s*([\d.]+)\s*$`)
 
 	matches := profileRegex.FindAllStringSubmatch(string(content), -1)
@@ -87,7 +87,9 @@ func loadProfiles(db *sql.DB, filePath string) error {
 	defer stmt.Close()
 
 	for _, match := range matches {
-		name := match[1]
+		name := strings.TrimSpace(match[1])
+		systemPromptBlock := match[2]
+
 		systemPrompt := ""
 		repeatPenalty := 1.0
 		topK := 0
@@ -95,7 +97,7 @@ func loadProfiles(db *sql.DB, filePath string) error {
 		minP := 0.0
 		topA := 0.0
 
-		params := paramRegex.FindAllStringSubmatch(match[2], -1)
+		params := paramRegex.FindAllStringSubmatch(systemPromptBlock, -1)
 		for _, param := range params {
 			switch param[1] {
 			case "System prompt":
@@ -112,6 +114,14 @@ func loadProfiles(db *sql.DB, filePath string) error {
 				topA, _ = strconv.ParseFloat(param[2], 64)
 			}
 		}
+		
+        systemPromptLines := strings.Split(systemPromptBlock, "\n")
+        for i, line := range systemPromptLines {
+            if strings.HasPrefix(line, "###") {
+                systemPrompt = strings.TrimSpace(strings.Join(systemPromptLines[:i], "\n"))
+                break
+            }
+        }
 
 		_, err = stmt.Exec(name, systemPrompt, repeatPenalty, topK, topP, minP, topA)
 		if err != nil {
