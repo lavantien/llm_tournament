@@ -18,7 +18,11 @@ func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
 
 	leaderboardData := LeaderboardData{
 		Profiles: profiles,
-		Bots:     make([]LeaderboardBot, len(bots)),
+		Bots:     make([]struct {
+			Name     string             `json:"name"`
+			Elos     map[string]float64 `json:"elos"`
+			TotalElo float64            `json:"totalElo"`
+		}, len(bots)),
 	}
 
 	for i, bot := range bots {
