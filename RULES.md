@@ -1,3 +1,2 @@
 - Always write unit-test that cover all possible test-cases for the code you write if it's possible to do.
-- Record every technical choice and justification you make with a summary and files affected in a document named decision.md, if it doesn't exist then creat it as well.
-- Log every change you make with a summary and files you have changed in a log file named changes.md, if it doesn't exist then creat it as well.
+- Record every decision you make with a short one-line summary and files affected in a document named decision.md, if it doesn't exist then creat it as well.
