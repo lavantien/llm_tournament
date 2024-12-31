@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #282c34;
+            color: #abb2bf;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2 {
+            background-color: #61afef;
+            color: #282c34;
+            padding: 10px;
+            text-align: center;
+        }
+        h2 {
+            margin-top: 20px;
+            border-bottom: 2px solid #abb2bf;
+            padding-bottom: 5px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #abb2bf;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #61afef;
+            color: #282c34;
+        }
+        tr:nth-child(even) {
+            background-color: #3e4451;
+        }
+        tr:hover {
+            background-color: #5c6370;
+        }
+        .button {
+            background-color: #61afef;
+            color: #282c34;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .button:hover {
+            background-color: #98c379;
+        }
+        .chart-container {
+            width: 80%;
+            height: 400px;
+            margin: 20px auto;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>LLM Tournament Stats</h1>
+
+    <div class="section">
+        <h2>Lord of LLM</h2>
+        <p id="lordOfLLM"></p>
+    </div>
+
+    <div class="section">
+        <h2>Top 10 Bots per Profile</h2>
+        <div id="topBotsPerProfile"></div>
+    </div>
+
+    <div class="section">
+        <h2>Profile Performance</h2>
+        <div id="profilePerformanceCharts"></div>
+    </div>
+
+    <div class="section">
+        <h2>Total Elo Performance</h2>
+        <div class="chart-container">
+            <canvas id="totalEloChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        function loadStatsData() {
+            fetch('/stats_data')
+                .then(response => response.json())
+                .then(data => {
+                    displayLordOfLLM(data.lordOfLLM);
+                    displayTopBotsPerProfile(data.profiles);
+                    createProfilePerformanceCharts(data.profileData);
+                    createTotalEloChart(data.totalElos);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function displayLordOfLLM(lordOfLLM) {
+            document.getElementById('lordOfLLM').textContent = `The Lord of LLM is: ${lordOfLLM}`;
+        }
+
+        function displayTopBotsPerProfile(profiles) {
+            const container = document.getElementById('topBotsPerProfile');
+            for (const profileName in profiles) {
+                const profile = profiles[profileName];
+                const section = document.createElement('div');
+                section.innerHTML = `<h3>${profile.name}</h3>`;
+                const table = document.createElement('table');
+                const thead = document.createElement('thead');
+                const tbody = document.createElement('tbody');
+                const headerRow = thead.insertRow();
+                const nameHeader = document.createElement('th');
+                nameHeader.textContent = 'Bot Name';
+                const eloHeader = document.createElement('th');
+                eloHeader.textContent = 'Elo Score';
+                headerRow.appendChild(nameHeader);
+                headerRow.appendChild(eloHeader);
+                table.appendChild(thead);
+
+                profile.topBots.forEach(bot => {
+                    const row = tbody.insertRow();
+                    const nameCell = row.insertCell();
+                    nameCell.textContent = bot.name;
+                    const eloCell = row.insertCell();
+                    eloCell.textContent = bot.elo.toFixed(2);
+                });
+
+                table.appendChild(tbody);
+                section.appendChild(table);
+                container.appendChild(section);
+            }
+        }
+
+        function createProfilePerformanceCharts(profileData) {
+            const container = document.getElementById('profilePerformanceCharts');
+            for (const profileName in profileData) {
+                const botStats = profileData[profileName];
+                const chartContainer = document.createElement('div');
+                chartContainer.classList.add('chart-container');
+                const canvas = document.createElement('canvas');
+                canvas.id = `profileChart-${profileName}`;
+                chartContainer.appendChild(canvas);
+                container.appendChild(chartContainer);
+
+                const labels = botStats.map(bot => bot.name);
+                const data = botStats.map(bot => bot.elo);
+
+                new Chart(canvas, {
+                    type: 'line',
+                     {
+                        labels: labels,
+                        datasets: [{
+                            label: `${profileName} Performance`,
+                             data,
+                            fill: false,
+                            borderColor: '#61afef',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+        }
+
+        function createTotalEloChart(totalElos) {
+            const canvas = document.getElementById('totalEloChart');
+            const labels = Object.keys(totalElos);
+            const data = Object.values(totalElos);
+
+            new Chart(canvas, {
+                type: 'line',
+                 {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Elo Performance',
+                         data,
+                        fill: false,
+                        borderColor: '#61afef',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        loadStatsData();
+    </script>
+</body>
+</html>
