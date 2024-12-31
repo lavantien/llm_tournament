@@ -1,10 +1,26 @@
 package main
 
 import (
+	"database/sql"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	_ "github.com/mattn/go-sqlite3"
 )
+
+func setupTestDB() *sql.DB {
+	// Create a temporary test database
+	tempDB, err := sql.Open("sqlite3", ":memory:")
+	if err != nil {
+		panic(err)
+	}
+
+	// Initialize the database schema
+	initDB(tempDB)
+
+	return tempDB
+}
 
 func TestHomeHandler(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
@@ -115,6 +131,10 @@ func TestStatsHandler(t *testing.T) {
 }
 
 func TestConcludeStatsHandler(t *testing.T) {
+	// Set up the test database
+	db = setupTestDB()
+	defer db.Close()
+
 	req, err := http.NewRequest("POST", "/conclude_stats", nil)
 	if err != nil {
 		t.Fatal(err)
