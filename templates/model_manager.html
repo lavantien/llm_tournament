@@ -222,8 +222,67 @@
         }
 
         function editModel(name) {
-            // Implement edit functionality here
-            console.log('Edit model:', name);
+            fetch(`/models/${name}`)
+                .then(response => response.json())
+                .then(model => {
+                    document.getElementById('name').value = model.name;
+                    document.getElementById('path').value = model.path;
+                    document.getElementById('size').value = model.size;
+                    document.getElementById('param').value = model.param;
+                    document.getElementById('quant').value = model.quant;
+                    document.getElementById('gpuLayers').value = model.gpuLayers;
+                    document.getElementById('gpuLayersUsed').value = model.gpuLayersUsed;
+                    document.getElementById('ctx').value = model.ctx;
+                    document.getElementById('ctxUsed').value = model.ctxUsed;
+
+                    // Change the "Create Model" button to "Update Model"
+                    const createButton = document.querySelector('.form-container button');
+                    createButton.textContent = 'Update Model';
+                    createButton.onclick = () => updateModel(name);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('messages').textContent = 'Failed to fetch model details.';
+                });
+        }
+
+        function updateModel(name) {
+            const model = {
+                name: document.getElementById('name').value,
+                path: document.getElementById('path').value,
+                size: parseFloat(document.getElementById('size').value),
+                param: parseFloat(document.getElementById('param').value),
+                quant: document.getElementById('quant').value,
+                gpuLayers: parseInt(document.getElementById('gpuLayers').value),
+                gpuLayersUsed: parseInt(document.getElementById('gpuLayersUsed').value),
+                ctx: parseInt(document.getElementById('ctx').value),
+                ctxUsed: parseInt(document.getElementById('ctxUsed').value)
+            };
+
+            fetch(`/models/${name}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(model)
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('messages').textContent = 'Model updated successfully.';
+                    loadModels();
+                    // Reset the form and change the button back to "Create Model"
+                    document.querySelector('.form-container form').reset();
+                    const updateButton = document.querySelector('.form-container button');
+                    updateButton.textContent = 'Create Model';
+                    updateButton.onclick = createModel;
+                } else {
+                    throw new Error('Failed to update model.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('messages').textContent = 'Failed to update model.';
+            });
         }
 
         function deleteModel(name) {
