@@ -162,9 +162,7 @@ func TestRefreshLeaderboardDataHandler(t *testing.T) {
     }
 
     rr := httptest.NewRecorder()
-    handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        refreshLeaderboardDataHandler(w, r, db)
-    })
+    handler := http.HandlerFunc(refreshLeaderboardDataHandler)
 
     handler.ServeHTTP(rr, req)
 
