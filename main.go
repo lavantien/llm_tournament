@@ -22,6 +22,7 @@ func main() {
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/load", loadDataHandler(db))
 	http.HandleFunc("/clear", clearDataHandler(db))
+	http.HandleFunc("/generate", generateScoresHandler(db))
 
 	// Start the server
 	port := ":8080"
@@ -126,5 +127,15 @@ func clearDataHandler(db *sql.DB) http.HandlerFunc {
 			return
 		}
 		fmt.Fprint(w, "Data cleared successfully!")
+	}
+}
+
+func generateScoresHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if err := generateMockScores(db); err != nil {
+			http.Error(w, fmt.Sprintf("Failed to generate scores: %v", err), http.StatusInternalServerError)
+			return
+		}
+		fmt.Fprint(w, "Mock scores generated successfully!")
 	}
 }
