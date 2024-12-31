@@ -132,8 +132,8 @@ func TestStatsHandler(t *testing.T) {
 
 func TestConcludeStatsHandler(t *testing.T) {
 	// Set up the test database
-	db = setupTestDB()
-	defer db.Close()
+	testDB := setupTestDB()
+	defer testDB.Close()
 
 	req, err := http.NewRequest("POST", "/conclude_stats", nil)
 	if err != nil {
@@ -141,7 +141,9 @@ func TestConcludeStatsHandler(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(concludeStatsHandler)
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+		concludeStatsHandler(w, r, testDB)
+	})
 
 	handler.ServeHTTP(rr, req)
 
@@ -153,8 +155,8 @@ func TestConcludeStatsHandler(t *testing.T) {
 
 func TestRefreshLeaderboardDataHandler(t *testing.T) {
     // Set up the test database
-    db := setupTestDB()
-    defer db.Close()
+    testDB := setupTestDB()
+    defer testDB.Close()
 
     req, err := http.NewRequest("GET", "/refresh_leaderboard", nil)
     if err != nil {
@@ -162,7 +164,9 @@ func TestRefreshLeaderboardDataHandler(t *testing.T) {
     }
 
     rr := httptest.NewRecorder()
-    handler := http.HandlerFunc(refreshLeaderboardDataHandler)
+    handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+		refreshLeaderboardDataHandler(w, r, testDB)
+	})
 
     handler.ServeHTTP(rr, req)
 
