@@ -152,18 +152,24 @@ func TestConcludeStatsHandler(t *testing.T) {
 }
 
 func TestRefreshLeaderboardDataHandler(t *testing.T) {
-	req, err := http.NewRequest("GET", "/refresh_leaderboard", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+    // Set up the test database
+    db := setupTestDB()
+    defer db.Close()
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(refreshLeaderboardDataHandler)
+    req, err := http.NewRequest("GET", "/refresh_leaderboard", nil)
+    if err != nil {
+        t.Fatal(err)
+    }
 
-	handler.ServeHTTP(rr, req)
+    rr := httptest.NewRecorder()
+    handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        refreshLeaderboardDataHandler(w, r, db)
+    })
 
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
-	}
+    handler.ServeHTTP(rr, req)
+
+    if status := rr.Code; status != http.StatusOK {
+        t.Errorf("handler returned wrong status code: got %v want %v",
+            status, http.StatusOK)
+    }
 }
