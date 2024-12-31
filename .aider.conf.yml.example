@@ -12,13 +12,15 @@ api-key:
   - cohere=
 architect: true
 # model: mistral/mistral-large-latest
-# model: openai/deepseek-ai/DeepSeek-V3
-model: gemini/gemini-exp-1206
-edit-format: whole
+model: openai/deepseek-ai/DeepSeek-V3
+# model: gemini/gemini-exp-1206
+# model: gemini/gemini-2.0-flash-exp
+edit-format: diff
 # editor-model: mistral/mistral-large-latest
+editor-model: openai/deepseek-ai/DeepSeek-V3
 # editor-model: gemini/gemini-2.0-flash-exp
-editor-model: gemini/gemini-exp-1206
-editor-edit-format: editor-whole
+# editor-model: gemini/gemini-exp-1206
+editor-edit-format: editor-diff
 # weak-model: codestral/codestral-latest
 weak-model: mistral/mistral-large-latest
 read:
