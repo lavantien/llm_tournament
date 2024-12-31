@@ -190,3 +190,60 @@ func prepareTotalEloGraphData(db *sql.DB, statsData *StatsData) error {
 
 	return nil
 }
+
+// concludeStats updates the database with the concluded stats
+func concludeStats(db *sql.DB) error {
+	statsData, err := getStatsData(db)
+	if err != nil {
+		return fmt.Errorf("failed to get stats  %v", err)
+	}
+
+	tx, err := db.Begin()
+	if err != nil {
+		return fmt.Errorf("failed to begin transaction: %v", err)
+	}
+	defer tx.Rollback()
+
+	// Update bestBots for each profile
+	for profileName, profileStats := range statsData.Profiles {
+		for _, botStats := range profileStats.TopBots {
+			_, err := tx.Exec(`
+                INSERT INTO profile_bot (profile_name, bot_name)
+                VALUES (?, ?)
+                ON CONFLICT (profile_name, bot_name) DO NOTHING
+            `, profileName, botStats.Name)
+			if err != nil {
+				return fmt.Errorf("failed to update bestBots for profile %s: %v", profileName, err)
+			}
+		}
+	}
+
+	// Update kingOf for each bot based on the profile they performed best in
+	for profileName, profileStats := range statsData.Profiles {
+		if len(profileStats.TopBots) > 0 {
+			topBot := profileStats.TopBots[0].Name
+			_, err := tx.Exec(`
+                UPDATE bots SET kingOf = ? WHERE name = ?
+            `, profileName, topBot)
+			if err != nil {
+				return fmt.Errorf("failed to update kingOf for bot %s: %v", topBot, err)
+			}
+		}
+	}
+
+	// Update the bot with the highest total Elo to have "Lord of LLM"
+	if statsData.LordOfLLM != "" {
+		_, err := tx.Exec(`
+            UPDATE bots SET kingOf = 'Lord of LLM' WHERE name = ?
+        `, statsData.LordOfLLM)
+		if err != nil {
+			return fmt.Errorf("failed to update Lord of LLM: %v", err)
+		}
+	}
+
+	if err := tx.Commit(); err != nil {
+		return fmt.Errorf("failed to commit transaction: %v", err)
+	}
+
+	return nil
+}
