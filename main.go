@@ -58,6 +58,8 @@ func main() {
 	r.HandleFunc("/model_manager", modelManagerHandler)
 	r.HandleFunc("/profile_manager", profileManagerHandler)
 	r.HandleFunc("/prompt_manager", promptManagerHandler)
+	r.HandleFunc("/leaderboard", leaderboardHandler)
+	r.HandleFunc("/leaderboard_data", getLeaderboardDataHandler)
 
 	log.Println("Starting server on :8080")
 	err = http.ListenAndServe(":8080", r)
@@ -521,4 +523,28 @@ func profileManagerHandler(w http.ResponseWriter, r *http.Request) {
 
 func promptManagerHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "templates/prompt_manager.html")
+}
+
+func leaderboardHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "templates/leaderboard.html")
+}
+
+type LeaderboardData struct {
+	Profiles []string `json:"profiles"`
+	Bots     []struct {
+		Name     string             `json:"name"`
+		Elos     map[string]float64 `json:"elos"`
+		TotalElo float64            `json:"totalElo"`
+	} `json:"bots"`
+}
+
+func getLeaderboardDataHandler(w http.ResponseWriter, r *http.Request) {
+	data, err := getLeaderboardData(db)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Failed to get leaderboard  %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
 }

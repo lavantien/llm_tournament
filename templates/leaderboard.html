@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #282c34;
+            color: #abb2bf;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: #61afef;
+            color: #282c34;
+            padding: 10px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #abb2bf;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #61afef;
+            color: #282c34;
+            cursor: pointer;
+        }
+        tr:nth-child(even) {
+            background-color: #3e4451;
+        }
+        tr:hover {
+            background-color: #5c6370;
+        }
+        .button {
+            background-color: #61afef;
+            color: #282c34;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .button:hover {
+            background-color: #98c379;
+        }
+    </style>
+</head>
+<body>
+    <h1>Leaderboard</h1>
+    <table id="leaderboardTable">
+        <thead>
+            <tr>
+                <th>Bot Name</th>
+                <!-- Profile columns will be added here -->
+                <th>Total Elo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Leaderboard data will be loaded here -->
+        </tbody>
+    </table>
+
+    <script>
+        function loadLeaderboardData() {
+            fetch('/leaderboard_data')
+                .then(response => response.json())
+                .then(data => {
+                    const tableHead = document.getElementById('leaderboardTable').getElementsByTagName('thead')[0];
+                    const tableBody = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
+                    tableHead.innerHTML = '';
+                    tableBody.innerHTML = '';
+
+                    // Add header row
+                    const headerRow = tableHead.insertRow();
+                    const botNameHeader = document.createElement('th');
+                    botNameHeader.textContent = 'Bot Name';
+                    botNameHeader.onclick = () => sortTable(0);
+                    headerRow.appendChild(botNameHeader);
+
+                    data.profiles.forEach(profile => {
+                        const profileHeader = document.createElement('th');
+                        profileHeader.textContent = profile;
+                        profileHeader.onclick = () => sortTableByProfile(profile);
+                        headerRow.appendChild(profileHeader);
+                    });
+
+                    const totalEloHeader = document.createElement('th');
+                    totalEloHeader.textContent = 'Total Elo';
+                    totalEloHeader.onclick = () => sortTable(data.profiles.length + 1);
+                    headerRow.appendChild(totalEloHeader);
+
+                    // Add data rows
+                    data.bots.forEach(bot => {
+                        const row = tableBody.insertRow();
+                        const botNameCell = row.insertCell();
+                        botNameCell.textContent = bot.name;
+
+                        data.profiles.forEach(profile => {
+                            const eloCell = row.insertCell();
+                            eloCell.textContent = bot.elos[profile] !== undefined ? bot.elos[profile].toFixed(2) : 'N/A';
+                        });
+
+                        const totalEloCell = row.insertCell();
+                        totalEloCell.textContent = bot.totalElo.toFixed(2);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        let sortColumn = -1;
+        let sortDirection = 1;
+
+        function sortTable(columnIndex) {
+            if (sortColumn === columnIndex) {
+                sortDirection *= -1;
+            } else {
+                sortColumn = columnIndex;
+                sortDirection = 1;
+            }
+
+            const tableBody = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
+            const rows = Array.from(tableBody.rows);
+
+            rows.sort((a, b) => {
+                const aValue = a.cells[columnIndex].textContent;
+                const bValue = b.cells[columnIndex].textContent;
+
+                if (!isNaN(parseFloat(aValue)) && !isNaN(parseFloat(bValue))) {
+                    return sortDirection * (parseFloat(aValue) - parseFloat(bValue));
+                } else {
+                    return sortDirection * aValue.localeCompare(bValue);
+                }
+            });
+
+            rows.forEach(row => tableBody.appendChild(row));
+        }
+
+        function sortTableByProfile(profile) {
+            const columnIndex = Array.from(document.getElementById('leaderboardTable').getElementsByTagName('th')).findIndex(th => th.textContent === profile);
+            sortTable(columnIndex);
+        }
+
+        loadLeaderboardData();
+    </script>
+</body>
+</html>
