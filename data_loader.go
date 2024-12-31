@@ -54,6 +54,15 @@ func loadBots(db *sql.DB, filePath string) error {
 		ctx, _ := strconv.Atoi(match[7])
 		ctxUsed, _ := strconv.Atoi(match[8])
 
+        var count int
+        err = tx.QueryRow("SELECT COUNT(*) FROM bots WHERE name = ?", name).Scan(&count)
+        if err != nil {
+            return fmt.Errorf("failed to check if bot exists: %v", err)
+        }
+        if count > 0 {
+            continue // Skip if bot already exists
+        }
+
 		_, err = stmt.Exec(name, path, size, param, quant, gpuLayers, gpuLayersUsed, ctx, ctxUsed)
 		if err != nil {
 			return err
@@ -123,6 +132,15 @@ func loadProfiles(db *sql.DB, filePath string) error {
             }
         }
 
+        var count int
+        err = tx.QueryRow("SELECT COUNT(*) FROM profiles WHERE name = ?", name).Scan(&count)
+        if err != nil {
+            return fmt.Errorf("failed to check if profile exists: %v", err)
+        }
+        if count > 0 {
+            continue // Skip if profile already exists
+        }
+
 		_, err = stmt.Exec(name, systemPrompt, repeatPenalty, topK, topP, minP, topA)
 		if err != nil {
 			return err
@@ -190,6 +208,15 @@ func loadPrompts(db *sql.DB, filePath string) error {
 					solution += line + "\n"
 				}
 			}
+
+            var count int
+            err = tx.QueryRow("SELECT COUNT(*) FROM prompts WHERE number = ?", number).Scan(&count)
+            if err != nil {
+                return fmt.Errorf("failed to check if prompt exists: %v", err)
+            }
+            if count > 0 {
+                continue // Skip if prompt already exists
+            }
 
 			_, err = stmt.Exec(number, strings.TrimSpace(content), strings.TrimSpace(solution), currentProfile)
 			if err != nil {
