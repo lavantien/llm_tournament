@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"log"
 )
 
 func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
