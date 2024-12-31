@@ -237,6 +237,16 @@ func concludeStats(db *sql.DB) error {
 		}
 	}
 
+    // Find the bot with the highest total Elo
+    var lordOfLLM string
+    var maxTotalElo float64
+    for botName, totalElo := range statsData.TotalElos {
+        if totalElo > maxTotalElo {
+            maxTotalElo = totalElo
+            lordOfLLM = botName
+        }
+    }
+
 	for botName, profileName := range botProfiles {
         log.Printf("Updating kingOf for bot %s to %s", botName, profileName)
 		_, err = tx.Exec(`
@@ -248,11 +258,11 @@ func concludeStats(db *sql.DB) error {
 	}
 
 	// Update the bot with the highest total Elo to have "Lord of LLM"
-	if statsData.LordOfLLM != "" {
-        log.Printf("Setting Lord of LLM to bot: %s", statsData.LordOfLLM)
+	if lordOfLLM != "" {
+        log.Printf("Setting Lord of LLM to bot: %s", lordOfLLM)
 		_, err = tx.Exec(`
             UPDATE bots SET kingOf = 'Lord of LLM' WHERE name = ?
-        `, statsData.LordOfLLM)
+        `, lordOfLLM)
 		if err != nil {
 			return fmt.Errorf("failed to update Lord of LLM: %v", err)
 		}
