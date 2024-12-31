@@ -595,8 +595,7 @@ func updateScoreHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := updateScore(db, scoreData.BotId, scoreData.Profile, scoreData.PromptId, scoreData.Attempt, scoreData.Elo)
-	if err != nil {
+	if err := updateScore(db, scoreData.BotId, scoreData.Profile, scoreData.PromptId, scoreData.Attempt, scoreData.Elo); err != nil {
 		http.Error(w, fmt.Sprintf("Failed to update score: %v", err), http.StatusInternalServerError)
 		return
 	}
