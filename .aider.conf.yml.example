@@ -15,23 +15,23 @@ model: gemini/gemini-exp-1206
 # model: gemini/gemini-2.0-flash-exp
 # model: mistral/mistral-large-latest
 # model: openai/deepseek-ai/DeepSeek-V3
-# model: hf:meta-llama/Llama-3.1-405B-Instruct
-# model: hf:deepseek-ai/DeepSeek-V2.5-1210
-# model: hf:Qwen/Qwen2.5-Coder-32B-Instruct
-# model: hf:Qwen/Qwen2.5-72B-Instruct
-# model: hf:nvidia/Llama-3.1-Nemotron-70B-Instruct-HF
-# model: hf:meta-llama/Llama-3.3-70B-Instruct
+# model: openai/hf:meta-llama/Llama-3.1-405B-Instruct
+# model: openai/hf:deepseek-ai/DeepSeek-V2.5-1210
+# model: openai/hf:Qwen/Qwen2.5-Coder-32B-Instruct
+# model: openai/hf:Qwen/Qwen2.5-72B-Instruct
+# model: openai/hf:nvidia/Llama-3.1-Nemotron-70B-Instruct-HF
+# model: openai/hf:meta-llama/Llama-3.3-70B-Instruct
 edit-format: whole
 editor-model: gemini/gemini-exp-1206
 # editor-model: gemini/gemini-2.0-flash-exp
 # editor-model: mistral/mistral-large-latest
 # editor-model: openai/deepseek-ai/DeepSeek-V3
-# editor-model: hf:meta-llama/Llama-3.1-405B-Instruct
-# editor-model: hf:deepseek-ai/DeepSeek-V2.5-1210
-# editor-model: hf:Qwen/Qwen2.5-Coder-32B-Instruct
-# editor-model: hf:Qwen/Qwen2.5-72B-Instruct
-# editor-model: hf:nvidia/Llama-3.1-Nemotron-70B-Instruct-HF
-# editor-model: hf:meta-llama/Llama-3.3-70B-Instruct
+# editor-model: openai/hf:meta-llama/Llama-3.1-405B-Instruct
+# editor-model: openai/hf:deepseek-ai/DeepSeek-V2.5-1210
+# editor-model: openai/hf:Qwen/Qwen2.5-Coder-32B-Instruct
+# editor-model: openai/hf:Qwen/Qwen2.5-72B-Instruct
+# editor-model: openai/hf:nvidia/Llama-3.1-Nemotron-70B-Instruct-HF
+# editor-model: openai/hf:meta-llama/Llama-3.3-70B-Instruct
 editor-edit-format: editor-whole
 weak-model: mistral/mistral-large-latest
 # weak-model: codestral/codestral-latest
