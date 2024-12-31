@@ -141,9 +141,7 @@ func TestConcludeStatsHandler(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
-		concludeStatsHandler(w, r, testDB)
-	})
+	handler := http.HandlerFunc(concludeStatsHandler)
 
 	handler.ServeHTTP(rr, req)
 
@@ -164,9 +162,7 @@ func TestRefreshLeaderboardDataHandler(t *testing.T) {
     }
 
     rr := httptest.NewRecorder()
-    handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
-		refreshLeaderboardDataHandler(w, r, testDB)
-	})
+    handler := http.HandlerFunc(refreshLeaderboardDataHandler)
 
     handler.ServeHTTP(rr, req)
 
