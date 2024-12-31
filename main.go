@@ -63,6 +63,7 @@ func main() {
 	r.HandleFunc("/stats", statsHandler)
 	r.HandleFunc("/stats_data", getStatsDataHandler)
 	r.HandleFunc("/conclude_stats", concludeStatsHandler).Methods("POST")
+	r.HandleFunc("/update_score", updateScoreHandler).Methods("POST")
 
 	log.Println("Starting server on :8080")
 	err = http.ListenAndServe(":8080", r)
@@ -574,4 +575,27 @@ func concludeStatsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Fprintf(w, "Stats concluded successfully.")
+}
+
+func updateScoreHandler(w http.ResponseWriter, r *http.Request) {
+	var scoreData struct {
+		BotId    string  `json:"botId"`
+		Profile  string  `json:"profile"`
+		PromptId int     `json:"promptId"`
+		Attempt  int     `json:"attempt"`
+		Elo      float64 `json:"elo"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&scoreData); err != nil {
+		http.Error(w, fmt.Sprintf("Failed to decode score  %v", err), http.StatusBadRequest)
+		return
+	}
+
+	err := updateScore(db, scoreData.BotId, scoreData.Profile, scoreData.PromptId, scoreData.Attempt, scoreData.Elo)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Failed to update score: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "Score updated successfully.")
 }
