@@ -3,18 +3,24 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"log"
 )
 
 func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
+	log.Println("Starting getLeaderboardData")
 	profiles, err := getProfiles(db)
 	if err != nil {
+		log.Printf("Error getting profiles: %v", err)
 		return LeaderboardData{}, fmt.Errorf("failed to get profiles: %v", err)
 	}
+	log.Printf("Profiles: %v", profiles)
 
 	bots, err := getBots(db)
 	if err != nil {
+		log.Printf("Error getting bots: %v", err)
 		return LeaderboardData{}, fmt.Errorf("failed to get bots: %v", err)
 	}
+	log.Printf("Bots: %v", bots)
 
 	leaderboardData := LeaderboardData{
 		Profiles: profiles,
@@ -32,6 +38,7 @@ func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
 		for _, profile := range profiles {
 			elo, err := calculateBotEloForProfile(db, bot, profile)
 			if err != nil {
+				log.Printf("Error calculating elo for bot %s and profile %s: %v", bot, profile, err)
 				return LeaderboardData{}, fmt.Errorf("failed to calculate elo for bot %s and profile %s: %v", bot, profile, err)
 			}
 			leaderboardData.Bots[i].Elos[profile] = elo
@@ -43,7 +50,9 @@ func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
 			totalElo += elo
 		}
 		leaderboardData.Bots[i].TotalElo = totalElo
+		log.Printf("Bot %s, TotalElo: %f", bot, totalElo)
 	}
+	log.Println("Finished getLeaderboardData")
 
 	return leaderboardData, nil
 }
