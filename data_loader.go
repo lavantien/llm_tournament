@@ -138,18 +138,7 @@ func loadPrompts(db *sql.DB, filePath string) error {
 		return err
 	}
 
-	promptRegex := regexp.MustCompile(`(?m)^###\s*(\d+)([\s\S]*?)(?=(?:^###\s*\d+|$))`)
-	contentRegex := regexp.MustCompile(`(?m)^####\s*Content\n\n([\s\S]*?)(?=(?:^####\s*Solution|$))`)
-	solutionRegex := regexp.MustCompile(`(?m)^####\s*Solution\n\n([\s\S]*?)$`)
-	profileTypeRegex := regexp.MustCompile(`(?m)^##\s*(.*)\s*Profile\s*$`)
-
-	profileTypeMatches := profileTypeRegex.FindAllStringSubmatch(string(content), -1)
-	currentProfileType := ""
-	if len(profileTypeMatches) > 0 {
-		currentProfileType = profileTypeMatches[0][1]
-	}
-
-	matches := promptRegex.FindAllStringSubmatch(string(content), -1)
+	sections := strings.Split(string(content), "---")
 
 	tx, err := db.Begin()
 	if err != nil {
@@ -163,26 +152,49 @@ func loadPrompts(db *sql.DB, filePath string) error {
 	}
 	defer stmt.Close()
 
-	for _, match := range matches {
-		number, _ := strconv.Atoi(match[1])
-		block := match[2]
+	var currentProfile string
+	for _, section := range sections {
+		section = strings.TrimSpace(section)
+		if strings.HasPrefix(section, "## ") {
+			currentProfile = strings.TrimPrefix(section, "## ")
+			currentProfile = strings.TrimSpace(currentProfile)
+			currentProfile = strings.Split(currentProfile, " ")[0]
+		} else if strings.HasPrefix(section, "### ") {
+			lines := strings.Split(section, "\n")
+			if len(lines) < 5 {
+				continue
+			}
+			number, err := strconv.Atoi(strings.TrimSpace(strings.TrimPrefix(lines[0], "### ")))
+			if err != nil {
+				continue
+			}
+			content := ""
+			solution := ""
+			contentStarted := false
+			solutionStarted := false
+			for _, line := range lines[1:] {
+				if strings.HasPrefix(line, "#### Content") {
+					contentStarted = true
+					solutionStarted = false
+					continue
+				}
+				if strings.HasPrefix(line, "#### Solution") {
+					solutionStarted = true
+					contentStarted = false
+					continue
+				}
+				if contentStarted {
+					content += line + "\n"
+				}
+				if solutionStarted {
+					solution += line + "\n"
+				}
+			}
 
-		contentMatch := contentRegex.FindStringSubmatch(block)
-		solutionMatch := solutionRegex.FindStringSubmatch(block)
-
-		content := ""
-		if len(contentMatch) > 1 {
-			content = strings.TrimSpace(contentMatch[1])
-		}
-
-		solution := ""
-		if len(solutionMatch) > 1 {
-			solution = strings.TrimSpace(solutionMatch[1])
-		}
-
-		_, err = stmt.Exec(number, content, solution, currentProfileType)
-		if err != nil {
-			return err
+			_, err = stmt.Exec(number, strings.TrimSpace(content), strings.TrimSpace(solution), currentProfile)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
