@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+    "log"
 )
 
 func recalculateLeaderboard(db *sql.DB) error {
@@ -26,6 +27,7 @@ func recalculateLeaderboard(db *sql.DB) error {
 
 	// Recalculate scores for each bot and profile
 	for _, bot := range bots {
+        log.Printf("Recalculating total Elo for bot: %s", bot)
 		var totalElo float64
 		for _, profile := range profiles {
 			elo, err := calculateBotEloForProfileReCalc(tx, bot, profile)
@@ -33,6 +35,7 @@ func recalculateLeaderboard(db *sql.DB) error {
 				return fmt.Errorf("failed to calculate elo for bot %s and profile %s: %v", bot, profile, err)
 			}
 			totalElo += elo
+            log.Printf("  - Profile: %s, Elo: %f, TotalElo: %f", profile, elo, totalElo)
 		}
 
 		// Update the bot's total Elo score
@@ -40,6 +43,7 @@ func recalculateLeaderboard(db *sql.DB) error {
 		if err != nil {
 			return fmt.Errorf("failed to update total Elo for bot %s: %v", bot, err)
 		}
+        log.Printf("  - Updated total Elo for bot %s to: %f", bot, totalElo)
 	}
 
 	if err := tx.Commit(); err != nil {
