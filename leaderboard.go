@@ -35,8 +35,14 @@ func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
 				return LeaderboardData{}, fmt.Errorf("failed to calculate elo for bot %s and profile %s: %v", bot, profile, err)
 			}
 			leaderboardData.Bots[i].Elos[profile] = elo
-			leaderboardData.Bots[i].TotalElo += elo
 		}
+		// Fetch the totalElo from the bots table
+		var totalElo float64
+		err = db.QueryRow("SELECT totalElo FROM bots WHERE name = ?", bot).Scan(&totalElo)
+		if err != nil {
+			return LeaderboardData{}, fmt.Errorf("failed to get totalElo for bot %s: %v", bot, err)
+		}
+		leaderboardData.Bots[i].TotalElo = totalElo
 	}
 
 	return leaderboardData, nil
@@ -90,7 +96,7 @@ func getBots(db *sql.DB) ([]string, error) {
 
 func calculateBotEloForProfile(db *sql.DB, botName, profileName string) (float64, error) {
 	rows, err := db.Query(`
-        SELECT s.attempt
+        SELECT s.elo
         FROM scores s
         JOIN prompts p ON s.promptId = p.number
         WHERE s.botId = ? AND p.profile = ?
@@ -102,21 +108,9 @@ func calculateBotEloForProfile(db *sql.DB, botName, profileName string) (float64
 
 	var totalElo float64
 	for rows.Next() {
-		var attempt int
-		if err := rows.Scan(&attempt); err != nil {
-			return 0, fmt.Errorf("failed to scan attempt for bot %s and profile %s: %v", botName, profileName, err)
-		}
-
 		var elo float64
-		switch attempt {
-		case 1:
-			elo = 100
-		case 2:
-			elo = 50
-		case 3:
-			elo = 20
-		default:
-			elo = 0
+		if err := rows.Scan(&elo); err != nil {
+			return 0, fmt.Errorf("failed to scan elo for bot %s and profile %s: %v", botName, profileName, err)
 		}
 		totalElo += elo
 	}
