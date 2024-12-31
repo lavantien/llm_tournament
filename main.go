@@ -60,6 +60,8 @@ func main() {
 	r.HandleFunc("/prompt_manager", promptManagerHandler)
 	r.HandleFunc("/leaderboard", leaderboardHandler)
 	r.HandleFunc("/leaderboard_data", getLeaderboardDataHandler)
+	r.HandleFunc("/stats", statsHandler)
+	r.HandleFunc("/stats_data", getStatsDataHandler)
 
 	log.Println("Starting server on :8080")
 	err = http.ListenAndServe(":8080", r)
@@ -542,6 +544,21 @@ func getLeaderboardDataHandler(w http.ResponseWriter, r *http.Request) {
 	data, err := getLeaderboardData(db)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to get leaderboard  %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
+}
+
+func statsHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "templates/stats.html")
+}
+
+func getStatsDataHandler(w http.ResponseWriter, r *http.Request) {
+	data, err := getStatsData(db)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Failed to get stats  %v", err), http.StatusInternalServerError)
 		return
 	}
 
