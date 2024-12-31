@@ -112,8 +112,10 @@ func initDB() {
         elo REAL,
         botId TEXT,
         promptId INTEGER,
+        profile TEXT,
         FOREIGN KEY (botId) REFERENCES bots(name),
-        FOREIGN KEY (promptId) REFERENCES prompts(number)
+        FOREIGN KEY (promptId) REFERENCES prompts(number),
+        FOREIGN KEY (profile) REFERENCES profiles(name)
     );
 
     CREATE TABLE IF NOT EXISTS profile_bot (
