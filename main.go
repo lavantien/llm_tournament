@@ -23,7 +23,7 @@ func main() {
 	}
 	defer db.Close()
 
-	initDB()
+	initDB(db)
 
 	if len(os.Args) > 1 && os.Args[1] == "load" {
 		err := loadData(db)
@@ -73,7 +73,7 @@ func main() {
 	}
 }
 
-func initDB() {
+func initDB(db *sql.DB) {
 	createTables := `
     CREATE TABLE IF NOT EXISTS bots (
         name TEXT PRIMARY KEY,
