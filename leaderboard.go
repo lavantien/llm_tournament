@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"log"
 )
 
 func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
@@ -45,7 +46,7 @@ func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
 func getProfiles(db *sql.DB) ([]string, error) {
 	rows, err := db.Query("SELECT name FROM profiles")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to query profiles: %v", err)
 	}
 	defer rows.Close()
 
@@ -53,9 +54,13 @@ func getProfiles(db *sql.DB) ([]string, error) {
 	for rows.Next() {
 		var profile string
 		if err := rows.Scan(&profile); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to scan profile: %v", err)
 		}
 		profiles = append(profiles, profile)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, fmt.Errorf("error iterating over profiles: %v", err)
 	}
 
 	return profiles, nil
@@ -64,7 +69,7 @@ func getProfiles(db *sql.DB) ([]string, error) {
 func getBots(db *sql.DB) ([]string, error) {
 	rows, err := db.Query("SELECT name FROM bots")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to query bots: %v", err)
 	}
 	defer rows.Close()
 
@@ -72,9 +77,13 @@ func getBots(db *sql.DB) ([]string, error) {
 	for rows.Next() {
 		var bot string
 		if err := rows.Scan(&bot); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to scan bot: %v", err)
 		}
 		bots = append(bots, bot)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, fmt.Errorf("error iterating over bots: %v", err)
 	}
 
 	return bots, nil
@@ -88,7 +97,7 @@ func calculateBotEloForProfile(db *sql.DB, botName, profileName string) (float64
         WHERE s.botId = ? AND p.profile = ?
     `, botName, profileName)
 	if err != nil {
-		return 0, err
+		return 0, fmt.Errorf("failed to query scores for bot %s and profile %s: %v", botName, profileName, err)
 	}
 	defer rows.Close()
 
@@ -96,7 +105,7 @@ func calculateBotEloForProfile(db *sql.DB, botName, profileName string) (float64
 	for rows.Next() {
 		var attempt int
 		if err := rows.Scan(&attempt); err != nil {
-			return 0, err
+			return 0, fmt.Errorf("failed to scan attempt for bot %s and profile %s: %v", botName, profileName, err)
 		}
 
 		var elo float64
@@ -111,6 +120,10 @@ func calculateBotEloForProfile(db *sql.DB, botName, profileName string) (float64
 			elo = 0
 		}
 		totalElo += elo
+	}
+
+	if err = rows.Err(); err != nil {
+		return 0, fmt.Errorf("error iterating over scores for bot %s and profile %s: %v", botName, profileName, err)
 	}
 
 	return totalElo, nil
