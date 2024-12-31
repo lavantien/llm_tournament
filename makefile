@@ -10,4 +10,5 @@ pdfbots:
 test:
 	go test ./... -v -race -cover
 run:
+	go run . load
 	go run .
