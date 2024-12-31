@@ -91,6 +91,7 @@
 </head>
 <body>
     <h1>Leaderboard</h1>
+    <button class="button" onclick="refreshLeaderboard()">Refresh Leaderboard</button>
     <table id="leaderboardTable">
         <thead>
             <tr>
@@ -303,6 +304,10 @@
         function sortTableByProfile(profile) {
             const columnIndex = Array.from(document.getElementById('leaderboardTable').getElementsByTagName('th')).findIndex(th => th.textContent === profile);
             sortTable(columnIndex);
+        }
+
+        function refreshLeaderboard() {
+            loadLeaderboardData();
         }
 
         loadLeaderboardData();
