@@ -3,13 +3,10 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"io/ioutil"
-	"log"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
-
-	"github.com/mattn/go-sqlite3"
 )
 
 func loadData(db *sql.DB) error {
@@ -26,7 +23,7 @@ func loadData(db *sql.DB) error {
 }
 
 func loadBots(db *sql.DB, filePath string) error {
-	content, err := ioutil.ReadFile(filePath)
+	content, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
 	}
@@ -67,7 +64,7 @@ func loadBots(db *sql.DB, filePath string) error {
 }
 
 func loadProfiles(db *sql.DB, filePath string) error {
-	content, err := ioutil.ReadFile(filePath)
+	content, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
 	}
@@ -126,7 +123,7 @@ func loadProfiles(db *sql.DB, filePath string) error {
 }
 
 func loadPrompts(db *sql.DB, filePath string) error {
-	content, err := ioutil.ReadFile(filePath)
+	content, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
 	}

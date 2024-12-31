@@ -63,7 +63,7 @@ func createDummyDataFiles() {
   Ctx: 2048
   Ctx Used: 1024
 `
-	ioutil.WriteFile("data/test_models.md", []byte(modelsContent), 0644)
+	os.WriteFile("data/test_models.md", []byte(modelsContent), 0644)
 
 	profilesContent := `
 ## Profile1
@@ -90,7 +90,7 @@ Another test system prompt.
 - min_p: 0.1
 - top_a: 0.7
 `
-	ioutil.WriteFile("data/test_profiles.md", []byte(profilesContent), 0644)
+	os.WriteFile("data/test_profiles.md", []byte(profilesContent), 0644)
 
 	promptsContent := `
 ## Default Profile
@@ -117,7 +117,7 @@ Test prompt 2.
 
 Test solution 2.
 `
-	ioutil.WriteFile("data/test_prompts.md", []byte(promptsContent), 0644)
+	os.WriteFile("data/test_prompts.md", []byte(promptsContent), 0644)
 }
 
 func cleanupDummyDataFiles() {

@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"sort"
 )
 
 // BotStats represents the statistics for a bot
@@ -27,7 +26,7 @@ type StatsData struct {
 	LordOfLLM   string                  `json:"lordOfLLM"`
 	Profiles    map[string]ProfileStats `json:"profiles"`
 	TotalElos   map[string]float64      `json:"totalElos"`
-	ProfileData map[string][]BotStats  `json:"profileData"`
+	ProfileData map[string][]BotStats   `json:"profileData"`
 }
 
 // getStatsData retrieves and compiles statistics data

@@ -13,13 +13,13 @@ func recalculateLeaderboard(db *sql.DB) error {
 	defer tx.Rollback()
 
 	// Get all bots
-	bots, err := getBots(tx)
+	bots, err := getBotsReCalc(tx)
 	if err != nil {
 		return fmt.Errorf("failed to get bots: %v", err)
 	}
 
 	// Get all profiles
-	profiles, err := getProfiles(tx)
+	profiles, err := getProfilesReCalc(tx)
 	if err != nil {
 		return fmt.Errorf("failed to get profiles: %v", err)
 	}
@@ -27,7 +27,7 @@ func recalculateLeaderboard(db *sql.DB) error {
 	// Recalculate scores for each bot and profile
 	for _, bot := range bots {
 		for _, profile := range profiles {
-			totalElo, err := calculateBotEloForProfile(tx, bot, profile)
+			totalElo, err := calculateBotEloForProfileReCalc(tx, bot, profile)
 			if err != nil {
 				return fmt.Errorf("failed to calculate elo for bot %s and profile %s: %v", bot, profile, err)
 			}
@@ -47,7 +47,7 @@ func recalculateLeaderboard(db *sql.DB) error {
 	return nil
 }
 
-func getBots(tx *sql.Tx) ([]string, error) {
+func getBotsReCalc(tx *sql.Tx) ([]string, error) {
 	rows, err := tx.Query("SELECT name FROM bots")
 	if err != nil {
 		return nil, err
@@ -66,7 +66,7 @@ func getBots(tx *sql.Tx) ([]string, error) {
 	return bots, nil
 }
 
-func getProfiles(tx *sql.Tx) ([]string, error) {
+func getProfilesReCalc(tx *sql.Tx) ([]string, error) {
 	rows, err := tx.Query("SELECT name FROM profiles")
 	if err != nil {
 		return nil, err
@@ -85,7 +85,7 @@ func getProfiles(tx *sql.Tx) ([]string, error) {
 	return profiles, nil
 }
 
-func calculateBotEloForProfile(tx *sql.Tx, botName, profileName string) (float64, error) {
+func calculateBotEloForProfileReCalc(tx *sql.Tx, botName, profileName string) (float64, error) {
 	rows, err := tx.Query(`
         SELECT s.elo
         FROM scores s
