@@ -196,7 +196,7 @@ type Bot struct {
 	GPULayersUsed int     `json:"gpuLayersUsed"`
 	Ctx           int     `json:"ctx"`
 	CtxUsed       int     `json:"ctxUsed"`
-	KingOf        string  `json:"kingOf"`
+	KingOf        sql.NullString  `json:"kingOf"`
 }
 
 func getModelsHandler(w http.ResponseWriter, r *http.Request) {
@@ -216,6 +216,12 @@ func getModelsHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		bots = append(bots, bot)
 	}
+
+    for i := range bots {
+        if !bots[i].KingOf.Valid {
+            bots[i].KingOf.String = ""
+        }
+    }
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(bots)
@@ -252,6 +258,10 @@ func getModelHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+
+    if !bot.KingOf.Valid {
+        bot.KingOf.String = ""
+    }
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(bot)
