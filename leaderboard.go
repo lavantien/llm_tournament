@@ -18,11 +18,7 @@ func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
 
 	leaderboardData := LeaderboardData{
 		Profiles: profiles,
-		Bots: make([]struct {
-			Name     string             `json:"name"`
-			Elos     map[string]float64 `json:"elos"`
-			TotalElo float64            `json:"totalElo"`
-		}, len(bots)),
+		Bots:     make([]LeaderboardBot, len(bots)),
 	}
 
 	for i, bot := range bots {
@@ -36,16 +32,22 @@ func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
 			}
 			leaderboardData.Bots[i].Elos[profile] = elo
 		}
-		// Fetch the totalElo from the bots table
-		var totalElo float64
-		err = db.QueryRow("SELECT totalElo FROM bots WHERE name = ?", bot).Scan(&totalElo)
-		if err != nil {
-			return LeaderboardData{}, fmt.Errorf("failed to get totalElo for bot %s: %v", bot, err)
+
+		// Calculate totalElo for the bot
+		totalElo := 0.0
+		for _, elo := range leaderboardData.Bots[i].Elos {
+			totalElo += elo
 		}
 		leaderboardData.Bots[i].TotalElo = totalElo
 	}
 
 	return leaderboardData, nil
+}
+
+type LeaderboardBot struct {
+	Name     string             `json:"name"`
+	Elos     map[string]float64 `json:"elos"`
+	TotalElo float64            `json:"totalElo"`
 }
 
 func getProfiles(db *sql.DB) ([]string, error) {

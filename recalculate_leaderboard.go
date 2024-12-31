@@ -52,7 +52,7 @@ func recalculateLeaderboard(db *sql.DB) error {
 func getBotsReCalc(tx *sql.Tx) ([]string, error) {
 	rows, err := tx.Query("SELECT name FROM bots")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to query bots: %v", err)
 	}
 	defer rows.Close()
 
@@ -60,9 +60,12 @@ func getBotsReCalc(tx *sql.Tx) ([]string, error) {
 	for rows.Next() {
 		var bot string
 		if err := rows.Scan(&bot); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to scan bot: %v", err)
 		}
 		bots = append(bots, bot)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, fmt.Errorf("error iterating over bots: %v", err)
 	}
 
 	return bots, nil
@@ -71,7 +74,7 @@ func getBotsReCalc(tx *sql.Tx) ([]string, error) {
 func getProfilesReCalc(tx *sql.Tx) ([]string, error) {
 	rows, err := tx.Query("SELECT name FROM profiles")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to query profiles: %v", err)
 	}
 	defer rows.Close()
 
@@ -79,9 +82,12 @@ func getProfilesReCalc(tx *sql.Tx) ([]string, error) {
 	for rows.Next() {
 		var profile string
 		if err := rows.Scan(&profile); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to scan profile: %v", err)
 		}
 		profiles = append(profiles, profile)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, fmt.Errorf("error iterating over profiles: %v", err)
 	}
 
 	return profiles, nil
@@ -95,7 +101,7 @@ func calculateBotEloForProfileReCalc(tx *sql.Tx, botName, profileName string) (f
         WHERE s.botId = ? AND p.profile = ?
     `, botName, profileName)
 	if err != nil {
-		return 0, err
+		return 0, fmt.Errorf("failed to query scores for bot %s and profile %s: %v", botName, profileName, err)
 	}
 	defer rows.Close()
 
@@ -103,9 +109,12 @@ func calculateBotEloForProfileReCalc(tx *sql.Tx, botName, profileName string) (f
 	for rows.Next() {
 		var elo float64
 		if err := rows.Scan(&elo); err != nil {
-			return 0, err
+			return 0, fmt.Errorf("failed to scan elo for bot %s and profile %s: %v", botName, profileName, err)
 		}
 		totalElo += elo
+	}
+	if err = rows.Err(); err != nil {
+		return 0, fmt.Errorf("error iterating over scores for bot %s and profile %s: %v", botName, profileName, err)
 	}
 
 	return totalElo, nil

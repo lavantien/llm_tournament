@@ -194,7 +194,7 @@ func prepareTotalEloGraphData(db *sql.DB, statsData *StatsData) error {
 func concludeStats(db *sql.DB) error {
 	statsData, err := getStatsData(db)
 	if err != nil {
-		return fmt.Errorf("failed to get stats  %v", err)
+		return fmt.Errorf("failed to get stats: %v", err)
 	}
 
 	tx, err := db.Begin()
@@ -206,9 +206,9 @@ func concludeStats(db *sql.DB) error {
 	// Update bestBots for each profile
 	for profileName, profileStats := range statsData.Profiles {
 		for _, botStats := range profileStats.TopBots {
-			_, err := tx.Exec(`
-                INSERT INTO profile_bot (profile_name, bot_name)
-                VALUES (?, ?)
+			_, err = tx.Exec(`
+                INSERT INTO profile_bot (profile_name, bot_name) 
+                VALUES (?, ?) 
                 ON CONFLICT (profile_name, bot_name) DO NOTHING
             `, profileName, botStats.Name)
 			if err != nil {
@@ -217,22 +217,28 @@ func concludeStats(db *sql.DB) error {
 		}
 	}
 
-	// Update kingOf for each bot based on the profile they performed best in
+	// Update kingOf for each bot based on their best-performing profile
+	botProfiles := make(map[string]string)
 	for profileName, profileStats := range statsData.Profiles {
-		if len(profileStats.TopBots) > 0 {
-			topBot := profileStats.TopBots[0].Name
-			_, err := tx.Exec(`
-                UPDATE bots SET kingOf = ? WHERE name = ?
-            `, profileName, topBot)
-			if err != nil {
-				return fmt.Errorf("failed to update kingOf for bot %s: %v", topBot, err)
+		for _, botStat := range profileStats.TopBots {
+			if currentProfile, exists := botProfiles[botStat.Name]; !exists || profileStats.BotScores[botStat.Name] > statsData.Profiles[currentProfile].BotScores[botStat.Name] {
+				botProfiles[botStat.Name] = profileName
 			}
+		}
+	}
+
+	for botName, profileName := range botProfiles {
+		_, err = tx.Exec(`
+            UPDATE bots SET kingOf = ? WHERE name = ?
+        `, profileName, botName)
+		if err != nil {
+			return fmt.Errorf("failed to update kingOf for bot %s: %v", botName, err)
 		}
 	}
 
 	// Update the bot with the highest total Elo to have "Lord of LLM"
 	if statsData.LordOfLLM != "" {
-		_, err := tx.Exec(`
+		_, err = tx.Exec(`
             UPDATE bots SET kingOf = 'Lord of LLM' WHERE name = ?
         `, statsData.LordOfLLM)
 		if err != nil {
