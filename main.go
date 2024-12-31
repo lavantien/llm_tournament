@@ -57,6 +57,7 @@ func main() {
 	r.HandleFunc("/prompts/{number}", deletePromptHandler).Methods("DELETE")
 	r.HandleFunc("/model_manager", modelManagerHandler)
 	r.HandleFunc("/profile_manager", profileManagerHandler)
+	r.HandleFunc("/prompt_manager", promptManagerHandler)
 
 	log.Println("Starting server on :8080")
 	err = http.ListenAndServe(":8080", r)
@@ -516,4 +517,8 @@ func modelManagerHandler(w http.ResponseWriter, r *http.Request) {
 
 func profileManagerHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "templates/profile_manager.html")
+}
+
+func promptManagerHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "templates/prompt_manager.html")
 }
