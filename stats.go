@@ -24,17 +24,17 @@ type ProfileStats struct {
 
 // StatsData represents the overall statistics data
 type StatsData struct {
-	LordOfLLM  string                  `json:"lordOfLLM"`
-	Profiles   map[string]ProfileStats `json:"profiles"`
-	TotalElos  map[string]float64      `json:"totalElos"`
+	LordOfLLM   string                  `json:"lordOfLLM"`
+	Profiles    map[string]ProfileStats `json:"profiles"`
+	TotalElos   map[string]float64      `json:"totalElos"`
 	ProfileData map[string][]BotStats  `json:"profileData"`
 }
 
 // getStatsData retrieves and compiles statistics data
 func getStatsData(db *sql.DB) (StatsData, error) {
 	statsData := StatsData{
-		Profiles:   make(map[string]ProfileStats),
-		TotalElos:  make(map[string]float64),
+		Profiles:    make(map[string]ProfileStats),
+		TotalElos:   make(map[string]float64),
 		ProfileData: make(map[string][]BotStats),
 	}
 
