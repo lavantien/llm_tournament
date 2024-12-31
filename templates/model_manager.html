@@ -155,10 +155,17 @@
             fetch('/models')
                 .then(response => {
                     console.log("Response:", response); // Log the response
-                    return response.json()
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
                 })
                 .then(models => {
                     console.log("Models:", models); // Log the models data
+                    if (!models || models.length === 0) {
+                        document.getElementById('messages').textContent = 'No models found.';
+                        return;
+                    }
                     const tableBody = document.getElementById('modelsTable').getElementsByTagName('tbody')[0];
                     tableBody.innerHTML = '';
                     models.forEach(model => {

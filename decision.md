@@ -1,0 +1,1 @@
+- Added logging and error handling to the loadModels function in templates/model_manager.html to debug the "models is null" error.
