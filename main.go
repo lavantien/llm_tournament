@@ -64,6 +64,7 @@ func main() {
 	r.HandleFunc("/stats_data", getStatsDataHandler)
 	r.HandleFunc("/conclude_stats", concludeStatsHandler).Methods("POST")
 	r.HandleFunc("/update_score", updateScoreHandler).Methods("POST")
+	r.HandleFunc("/refresh_leaderboard", refreshLeaderboardDataHandler).Methods("GET")
 
 	log.Println("Starting server on :8080")
 	err = http.ListenAndServe(":8080", r)
@@ -72,7 +73,7 @@ func main() {
 	}
 }
 
-func initDB() {
+initDB() {
 	createTables := `
     CREATE TABLE IF NOT EXISTS bots (
         name TEXT PRIMARY KEY,
@@ -600,4 +601,15 @@ func updateScoreHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprintf(w, "Score updated successfully.")
+}
+
+func refreshLeaderboardDataHandler(w http.ResponseWriter, r *http.Request) {
+	data, err := getLeaderboardData(db)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Failed to refresh leaderboard  %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
 }
