@@ -242,7 +242,7 @@ Remember to:
 
 ### temperature
 
-1.0
+1.6
 
 ---
 
