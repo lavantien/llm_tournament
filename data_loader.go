@@ -138,7 +138,9 @@ func loadPrompts(db *sql.DB, filePath string) error {
 		return err
 	}
 
-	promptRegex := regexp.MustCompile(`(?m)^###\s*(\d+)\n\n####\s*Content\n\n([\s\S]*?)(?=(?:####\s*Solution|$))####\s*Solution\n\n([\s\S]*?)(?=(?:---|$))`)
+	promptRegex := regexp.MustCompile(`(?m)^###\s*(\d+)([\s\S]*?)(?=(?:^###\s*\d+|$))`)
+	contentRegex := regexp.MustCompile(`(?m)^####\s*Content\n\n([\s\S]*?)(?=(?:^####\s*Solution|$))`)
+	solutionRegex := regexp.MustCompile(`(?m)^####\s*Solution\n\n([\s\S]*?)$`)
 	profileTypeRegex := regexp.MustCompile(`(?m)^##\s*(.*)\s*Profile\s*$`)
 
 	profileTypeMatches := profileTypeRegex.FindAllStringSubmatch(string(content), -1)
@@ -163,8 +165,20 @@ func loadPrompts(db *sql.DB, filePath string) error {
 
 	for _, match := range matches {
 		number, _ := strconv.Atoi(match[1])
-		content := strings.TrimSpace(match[2])
-		solution := strings.TrimSpace(match[3])
+		block := match[2]
+
+		contentMatch := contentRegex.FindStringSubmatch(block)
+		solutionMatch := solutionRegex.FindStringSubmatch(block)
+
+		content := ""
+		if len(contentMatch) > 1 {
+			content = strings.TrimSpace(contentMatch[1])
+		}
+
+		solution := ""
+		if len(solutionMatch) > 1 {
+			solution = strings.TrimSpace(solutionMatch[1])
+		}
 
 		_, err = stmt.Exec(number, content, solution, currentProfileType)
 		if err != nil {
