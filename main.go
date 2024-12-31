@@ -86,6 +86,7 @@ func initDB() {
         ctx INTEGER,
         ctxUsed INTEGER,
         kingOf TEXT,
+        totalElo REAL DEFAULT 0,
         FOREIGN KEY (kingOf) REFERENCES profiles(name)
     );
 

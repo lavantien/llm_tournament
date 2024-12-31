@@ -13,33 +13,29 @@ func recalculateLeaderboard(db *sql.DB) error {
 	defer tx.Rollback()
 
 	// Get all bots
-	bots, err := getBots(db)
+	bots, err := getBots(tx)
 	if err != nil {
 		return fmt.Errorf("failed to get bots: %v", err)
 	}
 
 	// Get all profiles
-	profiles, err := getProfiles(db)
+	profiles, err := getProfiles(tx)
 	if err != nil {
 		return fmt.Errorf("failed to get profiles: %v", err)
-	}
-
-	// Clear existing bot scores
-	if _, err := tx.Exec("UPDATE bots SET kingOf = NULL"); err != nil {
-		return fmt.Errorf("failed to clear existing bot scores: %v", err)
 	}
 
 	// Recalculate scores for each bot and profile
 	for _, bot := range bots {
 		for _, profile := range profiles {
-			totalElo, err := calculateBotEloForProfile(db, bot, profile)
+			totalElo, err := calculateBotEloForProfile(tx, bot, profile)
 			if err != nil {
 				return fmt.Errorf("failed to calculate elo for bot %s and profile %s: %v", bot, profile, err)
 			}
 
-			// Update the bot's score for the profile
-			if _, err := tx.Exec("UPDATE bots SET kingOf = ? WHERE name = ?", profile, bot); err != nil {
-				return fmt.Errorf("failed to update bot %s score for profile %s: %v", bot, profile, err)
+			// Update the bot's total Elo score
+			_, err = tx.Exec("UPDATE bots SET totalElo = ? WHERE name = ?", totalElo, bot)
+			if err != nil {
+				return fmt.Errorf("failed to update total Elo for bot %s: %v", bot, err)
 			}
 		}
 	}
@@ -49,4 +45,66 @@ func recalculateLeaderboard(db *sql.DB) error {
 	}
 
 	return nil
+}
+
+func getBots(tx *sql.Tx) ([]string, error) {
+	rows, err := tx.Query("SELECT name FROM bots")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var bots []string
+	for rows.Next() {
+		var bot string
+		if err := rows.Scan(&bot); err != nil {
+			return nil, err
+		}
+		bots = append(bots, bot)
+	}
+
+	return bots, nil
+}
+
+func getProfiles(tx *sql.Tx) ([]string, error) {
+	rows, err := tx.Query("SELECT name FROM profiles")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var profiles []string
+	for rows.Next() {
+		var profile string
+		if err := rows.Scan(&profile); err != nil {
+			return nil, err
+		}
+		profiles = append(profiles, profile)
+	}
+
+	return profiles, nil
+}
+
+func calculateBotEloForProfile(tx *sql.Tx, botName, profileName string) (float64, error) {
+	rows, err := tx.Query(`
+        SELECT s.elo
+        FROM scores s
+        JOIN prompts p ON s.promptId = p.number
+        WHERE s.botId = ? AND p.profile = ?
+    `, botName, profileName)
+	if err != nil {
+		return 0, err
+	}
+	defer rows.Close()
+
+	var totalElo float64
+	for rows.Next() {
+		var elo float64
+		if err := rows.Scan(&elo); err != nil {
+			return 0, err
+		}
+		totalElo += elo
+	}
+
+	return totalElo, nil
 }
