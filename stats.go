@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+    "log"
 )
 
 // BotStats represents the statistics for a bot
@@ -197,6 +198,8 @@ func concludeStats(db *sql.DB) error {
 		return fmt.Errorf("failed to get stats: %v", err)
 	}
 
+    log.Printf("Stats  %+v", statsData)
+
 	tx, err := db.Begin()
 	if err != nil {
 		return fmt.Errorf("failed to begin transaction: %v", err)
@@ -205,7 +208,9 @@ func concludeStats(db *sql.DB) error {
 
 	// Update bestBots for each profile
 	for profileName, profileStats := range statsData.Profiles {
+        log.Printf("Updating bestBots for profile: %s", profileName)
 		for _, botStats := range profileStats.TopBots {
+            log.Printf("  - Adding bot %s to bestBots for profile %s", botStats.Name, profileName)
 			_, err = tx.Exec(`
                 INSERT INTO profile_bot (profile_name, bot_name) 
                 VALUES (?, ?) 
@@ -220,14 +225,20 @@ func concludeStats(db *sql.DB) error {
 	// Update kingOf for each bot based on their best-performing profile
 	botProfiles := make(map[string]string)
 	for profileName, profileStats := range statsData.Profiles {
+        log.Printf("Checking kingOf for profile: %s", profileName)
 		for _, botStat := range profileStats.TopBots {
-			if currentProfile, exists := botProfiles[botStat.Name]; !exists || profileStats.BotScores[botStat.Name] > statsData.Profiles[currentProfile].BotScores[botStat.Name] {
-				botProfiles[botStat.Name] = profileName
-			}
+            if _, exists := botProfiles[botStat.Name]; !exists {
+                botProfiles[botStat.Name] = profileName
+                log.Printf("  - Bot %s is now king of %s", botStat.Name, profileName)
+            } else if profileStats.BotScores[botStat.Name] > statsData.Profiles[botProfiles[botStat.Name]].BotScores[botStat.Name] {
+                botProfiles[botStat.Name] = profileName
+                log.Printf("  - Bot %s is now king of %s (updated)", botStat.Name, profileName)
+            }
 		}
 	}
 
 	for botName, profileName := range botProfiles {
+        log.Printf("Updating kingOf for bot %s to %s", botName, profileName)
 		_, err = tx.Exec(`
             UPDATE bots SET kingOf = ? WHERE name = ?
         `, profileName, botName)
@@ -238,6 +249,7 @@ func concludeStats(db *sql.DB) error {
 
 	// Update the bot with the highest total Elo to have "Lord of LLM"
 	if statsData.LordOfLLM != "" {
+        log.Printf("Setting Lord of LLM to bot: %s", statsData.LordOfLLM)
 		_, err = tx.Exec(`
             UPDATE bots SET kingOf = 'Lord of LLM' WHERE name = ?
         `, statsData.LordOfLLM)
