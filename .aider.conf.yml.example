@@ -1,26 +1,31 @@
-openai-api-base: https://glhf.chat/api/openai/v1
+# openai-api-base: https://glhf.chat/api/openai/v1
+openai-api-base: https://api.hyperbolic.xyz/v1
 api-key:
   - openai=
+  # - openai=
+  # - openai=
   - anthropic=
   - gemini=
   - xai=
-  - mistraL=
-  - codestRAL=
+  - mistral=
+  - codestral=
   - cohere=
 architect: true
-model: mistral/mistral-large-latest
+# model: mistral/mistral-large-latest
+# model: openai/deepseek-ai/DeepSeek-V3
+model: gemini/gemini-exp-1206
 edit-format: diff
-editor-model: mistral/mistral-large-latest
+# editor-model: mistral/mistral-large-latest
+editor-model: gemini/gemini-exp-1206
 editor-edit-format: editor-diff
-weak-model: codestral/codestral-latest
+# weak-model: codestral/codestral-latest
+weak-model: mistral/mistral-large-latest
 read:
   - RULES.md
   - PROMPT.md
   - INSTRUCTION.md
   - preliminary_design.md
-  - fyne_doc.md
-  - fyne_api.html
-yes-always: false
+yes-always: true
 map-tokens: 2048
 timeout: 300
 cache-prompts: true
@@ -32,3 +37,4 @@ editor: vim
 multiline: false
 code-theme: coffee
 show-diffs: true
+
