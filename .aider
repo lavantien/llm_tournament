@@ -1,0 +1,25 @@
+/drop
+/add       data_generator.go
+/add       data_generator_test.go
+/add       data_loader.go
+/add       data_loader_test.go
+/add       leaderboard.go
+/add       leaderboard_test.go
+/add       main.go
+/add       main_test.go
+/add       makefile
+/add       recalculate_leaderboard.go
+/add       recalculate_leaderboard_test.go
+/add       scores.go
+/add       scores_test.go
+/add       stats.go
+/add       stats_test.go
+/add       templates\leaderboard.html
+/add       templates\model_manager.html
+/add       templates\profile_manager.html
+/add       templates\prompt_manager.html
+/add       templates\stats.html
+/read-only INSTRUCTION.md
+/read-only PROMPT.md
+/read-only RULES.md
+/read-only preliminary_design.md
