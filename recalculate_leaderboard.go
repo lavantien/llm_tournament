@@ -28,7 +28,7 @@ func recalculateLeaderboard(db *sql.DB) error {
 	// Recalculate scores for each bot and profile
 	for _, bot := range bots {
         log.Printf("Recalculating total Elo for bot: %s", bot)
-		var totalElo float64
+		totalElo := 0.0
 		for _, profile := range profiles {
 			elo, err := calculateBotEloForProfileReCalc(tx, bot, profile)
 			if err != nil {
