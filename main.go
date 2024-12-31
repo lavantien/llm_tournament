@@ -10,7 +10,7 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 var db *sql.DB
@@ -62,6 +62,7 @@ func main() {
 	r.HandleFunc("/leaderboard_data", getLeaderboardDataHandler)
 	r.HandleFunc("/stats", statsHandler)
 	r.HandleFunc("/stats_data", getStatsDataHandler)
+	r.HandleFunc("/conclude_stats", concludeStatsHandler).Methods("POST")
 
 	log.Println("Starting server on :8080")
 	err = http.ListenAndServe(":8080", r)
@@ -564,4 +565,13 @@ func getStatsDataHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
+}
+
+func concludeStatsHandler(w http.ResponseWriter, r *http.Request) {
+	err := concludeStats(db)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Failed to conclude stats: %v", err), http.StatusInternalServerError)
+		return
+	}
+	fmt.Fprintf(w, "Stats concluded successfully.")
 }
