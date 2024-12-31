@@ -20,8 +20,8 @@ func main() {
 
 	// Set up HTTP handlers
 	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/load", loadDataHandler)
-	http.HandleFunc("/clear", clearDataHandler)
+	http.HandleFunc("/load", loadDataHandler(db))
+	http.HandleFunc("/clear", clearDataHandler(db))
 
 	// Start the server
 	port := ":8080"
@@ -97,10 +97,34 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Welcome to the LLM Tournament App!")
 }
 
-func loadDataHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Load Test Scores button clicked (Not yet implemented)")
+func loadDataHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if err := loadData(db); err != nil {
+			http.Error(w, fmt.Sprintf("Failed to load  %v", err), http.StatusInternalServerError)
+			return
+		}
+		fmt.Fprint(w, "Data loaded successfully!")
+	}
 }
 
-func clearDataHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Clear Test Data button clicked (Not yet implemented)")
+func clearDataHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if _, err := db.Exec("DELETE FROM bots"); err != nil {
+			http.Error(w, fmt.Sprintf("Failed to clear bots  %v", err), http.StatusInternalServerError)
+			return
+		}
+		if _, err := db.Exec("DELETE FROM profiles"); err != nil {
+			http.Error(w, fmt.Sprintf("Failed to clear profiles  %v", err), http.StatusInternalServerError)
+			return
+		}
+		if _, err := db.Exec("DELETE FROM prompts"); err != nil {
+			http.Error(w, fmt.Sprintf("Failed to clear prompts  %v", err), http.StatusInternalServerError)
+			return
+		}
+		if _, err := db.Exec("DELETE FROM scores"); err != nil {
+			http.Error(w, fmt.Sprintf("Failed to clear scores  %v", err), http.StatusInternalServerError)
+			return
+		}
+		fmt.Fprint(w, "Data cleared successfully!")
+	}
 }
