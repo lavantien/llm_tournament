@@ -311,13 +311,13 @@ func deleteModelHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 type Profile struct {
-	Name         string  `json:"name"`
-	SystemPrompt string  `json:"systemPrompt"`
+	Name          string  `json:"name"`
+	SystemPrompt  string  `json:"systemPrompt"`
 	RepeatPenalty float64 `json:"repeatPenalty"`
-	TopK         int     `json:"topK"`
-	TopP         float64 `json:"topP"`
-	MinP         float64 `json:"minP"`
-	TopA         float64 `json:"topA"`
+	TopK          int     `json:"topK"`
+	TopP          float64 `json:"topP"`
+	MinP          float64 `json:"minP"`
+	TopA          float64 `json:"topA"`
 }
 
 func getProfilesHandler(w http.ResponseWriter, r *http.Request) {
