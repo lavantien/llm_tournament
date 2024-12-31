@@ -107,4 +107,3 @@ erDiagram
 - go
 - go html/template
 - sqlite3
-- go log/slog

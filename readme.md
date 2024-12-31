@@ -2,10 +2,10 @@
 
 ## Benchmarking, Profiles, and Prompt Suites
 
-- Full solution dataset and evaluation methodology: [`profiles.md`](./profiles.md) & [`prompts.md`](./prompts.md).
+- Full solution dataset and evaluation methodology: [`/data/profiles.md`](./data/profiles.md) & [`data/prompts.md`](./data/prompts.md).
 
   - 6 comprehensive specialized system prompt and sampler profiles.
-  - 33 quality prompts divided into 7 groups.
+  - 33 quality prompts divided into 6 groups.
 
 - Quickly chat with a local LLM with correct sampler profile (7-10 tps on 8gb vram system):
 
@@ -24,7 +24,7 @@
 
 - **LLM Benchmarking** [`preliminary_design.md`](./preliminary_design.md)
 
-- `LLM Benchmarking` app on localhost with golang, html/template, and sqlite3.
+- `LLM Benchmarking` app on localhost with Golang, html/template, and SQLite 3.
 
 ![ER Diagram](./assets/design/erdiagram.png)
 
@@ -39,6 +39,7 @@
 - Learn new languages and skills.
 - Use AIs as a copilot to engineer software and compose documentation.
 - Generate a couple of 600-1000 page books for personal use.
+- Build a swarm of autonomous AI agents to accomplish tasks.
 - So need to select the best candidate for the task, given the specs of the local machine.
 - There for, prompt suites and tournament pipeline is necessary
 - In conclusion, build a general pipeline for future works with local AIs.
@@ -50,67 +51,19 @@
 - C++ runtime (msvc runtime or llvm).
 - C# and .NET MAUI.
 - (Docker/Compose) if use Ollama.
-- **Neovim/Aider/Mistral/Crawl4AI**, **LlamaCpp/SillyTavern**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, etc.
+- **Neovim/Aider/Mistral/Gemini/Crawl4AI**, **LlamaCpp/SillyTavern**, TabbyAPI/Exllamav2, Vllm/Aphrodite (Linux), Ollama/Open Web UI, LM Studio/AnythingLLM, etc.
 - HuggingFace, CivitAI, stable-diffusion-webui-forge, ComfyUI, SwarmUI, Speed isn't important, as long as it can run then it's fair game.
 - Local LLMs with highest quant that runnable on your machine, example archs: llama, gemma2, command-r, gwen2, deepseek2, phi3, mamba, internlm2, stablelm, t5, bart
 
 ## LLM Benchmarking
 
-## Tournament Leaderboard
+### Goals
 
-### TODO
-
-- Desktop app or spreadsheet for managing and visualizing the tournament
-
-### Free LLM API list:
-
-<details>
-    <summary>...more</summary>
-
-#### GLHF
-
-1. Llama 3.1 405B Instruct
-1. Deepseek 2.5
-1. Aria
-1. Command R Plus
-1. Athene v2 Chat
-1. Magnum v4 123B
-1. Llama 3.1 Nemotron 70B Instruct HF
-
-#### Mistral
-
-1. Mistral Large 2411
-1. Mistral 8x22B
-1. Codestral
-
-#### Groq
-
-1. Llama 3.2 90B Text Preview
-1. Llama 3.3 70B Versatile
-
-#### SambaNova Cloud
-
-1. LLama 3.2 90B Vision Instruct
-1. Qwen 2.5 72B Instruct
-1. QwQ 32B Preview
-
-#### Google AI Studio or Project IDX
-
-1. Gemini 2.0 Flash Experimental
-1. Gemini Experimental 1206
-1. Gemini 2.0 Flash Thinking Experimental
-
-#### DeepSeek
-
-1. DeepSeek-R1-Lite-Preview
-
-#### Big Brother
-
-1. ChatGPT 4o
-1. Claude 3.5 Sonnet
-1. Copilot Chat
-
-</details>
+- Keep track of models, profiles, and prompt suites.
+- Store and calculate elo for each models.
+- Store their output.
+- Table view with multi sort.
+- Figure out the best free LLM, both remote and local.
 
 ### Local LLMs list:
 
