@@ -37,6 +37,20 @@ func main() {
 	r.HandleFunc("/models/{name}", updateModelHandler(db)).Methods("PUT")
 	r.HandleFunc("/models/{name}", deleteModelHandler(db)).Methods("DELETE")
 
+	// Profile Manager routes
+	r.HandleFunc("/profiles", getProfilesHandler(db)).Methods("GET")
+	r.HandleFunc("/profiles/{name}", getProfileHandler(db)).Methods("GET")
+	r.HandleFunc("/profiles", createProfileHandler(db)).Methods("POST")
+	r.HandleFunc("/profiles/{name}", updateProfileHandler(db)).Methods("PUT")
+	r.HandleFunc("/profiles/{name}", deleteProfileHandler(db)).Methods("DELETE")
+
+	// Prompt Manager routes
+	r.HandleFunc("/prompts", getPromptsHandler(db)).Methods("GET")
+	r.HandleFunc("/prompts/{number}", getPromptHandler(db)).Methods("GET")
+	r.HandleFunc("/prompts", createPromptHandler(db)).Methods("POST")
+	r.HandleFunc("/prompts/{number}", updatePromptHandler(db)).Methods("PUT")
+	r.HandleFunc("/prompts/{number}", deletePromptHandler(db)).Methods("DELETE")
+
 	// Start the server
 	port := ":8080"
 	fmt.Printf("Starting server on port %s\n", port)
@@ -264,6 +278,246 @@ func deleteModelHandler(db *sql.DB) http.HandlerFunc {
 		_, err := db.Exec("DELETE FROM bots WHERE name = ?", name)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Failed to delete bot: %v", err), http.StatusInternalServerError)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+	}
+}
+
+// Profile struct to hold data for a single profile
+type Profile struct {
+	Name         string  `json:"name"`
+	SystemPrompt string  `json:"systemPrompt"`
+	RepeatPenalty float64 `json:"repeatPenalty"`
+	TopK         int     `json:"topK"`
+	TopP         float64 `json:"topP"`
+	MinP         float64 `json:"minP"`
+	TopA         float64 `json:"topA"`
+	BestBots     string  `json:"bestBots"`
+}
+
+// getProfilesHandler returns a list of all profiles
+func getProfilesHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		rows, err := db.Query("SELECT * FROM profiles")
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Failed to query profiles: %v", err), http.StatusInternalServerError)
+			return
+		}
+		defer rows.Close()
+
+		var profiles []Profile
+		for rows.Next() {
+			var profile Profile
+			if err := rows.Scan(&profile.Name, &profile.SystemPrompt, &profile.RepeatPenalty, &profile.TopK, &profile.TopP, &profile.MinP, &profile.TopA, &profile.BestBots); err != nil {
+				http.Error(w, fmt.Sprintf("Failed to scan profile: %v", err), http.StatusInternalServerError)
+				return
+			}
+			profiles = append(profiles, profile)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(profiles)
+	}
+}
+
+// getProfileHandler returns a single profile by name
+func getProfileHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		name := vars["name"]
+
+		var profile Profile
+		err := db.QueryRow("SELECT * FROM profiles WHERE name = ?", name).Scan(&profile.Name, &profile.SystemPrompt, &profile.RepeatPenalty, &profile.TopK, &profile.TopP, &profile.MinP, &profile.TopA, &profile.BestBots)
+		if err != nil {
+			if err == sql.ErrNoRows {
+				http.Error(w, "Profile not found", http.StatusNotFound)
+			} else {
+				http.Error(w, fmt.Sprintf("Failed to query profile: %v", err), http.StatusInternalServerError)
+			}
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(profile)
+	}
+}
+
+// createProfileHandler creates a new profile
+func createProfileHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var profile Profile
+		if err := json.NewDecoder(r.Body).Decode(&profile); err != nil {
+			http.Error(w, fmt.Sprintf("Failed to decode profile: %v", err), http.StatusBadRequest)
+			return
+		}
+
+		_, err := db.Exec("INSERT INTO profiles(name, systemPrompt, repeatPenalty, topK, topP, minP, topA) VALUES(?, ?, ?, ?, ?, ?, ?)", profile.Name, profile.SystemPrompt, profile.RepeatPenalty, profile.TopK, profile.TopP, profile.MinP, profile.TopA)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Failed to insert profile: %v", err), http.StatusInternalServerError)
+			return
+		}
+
+		w.WriteHeader(http.StatusCreated)
+	}
+}
+
+// updateProfileHandler updates an existing profile
+func updateProfileHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		name := vars["name"]
+
+		var profile Profile
+		if err := json.NewDecoder(r.Body).Decode(&profile); err != nil {
+			http.Error(w, fmt.Sprintf("Failed to decode profile: %v", err), http.StatusBadRequest)
+			return
+		}
+
+		_, err := db.Exec("UPDATE profiles SET systemPrompt = ?, repeatPenalty = ?, topK = ?, topP = ?, minP = ?, topA = ? WHERE name = ?", profile.SystemPrompt, profile.RepeatPenalty, profile.TopK, profile.TopP, profile.MinP, profile.TopA, name)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Failed to update profile: %v", err), http.StatusInternalServerError)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+	}
+}
+
+// deleteProfileHandler deletes a profile by name
+func deleteProfileHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		name := vars["name"]
+
+		_, err := db.Exec("DELETE FROM profiles WHERE name = ?", name)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Failed to delete profile: %v", err), http.StatusInternalServerError)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+	}
+}
+
+// Prompt struct to hold data for a single prompt
+type Prompt struct {
+	Number   int    `json:"number"`
+	Content  string `json:"content"`
+	Solution string `json:"solution"`
+	Profile  string `json:"profile"`
+}
+
+// getPromptsHandler returns a list of all prompts
+func getPromptsHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		rows, err := db.Query("SELECT * FROM prompts")
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Failed to query prompts: %v", err), http.StatusInternalServerError)
+			return
+		}
+		defer rows.Close()
+
+		var prompts []Prompt
+		for rows.Next() {
+			var prompt Prompt
+			if err := rows.Scan(&prompt.Number, &prompt.Content, &prompt.Solution, &prompt.Profile); err != nil {
+				http.Error(w, fmt.Sprintf("Failed to scan prompt: %v", err), http.StatusInternalServerError)
+				return
+			}
+			prompts = append(prompts, prompt)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(prompts)
+	}
+}
+
+// getPromptHandler returns a single prompt by number
+func getPromptHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		number, err := strconv.Atoi(vars["number"])
+		if err != nil {
+			http.Error(w, "Invalid prompt number", http.StatusBadRequest)
+			return
+		}
+
+		var prompt Prompt
+		err = db.QueryRow("SELECT * FROM prompts WHERE number = ?", number).Scan(&prompt.Number, &prompt.Content, &prompt.Solution, &prompt.Profile)
+		if err != nil {
+			if err == sql.ErrNoRows {
+				http.Error(w, "Prompt not found", http.StatusNotFound)
+			} else {
+				http.Error(w, fmt.Sprintf("Failed to query prompt: %v", err), http.StatusInternalServerError)
+			}
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(prompt)
+	}
+}
+
+// createPromptHandler creates a new prompt
+func createPromptHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var prompt Prompt
+		if err := json.NewDecoder(r.Body).Decode(&prompt); err != nil {
+			http.Error(w, fmt.Sprintf("Failed to decode prompt: %v", err), http.StatusBadRequest)
+			return
+		}
+
+		_, err := db.Exec("INSERT INTO prompts(number, content, solution, profile) VALUES(?, ?, ?, ?)", prompt.Number, prompt.Content, prompt.Solution, prompt.Profile)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Failed to insert prompt: %v", err), http.StatusInternalServerError)
+			return
+		}
+
+		w.WriteHeader(http.StatusCreated)
+	}
+}
+
+// updatePromptHandler updates an existing prompt
+func updatePromptHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		number, err := strconv.Atoi(vars["number"])
+		if err != nil {
+			http.Error(w, "Invalid prompt number", http.StatusBadRequest)
+			return
+		}
+
+		var prompt Prompt
+		if err := json.NewDecoder(r.Body).Decode(&prompt); err != nil {
+			http.Error(w, fmt.Sprintf("Failed to decode prompt: %v", err), http.StatusBadRequest)
+			return
+		}
+
+		_, err = db.Exec("UPDATE prompts SET content = ?, solution = ?, profile = ? WHERE number = ?", prompt.Content, prompt.Solution, prompt.Profile, number)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Failed to update prompt: %v", err), http.StatusInternalServerError)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+	}
+}
+
+// deletePromptHandler deletes a prompt by number
+func deletePromptHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		number, err := strconv.Atoi(vars["number"])
+		if err != nil {
+			http.Error(w, "Invalid prompt number", http.StatusBadRequest)
+			return
+		}
+
+		_, err = db.Exec("DELETE FROM prompts WHERE number = ?", number)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Failed to delete prompt: %v", err), http.StatusInternalServerError)
 			return
 		}
 
