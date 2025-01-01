@@ -165,6 +165,7 @@
 
     <script>
       function loadProfiles() {
+        console.log("Loading profiles");
         fetch("/profiles")
           .then((response) => response.json())
           .then((profiles) => {
@@ -202,6 +203,7 @@
       }
 
       function createProfile() {
+        console.log("Creating profile");
         const profile = {
           name: document.getElementById("name").value,
           systemPrompt: document.getElementById("systemPrompt").value,
@@ -239,6 +241,7 @@
       }
 
       function editProfile(name) {
+        console.log("Editing profile:", name);
         fetch(`/profiles/${name}`)
           .then((response) => response.json())
           .then((profile) => {
@@ -268,6 +271,7 @@
       }
 
       function updateProfile() {
+        console.log("Updating profile");
         const originalName = document.getElementById("originalName").value;
         const profile = {
           name: document.getElementById("name").value,
@@ -312,6 +316,7 @@
       }
 
       function deleteProfile(name) {
+        console.log("Deleting profile:", name);
         if (
           !confirm(`Are you sure you want to delete the profile "${name}"?`)
         ) {

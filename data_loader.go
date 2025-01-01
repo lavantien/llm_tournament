@@ -7,9 +7,11 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"log/slog"
 )
 
 func loadData(db *sql.DB) error {
+	slog.Info("Loading data")
 	if err := loadBots(db, "data/models.md"); err != nil {
 		return fmt.Errorf("failed to load bots: %v", err)
 	}
@@ -19,10 +21,12 @@ func loadData(db *sql.DB) error {
 	if err := loadPrompts(db, "data/prompts.md"); err != nil {
 		return fmt.Errorf("failed to load prompts: %v", err)
 	}
+	slog.Info("Data loaded successfully")
 	return nil
 }
 
 func loadBots(db *sql.DB, filePath string) error {
+	slog.Info("Loading bots", "filePath", filePath)
 	content, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
@@ -54,25 +58,28 @@ func loadBots(db *sql.DB, filePath string) error {
 		ctx, _ := strconv.Atoi(match[7])
 		ctxUsed, _ := strconv.Atoi(match[8])
 
-        var count int
-        err = tx.QueryRow("SELECT COUNT(*) FROM bots WHERE name = ?", name).Scan(&count)
-        if err != nil {
-            return fmt.Errorf("failed to check if bot exists: %v", err)
-        }
-        if count > 0 {
-            continue // Skip if bot already exists
-        }
+		var count int
+		err = tx.QueryRow("SELECT COUNT(*) FROM bots WHERE name = ?", name).Scan(&count)
+		if err != nil {
+			return fmt.Errorf("failed to check if bot exists: %v", err)
+		}
+		if count > 0 {
+			slog.Info("Skipping existing bot", "name", name)
+			continue // Skip if bot already exists
+		}
 
 		_, err = stmt.Exec(name, path, size, param, quant, gpuLayers, gpuLayersUsed, ctx, ctxUsed)
 		if err != nil {
 			return err
 		}
+		slog.Info("Loaded bot", "name", name)
 	}
 
 	return tx.Commit()
 }
 
 func loadProfiles(db *sql.DB, filePath string) error {
+	slog.Info("Loading profiles", "filePath", filePath)
 	content, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
@@ -123,34 +130,37 @@ func loadProfiles(db *sql.DB, filePath string) error {
 				topA, _ = strconv.ParseFloat(param[2], 64)
 			}
 		}
-		
-        systemPromptLines := strings.Split(systemPromptBlock, "\n")
-        for i, line := range systemPromptLines {
-            if strings.HasPrefix(line, "###") {
-                systemPrompt = strings.TrimSpace(strings.Join(systemPromptLines[:i], "\n"))
-                break
-            }
-        }
 
-        var count int
-        err = tx.QueryRow("SELECT COUNT(*) FROM profiles WHERE name = ?", name).Scan(&count)
-        if err != nil {
-            return fmt.Errorf("failed to check if profile exists: %v", err)
-        }
-        if count > 0 {
-            continue // Skip if profile already exists
-        }
+		systemPromptLines := strings.Split(systemPromptBlock, "\n")
+		for i, line := range systemPromptLines {
+			if strings.HasPrefix(line, "###") {
+				systemPrompt = strings.TrimSpace(strings.Join(systemPromptLines[:i], "\n"))
+				break
+			}
+		}
+
+		var count int
+		err = tx.QueryRow("SELECT COUNT(*) FROM profiles WHERE name = ?", name).Scan(&count)
+		if err != nil {
+			return fmt.Errorf("failed to check if profile exists: %v", err)
+		}
+		if count > 0 {
+			slog.Info("Skipping existing profile", "name", name)
+			continue // Skip if profile already exists
+		}
 
 		_, err = stmt.Exec(name, systemPrompt, repeatPenalty, topK, topP, minP, topA)
 		if err != nil {
 			return err
 		}
+		slog.Info("Loaded profile", "name", name)
 	}
 
 	return tx.Commit()
 }
 
 func loadPrompts(db *sql.DB, filePath string) error {
+	slog.Info("Loading prompts", "filePath", filePath)
 	content, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
@@ -209,19 +219,21 @@ func loadPrompts(db *sql.DB, filePath string) error {
 				}
 			}
 
-            var count int
-            err = tx.QueryRow("SELECT COUNT(*) FROM prompts WHERE number = ?", number).Scan(&count)
-            if err != nil {
-                return fmt.Errorf("failed to check if prompt exists: %v", err)
-            }
-            if count > 0 {
-                continue // Skip if prompt already exists
-            }
+			var count int
+			err = tx.QueryRow("SELECT COUNT(*) FROM prompts WHERE number = ?", number).Scan(&count)
+			if err != nil {
+				return fmt.Errorf("failed to check if prompt exists: %v", err)
+			}
+			if count > 0 {
+				slog.Info("Skipping existing prompt", "number", number)
+				continue // Skip if prompt already exists
+			}
 
 			_, err = stmt.Exec(number, strings.TrimSpace(content), strings.TrimSpace(solution), currentProfile)
 			if err != nil {
 				return err
 			}
+			slog.Info("Loaded prompt", "number", number)
 		}
 	}
 

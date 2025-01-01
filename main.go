@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html/template"
 	"log"
+	"log/slog"
 	"net/http"
 	"os"
 	"strconv"
@@ -163,6 +164,7 @@ func navHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func loadDataHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("Loading data")
 	err := loadData(db)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to load  %v", err), http.StatusInternalServerError)
@@ -172,6 +174,7 @@ func loadDataHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func clearDataHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("Clearing data")
 	_, err := db.Exec("DELETE FROM scores")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to clear scores: %v", err), http.StatusInternalServerError)
@@ -201,6 +204,7 @@ func clearDataHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func generateMockScoresHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("Generating mock scores")
 	err := generateMockScores(db)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to generate mock scores: %v", err), http.StatusInternalServerError)
@@ -223,6 +227,7 @@ type Bot struct {
 }
 
 func getModelsHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("Getting models")
 	rows, err := db.Query("SELECT name, path, size, param, quant, gpuLayers, gpuLayersUsed, ctx, ctxUsed, kingOf FROM bots")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to query bots: %v", err), http.StatusInternalServerError)
@@ -358,6 +363,7 @@ type Profile struct {
 }
 
 func getProfilesHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("Getting profiles")
 	rows, err := db.Query("SELECT name, systemPrompt, repeatPenalty, topK, topP, minP, topA FROM profiles")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to query profiles: %v", err), http.StatusInternalServerError)
@@ -460,6 +466,7 @@ type Prompt struct {
 }
 
 func getPromptsHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("Getting prompts")
 	rows, err := db.Query("SELECT number, content, solution, profile FROM prompts")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to query prompts: %v", err), http.StatusInternalServerError)
@@ -624,6 +631,7 @@ type LeaderboardData struct {
 }
 
 func getLeaderboardDataHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("Getting leaderboard data")
 	data, err := getLeaderboardData(db)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to get leaderboard  %v", err), http.StatusInternalServerError)
@@ -649,6 +657,7 @@ func statsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getStatsDataHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("Getting stats data")
 	data, err := getStatsData(db)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to get stats  %v", err), http.StatusInternalServerError)
@@ -662,6 +671,7 @@ func getStatsDataHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func concludeStatsHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("Concluding stats")
 	err := concludeStats(db)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to conclude stats: %v", err), http.StatusInternalServerError)
@@ -693,6 +703,7 @@ func updateScoreHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func refreshLeaderboardDataHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("Refreshing leaderboard data")
 	data, err := getLeaderboardData(db)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to refresh leaderboard  %v", err), http.StatusInternalServerError)

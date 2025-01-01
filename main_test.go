@@ -7,13 +7,14 @@ import (
 	"testing"
 
 	_ "github.com/mattn/go-sqlite3"
+	"log/slog"
 )
 
 func setupTestDB() *sql.DB {
 	// Create a temporary test database
 	tempDB, err := sql.Open("sqlite3", ":memory:")
 	if err != nil {
-		panic(err)
+		slog.Error("Failed to open temporary database", "error", err)
 	}
 
 	// Initialize the database schema

@@ -4,9 +4,11 @@ import (
 	"database/sql"
 	"fmt"
 	"math/rand"
+	"log/slog"
 )
 
 func generateMockScores(db *sql.DB) error {
+	slog.Info("Generating mock scores")
 	tx, err := db.Begin()
 	if err != nil {
 		return fmt.Errorf("failed to begin transaction: %v", err)
@@ -67,6 +69,7 @@ func generateMockScores(db *sql.DB) error {
 			if _, err := stmt.Exec(attempt, elo, bot, prompt); err != nil {
 				return fmt.Errorf("failed to insert score: %v", err)
 			}
+			slog.Info("Inserted mock score", "bot", bot, "prompt", prompt, "attempt", attempt, "elo", elo)
 		}
 	}
 
@@ -74,5 +77,6 @@ func generateMockScores(db *sql.DB) error {
 		return fmt.Errorf("failed to commit transaction: %v", err)
 	}
 
+	slog.Info("Mock scores generated successfully")
 	return nil
 }

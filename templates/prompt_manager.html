@@ -145,6 +145,7 @@
 
     <script>
       function loadPrompts() {
+        console.log("Loading prompts");
         fetch("/prompts")
           .then((response) => response.json())
           .then((prompts) => {
@@ -179,6 +180,7 @@
       }
 
       function createPrompt() {
+        console.log("Creating prompt");
         const prompt = {
           number: parseInt(document.getElementById("number").value),
           content: document.getElementById("content").value,
@@ -211,6 +213,7 @@
       }
 
       function editPrompt(number) {
+        console.log("Editing prompt:", number);
         fetch(`/prompts/${number}`)
           .then((response) => response.json())
           .then((prompt) => {
@@ -235,6 +238,7 @@
       }
 
       function updatePrompt() {
+        console.log("Updating prompt");
         const originalNumber = parseInt(
           document.getElementById("originalNumber").value,
         );
@@ -276,6 +280,7 @@
       }
 
       function deletePrompt(number) {
+        console.log("Deleting prompt:", number);
         if (
           !confirm(
             `Are you sure you want to delete the prompt with number ${number}?`,

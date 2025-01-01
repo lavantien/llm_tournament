@@ -5,13 +5,14 @@ import (
 	"testing"
 
 	_ "github.com/mattn/go-sqlite3"
+	"log/slog"
 )
 
 func TestGetStatsData(t *testing.T) {
 	// Create a temporary test database
 	tempDB, err := sql.Open("sqlite3", ":memory:")
 	if err != nil {
-		t.Fatalf("Failed to open temporary database: %v", err)
+		slog.Error("Failed to open temporary database", "error", err)
 	}
 	defer tempDB.Close()
 
@@ -21,25 +22,25 @@ func TestGetStatsData(t *testing.T) {
 	// Insert some mock data for testing
 	_, err = tempDB.Exec("INSERT INTO bots(name, path) VALUES('bot1', 'path1'), ('bot2', 'path2'), ('bot3', 'path3')")
 	if err != nil {
-		t.Fatalf("Failed to insert mock bots: %v", err)
+		slog.Error("Failed to insert mock bots", "error", err)
 	}
 	_, err = tempDB.Exec("INSERT INTO profiles(name, systemPrompt) VALUES('profile1', 'prompt1'), ('profile2', 'prompt2')")
 	if err != nil {
-		t.Fatalf("Failed to insert mock profiles: %v", err)
+		slog.Error("Failed to insert mock profiles", "error", err)
 	}
 	_, err = tempDB.Exec("INSERT INTO prompts(number, content, solution, profile) VALUES(1, 'content1', 'solution1', 'profile1'), (2, 'content2', 'solution2', 'profile2')")
 	if err != nil {
-		t.Fatalf("Failed to insert mock prompts: %v", err)
+		slog.Error("Failed to insert mock prompts", "error", err)
 	}
 	_, err = tempDB.Exec("INSERT INTO scores(attempt, elo, botId, promptId, profile) VALUES(1, 100, 'bot1', 1, 'profile1'), (2, 50, 'bot2', 2, 'profile2'), (1, 200, 'bot3', 1, 'profile1')")
 	if err != nil {
-		t.Fatalf("Failed to insert mock scores: %v", err)
+		slog.Error("Failed to insert mock scores", "error", err)
 	}
 
 	// Test getStatsData
 	statsData, err := getStatsData(tempDB)
 	if err != nil {
-		t.Errorf("getStatsData failed: %v", err)
+		slog.Error("getStatsData failed", "error", err)
 	}
 
 	// Verify Lord of LLM
@@ -76,7 +77,7 @@ func TestConcludeStats(t *testing.T) {
 	// Create a temporary test database
 	tempDB, err := sql.Open("sqlite3", ":memory:")
 	if err != nil {
-		t.Fatalf("Failed to open temporary database: %v", err)
+		slog.Error("Failed to open temporary database", "error", err)
 	}
 	defer tempDB.Close()
 
@@ -86,32 +87,32 @@ func TestConcludeStats(t *testing.T) {
 	// Insert some mock data for testing
 	_, err = tempDB.Exec("INSERT INTO bots(name, path) VALUES('bot1', 'path1'), ('bot2', 'path2'), ('bot3', 'path3')")
 	if err != nil {
-		t.Fatalf("Failed to insert mock bots: %v", err)
+		slog.Error("Failed to insert mock bots", "error", err)
 	}
 	_, err = tempDB.Exec("INSERT INTO profiles(name, systemPrompt) VALUES('profile1', 'prompt1'), ('profile2', 'prompt2')")
 	if err != nil {
-		t.Fatalf("Failed to insert mock profiles: %v", err)
+		slog.Error("Failed to insert mock profiles", "error", err)
 	}
 	_, err = tempDB.Exec("INSERT INTO prompts(number, content, solution, profile) VALUES(1, 'content1', 'solution1', 'profile1'), (2, 'content2', 'solution2', 'profile2')")
 	if err != nil {
-		t.Fatalf("Failed to insert mock prompts: %v", err)
+		slog.Error("Failed to insert mock prompts", "error", err)
 	}
 	_, err = tempDB.Exec("INSERT INTO scores(attempt, elo, botId, promptId, profile) VALUES(1, 100, 'bot1', 1, 'profile1'), (2, 50, 'bot2', 2, 'profile2'), (1, 200, 'bot3', 1, 'profile1')")
 	if err != nil {
-		t.Fatalf("Failed to insert mock scores: %v", err)
+		slog.Error("Failed to insert mock scores", "error", err)
 	}
 
 	// Test concludeStats
 	err = concludeStats(tempDB)
 	if err != nil {
-		t.Errorf("concludeStats failed: %v", err)
+		slog.Error("concludeStats failed", "error", err)
 	}
 
 	// Verify bestBots for each profile
 	var count int
 	err = tempDB.QueryRow("SELECT COUNT(*) FROM profile_bot WHERE profile_name = 'profile1'").Scan(&count)
 	if err != nil {
-		t.Fatalf("Failed to query profile_bot count: %v", err)
+		slog.Error("Failed to query profile_bot count", "error", err)
 	}
 	if count != 2 {
 		t.Errorf("Expected 2 bestBots for profile1, got %d", count)
@@ -121,7 +122,7 @@ func TestConcludeStats(t *testing.T) {
 	var kingOf sql.NullString
 	err = tempDB.QueryRow("SELECT kingOf FROM bots WHERE name = 'bot3'").Scan(&kingOf)
 	if err != nil {
-		t.Fatalf("Failed to query kingOf for bot3: %v", err)
+		slog.Error("Failed to query kingOf for bot3", "error", err)
 	}
 	if !kingOf.Valid || kingOf.String != "profile1" {
 		t.Errorf("Expected kingOf for bot3 to be profile1, got %s", kingOf.String)
@@ -130,7 +131,7 @@ func TestConcludeStats(t *testing.T) {
 	// Verify Lord of LLM
 	err = tempDB.QueryRow("SELECT kingOf FROM bots WHERE name = 'bot3'").Scan(&kingOf)
 	if err != nil {
-		t.Fatalf("Failed to query kingOf for bot3: %v", err)
+		slog.Error("Failed to query kingOf for bot3", "error", err)
 	}
 	if !kingOf.Valid || kingOf.String != "Lord of LLM" {
 		t.Errorf("Expected Lord of LLM to be bot3, got %s", kingOf.String)

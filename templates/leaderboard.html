@@ -149,9 +149,10 @@
       let promptsData = [];
 
       function loadLeaderboardData() {
-        fetch("/leaderboard_data")
-          .then((response) => response.json())
-          .then((data) => {
+        console.log("Loading leaderboard data");
+        fetch('/leaderboard_data')
+          .then(response => response.json())
+          .then(data => {
             profilesData = data.profiles;
             const tableHead = document
               .getElementById("leaderboardTable")
@@ -207,6 +208,7 @@
       }
 
       function openEditPanel(botName) {
+        console.log("Opening edit panel for bot:", botName);
         document.getElementById("editBotName").value = botName;
         const profileSelect = document.getElementById("editProfile");
         profileSelect.innerHTML = "";
@@ -340,6 +342,7 @@
       }
 
       function refreshLeaderboard() {
+        console.log("Refreshing leaderboard");
         loadLeaderboardData();
       }
 

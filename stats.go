@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"log"
+	"log/slog"
 )
 
 // BotStats represents the statistics for a bot
@@ -32,6 +32,7 @@ type StatsData struct {
 
 // getStatsData retrieves and compiles statistics data
 func getStatsData(db *sql.DB) (StatsData, error) {
+	slog.Info("Retrieving statistics data")
 	statsData := StatsData{
 		Profiles:    make(map[string]ProfileStats),
 		TotalElos:   make(map[string]float64),
@@ -54,11 +55,13 @@ func getStatsData(db *sql.DB) (StatsData, error) {
 		return statsData, fmt.Errorf("failed to prepare total elo graph  %v", err)
 	}
 
+	slog.Info("Statistics data retrieved successfully")
 	return statsData, nil
 }
 
 // calculateTopBotsPerProfile calculates the top 10 bots for each profile
 func calculateTopBotsPerProfile(db *sql.DB, statsData *StatsData) error {
+	slog.Info("Calculating top bots per profile")
 	profiles, err := getProfiles(db)
 	if err != nil {
 		return err
@@ -98,11 +101,13 @@ func calculateTopBotsPerProfile(db *sql.DB, statsData *StatsData) error {
 		statsData.Profiles[profile] = profileStats
 	}
 
+	slog.Info("Top bots per profile calculated successfully")
 	return nil
 }
 
 // calculateLordOfLLM determines the bot with the highest total Elo
 func calculateLordOfLLM(db *sql.DB, statsData *StatsData) error {
+	slog.Info("Calculating Lord of LLM")
 	rows, err := db.Query(`
         SELECT b.name, COALESCE(SUM(s.elo), 0) as totalElo
         FROM bots b
@@ -125,11 +130,13 @@ func calculateLordOfLLM(db *sql.DB, statsData *StatsData) error {
 		statsData.LordOfLLM = botName
 	}
 
+	slog.Info("Lord of LLM calculated successfully")
 	return nil
 }
 
 // prepareProfileGraphData prepares data for the per-profile line graphs
 func prepareProfileGraphData(db *sql.DB, statsData *StatsData) error {
+	slog.Info("Preparing profile graph data")
 	profiles, err := getProfiles(db)
 	if err != nil {
 		return err
@@ -162,11 +169,13 @@ func prepareProfileGraphData(db *sql.DB, statsData *StatsData) error {
 		statsData.ProfileData[profile] = botStatsList
 	}
 
+	slog.Info("Profile graph data prepared successfully")
 	return nil
 }
 
 // prepareTotalEloGraphData prepares data for the total Elo line graph
 func prepareTotalEloGraphData(db *sql.DB, statsData *StatsData) error {
+	slog.Info("Preparing total Elo graph data")
 	rows, err := db.Query(`
         SELECT b.name, COALESCE(SUM(s.elo), 0) as totalElo
         FROM bots b
@@ -188,17 +197,19 @@ func prepareTotalEloGraphData(db *sql.DB, statsData *StatsData) error {
 		statsData.TotalElos[botName] = totalElo
 	}
 
+	slog.Info("Total Elo graph data prepared successfully")
 	return nil
 }
 
 // concludeStats updates the database with the concluded stats
 func concludeStats(db *sql.DB) error {
+	slog.Info("Concluding stats")
 	statsData, err := getStatsData(db)
 	if err != nil {
 		return fmt.Errorf("failed to get stats: %v", err)
 	}
 
-	log.Printf("Stats  %+v", statsData)
+	slog.Debug("Stats data", "statsData", statsData)
 
 	tx, err := db.Begin()
 	if err != nil {
@@ -207,7 +218,7 @@ func concludeStats(db *sql.DB) error {
 	defer tx.Rollback()
 
 	// Reset kingOf for all bots
-	log.Println("Resetting kingOf for all bots")
+	slog.Info("Resetting kingOf for all bots")
 	_, err = tx.Exec(`UPDATE bots SET kingOf = ''`)
 	if err != nil {
 		return fmt.Errorf("failed to reset kingOf for all bots: %v", err)
@@ -215,12 +226,12 @@ func concludeStats(db *sql.DB) error {
 
 	// Update bestBots for each profile
 	for profileName, profileStats := range statsData.Profiles {
-		log.Printf("Updating bestBots for profile: %s", profileName)
+		slog.Info("Updating bestBots for profile", "profile", profileName)
 		for _, botStats := range profileStats.TopBots {
-			log.Printf("  - Adding bot %s to bestBots for profile %s", botStats.Name, profileName)
+			slog.Debug("Adding bot to bestBots", "bot", botStats.Name, "profile", profileName)
 			_, err = tx.Exec(`
-                INSERT INTO profile_bot (profile_name, bot_name) 
-                VALUES (?, ?) 
+                INSERT INTO profile_bot (profile_name, bot_name)
+                VALUES (?, ?)
                 ON CONFLICT (profile_name, bot_name) DO NOTHING
             `, profileName, botStats.Name)
 			if err != nil {
@@ -232,10 +243,10 @@ func concludeStats(db *sql.DB) error {
 	// Update kingOf for each bot based on their best-performing profile
 	botKingOf := make(map[string]string)
 	for profileName, profileStats := range statsData.Profiles {
-		log.Printf("Checking kingOf for profile: %s", profileName)
+		slog.Info("Checking kingOf for profile", "profile", profileName)
 		if len(profileStats.TopBots) > 0 {
 			kingBot := profileStats.TopBots[0]
-			log.Printf("  - Bot %s is king of %s", kingBot.Name, profileName)
+			slog.Debug("Bot is king of profile", "bot", kingBot.Name, "profile", profileName)
 			botKingOf[kingBot.Name] = profileName
 		}
 	}
@@ -251,7 +262,7 @@ func concludeStats(db *sql.DB) error {
 	}
 
 	for botName, profileName := range botKingOf {
-		log.Printf("Updating kingOf for bot %s to %s", botName, profileName)
+		slog.Info("Updating kingOf for bot", "bot", botName, "profile", profileName)
 		_, err = tx.Exec(`
             UPDATE bots SET kingOf = ? WHERE name = ?
         `, profileName, botName)
@@ -262,7 +273,7 @@ func concludeStats(db *sql.DB) error {
 
 	// Update the bot with the highest total Elo to have "Lord of LLM"
 	if lordOfLLM != "" {
-		log.Printf("Setting Lord of LLM to bot: %s", lordOfLLM)
+		slog.Info("Setting Lord of LLM", "bot", lordOfLLM)
 		_, err = tx.Exec(`
             UPDATE bots SET kingOf = 'Lord of LLM' WHERE name = ?
         `, lordOfLLM)
@@ -275,5 +286,6 @@ func concludeStats(db *sql.DB) error {
 		return fmt.Errorf("failed to commit transaction: %v", err)
 	}
 
+	slog.Info("Stats concluded successfully")
 	return nil
 }

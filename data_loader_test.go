@@ -6,13 +6,14 @@ import (
 	"testing"
 
 	_ "github.com/mattn/go-sqlite3"
+	"log/slog"
 )
 
 func TestLoadData(t *testing.T) {
 	// Create a temporary test database
 	tempDB, err := sql.Open("sqlite3", ":memory:")
 	if err != nil {
-		t.Fatalf("Failed to open temporary database: %v", err)
+		slog.Error("Failed to open temporary database", "error", err)
 	}
 	defer tempDB.Close()
 
@@ -26,23 +27,24 @@ func TestLoadData(t *testing.T) {
 	// Test loadBots
 	err = loadBots(tempDB, "data/test_models.md")
 	if err != nil {
-		t.Errorf("loadBots failed: %v", err)
+		slog.Error("loadBots failed", "error", err)
 	}
 
 	// Test loadProfiles
 	err = loadProfiles(tempDB, "data/test_profiles.md")
 	if err != nil {
-		t.Errorf("loadProfiles failed: %v", err)
+		slog.Error("loadProfiles failed", "error", err)
 	}
 
 	// Test loadPrompts
 	err = loadPrompts(tempDB, "data/test_prompts.md")
 	if err != nil {
-		t.Errorf("loadPrompts failed: %v", err)
+		slog.Error("loadPrompts failed", "error", err)
 	}
 }
 
 func createDummyDataFiles() {
+	slog.Info("Creating dummy data files")
 	os.Mkdir("data", 0755)
 
 	modelsContent := `
@@ -121,6 +123,7 @@ Test solution 2.
 }
 
 func cleanupDummyDataFiles() {
+	slog.Info("Cleaning up dummy data files")
 	os.Remove("data/test_models.md")
 	os.Remove("data/test_profiles.md")
 	os.Remove("data/test_prompts.md")

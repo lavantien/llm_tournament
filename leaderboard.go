@@ -3,24 +3,24 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"log"
+	"log/slog"
 )
 
 func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
-	log.Println("Starting getLeaderboardData")
+	slog.Info("Getting leaderboard data")
 	profiles, err := getProfiles(db)
 	if err != nil {
-		log.Printf("Error getting profiles: %v", err)
+		slog.Error("Error getting profiles", "error", err)
 		return LeaderboardData{}, fmt.Errorf("failed to get profiles: %v", err)
 	}
-	log.Printf("Profiles: %v", profiles)
+	slog.Info("Profiles retrieved", "profiles", profiles)
 
 	bots, err := getBots(db)
 	if err != nil {
-		log.Printf("Error getting bots: %v", err)
+		slog.Error("Error getting bots", "error", err)
 		return LeaderboardData{}, fmt.Errorf("failed to get bots: %v", err)
 	}
-	log.Printf("Bots: %v", bots)
+	slog.Info("Bots retrieved", "bots", bots)
 
 	leaderboardData := LeaderboardData{
 		Profiles: profiles,
@@ -38,7 +38,7 @@ func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
 		for _, profile := range profiles {
 			elo, err := calculateBotEloForProfile(db, bot, profile)
 			if err != nil {
-				log.Printf("Error calculating elo for bot %s and profile %s: %v", bot, profile, err)
+				slog.Error("Error calculating elo for bot and profile", "bot", bot, "profile", profile, "error", err)
 				return LeaderboardData{}, fmt.Errorf("failed to calculate elo for bot %s and profile %s: %v", bot, profile, err)
 			}
 			leaderboardData.Bots[i].Elos[profile] = elo
@@ -50,10 +50,10 @@ func getLeaderboardData(db *sql.DB) (LeaderboardData, error) {
 			totalElo += elo
 		}
 		leaderboardData.Bots[i].TotalElo = totalElo
-		log.Printf("Bot %s, TotalElo: %f", bot, totalElo)
+		slog.Info("Total Elo calculated for bot", "bot", bot, "totalElo", totalElo)
 	}
-	log.Println("Finished getLeaderboardData")
 
+	slog.Info("Leaderboard data retrieved successfully")
 	return leaderboardData, nil
 }
 
@@ -64,6 +64,7 @@ type LeaderboardBot struct {
 }
 
 func getProfiles(db *sql.DB) ([]string, error) {
+	slog.Info("Getting profiles")
 	rows, err := db.Query("SELECT name FROM profiles")
 	if err != nil {
 		return nil, fmt.Errorf("failed to query profiles: %v", err)
@@ -83,10 +84,12 @@ func getProfiles(db *sql.DB) ([]string, error) {
 		return nil, fmt.Errorf("error iterating over profiles: %v", err)
 	}
 
+	slog.Info("Profiles retrieved", "profiles", profiles)
 	return profiles, nil
 }
 
 func getBots(db *sql.DB) ([]string, error) {
+	slog.Info("Getting bots")
 	rows, err := db.Query("SELECT name FROM bots")
 	if err != nil {
 		return nil, fmt.Errorf("failed to query bots: %v", err)
@@ -106,10 +109,12 @@ func getBots(db *sql.DB) ([]string, error) {
 		return nil, fmt.Errorf("error iterating over bots: %v", err)
 	}
 
+	slog.Info("Bots retrieved", "bots", bots)
 	return bots, nil
 }
 
 func calculateBotEloForProfile(db *sql.DB, botName, profileName string) (float64, error) {
+	slog.Info("Calculating Elo for bot and profile", "bot", botName, "profile", profileName)
 	rows, err := db.Query(`
         SELECT s.elo
         FROM scores s
@@ -134,5 +139,6 @@ func calculateBotEloForProfile(db *sql.DB, botName, profileName string) (float64
 		return 0, fmt.Errorf("error iterating over scores for bot %s and profile %s: %v", botName, profileName, err)
 	}
 
+	slog.Info("Elo calculated for bot and profile", "bot", botName, "profile", profileName, "elo", totalElo)
 	return totalElo, nil
 }

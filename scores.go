@@ -3,10 +3,11 @@ package main
 import (
 	"database/sql"
 	"fmt"
-    "log"
+	"log/slog"
 )
 
 func updateScore(db *sql.DB, botId string, profile string, promptId int, attempt int, elo float64) error {
+	slog.Info("Updating score", "botId", botId, "profile", profile, "promptId", promptId, "attempt", attempt, "elo", elo)
 	tx, err := db.Begin()
 	if err != nil {
 		return fmt.Errorf("failed to begin transaction: %v", err)
@@ -26,14 +27,14 @@ func updateScore(db *sql.DB, botId string, profile string, promptId int, attempt
 		if err != nil {
 			return fmt.Errorf("failed to insert new score: %v", err)
 		}
-        log.Printf("Inserted new score for bot %s, prompt %d, profile %s, attempt %d, elo %f", botId, promptId, profile, attempt, elo)
+		slog.Info("Inserted new score", "botId", botId, "profile", profile, "promptId", promptId, "attempt", attempt, "elo", elo)
 	} else {
 		// Existing score found, so update it
 		_, err = tx.Exec("UPDATE scores SET attempt = ?, elo = ? WHERE id = ?", attempt, elo, existingScoreId)
 		if err != nil {
 			return fmt.Errorf("failed to update score: %v", err)
 		}
-        log.Printf("Updated score for bot %s, prompt %d, profile %s, attempt %d, elo %f", botId, promptId, profile, attempt, elo)
+		slog.Info("Updated score", "botId", botId, "profile", profile, "promptId", promptId, "attempt", attempt, "elo", elo)
 	}
 
 	if err := tx.Commit(); err != nil {
@@ -41,11 +42,11 @@ func updateScore(db *sql.DB, botId string, profile string, promptId int, attempt
 	}
 
 	// Recalculate the leaderboard
-    log.Println("Recalculating leaderboard after score update")
+	slog.Info("Recalculating leaderboard after score update")
 	if err := recalculateLeaderboard(db); err != nil {
 		return fmt.Errorf("failed to recalculate leaderboard: %v", err)
 	}
-    log.Println("Finished recalculating leaderboard after score update")
+	slog.Info("Finished recalculating leaderboard after score update")
 
 	return nil
 }
