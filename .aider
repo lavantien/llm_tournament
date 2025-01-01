@@ -21,6 +21,7 @@
 /add       templates\profile_manager.html
 /add       templates\prompt_manager.html
 /add       templates\stats.html
+/add       test_output.txt
 /read-only INSTRUCTION.md
 /read-only PROMPT.md
 /read-only RULES.md

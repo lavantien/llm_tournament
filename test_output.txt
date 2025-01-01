@@ -1,0 +1,182 @@
+?   	llm-tournament/tools	[no test files]
+=== RUN   TestGenerateMockScores
+2025/01/01 17:45:59 INFO Generating mock scores
+2025/01/01 17:45:59 INFO Inserted mock score bot=bot1 prompt=1 attempt=1 elo=100
+2025/01/01 17:45:59 INFO Inserted mock score bot=bot1 prompt=2 attempt=2 elo=50
+2025/01/01 17:45:59 INFO Inserted mock score bot=bot2 prompt=1 attempt=3 elo=20
+2025/01/01 17:45:59 INFO Inserted mock score bot=bot2 prompt=2 attempt=2 elo=50
+2025/01/01 17:45:59 INFO Mock scores generated successfully
+--- PASS: TestGenerateMockScores (0.00s)
+=== RUN   TestLoadData
+2025/01/01 17:45:59 INFO Creating dummy data files
+2025/01/01 17:45:59 INFO Loading bots filePath=data/test_models.md
+2025/01/01 17:45:59 INFO Loading profiles filePath=data/test_profiles.md
+2025/01/01 17:45:59 INFO Loaded profile name=Profile1
+2025/01/01 17:45:59 INFO Loaded profile name=Profile2
+2025/01/01 17:45:59 INFO Loading prompts filePath=data/test_prompts.md
+2025/01/01 17:45:59 INFO Loaded prompt number=2
+2025/01/01 17:45:59 INFO Cleaning up dummy data files
+--- PASS: TestLoadData (0.01s)
+=== RUN   TestGetLeaderboardData
+2025/01/01 17:45:59 INFO Getting leaderboard data
+2025/01/01 17:45:59 INFO Getting profiles
+2025/01/01 17:45:59 INFO Profiles retrieved profiles="[profile1 profile2]"
+2025/01/01 17:45:59 INFO Profiles retrieved profiles="[profile1 profile2]"
+2025/01/01 17:45:59 INFO Getting bots
+2025/01/01 17:45:59 INFO Bots retrieved bots="[bot1 bot2]"
+2025/01/01 17:45:59 INFO Bots retrieved bots="[bot1 bot2]"
+2025/01/01 17:45:59 INFO Calculating Elo for bot and profile bot=bot1 profile=profile1
+2025/01/01 17:45:59 INFO Elo calculated for bot and profile bot=bot1 profile=profile1 elo=100
+2025/01/01 17:45:59 INFO Calculating Elo for bot and profile bot=bot1 profile=profile2
+2025/01/01 17:45:59 INFO Elo calculated for bot and profile bot=bot1 profile=profile2 elo=0
+2025/01/01 17:45:59 INFO Total Elo calculated for bot bot=bot1 totalElo=100
+2025/01/01 17:45:59 INFO Calculating Elo for bot and profile bot=bot2 profile=profile1
+2025/01/01 17:45:59 INFO Elo calculated for bot and profile bot=bot2 profile=profile1 elo=0
+2025/01/01 17:45:59 INFO Calculating Elo for bot and profile bot=bot2 profile=profile2
+2025/01/01 17:45:59 INFO Elo calculated for bot and profile bot=bot2 profile=profile2 elo=50
+2025/01/01 17:45:59 INFO Total Elo calculated for bot bot=bot2 totalElo=50
+2025/01/01 17:45:59 INFO Leaderboard data retrieved successfully
+--- PASS: TestGetLeaderboardData (0.00s)
+=== RUN   TestNavHandler
+--- PASS: TestNavHandler (0.00s)
+=== RUN   TestHomeHandler
+--- PASS: TestHomeHandler (0.00s)
+=== RUN   TestModelManagerHandler
+--- PASS: TestModelManagerHandler (0.00s)
+=== RUN   TestProfileManagerHandler
+--- PASS: TestProfileManagerHandler (0.00s)
+=== RUN   TestPromptManagerHandler
+--- PASS: TestPromptManagerHandler (0.00s)
+=== RUN   TestLeaderboardHandler
+--- PASS: TestLeaderboardHandler (0.00s)
+=== RUN   TestStatsHandler
+--- PASS: TestStatsHandler (0.00s)
+=== RUN   TestConcludeStatsHandler
+2025/01/01 17:45:59 INFO Concluding stats
+2025/01/01 17:45:59 INFO Concluding stats
+2025/01/01 17:45:59 INFO Retrieving statistics data
+2025/01/01 17:45:59 INFO Calculating top bots per profile
+2025/01/01 17:45:59 INFO Getting profiles
+2025/01/01 17:45:59 INFO Profiles retrieved profiles=[]
+2025/01/01 17:45:59 INFO Top bots per profile calculated successfully
+2025/01/01 17:45:59 INFO Calculating Lord of LLM
+2025/01/01 17:45:59 INFO Lord of LLM calculated successfully
+2025/01/01 17:45:59 INFO Preparing profile graph data
+2025/01/01 17:45:59 INFO Getting profiles
+2025/01/01 17:45:59 INFO Profiles retrieved profiles=[]
+2025/01/01 17:45:59 INFO Profile graph data prepared successfully
+2025/01/01 17:45:59 INFO Preparing total Elo graph data
+2025/01/01 17:45:59 INFO Total Elo graph data prepared successfully
+2025/01/01 17:45:59 INFO Statistics data retrieved successfully
+2025/01/01 17:45:59 INFO Resetting kingOf for all bots
+2025/01/01 17:45:59 INFO Stats concluded successfully
+--- PASS: TestConcludeStatsHandler (0.00s)
+=== RUN   TestRefreshLeaderboardDataHandler
+2025/01/01 17:45:59 INFO Refreshing leaderboard data
+2025/01/01 17:45:59 INFO Getting leaderboard data
+2025/01/01 17:45:59 INFO Getting profiles
+2025/01/01 17:45:59 INFO Profiles retrieved profiles=[]
+2025/01/01 17:45:59 INFO Profiles retrieved profiles=[]
+2025/01/01 17:45:59 INFO Getting bots
+2025/01/01 17:45:59 INFO Bots retrieved bots=[]
+2025/01/01 17:45:59 INFO Bots retrieved bots=[]
+2025/01/01 17:45:59 INFO Leaderboard data retrieved successfully
+--- PASS: TestRefreshLeaderboardDataHandler (0.00s)
+=== RUN   TestRecalculateLeaderboard
+2025/01/01 17:45:59 INFO Recalculating leaderboard
+2025/01/01 17:45:59 INFO Getting bots for recalculation
+2025/01/01 17:45:59 INFO Bots retrieved for recalculation bots="[bot1 bot2]"
+2025/01/01 17:45:59 INFO Getting profiles for recalculation
+2025/01/01 17:45:59 INFO Profiles retrieved for recalculation profiles="[profile1 profile2]"
+2025/01/01 17:45:59 INFO Recalculating total Elo for bot bot=bot1
+2025/01/01 17:45:59 INFO Calculating Elo for bot and profile bot=bot1 profile=profile1
+2025/01/01 17:45:59 INFO Elo calculated for bot and profile bot=bot1 profile=profile1 elo=100
+2025/01/01 17:45:59 INFO Recalculating Elo for bot and profile bot=bot1 profile=profile1 elo=100 totalElo=100
+2025/01/01 17:45:59 INFO Calculating Elo for bot and profile bot=bot1 profile=profile2
+2025/01/01 17:45:59 INFO Elo calculated for bot and profile bot=bot1 profile=profile2 elo=0
+2025/01/01 17:45:59 INFO Recalculating Elo for bot and profile bot=bot1 profile=profile2 elo=0 totalElo=100
+2025/01/01 17:45:59 INFO Updated total Elo for bot bot=bot1 totalElo=100
+2025/01/01 17:45:59 INFO Recalculating total Elo for bot bot=bot2
+2025/01/01 17:45:59 INFO Calculating Elo for bot and profile bot=bot2 profile=profile1
+2025/01/01 17:45:59 INFO Elo calculated for bot and profile bot=bot2 profile=profile1 elo=0
+2025/01/01 17:45:59 INFO Recalculating Elo for bot and profile bot=bot2 profile=profile1 elo=0 totalElo=0
+2025/01/01 17:45:59 INFO Calculating Elo for bot and profile bot=bot2 profile=profile2
+2025/01/01 17:45:59 INFO Elo calculated for bot and profile bot=bot2 profile=profile2 elo=50
+2025/01/01 17:45:59 INFO Recalculating Elo for bot and profile bot=bot2 profile=profile2 elo=50 totalElo=50
+2025/01/01 17:45:59 INFO Updated total Elo for bot bot=bot2 totalElo=50
+2025/01/01 17:45:59 INFO Leaderboard recalculated successfully
+--- PASS: TestRecalculateLeaderboard (0.00s)
+=== RUN   TestUpdateScore
+2025/01/01 17:45:59 INFO Updating score botId=bot1 profile=profile1 promptId=1 attempt=1 elo=100
+2025/01/01 17:45:59 INFO Inserted new score botId=bot1 profile=profile1 promptId=1 attempt=1 elo=100
+2025/01/01 17:45:59 INFO Recalculating leaderboard after score update
+2025/01/01 17:45:59 INFO Recalculating leaderboard
+2025/01/01 17:45:59 INFO Getting bots for recalculation
+2025/01/01 17:45:59 INFO Bots retrieved for recalculation bots=[bot1]
+2025/01/01 17:45:59 INFO Getting profiles for recalculation
+2025/01/01 17:45:59 INFO Profiles retrieved for recalculation profiles=[]
+2025/01/01 17:45:59 INFO Recalculating total Elo for bot bot=bot1
+2025/01/01 17:45:59 INFO Updated total Elo for bot bot=bot1 totalElo=0
+2025/01/01 17:45:59 INFO Leaderboard recalculated successfully
+2025/01/01 17:45:59 INFO Finished recalculating leaderboard after score update
+2025/01/01 17:45:59 INFO Updating score botId=bot1 profile=profile1 promptId=1 attempt=2 elo=50
+2025/01/01 17:45:59 INFO Updated score botId=bot1 profile=profile1 promptId=1 attempt=2 elo=50
+2025/01/01 17:45:59 INFO Recalculating leaderboard after score update
+2025/01/01 17:45:59 INFO Recalculating leaderboard
+2025/01/01 17:45:59 INFO Getting bots for recalculation
+2025/01/01 17:45:59 INFO Bots retrieved for recalculation bots=[bot1]
+2025/01/01 17:45:59 INFO Getting profiles for recalculation
+2025/01/01 17:45:59 INFO Profiles retrieved for recalculation profiles=[]
+2025/01/01 17:45:59 INFO Recalculating total Elo for bot bot=bot1
+2025/01/01 17:45:59 INFO Updated total Elo for bot bot=bot1 totalElo=0
+2025/01/01 17:45:59 INFO Leaderboard recalculated successfully
+2025/01/01 17:45:59 INFO Finished recalculating leaderboard after score update
+    scores_test.go:70: Expected bot total Elo to be updated to 50, got 0.000000
+--- FAIL: TestUpdateScore (0.00s)
+=== RUN   TestGetStatsData
+2025/01/01 17:45:59 INFO Retrieving statistics data
+2025/01/01 17:45:59 INFO Calculating top bots per profile
+2025/01/01 17:45:59 INFO Getting profiles
+2025/01/01 17:45:59 INFO Profiles retrieved profiles="[profile1 profile2]"
+2025/01/01 17:45:59 INFO Top bots per profile calculated successfully
+2025/01/01 17:45:59 INFO Calculating Lord of LLM
+2025/01/01 17:45:59 INFO Lord of LLM calculated successfully
+2025/01/01 17:45:59 INFO Preparing profile graph data
+2025/01/01 17:45:59 INFO Getting profiles
+2025/01/01 17:45:59 INFO Profiles retrieved profiles="[profile1 profile2]"
+2025/01/01 17:45:59 INFO Profile graph data prepared successfully
+2025/01/01 17:45:59 INFO Preparing total Elo graph data
+2025/01/01 17:45:59 INFO Total Elo graph data prepared successfully
+2025/01/01 17:45:59 INFO Statistics data retrieved successfully
+--- PASS: TestGetStatsData (0.00s)
+=== RUN   TestConcludeStats
+2025/01/01 17:45:59 INFO Concluding stats
+2025/01/01 17:45:59 INFO Retrieving statistics data
+2025/01/01 17:45:59 INFO Calculating top bots per profile
+2025/01/01 17:45:59 INFO Getting profiles
+2025/01/01 17:45:59 INFO Profiles retrieved profiles="[profile1 profile2]"
+2025/01/01 17:45:59 INFO Top bots per profile calculated successfully
+2025/01/01 17:45:59 INFO Calculating Lord of LLM
+2025/01/01 17:45:59 INFO Lord of LLM calculated successfully
+2025/01/01 17:45:59 INFO Preparing profile graph data
+2025/01/01 17:45:59 INFO Getting profiles
+2025/01/01 17:45:59 INFO Profiles retrieved profiles="[profile1 profile2]"
+2025/01/01 17:45:59 INFO Profile graph data prepared successfully
+2025/01/01 17:45:59 INFO Preparing total Elo graph data
+2025/01/01 17:45:59 INFO Total Elo graph data prepared successfully
+2025/01/01 17:45:59 INFO Statistics data retrieved successfully
+2025/01/01 17:45:59 INFO Resetting kingOf for all bots
+2025/01/01 17:45:59 INFO Updating bestBots for profile profile=profile1
+2025/01/01 17:45:59 INFO Updating bestBots for profile profile=profile2
+2025/01/01 17:45:59 INFO Checking kingOf for profile profile=profile1
+2025/01/01 17:45:59 INFO Checking kingOf for profile profile=profile2
+2025/01/01 17:45:59 INFO Updating kingOf for bot bot=bot3 profile=profile1
+2025/01/01 17:45:59 INFO Updating kingOf for bot bot=bot2 profile=profile2
+2025/01/01 17:45:59 INFO Setting Lord of LLM bot=bot3
+2025/01/01 17:45:59 INFO Stats concluded successfully
+    stats_test.go:128: Expected kingOf for bot3 to be profile1, got Lord of LLM
+--- FAIL: TestConcludeStats (0.00s)
+FAIL
+coverage: 47.3% of statements
+FAIL	llm-tournament	0.074s
+FAIL

@@ -8,7 +8,7 @@ pdfprofiles:
 pdfbots:
 	pandoc --pdf-engine=xelatex -V "mainfont:Iosevka NerdFont" -V geometry:margin=0.25in -V "monofont:Iosevka Nerd Font" --highlight-style=breezedark .\data\models.md -o .\data\bots.pdf
 test:
-	go test ./... -v -race -cover
+	go test ./... -v -race -cover > test_output.txt
 run:
 	go run . load
 	go run .
