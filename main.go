@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -65,6 +66,8 @@ func main() {
 	r.HandleFunc("/conclude_stats", concludeStatsHandler).Methods("POST")
 	r.HandleFunc("/update_score", updateScoreHandler).Methods("POST")
 	r.HandleFunc("/refresh_leaderboard", refreshLeaderboardDataHandler).Methods("GET")
+
+	r.HandleFunc("/nav", navHandler)
 
 	log.Println("Starting server on :8080")
 	err = http.ListenAndServe(":8080", r)
@@ -136,7 +139,27 @@ func initDB(db *sql.DB) {
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to the LLM Tournament!")
+	tmpl, err := template.ParseFiles("templates/home.html", "templates/nav.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.ExecuteTemplate(w, "home.html", nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func navHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("templates/nav.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func loadDataHandler(w http.ResponseWriter, r *http.Request) {
