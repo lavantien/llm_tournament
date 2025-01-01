@@ -555,19 +555,51 @@ func deletePromptHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func modelManagerHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "templates/model_manager.html")
+    tmpl, err := template.ParseFiles("templates/model_manager.html", "templates/nav.html")
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    err = tmpl.ExecuteTemplate(w, "model_manager.html", nil)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
 }
 
 func profileManagerHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "templates/profile_manager.html")
+    tmpl, err := template.ParseFiles("templates/profile_manager.html", "templates/nav.html")
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    err = tmpl.ExecuteTemplate(w, "profile_manager.html", nil)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
 }
 
 func promptManagerHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "templates/prompt_manager.html")
+    tmpl, err := template.ParseFiles("templates/prompt_manager.html", "templates/nav.html")
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    err = tmpl.ExecuteTemplate(w, "prompt_manager.html", nil)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
 }
 
 func leaderboardHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "templates/leaderboard.html")
+    tmpl, err := template.ParseFiles("templates/leaderboard.html", "templates/nav.html")
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    err = tmpl.ExecuteTemplate(w, "leaderboard.html", nil)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
 }
 
 type LeaderboardData struct {
@@ -591,7 +623,15 @@ func getLeaderboardDataHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func statsHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "templates/stats.html")
+    tmpl, err := template.ParseFiles("templates/stats.html", "templates/nav.html")
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    err = tmpl.ExecuteTemplate(w, "stats.html", nil)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
 }
 
 func getStatsDataHandler(w http.ResponseWriter, r *http.Request) {
