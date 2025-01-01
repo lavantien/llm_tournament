@@ -1,296 +1,342 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile Manager</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #282c34;
-            color: #abb2bf;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            background-color: #61afef;
-            color: #282c34;
-            padding: 10px;
-            text-align: center;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #abb2bf;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #61afef;
-            color: #282c34;
-        }
-        tr:nth-child(even) {
-            background-color: #3e4451;
-        }
-        tr:hover {
-            background-color: #5c6370;
-        }
-        .button {
-            background-color: #61afef;
-            color: #282c34;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .button:hover {
-            background-color: #98c379;
-        }
-        .form-container {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #3e4451;
-            border-radius: 4px;
-        }
-        .form-field {
-            margin-bottom: 10px;
-        }
-        .form-field label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-field input, .form-field select, .form-field textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #abb2bf;
-            border-radius: 4px;
-            background-color: #282c34;
-            color: #abb2bf;
-        }
-        #messages {
-            margin-top: 20px;
-            color: #98c379;
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #282c34;
+        color: #abb2bf;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        background-color: #61afef;
+        color: #282c34;
+        padding: 10px;
+        text-align: center;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #abb2bf;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #61afef;
+        color: #282c34;
+      }
+
+      tr:nth-child(even) {
+        background-color: #3e4451;
+      }
+
+      tr:hover {
+        background-color: #5c6370;
+      }
+
+      .button {
+        background-color: #61afef;
+        color: #282c34;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      .button:hover {
+        background-color: #98c379;
+      }
+
+      .form-container {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #3e4451;
+        border-radius: 4px;
+      }
+
+      .form-field {
+        margin-bottom: 10px;
+      }
+
+      .form-field label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .form-field input,
+      .form-field select,
+      .form-field textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #abb2bf;
+        border-radius: 4px;
+        background-color: #282c34;
+        color: #abb2bf;
+      }
+
+      #messages {
+        margin-top: 20px;
+        color: #98c379;
+      }
     </style>
-</head>
-<body>
+  </head>
+
+  <body>
+    {{template "nav"}}
+
     <h1>Profile Manager</h1>
     <button class="button" onclick="loadProfiles()">Load Profiles</button>
 
     <div class="form-container">
-        <h2>Create New Profile</h2>
-        <input type="hidden" id="originalName" name="originalName">
-        <div class="form-field">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name">
-        </div>
-        <div class="form-field">
-            <label for="systemPrompt">System Prompt:</label>
-            <textarea id="systemPrompt" name="systemPrompt" rows="4"></textarea>
-        </div>
-        <div class="form-field">
-            <label for="repeatPenalty">Repeat Penalty:</label>
-            <input type="number" id="repeatPenalty" name="repeatPenalty" value="1.0">
-        </div>
-        <div class="form-field">
-            <label for="topK">Top K:</label>
-            <input type="number" id="topK" name="topK" value="0">
-        </div>
-        <div class="form-field">
-            <label for="topP">Top P:</label>
-            <input type="number" id="topP" name="topP" value="1.0">
-        </div>
-        <div class="form-field">
-            <label for="minP">Min P:</label>
-            <input type="number" id="minP" name="minP" value="0.0">
-        </div>
-        <div class="form-field">
-            <label for="topA">Top A:</label>
-            <input type="number" id="topA" name="topA" value="0.0">
-        </div>
-        <button class="button" onclick="createProfile()">Create Profile</button>
+      <h2>Create New Profile</h2>
+      <input type="hidden" id="originalName" name="originalName" />
+      <div class="form-field">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" />
+      </div>
+      <div class="form-field">
+        <label for="systemPrompt">System Prompt:</label>
+        <textarea id="systemPrompt" name="systemPrompt" rows="4"></textarea>
+      </div>
+      <div class="form-field">
+        <label for="repeatPenalty">Repeat Penalty:</label>
+        <input
+          type="number"
+          id="repeatPenalty"
+          name="repeatPenalty"
+          value="1.0"
+        />
+      </div>
+      <div class="form-field">
+        <label for="topK">Top K:</label>
+        <input type="number" id="topK" name="topK" value="0" />
+      </div>
+      <div class="form-field">
+        <label for="topP">Top P:</label>
+        <input type="number" id="topP" name="topP" value="1.0" />
+      </div>
+      <div class="form-field">
+        <label for="minP">Min P:</label>
+        <input type="number" id="minP" name="minP" value="0.0" />
+      </div>
+      <div class="form-field">
+        <label for="topA">Top A:</label>
+        <input type="number" id="topA" name="topA" value="0.0" />
+      </div>
+      <button class="button" onclick="createProfile()">Create Profile</button>
     </div>
 
     <div id="messages"></div>
 
     <table id="profilesTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>System Prompt</th>
-                <th>Repeat Penalty</th>
-                <th>Top K</th>
-                <th>Top P</th>
-                <th>Min P</th>
-                <th>Top A</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Profiles will be loaded here -->
-        </tbody>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>System Prompt</th>
+          <th>Repeat Penalty</th>
+          <th>Top K</th>
+          <th>Top P</th>
+          <th>Min P</th>
+          <th>Top A</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Profiles will be loaded here -->
+      </tbody>
     </table>
 
     <script>
-        function loadProfiles() {
-            fetch('/profiles')
-                .then(response => response.json())
-                .then(profiles => {
-                    const tableBody = document.getElementById('profilesTable').getElementsByTagName('tbody')[0];
-                    tableBody.innerHTML = '';
-                    profiles.forEach(profile => {
-                        const row = tableBody.insertRow();
-                        row.insertCell().textContent = profile.name;
-                        row.insertCell().textContent = profile.systemPrompt;
-                        row.insertCell().textContent = profile.repeatPenalty;
-                        row.insertCell().textContent = profile.topK;
-                        row.insertCell().textContent = profile.topP;
-                        row.insertCell().textContent = profile.minP;
-                        row.insertCell().textContent = profile.topA;
-                        const actionsCell = row.insertCell();
-                        const editButton = document.createElement('button');
-                        editButton.textContent = 'Edit';
-                        editButton.className = 'button';
-                        editButton.onclick = () => editProfile(profile.name);
-                        actionsCell.appendChild(editButton);
-                        const deleteButton = document.createElement('button');
-                        deleteButton.textContent = 'Delete';
-                        deleteButton.className = 'button';
-                        deleteButton.onclick = () => deleteProfile(profile.name);
-                        actionsCell.appendChild(deleteButton);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('messages').textContent = 'Failed to load profiles.';
-                });
-        }
-
-        function createProfile() {
-            const profile = {
-                name: document.getElementById('name').value,
-                systemPrompt: document.getElementById('systemPrompt').value,
-                repeatPenalty: parseFloat(document.getElementById('repeatPenalty').value),
-                topK: parseInt(document.getElementById('topK').value),
-                topP: parseFloat(document.getElementById('topP').value),
-                minP: parseFloat(document.getElementById('minP').value),
-                topA: parseFloat(document.getElementById('topA').value)
-            };
-
-            fetch('/profiles', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(profile)
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('messages').textContent = 'Profile created successfully.';
-                    loadProfiles();
-                    document.querySelector('.form-container form').reset();
-                } else {
-                    throw new Error('Failed to create profile.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('messages').textContent = 'Failed to create profile.';
+      function loadProfiles() {
+        fetch("/profiles")
+          .then((response) => response.json())
+          .then((profiles) => {
+            const tableBody = document
+              .getElementById("profilesTable")
+              .getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = "";
+            profiles.forEach((profile) => {
+              const row = tableBody.insertRow();
+              row.insertCell().textContent = profile.name;
+              row.insertCell().textContent = profile.systemPrompt;
+              row.insertCell().textContent = profile.repeatPenalty;
+              row.insertCell().textContent = profile.topK;
+              row.insertCell().textContent = profile.topP;
+              row.insertCell().textContent = profile.minP;
+              row.insertCell().textContent = profile.topA;
+              const actionsCell = row.insertCell();
+              const editButton = document.createElement("button");
+              editButton.textContent = "Edit";
+              editButton.className = "button";
+              editButton.onclick = () => editProfile(profile.name);
+              actionsCell.appendChild(editButton);
+              const deleteButton = document.createElement("button");
+              deleteButton.textContent = "Delete";
+              deleteButton.className = "button";
+              deleteButton.onclick = () => deleteProfile(profile.name);
+              actionsCell.appendChild(deleteButton);
             });
-        }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("messages").textContent =
+              "Failed to load profiles.";
+          });
+      }
 
-        function editProfile(name) {
-            fetch(`/profiles/${name}`)
-                .then(response => response.json())
-                .then(profile => {
-                    document.getElementById('originalName').value = name;
-                    document.getElementById('name').value = profile.name;
-                    document.getElementById('systemPrompt').value = profile.systemPrompt;
-                    document.getElementById('repeatPenalty').value = profile.repeatPenalty;
-                    document.getElementById('topK').value = profile.topK;
-                    document.getElementById('topP').value = profile.topP;
-                    document.getElementById('minP').value = profile.minP;
-                    document.getElementById('topA').value = profile.topA;
+      function createProfile() {
+        const profile = {
+          name: document.getElementById("name").value,
+          systemPrompt: document.getElementById("systemPrompt").value,
+          repeatPenalty: parseFloat(
+            document.getElementById("repeatPenalty").value,
+          ),
+          topK: parseInt(document.getElementById("topK").value),
+          topP: parseFloat(document.getElementById("topP").value),
+          minP: parseFloat(document.getElementById("minP").value),
+          topA: parseFloat(document.getElementById("topA").value),
+        };
 
-                    // Change the "Create Profile" button to "Update Profile"
-                    const createButton = document.querySelector('.form-container button');
-                    createButton.textContent = 'Update Profile';
-                    createButton.onclick = () => updateProfile();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('messages').textContent = 'Failed to fetch profile details.';
-                });
-        }
-
-        function updateProfile() {
-            const originalName = document.getElementById('originalName').value;
-            const profile = {
-                name: document.getElementById('name').value,
-                systemPrompt: document.getElementById('systemPrompt').value,
-                repeatPenalty: parseFloat(document.getElementById('repeatPenalty').value),
-                topK: parseInt(document.getElementById('topK').value),
-                topP: parseFloat(document.getElementById('topP').value),
-                minP: parseFloat(document.getElementById('minP').value),
-                topA: parseFloat(document.getElementById('topA').value)
-            };
-
-            fetch(`/profiles/${originalName}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(profile)
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('messages').textContent = 'Profile updated successfully.';
-                    loadProfiles();
-                    // Reset the form and change the button back to "Create Profile"
-                    document.querySelector('.form-container form').reset();
-                    const updateButton = document.querySelector('.form-container button');
-                    updateButton.textContent = 'Create Profile';
-                    updateButton.onclick = createProfile;
-                } else {
-                    throw new Error('Failed to update profile.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('messages').textContent = 'Failed to update profile.';
-            });
-        }
-
-        function deleteProfile(name) {
-            if (!confirm(`Are you sure you want to delete the profile "${name}"?`)) {
-                return;
+        fetch("/profiles", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(profile),
+        })
+          .then((response) => {
+            if (response.ok) {
+              document.getElementById("messages").textContent =
+                "Profile created successfully.";
+              loadProfiles();
+              document.querySelector(".form-container form").reset();
+            } else {
+              throw new Error("Failed to create profile.");
             }
-            fetch(`/profiles/${name}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('messages').textContent = 'Profile deleted successfully.';
-                    loadProfiles();
-                } else {
-                    throw new Error('Failed to delete profile.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('messages').textContent = 'Failed to delete profile.';
-            });
-        }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("messages").textContent =
+              "Failed to create profile.";
+          });
+      }
 
-        loadProfiles();
+      function editProfile(name) {
+        fetch(`/profiles/${name}`)
+          .then((response) => response.json())
+          .then((profile) => {
+            document.getElementById("originalName").value = name;
+            document.getElementById("name").value = profile.name;
+            document.getElementById("systemPrompt").value =
+              profile.systemPrompt;
+            document.getElementById("repeatPenalty").value =
+              profile.repeatPenalty;
+            document.getElementById("topK").value = profile.topK;
+            document.getElementById("topP").value = profile.topP;
+            document.getElementById("minP").value = profile.minP;
+            document.getElementById("topA").value = profile.topA;
+
+            // Change the "Create Profile" button to "Update Profile"
+            const createButton = document.querySelector(
+              ".form-container button",
+            );
+            createButton.textContent = "Update Profile";
+            createButton.onclick = () => updateProfile();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("messages").textContent =
+              "Failed to fetch profile details.";
+          });
+      }
+
+      function updateProfile() {
+        const originalName = document.getElementById("originalName").value;
+        const profile = {
+          name: document.getElementById("name").value,
+          systemPrompt: document.getElementById("systemPrompt").value,
+          repeatPenalty: parseFloat(
+            document.getElementById("repeatPenalty").value,
+          ),
+          topK: parseInt(document.getElementById("topK").value),
+          topP: parseFloat(document.getElementById("topP").value),
+          minP: parseFloat(document.getElementById("minP").value),
+          topA: parseFloat(document.getElementById("topA").value),
+        };
+
+        fetch(`/profiles/${originalName}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(profile),
+        })
+          .then((response) => {
+            if (response.ok) {
+              document.getElementById("messages").textContent =
+                "Profile updated successfully.";
+              loadProfiles();
+              // Reset the form and change the button back to "Create Profile"
+              document.querySelector(".form-container form").reset();
+              const updateButton = document.querySelector(
+                ".form-container button",
+              );
+              updateButton.textContent = "Create Profile";
+              updateButton.onclick = createProfile;
+            } else {
+              throw new Error("Failed to update profile.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("messages").textContent =
+              "Failed to update profile.";
+          });
+      }
+
+      function deleteProfile(name) {
+        if (
+          !confirm(`Are you sure you want to delete the profile "${name}"?`)
+        ) {
+          return;
+        }
+        fetch(`/profiles/${name}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.ok) {
+              document.getElementById("messages").textContent =
+                "Profile deleted successfully.";
+              loadProfiles();
+            } else {
+              throw new Error("Failed to delete profile.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("messages").textContent =
+              "Failed to delete profile.";
+          });
+      }
+
+      loadProfiles();
     </script>
-</body>
+  </body>
 </html>

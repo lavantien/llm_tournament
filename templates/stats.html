@@ -1,98 +1,114 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stats</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #282c34;
-            color: #abb2bf;
-            margin: 0;
-            padding: 0;
-        }
-        h1, h2 {
-            background-color: #61afef;
-            color: #282c34;
-            padding: 10px;
-            text-align: center;
-        }
-        h2 {
-            margin-top: 20px;
-            border-bottom: 2px solid #abb2bf;
-            padding-bottom: 5px;
-        }
-        .section {
-            margin-bottom: 30px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #abb2bf;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #61afef;
-            color: #282c34;
-        }
-        tr:nth-child(even) {
-            background-color: #3e4451;
-        }
-        tr:hover {
-            background-color: #5c6370;
-        }
-        .button {
-            background-color: #61afef;
-            color: #282c34;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .button:hover {
-            background-color: #98c379;
-        }
-        .chart-container {
-            width: 80%;
-            height: 400px;
-            margin: 20px auto;
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #282c34;
+        color: #abb2bf;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1,
+      h2 {
+        background-color: #61afef;
+        color: #282c34;
+        padding: 10px;
+        text-align: center;
+      }
+
+      h2 {
+        margin-top: 20px;
+        border-bottom: 2px solid #abb2bf;
+        padding-bottom: 5px;
+      }
+
+      .section {
+        margin-bottom: 30px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #abb2bf;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #61afef;
+        color: #282c34;
+      }
+
+      tr:nth-child(even) {
+        background-color: #3e4451;
+      }
+
+      tr:hover {
+        background-color: #5c6370;
+      }
+
+      .button {
+        background-color: #61afef;
+        color: #282c34;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      .button:hover {
+        background-color: #98c379;
+      }
+
+      .chart-container {
+        width: 80%;
+        height: 400px;
+        margin: 20px auto;
+      }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
+  </head>
+
+  <body>
+    {{template "nav"}}
+
     <h1>LLM Tournament Stats</h1>
 
     <div class="section">
-        <h2>Lord of LLM</h2>
-        <p id="lordOfLLM"></p>
+      <h2>Lord of LLM</h2>
+      <p id="lordOfLLM"></p>
     </div>
 
     <div class="section">
-        <h2>Top 10 Bots per Profile</h2>
-        <div id="topBotsPerProfile"></div>
+      <h2>Top 10 Bots per Profile</h2>
+      <div id="topBotsPerProfile"></div>
     </div>
 
     <div class="section">
-        <h2>Profile Performance</h2>
-        <div id="profilePerformanceCharts"></div>
+      <h2>Profile Performance</h2>
+      <div id="profilePerformanceCharts"></div>
     </div>
 
     <div class="section">
-        <h2>Total Elo Performance</h2>
-        <div class="chart-container">
-            <canvas id="totalEloChart"></canvas>
-        </div>
+      <h2>Total Elo Performance</h2>
+      <div class="chart-container">
+        <canvas id="totalEloChart"></canvas>
+      </div>
     </div>
 
     <script>
@@ -162,23 +178,23 @@
 
                 new Chart(canvas, {
                     type: 'line',
-                     {
+                   {
                         labels: labels,
                         datasets: [{
                             label: `${profileName} Performance`,
-                             data,
+                            data,
                             fill: false,
                             borderColor: '#61afef',
                             tension: 0.1
                         }]
                     },
                     options: {
-                        responsive: true,
-                        maintainAspectRatio: false
-                    }
-                });
-            }
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+              });
         }
+      }
 
         function createTotalEloChart(totalElos) {
             const canvas = document.getElementById('totalEloChart');
@@ -187,24 +203,24 @@
 
             new Chart(canvas, {
                 type: 'line',
-                 {
+               {
                     labels: labels,
                     datasets: [{
                         label: 'Total Elo Performance',
-                         data,
+                        data,
                         fill: false,
                         borderColor: '#61afef',
                         tension: 0.1
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        }
+                responsive: true,
+                maintainAspectRatio: false
+            }
+          });
+      }
 
         loadStatsData();
     </script>
-</body>
+  </body>
 </html>

@@ -1,269 +1,308 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prompt Manager</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #282c34;
-            color: #abb2bf;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            background-color: #61afef;
-            color: #282c34;
-            padding: 10px;
-            text-align: center;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #abb2bf;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #61afef;
-            color: #282c34;
-        }
-        tr:nth-child(even) {
-            background-color: #3e4451;
-        }
-        tr:hover {
-            background-color: #5c6370;
-        }
-        .button {
-            background-color: #61afef;
-            color: #282c34;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .button:hover {
-            background-color: #98c379;
-        }
-        .form-container {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #3e4451;
-            border-radius: 4px;
-        }
-        .form-field {
-            margin-bottom: 10px;
-        }
-        .form-field label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-field input, .form-field select, .form-field textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #abb2bf;
-            border-radius: 4px;
-            background-color: #282c34;
-            color: #abb2bf;
-        }
-        #messages {
-            margin-top: 20px;
-            color: #98c379;
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #282c34;
+        color: #abb2bf;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        background-color: #61afef;
+        color: #282c34;
+        padding: 10px;
+        text-align: center;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #abb2bf;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #61afef;
+        color: #282c34;
+      }
+
+      tr:nth-child(even) {
+        background-color: #3e4451;
+      }
+
+      tr:hover {
+        background-color: #5c6370;
+      }
+
+      .button {
+        background-color: #61afef;
+        color: #282c34;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      .button:hover {
+        background-color: #98c379;
+      }
+
+      .form-container {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #3e4451;
+        border-radius: 4px;
+      }
+
+      .form-field {
+        margin-bottom: 10px;
+      }
+
+      .form-field label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .form-field input,
+      .form-field select,
+      .form-field textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #abb2bf;
+        border-radius: 4px;
+        background-color: #282c34;
+        color: #abb2bf;
+      }
+
+      #messages {
+        margin-top: 20px;
+        color: #98c379;
+      }
     </style>
-</head>
-<body>
+  </head>
+
+  <body>
+    {{template "nav"}}
+
     <h1>Prompt Manager</h1>
     <button class="button" onclick="loadPrompts()">Load Prompts</button>
 
     <div class="form-container">
-        <h2>Create New Prompt</h2>
-        <input type="hidden" id="originalNumber" name="originalNumber">
-        <div class="form-field">
-            <label for="number">Number:</label>
-            <input type="number" id="number" name="number">
-        </div>
-        <div class="form-field">
-            <label for="content">Content:</label>
-            <textarea id="content" name="content" rows="4"></textarea>
-        </div>
-        <div class="form-field">
-            <label for="solution">Solution:</label>
-            <textarea id="solution" name="solution" rows="4"></textarea>
-        </div>
-        <div class="form-field">
-            <label for="profile">Profile:</label>
-            <input type="text" id="profile" name="profile">
-        </div>
-        <button class="button" onclick="createPrompt()">Create Prompt</button>
+      <h2>Create New Prompt</h2>
+      <input type="hidden" id="originalNumber" name="originalNumber" />
+      <div class="form-field">
+        <label for="number">Number:</label>
+        <input type="number" id="number" name="number" />
+      </div>
+      <div class="form-field">
+        <label for="content">Content:</label>
+        <textarea id="content" name="content" rows="4"></textarea>
+      </div>
+      <div class="form-field">
+        <label for="solution">Solution:</label>
+        <textarea id="solution" name="solution" rows="4"></textarea>
+      </div>
+      <div class="form-field">
+        <label for="profile">Profile:</label>
+        <input type="text" id="profile" name="profile" />
+      </div>
+      <button class="button" onclick="createPrompt()">Create Prompt</button>
     </div>
 
     <div id="messages"></div>
 
     <table id="promptsTable">
-        <thead>
-            <tr>
-                <th>Number</th>
-                <th>Content</th>
-                <th>Solution</th>
-                <th>Profile</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Prompts will be loaded here -->
-        </tbody>
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Content</th>
+          <th>Solution</th>
+          <th>Profile</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Prompts will be loaded here -->
+      </tbody>
     </table>
 
     <script>
-        function loadPrompts() {
-            fetch('/prompts')
-                .then(response => response.json())
-                .then(prompts => {
-                    const tableBody = document.getElementById('promptsTable').getElementsByTagName('tbody')[0];
-                    tableBody.innerHTML = '';
-                    prompts.forEach(prompt => {
-                        const row = tableBody.insertRow();
-                        row.insertCell().textContent = prompt.number;
-                        row.insertCell().textContent = prompt.content;
-                        row.insertCell().textContent = prompt.solution;
-                        row.insertCell().textContent = prompt.profile;
-                        const actionsCell = row.insertCell();
-                        const editButton = document.createElement('button');
-                        editButton.textContent = 'Edit';
-                        editButton.className = 'button';
-                        editButton.onclick = () => editPrompt(prompt.number);
-                        actionsCell.appendChild(editButton);
-                        const deleteButton = document.createElement('button');
-                        deleteButton.textContent = 'Delete';
-                        deleteButton.className = 'button';
-                        deleteButton.onclick = () => deletePrompt(prompt.number);
-                        actionsCell.appendChild(deleteButton);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('messages').textContent = 'Failed to load prompts.';
-                });
-        }
-
-        function createPrompt() {
-            const prompt = {
-                number: parseInt(document.getElementById('number').value),
-                content: document.getElementById('content').value,
-                solution: document.getElementById('solution').value,
-                profile: document.getElementById('profile').value
-            };
-
-            fetch('/prompts', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(prompt)
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('messages').textContent = 'Prompt created successfully.';
-                    loadPrompts();
-                    document.querySelector('.form-container form').reset();
-                } else {
-                    throw new Error('Failed to create prompt.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('messages').textContent = 'Failed to create prompt.';
+      function loadPrompts() {
+        fetch("/prompts")
+          .then((response) => response.json())
+          .then((prompts) => {
+            const tableBody = document
+              .getElementById("promptsTable")
+              .getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = "";
+            prompts.forEach((prompt) => {
+              const row = tableBody.insertRow();
+              row.insertCell().textContent = prompt.number;
+              row.insertCell().textContent = prompt.content;
+              row.insertCell().textContent = prompt.solution;
+              row.insertCell().textContent = prompt.profile;
+              const actionsCell = row.insertCell();
+              const editButton = document.createElement("button");
+              editButton.textContent = "Edit";
+              editButton.className = "button";
+              editButton.onclick = () => editPrompt(prompt.number);
+              actionsCell.appendChild(editButton);
+              const deleteButton = document.createElement("button");
+              deleteButton.textContent = "Delete";
+              deleteButton.className = "button";
+              deleteButton.onclick = () => deletePrompt(prompt.number);
+              actionsCell.appendChild(deleteButton);
             });
-        }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("messages").textContent =
+              "Failed to load prompts.";
+          });
+      }
 
-        function editPrompt(number) {
-            fetch(`/prompts/${number}`)
-                .then(response => response.json())
-                .then(prompt => {
-                    document.getElementById('originalNumber').value = number;
-                    document.getElementById('number').value = prompt.number;
-                    document.getElementById('content').value = prompt.content;
-                    document.getElementById('solution').value = prompt.solution;
-                    document.getElementById('profile').value = prompt.profile;
+      function createPrompt() {
+        const prompt = {
+          number: parseInt(document.getElementById("number").value),
+          content: document.getElementById("content").value,
+          solution: document.getElementById("solution").value,
+          profile: document.getElementById("profile").value,
+        };
 
-                    // Change the "Create Prompt" button to "Update Prompt"
-                    const createButton = document.querySelector('.form-container button');
-                    createButton.textContent = 'Update Prompt';
-                    createButton.onclick = () => updatePrompt();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('messages').textContent = 'Failed to fetch prompt details.';
-                });
-        }
-
-        function updatePrompt() {
-            const originalNumber = parseInt(document.getElementById('originalNumber').value);
-            const prompt = {
-                number: parseInt(document.getElementById('number').value),
-                content: document.getElementById('content').value,
-                solution: document.getElementById('solution').value,
-                profile: document.getElementById('profile').value
-            };
-
-            fetch(`/prompts/${originalNumber}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(prompt)
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('messages').textContent = 'Prompt updated successfully.';
-                    loadPrompts();
-                    // Reset the form and change the button back to "Create Prompt"
-                    document.querySelector('.form-container form').reset();
-                    const updateButton = document.querySelector('.form-container button');
-                    updateButton.textContent = 'Create Prompt';
-                    updateButton.onclick = createPrompt;
-                } else {
-                    throw new Error('Failed to update prompt.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('messages').textContent = 'Failed to update prompt.';
-            });
-        }
-
-        function deletePrompt(number) {
-            if (!confirm(`Are you sure you want to delete the prompt with number ${number}?`)) {
-                return;
+        fetch("/prompts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(prompt),
+        })
+          .then((response) => {
+            if (response.ok) {
+              document.getElementById("messages").textContent =
+                "Prompt created successfully.";
+              loadPrompts();
+              document.querySelector(".form-container form").reset();
+            } else {
+              throw new Error("Failed to create prompt.");
             }
-            fetch(`/prompts/${number}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('messages').textContent = 'Prompt deleted successfully.';
-                    loadPrompts();
-                } else {
-                    throw new Error('Failed to delete prompt.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('messages').textContent = 'Failed to delete prompt.';
-            });
-        }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("messages").textContent =
+              "Failed to create prompt.";
+          });
+      }
 
-        loadPrompts();
+      function editPrompt(number) {
+        fetch(`/prompts/${number}`)
+          .then((response) => response.json())
+          .then((prompt) => {
+            document.getElementById("originalNumber").value = number;
+            document.getElementById("number").value = prompt.number;
+            document.getElementById("content").value = prompt.content;
+            document.getElementById("solution").value = prompt.solution;
+            document.getElementById("profile").value = prompt.profile;
+
+            // Change the "Create Prompt" button to "Update Prompt"
+            const createButton = document.querySelector(
+              ".form-container button",
+            );
+            createButton.textContent = "Update Prompt";
+            createButton.onclick = () => updatePrompt();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("messages").textContent =
+              "Failed to fetch prompt details.";
+          });
+      }
+
+      function updatePrompt() {
+        const originalNumber = parseInt(
+          document.getElementById("originalNumber").value,
+        );
+        const prompt = {
+          number: parseInt(document.getElementById("number").value),
+          content: document.getElementById("content").value,
+          solution: document.getElementById("solution").value,
+          profile: document.getElementById("profile").value,
+        };
+
+        fetch(`/prompts/${originalNumber}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(prompt),
+        })
+          .then((response) => {
+            if (response.ok) {
+              document.getElementById("messages").textContent =
+                "Prompt updated successfully.";
+              loadPrompts();
+              // Reset the form and change the button back to "Create Prompt"
+              document.querySelector(".form-container form").reset();
+              const updateButton = document.querySelector(
+                ".form-container button",
+              );
+              updateButton.textContent = "Create Prompt";
+              updateButton.onclick = createPrompt;
+            } else {
+              throw new Error("Failed to update prompt.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("messages").textContent =
+              "Failed to update prompt.";
+          });
+      }
+
+      function deletePrompt(number) {
+        if (
+          !confirm(
+            `Are you sure you want to delete the prompt with number ${number}?`,
+          )
+        ) {
+          return;
+        }
+        fetch(`/prompts/${number}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.ok) {
+              document.getElementById("messages").textContent =
+                "Prompt deleted successfully.";
+              loadPrompts();
+            } else {
+              throw new Error("Failed to delete prompt.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("messages").textContent =
+              "Failed to delete prompt.";
+          });
+      }
+
+      loadPrompts();
     </script>
-</body>
+  </body>
 </html>

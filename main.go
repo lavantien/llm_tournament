@@ -210,16 +210,16 @@ func generateMockScoresHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 type Bot struct {
-	Name          string  `json:"name"`
-	Path          string  `json:"path"`
-	Size          float64 `json:"size"`
-	Param         float64 `json:"param"`
-	Quant         string  `json:"quant"`
-	GPULayers     int     `json:"gpuLayers"`
-	GPULayersUsed int     `json:"gpuLayersUsed"`
-	Ctx           int     `json:"ctx"`
-	CtxUsed       int     `json:"ctxUsed"`
-	KingOf        sql.NullString  `json:"kingOf"`
+	Name          string         `json:"name"`
+	Path          string         `json:"path"`
+	Size          float64        `json:"size"`
+	Param         float64        `json:"param"`
+	Quant         string         `json:"quant"`
+	GPULayers     int            `json:"gpuLayers"`
+	GPULayersUsed int            `json:"gpuLayersUsed"`
+	Ctx           int            `json:"ctx"`
+	CtxUsed       int            `json:"ctxUsed"`
+	KingOf        sql.NullString `json:"kingOf"`
 }
 
 func getModelsHandler(w http.ResponseWriter, r *http.Request) {
@@ -240,11 +240,11 @@ func getModelsHandler(w http.ResponseWriter, r *http.Request) {
 		bots = append(bots, bot)
 	}
 
-    for i := range bots {
-        if !bots[i].KingOf.Valid {
-            bots[i].KingOf.String = ""
-        }
-    }
+	for i := range bots {
+		if !bots[i].KingOf.Valid {
+			bots[i].KingOf.String = ""
+		}
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(bots)
@@ -282,9 +282,9 @@ func getModelHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-    if !bot.KingOf.Valid {
-        bot.KingOf.String = ""
-    }
+	if !bot.KingOf.Valid {
+		bot.KingOf.String = ""
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(bot)
