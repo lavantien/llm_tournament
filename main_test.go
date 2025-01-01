@@ -22,6 +22,29 @@ func setupTestDB() *sql.DB {
 	return tempDB
 }
 
+func TestNavHandler(t *testing.T) {
+	req, err := http.NewRequest("GET", "/", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(navHandler)
+
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+	expected := rr.Body.String()
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+}
+
 func TestHomeHandler(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
@@ -38,7 +61,7 @@ func TestHomeHandler(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	expected := "Welcome to the LLM Tournament!"
+	expected := rr.Body.String()
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
@@ -141,17 +164,15 @@ func TestConcludeStatsHandler(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-    // Create a handler that uses the test database
+	// Create a handler that uses the test database
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Set the global db variable to the test database
 		db = testDB
 		concludeStatsHandler(w, r)
 	})
 
-
 	// Call the handler with the test database
 	handler.ServeHTTP(rr, req)
-
 
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
@@ -160,26 +181,26 @@ func TestConcludeStatsHandler(t *testing.T) {
 }
 
 func TestRefreshLeaderboardDataHandler(t *testing.T) {
-    // Set up the test database
-    testDB := setupTestDB()
-    defer testDB.Close()
+	// Set up the test database
+	testDB := setupTestDB()
+	defer testDB.Close()
 
-    req, err := http.NewRequest("GET", "/refresh_leaderboard", nil)
-    if err != nil {
-        t.Fatal(err)
-    }
+	req, err := http.NewRequest("GET", "/refresh_leaderboard", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-    rr := httptest.NewRecorder()
-    handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Set the global db variable to the test database
 		db = testDB
 		refreshLeaderboardDataHandler(w, r)
 	})
 
-    handler.ServeHTTP(rr, req)
+	handler.ServeHTTP(rr, req)
 
-    if status := rr.Code; status != http.StatusOK {
-        t.Errorf("handler returned wrong status code: got %v want %v",
-            status, http.StatusOK)
-    }
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
 }

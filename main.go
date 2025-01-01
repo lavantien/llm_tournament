@@ -247,7 +247,9 @@ func getModelsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(bots)
+	if err := json.NewEncoder(w).Encode(bots); err != nil {
+		fmt.Println("Failed to get bots", err)
+	}
 }
 
 func createModelHandler(w http.ResponseWriter, r *http.Request) {
@@ -287,7 +289,9 @@ func getModelHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(bot)
+	if err := json.NewEncoder(w).Encode(bot); err != nil {
+		fmt.Println("Failed to get bot", err)
+	}
 }
 
 func updateModelHandler(w http.ResponseWriter, r *http.Request) {
@@ -372,7 +376,9 @@ func getProfilesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(profiles)
+	if err := json.NewEncoder(w).Encode(profiles); err != nil {
+		fmt.Println("Failed to get profiles", err)
+	}
 }
 
 func createProfileHandler(w http.ResponseWriter, r *http.Request) {
@@ -408,7 +414,9 @@ func getProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(profile)
+	if err := json.NewEncoder(w).Encode(profile); err != nil {
+		fmt.Println("Failed to get profile", err)
+	}
 }
 
 func updateProfileHandler(w http.ResponseWriter, r *http.Request) {
@@ -470,7 +478,9 @@ func getPromptsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(prompts)
+	if err := json.NewEncoder(w).Encode(prompts); err != nil {
+		fmt.Println("Failed to get prompts", err)
+	}
 }
 
 func createPromptHandler(w http.ResponseWriter, r *http.Request) {
@@ -510,7 +520,9 @@ func getPromptHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(prompt)
+	if err := json.NewEncoder(w).Encode(prompt); err != nil {
+		fmt.Println("Failed to get prompt", err)
+	}
 }
 
 func updatePromptHandler(w http.ResponseWriter, r *http.Request) {
@@ -555,51 +567,51 @@ func deletePromptHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func modelManagerHandler(w http.ResponseWriter, r *http.Request) {
-    tmpl, err := template.ParseFiles("templates/model_manager.html", "templates/nav.html")
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-        return
-    }
-    err = tmpl.ExecuteTemplate(w, "model_manager.html", nil)
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-    }
+	tmpl, err := template.ParseFiles("templates/model_manager.html", "templates/nav.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.ExecuteTemplate(w, "model_manager.html", nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func profileManagerHandler(w http.ResponseWriter, r *http.Request) {
-    tmpl, err := template.ParseFiles("templates/profile_manager.html", "templates/nav.html")
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-        return
-    }
-    err = tmpl.ExecuteTemplate(w, "profile_manager.html", nil)
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-    }
+	tmpl, err := template.ParseFiles("templates/profile_manager.html", "templates/nav.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.ExecuteTemplate(w, "profile_manager.html", nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func promptManagerHandler(w http.ResponseWriter, r *http.Request) {
-    tmpl, err := template.ParseFiles("templates/prompt_manager.html", "templates/nav.html")
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-        return
-    }
-    err = tmpl.ExecuteTemplate(w, "prompt_manager.html", nil)
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-    }
+	tmpl, err := template.ParseFiles("templates/prompt_manager.html", "templates/nav.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.ExecuteTemplate(w, "prompt_manager.html", nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func leaderboardHandler(w http.ResponseWriter, r *http.Request) {
-    tmpl, err := template.ParseFiles("templates/leaderboard.html", "templates/nav.html")
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-        return
-    }
-    err = tmpl.ExecuteTemplate(w, "leaderboard.html", nil)
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-    }
+	tmpl, err := template.ParseFiles("templates/leaderboard.html", "templates/nav.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.ExecuteTemplate(w, "leaderboard.html", nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 type LeaderboardData struct {
@@ -619,19 +631,21 @@ func getLeaderboardDataHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(data)
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		fmt.Println("Failed to get leaderboard data", err)
+	}
 }
 
 func statsHandler(w http.ResponseWriter, r *http.Request) {
-    tmpl, err := template.ParseFiles("templates/stats.html", "templates/nav.html")
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-        return
-    }
-    err = tmpl.ExecuteTemplate(w, "stats.html", nil)
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-    }
+	tmpl, err := template.ParseFiles("templates/stats.html", "templates/nav.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.ExecuteTemplate(w, "stats.html", nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func getStatsDataHandler(w http.ResponseWriter, r *http.Request) {
@@ -642,7 +656,9 @@ func getStatsDataHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(data)
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		fmt.Println("Failed to get stats data", err)
+	}
 }
 
 func concludeStatsHandler(w http.ResponseWriter, r *http.Request) {
@@ -684,5 +700,7 @@ func refreshLeaderboardDataHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(data)
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		fmt.Println("Failed to refresh leaderboard data", err)
+	}
 }
