@@ -1,0 +1,97 @@
+<nav>
+    <a href="/" class="button">Home</a>
+    <a href="/model_manager" class="button">Model Manager</a>
+    <a href="/profile_manager" class="button">Profile Manager</a>
+    <a href="/prompt_manager" class="button">Prompt Manager</a>
+    <a href="/leaderboard" class="button">Leaderboard</a>
+    <a href="/stats" class="button">Stats</a>
+    <button class="button" onclick="loadData()">Load Data</button>
+    <button class="button" onclick="clearData()">Clear Data</button>
+    <button class="button" onclick="generateMockScores()">Generate Mock Scores</button>
+    <button class="button" onclick="concludeStats()">Conclude Stats</button>
+    <script>
+        function loadData() {
+            fetch('/load_data', { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Data loaded successfully.');
+                    } else {
+                        alert('Failed to load data.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to load data.');
+                });
+        }
+
+        function clearData() {
+            fetch('/clear_data', { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Data cleared successfully.');
+                    } else {
+                        alert('Failed to clear data.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to clear data.');
+                });
+        }
+
+        function generateMockScores() {
+            fetch('/generate_mock_scores', { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Mock scores generated successfully.');
+                    } else {
+                        alert('Failed to generate mock scores.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to generate mock scores.');
+                });
+        }
+
+        function concludeStats() {
+            fetch('/conclude_stats', { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Stats concluded successfully.');
+                        loadStatsData();
+                    } else {
+                        alert('Failed to conclude stats.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to conclude stats.');
+                });
+        }
+    </script>
+    <style>
+    nav {
+        background-color: #3e4451;
+        padding: 10px;
+        text-align: center;
+    }
+    .button {
+        background-color: #61afef;
+        color: #282c34;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    .button:hover {
+        background-color: #98c379;
+    }
+    </style>
+</nav>
