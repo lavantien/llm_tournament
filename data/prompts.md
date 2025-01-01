@@ -1275,6 +1275,8 @@ Good luck creating your masterpiece!
 
 #### Solution
 
+Freestyle
+
 ---
 
 ### 31
@@ -1328,6 +1330,8 @@ Develop a Python program to simulate this society:
 Good luck exploring the delicate balance between freedom, ethics, and human imperfection!
 
 #### Solution
+
+Freestyle
 
 ---
 
