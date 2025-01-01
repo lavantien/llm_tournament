@@ -14,6 +14,7 @@
 /add       scores_test.go
 /add       stats.go
 /add       stats_test.go
+/add       templates\home.html
 /add       templates\leaderboard.html
 /add       templates\model_manager.html
 /add       templates\nav.html
