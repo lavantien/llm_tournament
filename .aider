@@ -16,6 +16,7 @@
 /add       stats_test.go
 /add       templates\leaderboard.html
 /add       templates\model_manager.html
+/add       templates\nav.html
 /add       templates\profile_manager.html
 /add       templates\prompt_manager.html
 /add       templates\stats.html
